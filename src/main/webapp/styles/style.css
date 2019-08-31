@@ -1,0 +1,62 @@
+*{
+    margin:0;
+    padding:0;
+    /* border:0.5px solid grey; */
+}
+
+/* ============================= Nombre moneda ========================== */
+
+.price-coin{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    padding:3% 0 3% 0;
+}
+
+.price-coin img{
+    width:5%;
+    height:10%;
+}
+
+/* ================================= codigo wallet QR ========================= */
+
+.wallet-info{
+    border-top:2px solid grey;
+    border-bottom:2px solid grey;
+    padding:3% 0 3% 0;
+}
+
+.wallet-code{
+    display:flex;
+    flex-direction:column;
+    align-items: left;
+}
+.qr-code{
+    display:flex;
+    justify-content:center;
+}
+
+/* ====================================== cantidad de BTC ============================ */
+
+.amount-bitcoin{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    margin:3% 0 3% 0;
+}
+
+/* =================================== buttons ================================= */
+.buttons{
+    /* width:90%; */
+    margin:3% auto 3% auto;
+    display:flex;
+    justify-content:space-around;
+    border-bottom:2px solid grey;
+    padding:0 0 3% 0;
+}
+
+.btn-warning{
+    font-size:1.5em;
+    width:25%;
+}

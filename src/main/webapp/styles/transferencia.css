@@ -1,0 +1,91 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+
+/* ================================ section ============================ */
+
+section{
+    border:0.5px solid grey;
+    border-radius:50px;
+    padding:4% !important;
+    margin-top:2%;
+}
+
+/* =================================== formulario transferencia ================ */
+
+.select-coin{
+    margin-top:5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.select-coin h3{
+    width:100%;
+}
+
+.select-coin label {
+    margin:2% 0 2% 0;
+}
+
+.typeCoin{
+    width:20%;
+}
+
+.select-coin input{
+    justify-content:space-around;
+}
+
+.margin-5{
+    margin-top:5%;
+}
+
+.coin-withdraw {
+    margin-top:5%;
+    display:flex;
+    width:100%;
+}
+
+/* .form-code{
+    width:100%;
+} */
+.coin-withdraw .wallet-code{
+    width:100%;
+    margin-top:3%;
+}
+
+.confirm-buttons{
+    margin-top:5%;
+}
+
+/* =========================================== COMPRAR ========================================= */
+
+.change-coin{
+    display:flex;
+    justify-content:space-around;
+    
+}
+
+.change-coin h3{
+    width:100%;
+}
+
+.change-coin label{
+    text-align:center;
+    width:30%;
+    margin:3% 0 2% 0;
+}
+
+/* ========================================== SELECT CD ================================ */
+
+.select-card label{
+    display:flex;
+    width:100%;
+    align-items:center;
+    justify-content:space-evenly;
+}
+
+.select-card h3{
+    width:100%;
+}
