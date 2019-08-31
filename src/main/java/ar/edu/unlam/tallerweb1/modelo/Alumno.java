@@ -11,11 +11,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class Alumno extends Usuario {
 
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	
 	@OneToMany
 	private List<Cuota> cuota;
 	
@@ -27,15 +22,6 @@ public class Alumno extends Usuario {
 	@OneToMany
 	private List<Clase> clase;
 	
-	
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public List<Cuota> getCuota() {
 		return cuota;

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Vehiculo {
@@ -14,6 +15,12 @@ public class Vehiculo {
 	private String patente;
 	private String estado;
 	private String tipo;
+	
+	
+	
+	@OneToOne
+	private Instructor instructor;
+	
 	public Long getId() {
 		return id;
 	}
@@ -38,6 +45,14 @@ public class Vehiculo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	public Instructor getInstructor() {
+		return instructor;
+	}
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+	
+	
 	
 	
 	

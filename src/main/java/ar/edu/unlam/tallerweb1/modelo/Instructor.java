@@ -12,9 +12,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Instructor extends Usuario{
 
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String matricula;
 
 	@OneToMany
 	private List<Clase> clase;
@@ -22,14 +20,6 @@ public class Instructor extends Usuario{
 	@OneToOne
 	private Vehiculo vehiculo;
 	
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public List<Clase> getClase() {
 		return clase;
@@ -45,6 +35,14 @@ public class Instructor extends Usuario{
 
 	public void setVehiculo(Vehiculo vehiculo) {
 		this.vehiculo = vehiculo;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 	
 	

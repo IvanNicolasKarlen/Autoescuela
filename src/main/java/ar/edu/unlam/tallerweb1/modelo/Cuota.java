@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Cuota {
@@ -14,6 +15,9 @@ public class Cuota {
 	private String estado;
 	private Integer monto;
 	private String fecha;
+	
+	@ManyToOne
+	private Alumno alumno;
 	
 	
 	
@@ -41,6 +45,13 @@ public class Cuota {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
+	public Alumno getAlumno() {
+		return alumno;
+	}
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+	
 	
 	
 	
