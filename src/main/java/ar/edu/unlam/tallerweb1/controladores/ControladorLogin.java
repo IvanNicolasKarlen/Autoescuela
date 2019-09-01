@@ -24,6 +24,17 @@ public class ControladorLogin {
 	@Inject
 	private ServicioLogin servicioLogin;
 
+
+		@RequestMapping("/index")
+		public ModelAndView index() {
+			return new ModelAndView("redirect:/index");
+		}
+
+		@RequestMapping("/indexAlumno")
+		public ModelAndView indexAlumno() {
+			return new ModelAndView("IndexAlumno");
+		}
+	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login") //login lo asocia con el metodo iralogin
 	public ModelAndView irALogin() {
@@ -71,7 +82,7 @@ public class ControladorLogin {
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
-		return new ModelAndView("redirect:/login");
+		return new ModelAndView("Index");
 	}
 
 	

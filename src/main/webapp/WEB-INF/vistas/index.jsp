@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 	<title>Home</title>
@@ -77,15 +80,15 @@
 								<li>
 									<a href="contact.html">Contact</a>
 								</li>
+								
+								
 							</ul>
 						</nav>
 					</div>
 
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-facebook m-l-21" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-twitter m-l-21" aria-hidden="true"></i></a>
+						<a href="contact.html"><b class="text-danger">Log in</b></a>
 
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
@@ -101,6 +104,10 @@
 
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
+			
+			<a href="reservation.html" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
+					Log in
+				</a>
 			<li class="t-center m-b-13">
 				<a href="index.html" class="txt19">Home</a>
 			</li>
@@ -125,10 +132,11 @@
 				<a href="contact.html" class="txt19">Contact</a>
 			</li>
 
-			<li class="t-center">
+			<li class="t-center ">
 				<!-- Button3 -->
+				
 				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Reservation
+					Registrarse
 				</a>
 			</li>
 		</ul>
@@ -197,9 +205,9 @@
 						
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<a href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
+							<button href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Registrarse
-							</a>
+							</button>
 						</div>
 					</div>
 				</div>
@@ -229,10 +237,9 @@
 							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
 						</p>
 
-						<a href="about.html" class="txt4">
-							Registrarse
-							<i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-						</a>
+						<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								Conocenos
+							</button>
 					</div>
 				</div>
 
@@ -276,10 +283,9 @@
 								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<a href="#" class="txt4">
-									Conocenos
-									<i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-								</a>
+								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								Conocenos
+							</button>
 							</div>
 						</div>
 					</div>
@@ -288,7 +294,7 @@
 						<!-- Block1 -->
 						<div class="blo1">
 							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index7.jpg" alt="IMG-INTRO"></a>
+								<a href="#"><img src="images/index7.jpg" style="height:370px" alt="IMG-INTRO"></a>
 							</div>
 
 							<div class="wrap-text-blo1 p-t-35">
@@ -300,10 +306,9 @@
 									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
 								</p>
 
-								<a href="#" class="txt4">
-									Conocenos
-									<i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-								</a>
+								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								Conocenos
+							</button>
 							</div>
 						</div>
 					</div>
@@ -312,7 +317,7 @@
 						<!-- Block1 -->
 						<div class="blo1">
 							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index2.jpg" alt="IMG-INTRO"></a>
+								<a href="#"><img src="images/index2.jpg" style="height:370px" alt="IMG-INTRO"></a>
 							</div>
 
 							<div class="wrap-text-blo1 p-t-35">
@@ -324,10 +329,9 @@
 									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<a href="#" class="txt4">
-									Conocenos
-									<i class="fa fa-long-arrow-right m-l-10" aria-hidden="true"></i>
-								</a>
+								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								Conocenos
+							</button>
 							</div>
 						</div>
 					</div>
@@ -358,10 +362,7 @@
 							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
 								<img src="images/index10.jpg" alt="IMG-MENU">
 
-								<!-- Button2 -->
-								<a href="#" class="btn2 flex-c-m txt5 ab-c-m size4">
-									Registrate
-								</a>
+								
 							</div>
 						</div>
 
@@ -370,10 +371,7 @@
 							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
 								<img src="images/index11.jpg" alt="IMG-MENU">
 
-								<!-- Button2 -->
-								<a href="#" class="btn2 flex-c-m txt5 ab-c-m size5">
-									Registrate
-								</a>
+								
 							</div>
 						</div>
 
@@ -382,10 +380,7 @@
 							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
 								<img src="images/index15.jpg" alt="IMG-MENU">
 
-								<!-- Button2 -->
-								<a href="#" class="btn2 flex-c-m txt5 ab-c-m size6">
-									Registrate
-								</a>
+								
 							</div>
 						</div>
 					</div>
@@ -398,10 +393,7 @@
 							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
 								<img src="images/index12.jpg" alt="IMG-MENU">
 
-								<!-- Button2 -->
-								<a href="#" class="btn2 flex-c-m txt5 ab-c-m size7">
-									Registrate
-								</a>
+								
 							</div>
 						</div>
 
@@ -410,10 +402,7 @@
 							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
 								<img src="images/index13.jpg" alt="IMG-MENU">
 
-								<!-- Button2 -->
-								<a href="#" class="btn2 flex-c-m txt5 ab-c-m size8">
-									Registrate
-								</a>
+								
 							</div>
 						</div>
 
@@ -581,7 +570,7 @@
 
 							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
 								<p class="t-center txt12 size15 m-l-r-auto">
-									Gracias a esta Autoescuela, estoy aprendiendo a manejar en.. (Esperen, Â¿como era?).. En por el mundo, se me olvidaba soy un tonto Â¡Jajaja!.
+									Gracias a esta Autoescuela, estoy aprendiendo a manejar en.. (Esperen, ¿como era?).. En por el mundo, se me olvidaba soy un tonto ¡Jajaja!.
 								</p>
 
 								<div class="star-review fs-18 color0 flex-c-m m-t-12">
@@ -593,7 +582,7 @@
 								</div>
 
 								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Marley Ë— Buenos Aires
+									Marley -— Buenos Aires
 								</div>
 							</div>
 						</div>
@@ -609,7 +598,7 @@
 
 							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
 								<p class="t-center txt12 size15 m-l-r-auto">
-									Esta Autoescuela no es una cobra que te cobra todo lo que hiciste, bebe
+									Esta Autoescuela es una cobra que te cobra todo lo que hiciste, bebe
 								</p>
 
 								<div class="star-review fs-18 color0 flex-c-m m-t-12">
@@ -621,7 +610,7 @@
 								</div>
 
 								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Jimena Baron Ë— Soy la cobra
+									Jimena Baron - Soy la cobra
 								</div>
 							</div>
 						</div>
@@ -637,7 +626,7 @@
 
 							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
 								<p class="t-center txt12 size15 m-l-r-auto">
-									Despues de sacar el registro con esta Autoescuela, 'a poneeeeerla' en manejo a la chevi.
+									Despues de sacar el registro con esta Autoescuela, 'a poneeeeerla' en marcha a la chevi.
 								</p>
 
 								<div class="star-review fs-18 color0 flex-c-m m-t-12">
@@ -649,7 +638,7 @@
 								</div>
 
 								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Guillermo Franchella Ë— Buenos Aires
+									Guillermo Franchella -— Buenos Aires
 								</div>
 							</div>
 						</div>
