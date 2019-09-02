@@ -31,5 +31,16 @@ public class UsuarioDaoImpl implements UsuarioDao {
 				.add(Restrictions.eq("password", usuario.getPassword()))
 				.uniqueResult();
 	}
+	@Override
+	public 	String insertarUsuario (Usuario usuario){
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(usuario);
+		Usuario userPrueba = this.consultarUsuario(usuario);
+		if(userPrueba!= null){
+			return "Usuario creado con éxito";
+		}else{
+			return "Hubo un problema al crear su Usuario";
+		}
+	}
 
 }

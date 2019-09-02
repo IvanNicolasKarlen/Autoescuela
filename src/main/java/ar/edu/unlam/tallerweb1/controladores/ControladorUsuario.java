@@ -10,19 +10,20 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
 public class ControladorUsuario {
 
 	// La anotacion @Inject indica a Spring que en este atributo se debe setear (inyeccion de dependencias)
-	// un objeto de una clase que implemente la interface ServicioLogin, dicha clase debe estar anotada como
+	// un objeto de una clase que implemente la interface servicioUsuario, dicha clase debe estar anotada como
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
-	private ServicioLogin servicioLogin;
+	private ServicioUsuario servicioUsuario;
 
 
 		@RequestMapping("/index")
@@ -62,10 +63,10 @@ public class ControladorUsuario {
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			return new ModelAndView("redirect:/home");
+			return new ModelAndView("redirect:/indexAlumno");
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");
@@ -78,6 +79,33 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
 		return new ModelAndView("index");
+	}
+	
+	@RequestMapping(path = "/registro")
+	public ModelAndView registrarse(){
+		ModelMap model = new ModelMap();
+		Usuario user = new Usuario();
+		model.put("usuario",user);
+		return new ModelAndView("registro",model);
+	}
+	@RequestMapping(path="/realizarRegistro", method = RequestMethod.POST)
+	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
+		ModelMap model = new ModelMap();
+		if(!(user.getPassword().equals(password2))){
+			model.put("error", "Las contrase�as no coinciden");
+		}else{
+			Usuario usuarioBuscado = servicioUsuario.consultarUsuario(user);
+			if(usuarioBuscado != null){
+				model.put("error","Ya existe un usuario con esos datos");
+			}else{
+				user.setRol("Alumno");
+				String mensaje = servicioUsuario.insertarUsuario(user);
+				model.put("mensaje", mensaje);
+				return new ModelAndView("redirect:/login",model);
+			}
+		}
+
+		return new ModelAndView("registro",model);
 	}
 
 	

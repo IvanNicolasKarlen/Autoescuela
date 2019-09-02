@@ -88,7 +88,7 @@
 
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="contact.html"><b class="text-danger">Log in</b></a>
+						<a href="login"><b class="text-danger">Log in</b></a>
 
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
@@ -109,7 +109,7 @@
 					Log in
 				</a>
 			<li class="t-center m-b-13">
-				<a href="index.html" class="txt19">Home</a>
+				<a href="index" class="txt19">Home</a>
 			</li>
 
 			<li class="t-center m-b-13">
@@ -205,9 +205,9 @@
 						
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<button href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
+							<a href="registro" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Registrarse
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>
