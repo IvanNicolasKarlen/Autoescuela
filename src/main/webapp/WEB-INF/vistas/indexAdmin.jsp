@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-	<title>Home</title>
+	<title>Bienvenido administrador</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 <!--===============================================================================================-->
@@ -54,42 +55,20 @@
 						<nav class="menu">
 							<ul class="main_menu">
 								<li>
-									<a href="index.html">Home</a>
+									<a href="logueado.html">Mis clases</a>
 								</li>
 
 								<li>
-									<a href="menu.html">Menu</a>
+									<a href="menu.html">Anotarme</a>
 								</li>
-
-								<li>
-									<a href="reservation.html">Reservation</a>
-								</li>
-
-								<li>
-									<a href="gallery.html">Gallery</a>
-								</li>
-
-								<li>
-									<a href="about.html">About</a>
-								</li>
-
-								<li>
-									<a href="blog.html">Blog</a>
-								</li>
-
-								<li>
-									<a href="contact.html">Contact</a>
-								</li>
-								
-								
 							</ul>
 						</nav>
 					</div>
+	</header>
 
-					<!-- Social -->
+			<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="contact.html"><b class="text-danger">Log in</b></a>
-
+						
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
 				</div>
@@ -97,97 +76,6 @@
 		</div>
 	</header>
 
-	<!-- Sidebar -->
-	<aside class="sidebar trans-0-4">
-		<!-- Button Hide sidebar -->
-		<button class="btn-hide-sidebar ti-close color0-hov trans-0-4"></button>
-
-		<!-- - -->
-		<ul class="menu-sidebar p-t-95 p-b-70">
-			
-			<a href="reservation.html" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
-					Log in
-				</a>
-			<li class="t-center m-b-13">
-				<a href="index.html" class="txt19">Home</a>
-			</li>
-
-			<li class="t-center m-b-13">
-				<a href="menu.html" class="txt19">Menu</a>
-			</li>
-
-			<li class="t-center m-b-13">
-				<a href="gallery.html" class="txt19">Gallery</a>
-			</li>
-
-			<li class="t-center m-b-13">
-				<a href="about.html" class="txt19">About</a>
-			</li>
-
-			<li class="t-center m-b-13">
-				<a href="blog.html" class="txt19">Blog</a>
-			</li>
-
-			<li class="t-center m-b-33">
-				<a href="contact.html" class="txt19">Contact</a>
-			</li>
-
-			<li class="t-center ">
-				<!-- Button3 -->
-				
-				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Registrarse
-				</a>
-			</li>
-		</ul>
-
-		<!-- - -->
-		<div class="gallery-sidebar t-center p-l-60 p-r-60 p-b-40">
-			<!-- - -->
-			<h4 class="txt20 m-b-33">
-				Gallery
-			</h4>
-
-			<!-- Gallery -->
-			<div class="wrap-gallery-sidebar flex-w">
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-01.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-01.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-02.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-02.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-03.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-03.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-05.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-05.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-06.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-06.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-07.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-07.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-09.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-09.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-10.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-10.jpg" alt="GALLERY">
-				</a>
-
-				<a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-11.jpg" data-lightbox="gallery-footer">
-					<img src="images/photo-gallery-thumb-11.jpg" alt="GALLERY">
-				</a>
-			</div>
-		</div>
-	</aside>
 
 	<!-- Slide1 -->
 	<section class="section-slide">
@@ -196,19 +84,13 @@
 				<div class="item-slick1 item1-slick1" style="background-image: url(images/index.jpg);">
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<span class="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-							Bienvenido a
+							Bienvenido 
 						</span>
 
 						<h2 class="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-							Autoescuela
+							Administrador
 						</h2>
 						
-						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-							<!-- Button1 -->
-							<button href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Registrarse
-							</button>
-						</div>
 					</div>
 				</div>
 
@@ -219,199 +101,6 @@
 		</div>
 	</section>
 
-	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 p-t-45 p-b-30">
-					<div class="wrap-text-welcome t-center">
-						<span class="tit2 t-center">
-							Curso de Autoescuela
-						</span>
-
-						<h3 class="tit3 t-center m-b-35 m-t-5">
-							Bienvenido
-						</h3>
-
-						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
-						</p>
-
-						<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-								Conocenos
-							</button>
-					</div>
-				</div>
-
-				<div class="col-md-6 p-b-30">
-					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index2.jpg" alt="IMG-OUR">
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Intro -->
-	<section class="section-intro">
-		<div class="header-intro parallax100 t-center p-t-135 p-b-158" style="background-image: url(images/index5.jpg);">
-			<span class="tit2 p-l-15 p-r-15">
-				Clases de Manejo
-			</span>
-
-			<h3 class="tit4 t-center p-l-15 p-r-15 p-t-3">
-				Manejate con Cuidado
-			</h3>
-		</div>
-
-		<div class="content-intro bg-white p-t-77 p-b-133">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index6.jpg" alt="IMG-INTRO"></a>
-							</div>
-
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Precauciones
-								</h4></a>
-
-								<p class="m-b-20">
-								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
-								</p>
-
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-								Conocenos
-							</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index7.jpg" style="height:370px" alt="IMG-INTRO"></a>
-							</div>
-
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Comodidad
-								</h4></a>
-
-								<p class="m-b-20">
-									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
-								</p>
-
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-								Conocenos
-							</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index2.jpg" style="height:370px" alt="IMG-INTRO"></a>
-							</div>
-
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Excelente servicio
-								</h4></a>
-
-								<p class="m-b-20">
-									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
-								</p>
-
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-								Conocenos
-							</button>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Our menu -->
-	<section class="section-ourmenu bg2-pattern p-t-115 p-b-120">
-		<div class="container">
-			<div class="title-section-ourmenu t-center m-b-22">
-				<span class="tit2 t-center">
-					Recibidos
-				</span>
-
-				<h3 class="tit5 t-center m-t-2">
-					Nuestros alumnos
-				</h3>
-			</div>
-
-			<div class="row">
-				<div class="col-md-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index10.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index11.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index15.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index12.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index13.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
 
 
 	
@@ -545,115 +234,33 @@
 		</div>
 	</section>
 
-	<!-- Review -->
-	<section class="section-review p-t-115">
-		<!-- - -->
-		<div class="title-review t-center m-b-2">
-			<span class="tit2 p-l-15 p-r-15">
-				Los clientes dicen
-			</span>
 
-			<h3 class="tit8 t-center p-l-20 p-r-15 p-t-3">
-				Opiniones
-			</h3>
-		</div>
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
 
-		<!-- - -->
-		<div class="wrap-slick3">
-			<div class="slick3">
-				<div class="item-slick3 item1-slick3">
-					<div class="wrap-content-slide3 p-b-50 p-t-50">
-						<div class="container">
-							<div class="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
-								<img src="images/marley.jpg" alt="IGM-AVATAR">
-							</div>
+	<!-- Container Selection1 -->
+	<div id="dropDownSelect1"></div>
 
-							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-								<p class="t-center txt12 size15 m-l-r-auto">
-									Gracias a esta Autoescuela, estoy aprendiendo a manejar en.. (Esperen, ¿como era?).. En por el mundo, se me olvidaba soy un tonto ¡Jajaja!.
-								</p>
+	<!-- Modal Video 01-->
+	<div class="modal fade" id="modal-video-01" tabindex="-1" role="dialog" aria-hidden="true">
 
-								<div class="star-review fs-18 color0 flex-c-m m-t-12">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-								</div>
+		<div class="modal-dialog" role="document" data-dismiss="modal">
+			<div class="close-mo-video-01 trans-0-4" data-dismiss="modal" aria-label="Close">&times;</div>
 
-								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Marley - Buenos Aires
-								</div>
-							</div>
-						</div>
-					</div>
+			<div class="wrap-video-mo-01">
+				<div class="w-full wrap-pic-w op-0-0"><img src="images/icons/video-16-9.jpg" alt="IMG"></div>
+				<div class="video-mo-01">
+					<iframe src="https://www.youtube.com/embed/5k1hSu2gdKE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
 				</div>
-
-				<div class="item-slick3 item2-slick3">
-					<div class="wrap-content-slide3 p-b-50 p-t-50">
-						<div class="container">
-							<div class="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
-								<img src="images/jimena.jpg" alt="IGM-AVATAR">
-							</div>
-
-							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-								<p class="t-center txt12 size15 m-l-r-auto">
-									Esta Autoescuela es una cobra que te cobra todo lo que hiciste, bebe
-								</p>
-
-								<div class="star-review fs-18 color0 flex-c-m m-t-12">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-								</div>
-
-								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Jimena Baron - Soy la cobra
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item-slick3 item3-slick3">
-					<div class="wrap-content-slide3 p-b-50 p-t-50">
-						<div class="container">
-							<div class="pic-review size14 bo4 wrap-cir-pic m-l-r-auto animated visible-false" data-appear="zoomIn">
-								<img src="images/guillermo.jpg" alt="IGM-AVATAR">
-							</div>
-
-							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
-								<p class="t-center txt12 size15 m-l-r-auto">
-									Despues de sacar el registro con esta Autoescuela, 'a poneeeeerla' en marcha a la chevi.
-								</p>
-
-								<div class="star-review fs-18 color0 flex-c-m m-t-12">
-									<i class="fa fa-star" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
-								</div>
-
-								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Guillermo Franchella - Buenos Aires
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
 			</div>
-
-			<div class="wrap-slick3-dots m-t-30"></div>
 		</div>
-	</section>
+	</div>
 
-
-	<!-- Footer -->
-	<!-- Footer -->
+<!-- Footer -->
 	<footer class="bg1">
 		<div class="container p-t-40 p-b-70">
 			<div class="row">
@@ -822,33 +429,6 @@
 	</footer>
 
 
-	<!-- Back to top -->
-	<div class="btn-back-to-top bg0-hov" id="myBtn">
-		<span class="symbol-btn-back-to-top">
-			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
-		</span>
-	</div>
-
-	<!-- Container Selection1 -->
-	<div id="dropDownSelect1"></div>
-
-	<!-- Modal Video 01-->
-	<div class="modal fade" id="modal-video-01" tabindex="-1" role="dialog" aria-hidden="true">
-
-		<div class="modal-dialog" role="document" data-dismiss="modal">
-			<div class="close-mo-video-01 trans-0-4" data-dismiss="modal" aria-label="Close">&times;</div>
-
-			<div class="wrap-video-mo-01">
-				<div class="w-full wrap-pic-w op-0-0"><img src="images/icons/video-16-9.jpg" alt="IMG"></div>
-				<div class="video-mo-01">
-					<iframe src="https://www.youtube.com/embed/5k1hSu2gdKE?rel=0&amp;showinfo=0" allowfullscreen></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
@@ -873,6 +453,9 @@
 	<script type="text/javascript" src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="vendor/lightbox2/js/lightbox.min.js"></script>
+<!--===============================================================================================-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+	<script src="js/map-custom.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 

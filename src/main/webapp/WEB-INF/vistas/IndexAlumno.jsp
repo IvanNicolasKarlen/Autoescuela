@@ -130,7 +130,7 @@
 						</h3>
 
 						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Dirigite a nuestro calendario para reservar tus dias y horarios.
+							Dirigite a nuestro calendario para reservar tus días y horarios.
 						</p>
 
 						<button href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
@@ -207,35 +207,36 @@
 	
 
 	<!-- Footer -->
+	<!-- Footer -->
 	<footer class="bg1">
 		<div class="container p-t-40 p-b-70">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Contact Us
+						Contactenos
 					</h4>
 
 					<ul class="m-b-70">
 						<li class="txt14 m-b-14">
 							<i class="fa fa-map-marker fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							8th floor, 379 Hudson St, New York, NY 10018
+							Belgrano 1125, Capital Federal.
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-phone fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							(+1) 96 716 6879
+							11 2526 1112
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-envelope fs-13 dis-inline-block size19" aria-hidden="true"></i>
-							contact@site.com
+							autoescuela@hotmail.com
 						</li>
 					</ul>
 
 					<!-- - -->
 					<h4 class="txt13 m-b-32">
-						Opening Times
+						Horarios de apertura
 					</h4>
 
 					<ul>
@@ -244,7 +245,7 @@
 						</li>
 
 						<li class="txt14">
-							Every Day
+							Todos los dias
 						</li>
 					</ul>
 				</div>
@@ -252,7 +253,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Latest twitter
+						Twitter
 					</h4>
 
 					<div class="m-b-25">
@@ -271,7 +272,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Dec 2017
+							21 Agosto 2019
 						</span>
 					</div>
 
@@ -291,7 +292,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Dec 2017
+							21 Agosto 2019
 						</span>
 					</div>
 				</div>
@@ -299,7 +300,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-38">
-						Gallery
+						Galeria
 					</h4>
 
 					<!-- Gallery footer -->
@@ -367,7 +368,7 @@
 					</div>
 
 					<div class="txt17 p-r-20 p-t-5 p-b-5">
-						Copyright &copy; 2018 All rights reserved  |  This template is made with <i class="fa fa-heart"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+						Copyright &copy; 2019 Todos los derechos reservados 
 					</div>
 				</div>
 			</div>

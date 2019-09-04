@@ -32,7 +32,17 @@ public class ControladorUsuario {
 
 		@RequestMapping("/indexAlumno")
 		public ModelAndView indexAlumno() {
-			return new ModelAndView("indexAlumno");
+			return new ModelAndView("IndexAlumno");
+		}
+		
+		@RequestMapping("/indexInstructor")
+		public ModelAndView indexInstructor() {
+			return new ModelAndView("indexInstructor");
+		}
+		
+		@RequestMapping("/indexAdmin")
+		public ModelAndView indexAdmin() {
+			return new ModelAndView("indexAdmin");
 		}
 	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
