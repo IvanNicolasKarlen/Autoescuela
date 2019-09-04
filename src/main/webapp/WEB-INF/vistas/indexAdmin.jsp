@@ -55,11 +55,11 @@
 						<nav class="menu">
 							<ul class="main_menu">
 								<li>
-									<a href="logueado.html">Mis clases</a>
+									<a href="logueado.html">Ver todas las fechas</a>
 								</li>
 
 								<li>
-									<a href="menu.html">Anotarme</a>
+									<a href="menu.html">Asistencias</a>
 								</li>
 							</ul>
 						</nav>
