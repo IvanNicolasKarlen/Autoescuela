@@ -1,50 +1,47 @@
 package ar.edu.unlam.tallerweb1.modelo;
-
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Alumno extends Usuario {
+public class Alumno {
 
-	@OneToMany
-	private List<Cuota> cuota;
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String nombre;
+	private String apellido;
 	
 	
-	@OneToMany
-	private List<Asistencia> asistencia;
+	@OneToOne
+	private Usuario usuario; 
 	
 	
-	@OneToMany
-	private List<Clase> clase;
-	
-
-	public List<Cuota> getCuota() {
-		return cuota;
+	public Long getId() {
+		return id;
 	}
-
-	public void setCuota(List<Cuota> cuota) {
-		this.cuota = cuota;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
-	public List<Asistencia> getAsistencia() {
-		return asistencia;
+	public String getNombre() {
+		return nombre;
 	}
-
-	public void setAsistencia(List<Asistencia> asistencia) {
-		this.asistencia = asistencia;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-
-	public List<Clase> getClase() {
-		return clase;
+	public String getApellido() {
+		return apellido;
 	}
-
-	public void setClase(List<Clase> clase) {
-		this.clase = clase;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

@@ -105,7 +105,7 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 			
-			<a href="reservation.html" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
+			<a href="login" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
 					Log in
 				</a>
 			<li class="t-center m-b-13">
@@ -135,7 +135,7 @@
 			<li class="t-center ">
 				<!-- Button3 -->
 				
-				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+				<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Registrarse
 				</a>
 			</li>
@@ -237,9 +237,9 @@
 							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
 						</p>
 
-						<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+						<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 					</div>
 				</div>
 
@@ -283,9 +283,9 @@
 								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -306,9 +306,9 @@
 									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -329,9 +329,9 @@
 									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>

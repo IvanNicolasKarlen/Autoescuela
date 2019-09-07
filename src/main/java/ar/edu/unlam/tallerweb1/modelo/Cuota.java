@@ -17,7 +17,7 @@ public class Cuota {
 	private String fecha;
 	
 	@ManyToOne
-	private Alumno alumno;
+	private Usuario usuario;
 	
 	
 	
@@ -45,12 +45,13 @@ public class Cuota {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public Alumno getAlumno() {
-		return alumno;
+	public Usuario getUsuario() {
+		return usuario;
 	}
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
+	
 	
 	
 	

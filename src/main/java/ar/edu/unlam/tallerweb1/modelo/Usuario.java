@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Usuario {
@@ -11,12 +13,26 @@ public class Usuario {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String email;
 	private String password;
 	private Integer dni;
+	/*Estos no van*/
 	private String nombre;
+	private String email;
 	private String apellido;
-	private String rol;
+	
+	
+	
+	@OneToOne
+	private Especialidad especialidad;
+	
+	@OneToOne
+	private Alumno alumno;
+	
+	@OneToOne
+	private Instructor intructor;
+	
+	@OneToOne
+	private Organizador organizador;
 	
 	
 	
@@ -25,12 +41,6 @@ public class Usuario {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -44,6 +54,36 @@ public class Usuario {
 	public void setDni(Integer dni) {
 		this.dni = dni;
 	}
+	public Especialidad getEspecialidad() {
+		return especialidad;
+	}
+	public void setEspecialidad(Especialidad especialidad) {
+		this.especialidad = especialidad;
+	}
+	public Alumno getAlumno() {
+		return alumno;
+	}
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+	public Instructor getIntructor() {
+		return intructor;
+	}
+	public void setIntructor(Instructor intructor) {
+		this.intructor = intructor;
+	}
+	public Organizador getOrganizador() {
+		return organizador;
+	}
+	public void setOrganizador(Organizador organizador) {
+		this.organizador = organizador;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -55,12 +95,6 @@ public class Usuario {
 	}
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
-	}
-	public String getRol() {
-		return rol;
-	}
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 	
 	

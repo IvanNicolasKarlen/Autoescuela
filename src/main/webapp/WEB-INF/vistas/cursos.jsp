@@ -115,123 +115,75 @@
 	
 	
 	
-	
+	<form modelAtributte="curso" action="fechas" method="post">
 	
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 p-t-45 p-b-30">
-					<div class="wrap-text-welcome t-center">
-						
-
-						<h3 class="tit3 t-center m-b-35 m-t-5">
-							Aun no te has anotado
-						</h3>
-
-						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Dirigite a nuestro calendario para reservar tus dias y horarios.
-						</p>
-
-						<a href="cursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Anotarme
-				</a>
-					</div>
-				</div>
-
-				<div class="col-md-6 p-b-30">
-					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index4.jpg" alt="IMG-OUR">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		
 	
-
-	</section>
-	
-	
-	
-	
-	
-	
-	
-		<!-- Our menu -->
-	<section class="section-ourmenu bg2-pattern p-t-115 p-b-120">
-		<div class="container">
-			<div class="title-section-ourmenu t-center m-b-22">
-				<span class="tit2 t-center">
-					
-				</span>
-
-				<h3 class="tit5 t-center m-t-2">
-					Tus clases
-				</h3>
-			</div>
-
-			
-			
-			
-			
-			
-			
-			
-			<div class="card text-center">
-  <div class="card-header">
-    <div class="wrap-text-blo1  text-center ">
-								<h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Clase 1 
-								</h4>
-	</div>
-  </div>
+		<div class="row">
+		<div class="card col-xs-6 col-md-4" style="width: 18rem;">
+  
   <div class="card-body">
-   <p class="m-b-20">
-								<b>Fecha:</b> 21/09/2019 
-								</p>
-								<p class="m-b-20">
-								<b>Horario:</b> 14:00 hrs
-								</p>
-								<p class="m-b-20">
-								<b>Instructor:</b> Cesar Millan
-								</p>
-								<p class="m-b-20">
-								<b>Auto:</b> Vento color Rojo
-								</p>
-								
-    <button href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Modificar
+    <h5 class="card-title text-center bg-info text-white">5 CLASES</h5>
+    <p class="card-text text-center">Clases de 1 hora</p>
+	<p class="card-text text-center  bg-light text-dark">Auto</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
+    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
+    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
+    <li class="list-group-item">Posibilidad de elegir los dias</li>
+  </ul>
+  <div class="card-body">
+   <button type="submit" id="cantidad" path="cantidad" value="5" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					ANOTARME
 				</button>
   </div>
-  
 </div>
-<a href="fechas" class="btn3 flex-c-m size13 txt11 m-t-20 trans-0-4 m-l-r-auto">
-					Agregar clases
-				</a>
-			
-			
-			
-	
-
+	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title text-center bg-success text-white">7 CLASES</h5>
+    <p class="card-text text-center">Clases de 1 hora</p>
+	<p class="card-text text-center  bg-light text-dark">Auto</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
+    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
+    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
+    <li class="list-group-item">Posibilidad de elegir los dias</li>
+  </ul>
+  <div class="card-body">
+   <button type="submit" id="cantidad" path="cantidad" value="7" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					ANOTARME
+				</button>
+  </div>
+</div>
+	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
+  
+  <div class="card-body">
+    <h5 class="card-title text-center bg-warning text-white">10 CLASES</h5>
+    <p class="card-text text-center">Clases de 1 hora</p>
+	<p class="card-text text-center  bg-light text-dark">Auto</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
+    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
+    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
+    <li class="list-group-item">Posibilidad de elegir los dias</li>
+  </ul>
+  <div class="card-body">
+   <button type="submit" id="cantidad" path="cantidad" value="10" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					ANOTARME
+				</button>
+  </div>
+</div>
+		
 		</div>
-	</section>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+	</form>
 
-	
-	
-	
+	</section>
 	
 	
 	
@@ -449,3 +401,20 @@
 
 </body>
 </html>
+
+<script>
+var dateToday = new Date();
+var dates = $("#from, #to").datepicker({
+    defaultDate: "+1w",
+	dateFormat: 'dd/mm/yy',
+    changeMonth: true,
+    numberOfMonths: 1,
+    minDate: dateToday,
+    onSelect: function(selectedDate) {
+        var option = this.id == "from" ? "minDate" : "maxDate",
+            instance = $(this).data("datepicker"),
+            date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+        dates.not(this).datepicker("option", option, date);
+    }
+});
+</script>

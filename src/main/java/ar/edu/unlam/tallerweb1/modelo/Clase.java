@@ -18,15 +18,18 @@ public class Clase {
 	
 	
 	@OneToOne
+	private Vehiculo vehiculo;
+	
+	@ManyToOne
+	private Instructor instructor;
+	
+	@OneToOne
 	private Asistencia asistencia;
 	
 	@ManyToOne
 	private Alumno alumno;
 	
-	
-	@ManyToOne
-	private Instructor instructor;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -51,11 +54,11 @@ public class Clase {
 	public void setAsistencia(Asistencia asistencia) {
 		this.asistencia = asistencia;
 	}
-	public Alumno getAlumno() {
-		return alumno;
+	public Vehiculo getVehiculo() {
+		return vehiculo;
 	}
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
 	}
 	public Instructor getInstructor() {
 		return instructor;
@@ -63,6 +66,14 @@ public class Clase {
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
+	public Alumno getAlumno() {
+		return alumno;
+	}
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+
+	
 	
 	
 

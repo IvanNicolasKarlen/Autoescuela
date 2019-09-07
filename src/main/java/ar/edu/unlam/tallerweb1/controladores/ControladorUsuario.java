@@ -2,9 +2,14 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +29,7 @@ public class ControladorUsuario {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioUsuario servicioUsuario;
-
+	Usuario usuario = new Usuario();
 
 		@RequestMapping("/index")
 		public ModelAndView index() {
@@ -43,7 +48,7 @@ public class ControladorUsuario {
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el mismo sea asociado
 		// al model attribute del form que esta definido en la vista 'login'
-		Usuario usuario = new Usuario();
+		
 		modelo.put("usuario", usuario);
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
@@ -65,7 +70,7 @@ public class ControladorUsuario {
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			//request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			return new ModelAndView("redirect:/indexAlumno");
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
@@ -84,10 +89,11 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/registro")
 	public ModelAndView registrarse(){
 		ModelMap model = new ModelMap();
-		Usuario user = new Usuario();
-		model.put("usuario",user);
+		
+		model.put("usuario",usuario);
 		return new ModelAndView("registro",model);
 	}
+	
 	@RequestMapping(path="/realizarRegistro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
@@ -98,7 +104,7 @@ public class ControladorUsuario {
 			if(usuarioBuscado != null){
 				model.put("error","Ya existe un usuario con esos datos");
 			}else{
-				user.setRol("Alumno");
+				//user.setRol("Alumno");
 				String mensaje = servicioUsuario.insertarUsuario(user);
 				model.put("mensaje", mensaje);
 				return new ModelAndView("redirect:/login",model);
@@ -110,4 +116,40 @@ public class ControladorUsuario {
 
 	
 	
+	@RequestMapping(path = "/fechas")
+	public ModelAndView registrarFecha(){
+		ModelMap model = new ModelMap();
+		
+		model.put("usuario",usuario);
+		return new ModelAndView("fechas",model);
+	}
+	
+	
+
+	@RequestMapping(path = "/validarFechas", method = RequestMethod.POST)
+	public ModelAndView validarFechas(@ModelAttribute("clase") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha, String hora)
+	{
+		ModelMap modelo = new ModelMap();
+		
+		//servicioRegistrarClases.consultoHorariosDisponibles( fecha, usuario);
+		
+		return new ModelAndView("registrarClases",modelo);
+
+	}
+	
+	
+	@RequestMapping(path = "/horas")
+	public ModelAndView registrarHora(){
+		ModelMap model = new ModelMap();
+		model.put("usuario",usuario);
+		return new ModelAndView("horas",model);
+	}
+	
+	@RequestMapping(path = "/cursos")
+	public ModelAndView ofertaDeCursos(){
+		ModelMap model = new ModelMap();
+		
+		model.put("usuario",usuario);
+		return new ModelAndView("cursos",model);
+	}
 }
