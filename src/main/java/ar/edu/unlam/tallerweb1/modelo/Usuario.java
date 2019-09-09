@@ -15,10 +15,10 @@ public class Usuario {
 	private Long id;
 	private String password;
 	private Integer dni;
-	/*Estos no van*/
 	private String nombre;
 	private String email;
 	private String apellido;
+	private String rol;
 	
 	
 	
@@ -95,6 +95,13 @@ public class Usuario {
 	}
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
+	}
+	
+	public String getRol() {
+		return rol;
+	}
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 	
 	
