@@ -1,11 +1,16 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 
 @Entity
 public class Usuario {
@@ -26,12 +31,16 @@ public class Usuario {
 	private Especialidad especialidad;
 	
 	@OneToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+
 	private Alumno alumno;
 	
 	@OneToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private Instructor intructor;
 	
 	@OneToOne
+	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private Organizador organizador;
 	
 	

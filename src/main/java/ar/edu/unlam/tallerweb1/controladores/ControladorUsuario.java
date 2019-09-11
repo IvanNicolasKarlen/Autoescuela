@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
@@ -70,7 +71,7 @@ public class ControladorUsuario {
 		// hace una llamada a otro action a travÃ©s de la URL correspondiente a Ã©sta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-			//request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			return new ModelAndView("redirect:/indexAlumno");
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
@@ -97,17 +98,25 @@ public class ControladorUsuario {
 	@RequestMapping(path="/realizarRegistro", method = RequestMethod.POST)
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
-		if(!(user.getPassword().equals(password2))){
-			model.put("error", "Las contraseñas no coinciden");
-		}else{
-			Usuario usuarioBuscado = servicioUsuario.consultarUsuario(user);
-			if(usuarioBuscado != null){
-				model.put("error","Ya existe un usuario con esos datos");
+		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null){
+			model.put("error", "Por favor complete los campos obligatorios");
+		}
+		else{
+			if(!(user.getPassword().equals(password2))){
+				model.put("error", "Las contraseñas no coinciden");
 			}else{
-				//user.setRol("Alumno");
-				String mensaje = servicioUsuario.insertarUsuario(user);
-				model.put("mensaje", mensaje);
-				return new ModelAndView("redirect:/login",model);
+				Usuario usuarioBuscado = servicioUsuario.consultarUsuario(user);
+				if(usuarioBuscado != null){
+					model.put("error","Ya existe un usuario con esos datos");
+				}else{
+					user.setRol("Alumno");
+					Alumno alumno = new Alumno();
+					user.setAlumno(alumno);
+					String mensaje = servicioUsuario.insertarUsuario(user);
+					model.put("mensaje", mensaje);
+					return new ModelAndView("login",model);
+				}
 			}
 		}
 

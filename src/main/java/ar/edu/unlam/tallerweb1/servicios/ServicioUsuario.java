@@ -7,4 +7,5 @@ public interface ServicioUsuario {
 
 	Usuario consultarUsuario(Usuario usuario);
 	String insertarUsuario(Usuario usuario);
+	
 }
