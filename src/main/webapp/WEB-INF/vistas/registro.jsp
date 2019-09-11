@@ -221,6 +221,7 @@
                     <h3 class="tit3 t-center m-b-35 m-t-2">
                         Ingrese sus datos
                     </h3>
+                    <p><i>Los campos marcados con * son obligatorios</i></p>
                     <h4 class="t-center text-warning">${error}</h4>
                 </div>
 
@@ -229,7 +230,7 @@
                         <div class="col-md-4">
                             <!-- Date -->
                             <span class="txt9">
-									Nombre
+									Nombre*
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
@@ -240,7 +241,7 @@
                         <div class="col-md-4">
                             <!-- Date -->
                             <span class="txt9">
-									Apellido
+									Apellido*
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
@@ -251,12 +252,12 @@
                         <div class="col-md-4">
                             <!-- Date -->
                             <span class="txt9">
-									DNI
+									DNI*
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
                                 <form:input class="bo-rad-10 sizefull txt10 p-l-20"
-                                       type="number" id="dni" path="dni"></form:input>
+                                       type="number" max-lenght="8" min-lenght="8" id="dni" path="dni"></form:input>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -273,7 +274,7 @@
                         <div class="col-md-4">
                             <!-- Date -->
                             <span class="txt9">
-									Contraseña
+									Contraseña*
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
@@ -284,7 +285,7 @@
                         <div class="col-md-4">
                             <!-- Date -->
                             <span class="txt9">
-									Repita la contraseña:
+									Repita la contraseña*
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">

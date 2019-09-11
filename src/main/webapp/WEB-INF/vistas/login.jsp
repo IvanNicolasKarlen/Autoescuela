@@ -220,7 +220,7 @@
                     <h3 class="tit3 t-center m-b-35 m-t-2">
                         Ingrese sus datos
                     </h3>
-                    <h4 class="t-center text-warning">${error}</h4>
+                    <h4 class="t-center text-warning">${mensaje}</h4>
                 </div>
 
                 <form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="usuario" action="validar-login">
