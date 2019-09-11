@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -109,20 +112,21 @@
 		<!-- - -->
 		
 	</aside>
+	
+	<form modelAtributte="curso" action="cursoElegido" method="post">
+	
 
-
-	
-	
-	
-	
-	<form modelAtributte="curso" action="fechas" method="post">
 	
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
-	
-		<div class="row">
-		<div class="card col-xs-6 col-md-4" style="width: 18rem;">
-  
+	<h4 class="t-center text-danger">${error}</h4>
+<div class="row">
+ 
+
+<c:forEach items="${lista}" var="lc">
+
+
+	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title text-center bg-info text-white">5 CLASES</h5>
     <p class="card-text text-center">Clases de 1 hora</p>
@@ -134,57 +138,23 @@
     <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
     <li class="list-group-item">Posibilidad de elegir los dias</li>
   </ul>
-  <div class="card-body">
-   <button type="submit" id="cantidad" path="cantidad" value="5" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+ 		 <div class="card-body">
+  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" path="id" name="id" value="${lc.id}">
 					ANOTARME
 				</button>
-  </div>
-</div>
-	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
-  
-  <div class="card-body">
-    <h5 class="card-title text-center bg-success text-white">7 CLASES</h5>
-    <p class="card-text text-center">Clases de 1 hora</p>
-	<p class="card-text text-center  bg-light text-dark">Auto</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
-    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
-    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
-    <li class="list-group-item">Posibilidad de elegir los dias</li>
-  </ul>
-  <div class="card-body">
-   <button type="submit" id="cantidad" path="cantidad" value="7" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					ANOTARME
-				</button>
-  </div>
-</div>
-	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
-  
-  <div class="card-body">
-    <h5 class="card-title text-center bg-warning text-white">10 CLASES</h5>
-    <p class="card-text text-center">Clases de 1 hora</p>
-	<p class="card-text text-center  bg-light text-dark">Auto</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
-    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
-    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
-    <li class="list-group-item">Posibilidad de elegir los dias</li>
-  </ul>
-  <div class="card-body">
-   <button type="submit" id="cantidad" path="cantidad" value="10" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					ANOTARME
-				</button>
-  </div>
+  		</div>
+	</div>
+	
+	
+	
+</c:forEach>
+		
 </div>
 		
-		</div>
-		
-	</form>
+	
 
 	</section>
-	
+	</form>
 	
 	
 
@@ -401,20 +371,3 @@
 
 </body>
 </html>
-
-<script>
-var dateToday = new Date();
-var dates = $("#from, #to").datepicker({
-    defaultDate: "+1w",
-	dateFormat: 'dd/mm/yy',
-    changeMonth: true,
-    numberOfMonths: 1,
-    minDate: dateToday,
-    onSelect: function(selectedDate) {
-        var option = this.id == "from" ? "minDate" : "maxDate",
-            instance = $(this).data("datepicker"),
-            date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-        dates.not(this).datepicker("option", option, date);
-    }
-});
-</script>

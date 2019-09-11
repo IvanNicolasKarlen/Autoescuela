@@ -1,10 +1,17 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Agenda;
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -42,5 +49,30 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			return "Hubo un problema al crear su Usuario";
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+	
 }

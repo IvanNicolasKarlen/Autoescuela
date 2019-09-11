@@ -1,0 +1,43 @@
+
+use tallerwebtpfinal;
+
+
+
+select * from clase;
+
+select * from alumno;
+
+select * from curso;
+
+select * from agenda;
+
+select * from tablacursoalumno;
+
+
+
+
+
+/* Guardar al menos un curso*/
+
+
+
+Insert into curso (precio,
+	 cantClasesPracticas,
+	 cantClasesTeoricas,
+	 descripcion) values (100, 10, 2, "Curso A");
+ 
+
+ 
+Insert into curso (precio,
+	 cantClasesPracticas,
+	 cantClasesTeoricas,
+	 descripcion) values (150, 12, 1, "Curso B");
+     
+ 
+
+    
+     /*Para probar que ande si finalizo el curso, correr esta sentencia*/
+
+
+Update tablacursoalumno set estado= "Finalizado" where id=1;
+

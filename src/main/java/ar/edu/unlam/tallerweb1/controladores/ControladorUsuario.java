@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
@@ -30,16 +31,14 @@ public class ControladorUsuario {
 	@Inject
 	private ServicioUsuario servicioUsuario;
 	Usuario usuario = new Usuario();
-
+	
+	
 		@RequestMapping("/index")
 		public ModelAndView index() {
 			return new ModelAndView("index");
 		}
 
-		@RequestMapping("/indexAlumno")
-		public ModelAndView indexAlumno() {
-			return new ModelAndView("indexAlumno");
-		}
+		
 	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login") //login lo asocia con el metodo iralogin
@@ -145,11 +144,5 @@ public class ControladorUsuario {
 		return new ModelAndView("horas",model);
 	}
 	
-	@RequestMapping(path = "/cursos")
-	public ModelAndView ofertaDeCursos(){
-		ModelMap model = new ModelMap();
-		
-		model.put("usuario",usuario);
-		return new ModelAndView("cursos",model);
-	}
+
 }

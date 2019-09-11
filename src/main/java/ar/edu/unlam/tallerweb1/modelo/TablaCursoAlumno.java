@@ -8,11 +8,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class ClaseCursoAlumno {
+public class TablaCursoAlumno {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String estado;
 	
 	@ManyToOne
 	private Alumno alumno;
@@ -42,6 +43,14 @@ public class ClaseCursoAlumno {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	

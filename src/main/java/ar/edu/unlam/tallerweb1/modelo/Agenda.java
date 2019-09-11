@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -16,17 +18,17 @@ public class Agenda {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date fecha;
+	private String fecha;
 	private Integer hora;
 	
-	@OneToMany
-	private List<Vehiculo> vehiculo;
+	@ManyToOne
+	private Vehiculo vehiculo;
 	
-	@OneToMany
-	private List<Instructor> instructor;
+	@ManyToOne
+	private Instructor instructor;
 	
-	@OneToMany
-	private List<Alumno> alumno;
+	@ManyToOne
+	private Alumno alumno;
 	
 	
 	
@@ -39,12 +41,14 @@ public class Agenda {
 		this.id = id;
 	}
 
-	public Date getFecha() {
+	
+
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(String string) {
+		this.fecha = string;
 	}
 
 	public Integer getHora() {
@@ -55,29 +59,30 @@ public class Agenda {
 		this.hora = hora;
 	}
 
-	public List<Vehiculo> getVehiculo() {
+	public Vehiculo getVehiculo() {
 		return vehiculo;
 	}
 
-	public void setVehiculo(List<Vehiculo> vehiculo) {
+	public void setVehiculo(Vehiculo vehiculo) {
 		this.vehiculo = vehiculo;
 	}
 
-	public List<Instructor> getInstructor() {
+	public Instructor getInstructor() {
 		return instructor;
 	}
 
-	public void setInstructor(List<Instructor> instructor) {
+	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
 
-	public List<Alumno> getAlumno() {
+	public Alumno getAlumno() {
 		return alumno;
 	}
 
-	public void setAlumno(List<Alumno> alumno) {
+	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
+
 	
 	
 	

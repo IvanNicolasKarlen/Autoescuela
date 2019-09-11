@@ -133,7 +133,7 @@
 							Dirigite a nuestro calendario para reservar tus dias y horarios.
 						</p>
 
-						<a href="cursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+						<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Anotarme
 				</a>
 					</div>

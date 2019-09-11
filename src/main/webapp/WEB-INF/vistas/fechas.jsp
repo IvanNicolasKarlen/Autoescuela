@@ -130,24 +130,43 @@
             <div class="col-lg-12 p-b-30">
                 <div class="t-center">
 
-                    <h4 class="tit5 t-center m-b-35 m-t-2">
-                 <label for="from">Seleccione una fecha</label>
+		<form modelAttribute="curso" action="fechaElegida" method="post">
+
+
+
+                    <h4 class="tit5 t-center m-b-35">
+                 <label for="from">Buscar entre dos fecha</label>
 					</h4>
 				 
-				 <input type="text" style="background-color:white;" class="form-control input-lg border border-dark mx-sm-3 mb-2 text-center" id="from" name="from" readonly="readonly" required placeholder="Dia/Mes/AÃ±o"/>
+				 <h5 class="t-center m-b-5 m-t-2">
+                 <label for="from">Buscar desde</label>
+					</h5>
+				 <!--  <input type="date" style="background-color:white;" class="form-control input-lg border border-dark mx-sm-3 mb-2 text-center" name="desde" readonly="readonly" placeholder="Dia/Mes/Año"/>-->
+				 <input type="date" placeholder="Este"  name="desde">
+				 
+				  
+				 <h5 class=" t-center m-b-5 m-t-20">
+                 <label for="from">Buscar hasta</label>
+					</h5>
+				<!--  <input type="date" style="background-color:white;" class="form-control input-lg border border-dark mx-sm-3 mb-2 text-center"  name="hasta" readonly="readonly" placeholder="Dia/Mes/Año"/> -->
+					 <input type="date" placeholder="Este"  name="hasta">
+			
+				 <h6 class="m-t-10">Recomendacion: La fecha Hasta no debe ser anterior a la fecha Desde</h6>
 				 
 				 <div class="wrap-btn-booking flex-c-m m-t-6">
                         <!-- Button3 -->
-                        <a href="horas" type="submit" class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
+                        <button type="submit" class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
                             Continuar
-                        </a>   
+                        </button>   
                     </div> 
 				 </div>
 			</div>
 		</div>
 	</div>
-	</section>
 	
+	</form>	
+	</section>
+
 	
 	
 
@@ -323,7 +342,7 @@
 var dateToday = new Date();
 var dates = $("#from, #to").datepicker({
     defaultDate: "+1w",
-	dateFormat: 'dd/mm/yy',
+	dateFormat: 'dd/mm/yyyy',
     changeMonth: true,
     numberOfMonths: 1,
     minDate: dateToday,

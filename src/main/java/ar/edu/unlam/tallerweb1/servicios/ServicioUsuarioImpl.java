@@ -1,11 +1,19 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.UsuarioDao;
+import ar.edu.unlam.tallerweb1.modelo.Agenda;
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Implelemtacion del Servicio de usuarios, la anotacion @Service indica a Spring que esta clase es un componente que debe
@@ -29,5 +37,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public String insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
-
+	
+	
 }
