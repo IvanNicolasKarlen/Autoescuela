@@ -19,7 +19,7 @@ public class Vehiculo {
 	
 	
 	@OneToOne
-	private Usuario usuario;
+	private Instructor instructor;
 	
 	public Long getId() {
 		return id;
@@ -45,12 +45,13 @@ public class Vehiculo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public Usuario getUsuario() {
-		return usuario;
+	public Instructor getInstructor() {
+		return instructor;
 	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
 	}
+	
 	
 	
 	

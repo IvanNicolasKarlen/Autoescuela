@@ -13,13 +13,15 @@ public class TablaCursoAlumno {
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String estado;
-	
+
 	@ManyToOne
 	private Alumno alumno;
 	
 	@ManyToOne
 	private Curso curso;
+	
+	@ManyToOne
+	private Estado estado;
 
 	public Long getId() {
 		return id;
@@ -45,11 +47,13 @@ public class TablaCursoAlumno {
 		this.curso = curso;
 	}
 
-	public String getEstado() {
+	
+
+	public Estado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(String estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
 	

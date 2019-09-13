@@ -23,6 +23,7 @@ public class Alumno {
 	private List<Especialidad> especialidad;
 	
 	
+	//Relacion con Clase 
 	
 	
 	

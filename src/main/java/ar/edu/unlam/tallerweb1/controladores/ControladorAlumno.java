@@ -71,7 +71,7 @@ public class ControladorAlumno {
 		
 		
 		
-		servicioAlumnoGuardaFechas.metodoQueGuardaFechas(agenda); //************************************* NO VA (Solo de prueba)
+		//servicioAlumnoGuardaFechas.metodoQueGuardaFechas(agenda); //************************************* NO VA (Solo de prueba)
 		
 		servicioAlumnoGuardaAlumnos.guardarAlumno(alumno);			//********************************** NO VA (Solo de prueba)
 		

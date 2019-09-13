@@ -22,16 +22,8 @@ public class Agenda {
 	private Integer hora;
 	
 	@ManyToOne
-	private Vehiculo vehiculo;
-	
-	@ManyToOne
-	private Instructor instructor;
-	
-	@ManyToOne
-	private Alumno alumno;
-	
-	
-	
+	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
+
 
 	public Long getId() {
 		return id;
@@ -59,29 +51,16 @@ public class Agenda {
 		this.hora = hora;
 	}
 
-	public Vehiculo getVehiculo() {
-		return vehiculo;
+	public InstructorVehiculoEspecialidad getInstructorVehiculoEspecialidad() {
+		return instructorVehiculoEspecialidad;
 	}
 
-	public void setVehiculo(Vehiculo vehiculo) {
-		this.vehiculo = vehiculo;
+	public void setInstructorVehiculoEspecialidad(InstructorVehiculoEspecialidad instructorVehiculoEspecialidad) {
+		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
 
-	public Instructor getInstructor() {
-		return instructor;
-	}
-
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
-	}
-
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
+	
+	
 
 	
 	

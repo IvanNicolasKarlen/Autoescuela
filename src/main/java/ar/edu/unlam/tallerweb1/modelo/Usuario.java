@@ -27,8 +27,6 @@ public class Usuario {
 	
 	
 	
-	@OneToOne
-	private Especialidad especialidad;
 	
 	@OneToOne
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -37,7 +35,7 @@ public class Usuario {
 	
 	@OneToOne
 	@Cascade(value = CascadeType.SAVE_UPDATE)
-	private Instructor intructor;
+	private Instructor instructor;
 	
 	@OneToOne
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -99,13 +97,7 @@ public class Usuario {
 		this.rol = rol;
 	}
 
-	public Especialidad getEspecialidad() {
-		return especialidad;
-	}
 
-	public void setEspecialidad(Especialidad especialidad) {
-		this.especialidad = especialidad;
-	}
 
 	public Alumno getAlumno() {
 		return alumno;
@@ -116,11 +108,11 @@ public class Usuario {
 	}
 
 	public Instructor getIntructor() {
-		return intructor;
+		return instructor;
 	}
 
 	public void setIntructor(Instructor intructor) {
-		this.intructor = intructor;
+		this.instructor = intructor;
 	}
 
 	public Organizador getOrganizador() {

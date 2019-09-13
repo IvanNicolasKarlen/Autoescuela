@@ -24,7 +24,7 @@ public class AlumnoMetodoGuardaCursoDaoImpl implements AlumnoMetodoGuardaCursoDa
 		
 		cursoAlumno.setCurso(curso);
 		cursoAlumno.setAlumno(alumno);
-		cursoAlumno.setEstado("Cursando");
+		//cursoAlumno.setEstado("Cursando");
 		session.save(cursoAlumno);
 		
 	}

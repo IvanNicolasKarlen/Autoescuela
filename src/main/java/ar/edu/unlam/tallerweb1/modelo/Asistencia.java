@@ -23,7 +23,7 @@ public class Asistencia {
 	private Instructor instructor;
 	
 	@OneToOne
-	private Clase clase;
+	private Agenda agenda;
 	
 	
 	public Long getId() {
@@ -39,11 +39,12 @@ public class Asistencia {
 		this.estado = estado;
 	}
 	
-	public Clase getClase() {
-		return clase;
+	
+	public Agenda getAgenda() {
+		return agenda;
 	}
-	public void setClase(Clase clase) {
-		this.clase = clase;
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
 	}
 	public Alumno getAlumno() {
 		return alumno;
