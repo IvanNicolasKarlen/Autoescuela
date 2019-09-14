@@ -75,12 +75,19 @@ public class ControladorUsuario {
 		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			return new ModelAndView("redirect:/home");
-		} else {
-			// si el usuario no existe agrega un mensaje de error en el modelo.
-			model.put("error", "Usuario o clave incorrecta");
-		}
-		return new ModelAndView("login", model);
+			request.getSession().setAttribute("logueado", usuarioBuscado.getId().toString());
+			request.getSession().setAttribute("nombre", usuarioBuscado.getNombre());
+			  if(usuarioBuscado.getRol().equals("1")){
+					return new ModelAndView("redirect:/indexAdmin",model);
+				}
+					return new ModelAndView("redirect:/login", model);
+
+			}
+			else {
+				model.put("error", "Usuario o clave incorrecta");
+			}
+			return new ModelAndView("login", model);
+		
 	}
 
 
@@ -90,6 +97,16 @@ public class ControladorUsuario {
 		return new ModelAndView("index");
 	}
 
-	
+	@RequestMapping(path = "/cerrarsesion ", method = RequestMethod.POST)
+	public ModelAndView cerrarsesion(HttpServletRequest request) {
+		ModelMap model = new ModelMap();
+
+			request.getSession().removeAttribute("ROL");
+			request.getSession().removeAttribute("logueado");
+			request.getSession().removeAttribute("nombre");
+
+		return new ModelAndView("redirect:login", model);
+	}
+
 	
 }
