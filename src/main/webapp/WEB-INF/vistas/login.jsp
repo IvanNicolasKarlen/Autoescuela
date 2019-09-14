@@ -7,195 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Ingresar</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="fonts/themify/themify-icons.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="vendor/lightbox2/css/lightbox.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="css/util.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <!--===============================================================================================-->
+	<!-- meta, css, vendor, etc. -->
+<%@ include file="../../parts/meta.jsp" %> 
+	<!-- fin del meta, css, vendor, etc -->
 </head>
 <body class="animsition">
 
-<!-- Header -->
-<header>
-    <!-- Header desktop -->
-    <div class="wrap-menu-header gradient1 trans-0-4">
-        <div class="container h-full">
-            <div class="wrap_header trans-0-3">
-                <!-- Logo -->
-                <div class="logo">
-                    <a href="">
-                      <img src="images/logo.jpg" style="height:50px;width:70px;" alt="IMG-LOGO" data-logofixed="images/logo.jpg">
-                    </a>
-                </div>
-
-                <!-- Menu -->
-                <div class="wrap_menu p-l-45 p-l-0-xl">
-                    <nav class="menu">
-                        <ul class="main_menu">
-                            <li>
-                                <a href="index.html">Home</a>
-                            </li>
-
-                            <li>
-                                <a href="menu.html">Menu</a>
-                            </li>
-
-                            <li>
-                                <a href="reservation.html">Reservation</a>
-                            </li>
-
-                            <li>
-                                <a href="gallery.html">Gallery</a>
-                            </li>
-
-                            <li>
-                                <a href="about.html">About</a>
-                            </li>
-
-                            <li>
-                                <a href="blog.html">Blog</a>
-                            </li>
-
-                            <li>
-                                <a href="contact.html">Contact</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- Social -->
-                <div class="social flex-w flex-l-m p-r-20">
-                    <a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-facebook m-l-21" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-twitter m-l-21" aria-hidden="true"></i></a>
-
-                    <button class="btn-show-sidebar m-l-33 trans-0-4"></button>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-<!-- Sidebar -->
-<aside class="sidebar trans-0-4">
-    <!-- Button Hide sidebar -->
-    <button class="btn-hide-sidebar ti-close color0-hov trans-0-4"></button>
-
-    <!-- - -->
-    <ul class="menu-sidebar p-t-95 p-b-70">
-        <li class="t-center m-b-13">
-            <a href="index.html" class="txt19">Home</a>
-        </li>
-
-        <li class="t-center m-b-13">
-            <a href="menu.html" class="txt19">Menu</a>
-        </li>
-
-        <li class="t-center m-b-13">
-            <a href="gallery.html" class="txt19">Gallery</a>
-        </li>
-
-        <li class="t-center m-b-13">
-            <a href="about.html" class="txt19">About</a>
-        </li>
-
-        <li class="t-center m-b-13">
-            <a href="blog.html" class="txt19">Blog</a>
-        </li>
-
-        <li class="t-center m-b-33">
-            <a href="contact.html" class="txt19">Contact</a>
-        </li>
-
-        <li class="t-center">
-            <!-- Button3 -->
-            <a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-                Reservation
-            </a>
-        </li>
-    </ul>
-
-    <!-- - -->
-    <div class="gallery-sidebar t-center p-l-60 p-r-60 p-b-40">
-        <!-- - -->
-        <h4 class="txt20 m-b-33">
-            Gallery
-        </h4>
-
-        <!-- Gallery -->
-        <div class="wrap-gallery-sidebar flex-w">
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-01.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-01.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-02.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-02.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-03.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-03.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-05.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-05.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-06.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-06.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-07.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-07.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-09.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-09.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-10.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-10.jpg" alt="GALLERY">
-            </a>
-
-            <a class="item-gallery-sidebar wrap-pic-w" href="images/photo-gallery-11.jpg"
-               data-lightbox="gallery-footer">
-                <img src="images/photo-gallery-thumb-11.jpg" alt="GALLERY">
-            </a>
-        </div>
-    </div>
-</aside>
+	<!-- Header -->
+<%@ include file="../../parts/header.jsp" %> 
+	<!-- fin header -->
+	<!-- Sidebar -->
+<%@ include file="../../parts/sidebar.jsp" %> 
+	<!-- fin sidebar -->
 
 
 <!-- Title Page -->
@@ -221,24 +44,23 @@
                         Ingrese sus datos
                     </h3>
                     <h4 class="t-center text-warning">${mensaje}</h4>
+                    <h4 class="t-center text-warning">${error}</h4>
                 </div>
 
                 <form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="usuario" action="validar-login">
                     <div class="row">
                         
                         <div class="col-md-4">
-                            <!-- Date -->
                             <span class="txt9">
-									Email
+									DNI
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
                                 <form:input class="bo-rad-10 sizefull txt10 p-l-20"
-                                       type="email" id="email" path="email"></form:input>
+                                       type="number" id="dni" path="dni"></form:input>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <!-- Date -->
                             <span class="txt9">
 									Contraseña
 								</span>
@@ -248,6 +70,18 @@
                                        type="password" id="password" path="password"></form:input>
                             </div>
                         </div>
+                         <div class="col-md-4">
+                         <span class="txt9">
+                         	Usted es...
+                         </span>
+                        	  <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
+                                <select class="bo-rad-10 sizefull txt10 p-l-20"
+                                       id="rol" name="rol">
+                                 <option value="Alumno" >Soy Alumno</option>
+                                 <option value="Instructor" >Soy Instructor</option>  
+                                 <option value="Organizador" >Soy Organizador</option>  
+                                 </select>
+                            </div>
                        </div>
 
                     <div class="wrap-btn-booking flex-c-m m-t-6">

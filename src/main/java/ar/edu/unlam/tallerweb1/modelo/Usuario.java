@@ -107,12 +107,12 @@ public class Usuario {
 		this.alumno = alumno;
 	}
 
-	public Instructor getIntructor() {
+	public Instructor getInstructor() {
 		return instructor;
 	}
 
-	public void setIntructor(Instructor intructor) {
-		this.instructor = intructor;
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
 	}
 
 	public Organizador getOrganizador() {
