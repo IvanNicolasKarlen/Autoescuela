@@ -73,14 +73,14 @@ public class ControladorUsuario {
 
 	
 	// Este metodo escucha la URL validar-login siempre y cuando se invoque con metodo http POST
-	// El mÃ©todo recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
+	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
 	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request,@RequestParam(name="rol")String rol) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
-		// hace una llamada a otro action a travÃ©s de la URL correspondiente a Ã©sta
+		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			if(usuarioBuscado.getRol().equals(rol)){
@@ -124,7 +124,7 @@ public class ControladorUsuario {
 		}
 		else{
 			if(!(user.getPassword().equals(password2))){
-				model.put("error", "Las contraseñas no coinciden");
+				model.put("error", "Las contrase�as no coinciden");
 			}else{
 				Usuario usuarioBuscado = servicioUsuario.consultarUsuario(user);
 				if(usuarioBuscado != null){
