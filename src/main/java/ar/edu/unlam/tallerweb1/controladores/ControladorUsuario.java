@@ -30,7 +30,6 @@ public class ControladorUsuario {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioUsuario servicioUsuario;
-	Usuario usuario = new Usuario();
 	
 	
 		@RequestMapping("/index")
@@ -62,7 +61,7 @@ public class ControladorUsuario {
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el mismo sea asociado
 		// al model attribute del form que esta definido en la vista 'login'
-		
+		Usuario usuario = new Usuario();
 		modelo.put("usuario", usuario);
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
@@ -118,7 +117,7 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/registro")
 	public ModelAndView registrarse(){
 		ModelMap model = new ModelMap();
-		
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("registro",model);
 	}
@@ -156,7 +155,7 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/fechas")
 	public ModelAndView registrarFecha(){
 		ModelMap model = new ModelMap();
-		
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("fechas",model);
 	}
@@ -178,6 +177,7 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/horas")
 	public ModelAndView registrarHora(){
 		ModelMap model = new ModelMap();
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("horas",model);
 	}
