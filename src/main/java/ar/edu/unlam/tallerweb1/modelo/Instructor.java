@@ -1,5 +1,4 @@
 package ar.edu.unlam.tallerweb1.modelo;
-
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,41 +9,39 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Instructor extends Usuario{
+public class Instructor {
 
-	private String matricula;
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long id;
 
-	@OneToMany
-	private List<Clase> clase;
-	
 	@OneToOne
-	private Vehiculo vehiculo;
+	private Usuario usuario; 
 	
-
-	public List<Clase> getClase() {
-		return clase;
-	}
-
-	public void setClase(List<Clase> clase) {
-		this.clase = clase;
-	}
-
-	public Vehiculo getVehiculo() {
-		return vehiculo;
-	}
-
-	public void setVehiculo(Vehiculo vehiculo) {
-		this.vehiculo = vehiculo;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
+	@OneToMany
+	private List<Especialidad> especialidad;
 	
 	
+	
+	
+	public List<Especialidad> getEspecialidad() {
+		return especialidad;
+	}
+	public void setEspecialidad(List<Especialidad> especialidad) {
+		this.especialidad = especialidad;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
 }

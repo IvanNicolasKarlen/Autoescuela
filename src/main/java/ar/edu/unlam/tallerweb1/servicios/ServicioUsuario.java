@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.dao;
+package ar.edu.unlam.tallerweb1.servicios;
 
 import java.util.Date;
 import java.util.List;
@@ -9,13 +9,10 @@ import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
-// Interface que define los metodos del DAO de Usuarios.
-public interface UsuarioDao {
-	
-	Usuario consultarUsuario (Usuario usuario);
-	String insertarUsuario (Usuario usuario);
-	
-	
+// Interface que define los metodos del Servicio de Usuarios.
+public interface ServicioUsuario {
 
+	Usuario consultarUsuario(Usuario usuario);
+	String insertarUsuario(Usuario usuario);
 	
 }

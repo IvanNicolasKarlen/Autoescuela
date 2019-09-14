@@ -2,48 +2,43 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
 public class ControladorUsuario {
 
 	// La anotacion @Inject indica a Spring que en este atributo se debe setear (inyeccion de dependencias)
-	// un objeto de una clase que implemente la interface ServicioLogin, dicha clase debe estar anotada como
+	// un objeto de una clase que implemente la interface servicioUsuario, dicha clase debe estar anotada como
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
-	private ServicioLogin servicioLogin;
-
-
+	private ServicioUsuario servicioUsuario;
+	Usuario usuario = new Usuario();
+	
+	
 		@RequestMapping("/index")
 		public ModelAndView index() {
 			return new ModelAndView("index");
 		}
 
-		@RequestMapping("/indexAlumno")
-		public ModelAndView indexAlumno() {
-			return new ModelAndView("IndexAlumno");
-		}
 		
-		@RequestMapping("/indexInstructor")
-		public ModelAndView indexInstructor() {
-			return new ModelAndView("indexInstructor");
-		}
-		
-		@RequestMapping("/indexAdmin")
-		public ModelAndView indexAdmin() {
-			return new ModelAndView("indexAdmin");
-		}
 	
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login") //login lo asocia con el metodo iralogin
@@ -52,7 +47,7 @@ public class ControladorUsuario {
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el mismo sea asociado
 		// al model attribute del form que esta definido en la vista 'login'
-		Usuario usuario = new Usuario();
+		
 		modelo.put("usuario", usuario);
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
@@ -72,22 +67,15 @@ public class ControladorUsuario {
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(usuario);
+		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			request.getSession().setAttribute("logueado", usuarioBuscado.getId().toString());
-			request.getSession().setAttribute("nombre", usuarioBuscado.getNombre());
-			  if(usuarioBuscado.getRol().equals("1")){
-					return new ModelAndView("redirect:/indexAdmin",model);
-				}
-					return new ModelAndView("redirect:/login", model);
-
-			}
-			else {
-				model.put("error", "Usuario o clave incorrecta");
-			}
-			return new ModelAndView("login", model);
-		
+			return new ModelAndView("redirect:/indexAlumno");
+		} else {
+			// si el usuario no existe agrega un mensaje de error en el modelo.
+			model.put("error", "Usuario o clave incorrecta");
+		}
+		return new ModelAndView("login", model);
 	}
 
 
@@ -96,17 +84,73 @@ public class ControladorUsuario {
 	public ModelAndView inicio() {
 		return new ModelAndView("index");
 	}
-
-	@RequestMapping(path = "/cerrarsesion ", method = RequestMethod.POST)
-	public ModelAndView cerrarsesion(HttpServletRequest request) {
+	
+	@RequestMapping(path = "/registro")
+	public ModelAndView registrarse(){
 		ModelMap model = new ModelMap();
+		
+		model.put("usuario",usuario);
+		return new ModelAndView("registro",model);
+	}
+	
+	@RequestMapping(path="/realizarRegistro", method = RequestMethod.POST)
+	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
+		ModelMap model = new ModelMap();
+		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null){
+			model.put("error", "Por favor complete los campos obligatorios");
+		}
+		else{
+			if(!(user.getPassword().equals(password2))){
+				model.put("error", "Las contrase�as no coinciden");
+			}else{
+				Usuario usuarioBuscado = servicioUsuario.consultarUsuario(user);
+				if(usuarioBuscado != null){
+					model.put("error","Ya existe un usuario con esos datos");
+				}else{
+					user.setRol("Alumno");
+					Alumno alumno = new Alumno();
+					user.setAlumno(alumno);
+					String mensaje = servicioUsuario.insertarUsuario(user);
+					model.put("mensaje", mensaje);
+					return new ModelAndView("login",model);
+				}
+			}
+		}
 
-			request.getSession().removeAttribute("ROL");
-			request.getSession().removeAttribute("logueado");
-			request.getSession().removeAttribute("nombre");
-
-		return new ModelAndView("redirect:login", model);
+		return new ModelAndView("registro",model);
 	}
 
 	
+	
+	@RequestMapping(path = "/fechas")
+	public ModelAndView registrarFecha(){
+		ModelMap model = new ModelMap();
+		
+		model.put("usuario",usuario);
+		return new ModelAndView("fechas",model);
+	}
+	
+	
+
+	@RequestMapping(path = "/validarFechas", method = RequestMethod.POST)
+	public ModelAndView validarFechas(@ModelAttribute("clase") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha, String hora)
+	{
+		ModelMap modelo = new ModelMap();
+		
+		//servicioRegistrarClases.consultoHorariosDisponibles( fecha, usuario);
+		
+		return new ModelAndView("registrarClases",modelo);
+
+	}
+	
+	
+	@RequestMapping(path = "/horas")
+	public ModelAndView registrarHora(){
+		ModelMap model = new ModelMap();
+		model.put("usuario",usuario);
+		return new ModelAndView("horas",model);
+	}
+	
+
 }

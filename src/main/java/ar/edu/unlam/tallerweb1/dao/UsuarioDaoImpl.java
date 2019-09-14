@@ -1,10 +1,17 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import ar.edu.unlam.tallerweb1.modelo.Agenda;
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,9 +34,45 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		// uniqueResult da error si se encuentran m√°s de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.createCriteria(Usuario.class)
-				.add(Restrictions.eq("email", usuario.getEmail()))
+				//.add(Restrictions.eq("email", usuario.getEmail()))
 				.add(Restrictions.eq("password", usuario.getPassword()))
 				.uniqueResult();
 	}
+	@Override
+	public 	String insertarUsuario (Usuario usuario){
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(usuario);
+		Usuario userPrueba = this.consultarUsuario(usuario);
+		if(userPrueba!= null){
+			return "Usuario creado con Èxito";
+		}else{
+			return "Hubo un problema al crear su Usuario";
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+	
 }

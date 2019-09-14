@@ -8,56 +8,55 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Asistencia {
+public class TablaCursoAlumno {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String estado;
-	
+
 	@ManyToOne
 	private Alumno alumno;
 	
-
 	@ManyToOne
-	private Instructor instructor;
+	private Curso curso;
 	
-	@OneToOne
-	private Agenda agenda;
-	
-	
+	@ManyToOne
+	private Estado estado;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
-	
-	public Agenda getAgenda() {
-		return agenda;
-	}
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
-	}
+
 	public Alumno getAlumno() {
 		return alumno;
 	}
+
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
-	public Instructor getInstructor() {
-		return instructor;
+
+	public Curso getCurso() {
+		return curso;
 	}
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
+
+	
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	
 	
 	
 	

@@ -88,7 +88,7 @@
 
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="contact.html"><b class="text-danger">Log in</b></a>
+						<a href="login"><b class="text-danger">Log in</b></a>
 
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
@@ -105,11 +105,11 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 			
-			<a href="reservation.html" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
+			<a href="login" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
 					Log in
 				</a>
 			<li class="t-center m-b-13">
-				<a href="index.html" class="txt19">Home</a>
+				<a href="index" class="txt19">Home</a>
 			</li>
 
 			<li class="t-center m-b-13">
@@ -135,7 +135,7 @@
 			<li class="t-center ">
 				<!-- Button3 -->
 				
-				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+				<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Registrarse
 				</a>
 			</li>
@@ -205,14 +205,9 @@
 						
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-						
-							<button href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Registrarse					
-							</button>
-							
-							
-							
-							
+							<a href="registro" class="btn1 flex-c-m size1 txt3 trans-0-4">
+								Registrarse
+							</a>
 						</div>
 					</div>
 				</div>
@@ -242,9 +237,9 @@
 							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
 						</p>
 
-						<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+						<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 					</div>
 				</div>
 
@@ -288,9 +283,9 @@
 								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -311,9 +306,9 @@
 									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -334,9 +329,9 @@
 									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -429,10 +424,12 @@
 						<span class="tit2 t-center">
 							Reservation
 						</span>
+
 						<h3 class="tit3 t-center m-b-35 m-t-2">
 							Book table
 						</h3>
 					</div>
+
 					<form class="wrap-form-booking">
 						<div class="row">
 							<div class="col-md-6">
@@ -440,14 +437,17 @@
 								<span class="txt9">
 									Date
 								</span>
+
 								<div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="date">
 									<i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
 								</div>
+
 								
 								<span class="txt9">
 									Time
 								</span>
+
 								<div class="wrap-inputtime size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									
 									<select class="selection-1" name="time">
@@ -472,10 +472,12 @@
 										<option>18:00</option>
 									</select>
 								</div>
+
 								
 								<span class="txt9">
 									People
 								</span>
+
 								<div class="wrap-inputpeople size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									
 									<select class="selection-1" name="people">
@@ -494,30 +496,37 @@
 									</select>
 								</div>
 							</div>
+
 							<div class="col-md-6">
 								
 								<span class="txt9">
 									Name
 								</span>
+
 								<div class="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name">
 								</div>
+
 								
 								<span class="txt9">
 									Phone
 								</span>
+
 								<div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone">
 								</div>
+
 								
 								<span class="txt9">
 									Email
 								</span>
+
 								<div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email">
 								</div>
 							</div>
 						</div>
+
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							
 							<button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
@@ -526,6 +535,7 @@
 						</div>
 					</form>
 				</div>
+
 				<div class="col-lg-6 p-b-30 p-t-18">
 					<div class="wrap-pic-booking size2 bo-rad-10 hov-img-zoom m-l-r-auto">
 						<img src="images/booking-01.jpg" alt="IMG-OUR">
@@ -534,6 +544,7 @@
 			</div>
 		</div>
 	</section>
+
 	<!-- Review -->
 	<section class="section-review p-t-115">
 		<!-- - -->
@@ -559,7 +570,7 @@
 
 							<div class="content-review m-t-33 animated visible-false" data-appear="fadeInUp">
 								<p class="t-center txt12 size15 m-l-r-auto">
-									Gracias a esta Autoescuela, estoy aprendiendo a manejar en.. (Esperen, Â¿como era?).. En por el mundo, se me olvidaba soy un tonto Â¡Jajaja!.
+									Gracias a esta Autoescuela, estoy aprendiendo a manejar en.. (Esperen, ¿como era?).. En por el mundo, se me olvidaba soy un tonto ¡Jajaja!.
 								</p>
 
 								<div class="star-review fs-18 color0 flex-c-m m-t-12">
@@ -571,7 +582,7 @@
 								</div>
 
 								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Marley -Â— Buenos Aires
+									Marley -— Buenos Aires
 								</div>
 							</div>
 						</div>
@@ -627,7 +638,7 @@
 								</div>
 
 								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Guillermo Franchella -Â— Buenos Aires
+									Guillermo Franchella -— Buenos Aires
 								</div>
 							</div>
 						</div>
@@ -642,36 +653,35 @@
 
 
 	<!-- Footer -->
-	<!-- Footer -->
 	<footer class="bg1">
 		<div class="container p-t-40 p-b-70">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Contactenos
+						Contact Us
 					</h4>
 
 					<ul class="m-b-70">
 						<li class="txt14 m-b-14">
 							<i class="fa fa-map-marker fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							Belgrano 1125, Capital Federal.
+							8th floor, 379 Hudson St, New York, NY 10018
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-phone fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							11 2526 1112
+							(+1) 96 716 6879
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-envelope fs-13 dis-inline-block size19" aria-hidden="true"></i>
-							autoescuela@hotmail.com
+							contact@site.com
 						</li>
 					</ul>
 
 					<!-- - -->
 					<h4 class="txt13 m-b-32">
-						Horarios de apertura
+						Opening Times
 					</h4>
 
 					<ul>
@@ -680,7 +690,7 @@
 						</li>
 
 						<li class="txt14">
-							Todos los dias
+							Every Day
 						</li>
 					</ul>
 				</div>
@@ -688,7 +698,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Twitter
+						Latest twitter
 					</h4>
 
 					<div class="m-b-25">
@@ -707,7 +717,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Agosto 2019
+							21 Dec 2017
 						</span>
 					</div>
 
@@ -727,7 +737,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Agosto 2019
+							21 Dec 2017
 						</span>
 					</div>
 				</div>
@@ -735,7 +745,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-38">
-						Galeria
+						Gallery
 					</h4>
 
 					<!-- Gallery footer -->
@@ -803,7 +813,7 @@
 					</div>
 
 					<div class="txt17 p-r-20 p-t-5 p-b-5">
-						Copyright &copy; 2019 Todos los derechos reservados 
+						Copyright &copy; 2018 All rights reserved  |  This template is made with <i class="fa fa-heart"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 					</div>
 				</div>
 			</div>

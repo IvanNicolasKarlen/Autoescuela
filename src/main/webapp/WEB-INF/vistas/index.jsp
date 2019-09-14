@@ -88,7 +88,7 @@
 
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-						<a href="contact.html"><b class="text-danger">Log in</b></a>
+						<a href="login"><b class="text-danger">Log in</b></a>
 
 						<button class="btn-show-sidebar m-l-33 trans-0-4"></button>
 					</div>
@@ -105,11 +105,11 @@
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
 			
-			<a href="reservation.html" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
+			<a href="login" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
 					Log in
 				</a>
 			<li class="t-center m-b-13">
-				<a href="index.html" class="txt19">Home</a>
+				<a href="index" class="txt19">Home</a>
 			</li>
 
 			<li class="t-center m-b-13">
@@ -135,7 +135,7 @@
 			<li class="t-center ">
 				<!-- Button3 -->
 				
-				<a href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+				<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Registrarse
 				</a>
 			</li>
@@ -205,9 +205,9 @@
 						
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<button href="menu.html" class="btn1 flex-c-m size1 txt3 trans-0-4">
+							<a href="registro" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Registrarse
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -237,9 +237,9 @@
 							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
 						</p>
 
-						<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+						<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 					</div>
 				</div>
 
@@ -283,9 +283,9 @@
 								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -306,9 +306,9 @@
 									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -329,9 +329,9 @@
 									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
 								</p>
 
-								<button href="menu.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+								<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 								Conocenos
-							</button>
+							</a>
 							</div>
 						</div>
 					</div>

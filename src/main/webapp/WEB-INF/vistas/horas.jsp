@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -114,129 +116,65 @@
 	
 	
 	
-	
-	
-	
 	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 p-t-45 p-b-30">
-					<div class="wrap-text-welcome t-center">
+	<section class="section-welcome bg1-pattern p-t-100 p-b-105">
+	
+		
+		<section class="section-reservation bg1-pattern p-t-100 p-b-113">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 p-b-30">
+                <div class="t-center">
+                    <h4 class="tit5 t-center m-b-35 m-t-2">
+                 <label for="from">Elija a que hora asistira</label>
+                   
+                   
+                     <p>Desde: <fmt:formatDate type = "date" value = "${desde}" /> </p>
+                   
+                   
+                  
+                   
+                   
+                   
+					</h4>
+				 
+				         <!-- Button3 -->
+                        <a type="submit" href="indexAlumno" style="float:left; display:block; font-size:25px;border-radius:30px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 border-20 btn3 flex-c-m size13 txt11 trans-0-4">
+                            10:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            11:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            12:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            13:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            14:00
+                        </a> 
+						<A type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            15:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            16:00
+                        </a> 
+						<a type="submit" href="indexAlumno" style="float:left; display:block;font-size:25px;" class="col-md-4 m-t-50 m-l-60 m-r-20 p-t-5 btn3 flex-c-m size13 txt11 trans-0-4">
+                            17:00
+                        </a> 
 						
-
-						<h3 class="tit3 t-center m-b-35 m-t-5">
-							Aun no te has anotado
-						</h3>
-
-						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Dirigite a nuestro calendario para reservar tus días y horarios.
-						</p>
-
-						<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Anotarme
-				</a>
-					</div>
-				</div>
-
-				<div class="col-md-6 p-b-30">
-					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index4.jpg" alt="IMG-OUR">
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		
-	
-
-	</section>
-	
-	
-	
-	
-	
-	
-	
-		<!-- Our menu -->
-	<section class="section-ourmenu bg2-pattern p-t-115 p-b-120">
-		<div class="container">
-			<div class="title-section-ourmenu t-center m-b-22">
-				<span class="tit2 t-center">
+						
 					
-				</span>
-
-				<h3 class="tit5 t-center m-t-2">
-					Tus clases
-				</h3>
+				 </div>
 			</div>
-
-			
-			
-			
-			
-			
-			
-			
-			<div class="card text-center">
-  <div class="card-header">
-    <div class="wrap-text-blo1  text-center ">
-								<h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Clase 1 
-								</h4>
-	</div>
-  </div>
-  <div class="card-body">
-   <p class="m-b-20">
-								<b>Fecha:</b> 21/09/2019 
-								</p>
-								<p class="m-b-20">
-								<b>Horario:</b> 14:00 hrs
-								</p>
-								<p class="m-b-20">
-								<b>Instructor:</b> Cesar Millan
-								</p>
-								<p class="m-b-20">
-								<b>Auto:</b> Vento color Rojo
-								</p>
-								
-    <button href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Modificar
-				</button>
-  </div>
-  
-</div>
-<a href="fechas" class="btn3 flex-c-m size13 txt11 m-t-20 trans-0-4 m-l-r-auto">
-					Agregar clases
-				</a>
-			
-			
-			
-	
-
 		</div>
+	</div>
 	</section>
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-
-	<!-- Footer -->
 	<!-- Footer -->
 	<footer class="bg1">
 		<div class="container p-t-40 p-b-70">
@@ -244,29 +182,29 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Contactenos
+						Contact Us
 					</h4>
 
 					<ul class="m-b-70">
 						<li class="txt14 m-b-14">
 							<i class="fa fa-map-marker fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							Belgrano 1125, Capital Federal.
+							8th floor, 379 Hudson St, New York, NY 10018
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-phone fs-16 dis-inline-block size19" aria-hidden="true"></i>
-							11 2526 1112
+							(+1) 96 716 6879
 						</li>
 
 						<li class="txt14 m-b-14">
 							<i class="fa fa-envelope fs-13 dis-inline-block size19" aria-hidden="true"></i>
-							autoescuela@hotmail.com
+							contact@site.com
 						</li>
 					</ul>
 
 					<!-- - -->
 					<h4 class="txt13 m-b-32">
-						Horarios de apertura
+						Opening Times
 					</h4>
 
 					<ul>
@@ -275,7 +213,7 @@
 						</li>
 
 						<li class="txt14">
-							Todos los dias
+							Every Day
 						</li>
 					</ul>
 				</div>
@@ -283,7 +221,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-33">
-						Twitter
+						Latest twitter
 					</h4>
 
 					<div class="m-b-25">
@@ -302,7 +240,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Agosto 2019
+							21 Dec 2017
 						</span>
 					</div>
 
@@ -322,7 +260,7 @@
 						</p>
 
 						<span class="txt16">
-							21 Agosto 2019
+							21 Dec 2017
 						</span>
 					</div>
 				</div>
@@ -330,7 +268,7 @@
 				<div class="col-sm-6 col-md-4 p-t-50">
 					<!-- - -->
 					<h4 class="txt13 m-b-38">
-						Galeria
+						Gallery
 					</h4>
 
 					<!-- Gallery footer -->
@@ -398,7 +336,7 @@
 					</div>
 
 					<div class="txt17 p-r-20 p-t-5 p-b-5">
-						Copyright &copy; 2019 Todos los derechos reservados 
+						Copyright &copy; 2018 All rights reserved  |  This template is made with <i class="fa fa-heart"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 					</div>
 				</div>
 			</div>

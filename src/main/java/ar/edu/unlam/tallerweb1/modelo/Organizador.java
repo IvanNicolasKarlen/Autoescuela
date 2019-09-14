@@ -1,15 +1,12 @@
 package ar.edu.unlam.tallerweb1.modelo;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Alumno {
+public class Organizador {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -19,20 +16,7 @@ public class Alumno {
 	@OneToOne
 	private Usuario usuario; 
 	
-	@OneToMany
-	private List<Especialidad> especialidad;
 	
-	
-	//Relacion con Clase 
-	
-	
-	
-	public List<Especialidad> getEspecialidad() {
-		return especialidad;
-	}
-	public void setEspecialidad(List<Especialidad> especialidad) {
-		this.especialidad = especialidad;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -46,8 +30,5 @@ public class Alumno {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
 	
 }
