@@ -6,8 +6,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-@Service("ServicioAlumnoConvierteFecha")
-public class ServicioAdminConvierteFechaImpl implements ServicioAdminConvierteFecha{
+@Service("ServicioOrganizadorConvierteFecha")
+public class ServicioOrganizadorConvierteFechaImpl implements ServicioOrganizadorConvierteFecha{
 
 	@Override
 	public Date convertirFecha(String desde) {

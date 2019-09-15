@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.TurnosViewModel;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAdminConvierteFecha;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAdminValidaFechaElegida;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorConvierteFecha;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorValidaFechaElegida;
 
 @Controller
 public class ControladorOrganizador {
 	
 	@Inject
-	private ServicioAdminConvierteFecha servicioAdminConvierteFecha;
+	private ServicioOrganizadorConvierteFecha servicioOrganizadorConvierteFecha;
 	@Inject
-	private ServicioAdminValidaFechaElegida servicioAdminValidaFechaElegida;
+	private ServicioOrganizadorValidaFechaElegida servicioOrganizadorValidaFechaElegida;
 	
 	@RequestMapping(path="/DesdeHasta")
 	public ModelAndView elegirFechaDesdeHasta(){
@@ -49,10 +49,10 @@ public class ControladorOrganizador {
 		ModelMap modelo = new ModelMap();
 		
 		// Servicio para convertir fecha String a Date
-		Date fechaDesde = servicioAdminConvierteFecha.convertirFecha(fecha.getDesde());
-		Date fechaHasta = servicioAdminConvierteFecha.convertirFecha(fecha.getHasta());
+		Date fechaDesde = servicioOrganizadorConvierteFecha.convertirFecha(fecha.getDesde());
+		Date fechaHasta = servicioOrganizadorConvierteFecha.convertirFecha(fecha.getHasta());
 		
-		Boolean resultado=servicioAdminValidaFechaElegida.validarFechas(fechaDesde, fechaHasta);
+		Boolean resultado=servicioOrganizadorValidaFechaElegida.validarFechas(fechaDesde, fechaHasta);
 		
 		// Si la fechas Desde es mayor a la fecha Hasta, 
 		// redirijo al path /mensaje enviando un aviso por url 
