@@ -30,12 +30,26 @@ public class ControladorUsuario {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioUsuario servicioUsuario;
-	Usuario usuario = new Usuario();
 	
 	
 		@RequestMapping("/index")
-		public ModelAndView index() {
-			return new ModelAndView("index");
+		public ModelAndView index(HttpServletRequest request) {
+			ModelMap model = new ModelMap();
+			String rol = request.getSession().getAttribute("ROL") != null?(String) request.getSession().getAttribute("ROL"):"";
+			model.put("usuarioId", request.getSession().getAttribute("ID"));
+			model.put("rol", rol);
+			String vistaindex = "index";
+			switch(rol){
+			case "Alumno": 	vistaindex="indexAlumno";
+							break;
+			case "Instructor": vistaindex="indexInstructor";
+							break;
+			case "Organizador": vistaindex="indexOrganizador";
+							break;
+			default: 
+			}
+			return new ModelAndView(vistaindex,model);
+	
 		}
 
 		
@@ -47,7 +61,7 @@ public class ControladorUsuario {
 		ModelMap modelo = new ModelMap();
 		// Se agrega al modelo un objeto del tipo Usuario con key 'usuario' para que el mismo sea asociado
 		// al model attribute del form que esta definido en la vista 'login'
-		
+		Usuario usuario = new Usuario();
 		modelo.put("usuario", usuario);
 		// Se va a la vista login (el nombre completo de la lista se resuelve utilizando el view resolver definido en el archivo spring-servlet.xml)
 		// y se envian los datos a la misma  dentro del modelo
@@ -62,15 +76,23 @@ public class ControladorUsuario {
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
+	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request,@RequestParam(name="rol")String rol) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
-			return new ModelAndView("redirect:/indexAlumno");
+			if(usuarioBuscado.getRol().equals(rol)){
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+				request.getSession().setAttribute("ID", usuarioBuscado.getId());
+								
+				
+				return new ModelAndView("redirect:/index");
+			}else{
+				model.put("error", "Su usuario no coincide con el ROL elegido");
+			}
+
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
 			model.put("error", "Usuario o clave incorrecta");
@@ -82,13 +104,13 @@ public class ControladorUsuario {
 	// Escucha la url /, y redirige a la URL /index, es lo mismo que si se invoca la url /index directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
-		return new ModelAndView("index");
+		return new ModelAndView("redirect:/index");
 	}
 	
 	@RequestMapping(path = "/registro")
 	public ModelAndView registrarse(){
 		ModelMap model = new ModelMap();
-		
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("registro",model);
 	}
@@ -126,7 +148,7 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/fechas")
 	public ModelAndView registrarFecha(){
 		ModelMap model = new ModelMap();
-		
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("fechas",model);
 	}
@@ -148,9 +170,15 @@ public class ControladorUsuario {
 	@RequestMapping(path = "/horas")
 	public ModelAndView registrarHora(){
 		ModelMap model = new ModelMap();
+		Usuario usuario = new Usuario();
 		model.put("usuario",usuario);
 		return new ModelAndView("horas",model);
 	}
-	
+	@RequestMapping(path = "/cerrarSesion")
+	public ModelAndView cerrarSesion(HttpServletRequest request){
+		request.getSession().removeAttribute("ROL");
+		request.getSession().removeAttribute("ID");
+		return new ModelAndView("redirect:/login");
+	}
 
 }

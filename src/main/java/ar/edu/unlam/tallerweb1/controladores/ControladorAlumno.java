@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,7 +38,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueBuscaCursos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueGuardaAlumnos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueGuardaFechas;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoSiYaSeInscribioOnO;
-import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
+
 
 @Controller
 public class ControladorAlumno {
@@ -117,16 +118,10 @@ public class ControladorAlumno {
 			return new ModelAndView("cursos", modelo); 
 
 		}
-				
-		servicioAlumnoGuardaCurso.guardarCurso (alumno, cursoElegido, cursoAlumno);
-		
-		return new ModelAndView("fechas"); //Todavia no curso nada
+
+		return new ModelAndView("fechas", modelo); //Todavia no curso nada
 
 	}
 
-
-	
-	
-	
 	
 }

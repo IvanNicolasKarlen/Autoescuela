@@ -123,7 +123,7 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 	
-		
+		<h4 class="t-center text-danger">${mensaje}</h4>
 		<section class="section-reservation bg1-pattern p-t-100 p-b-113">
     <div class="container">
         <div class="row">
@@ -142,14 +142,15 @@
                  <label for="from">Buscar desde</label>
 					</h5>
 				 <!--  <input type="date" style="background-color:white;" class="form-control input-lg border border-dark mx-sm-3 mb-2 text-center" name="desde" readonly="readonly" placeholder="Dia/Mes/Año"/>-->
-				 <input type="date" placeholder="Este"  name="desde">
+				 
+				 <input type="date" min="${formatoFecha}" name="desde" >
 				 
 				  
 				 <h5 class=" t-center m-b-5 m-t-20">
                  <label for="from">Buscar hasta</label>
 					</h5>
 				<!--  <input type="date" style="background-color:white;" class="form-control input-lg border border-dark mx-sm-3 mb-2 text-center"  name="hasta" readonly="readonly" placeholder="Dia/Mes/Año"/> -->
-					 <input type="date" placeholder="Este"  name="hasta">
+					 <input type="date" min="${formatoFecha}" name="hasta" >
 			
 				 <h6 class="m-t-10">Recomendacion: La fecha Hasta no debe ser anterior a la fecha Desde</h6>
 				 
