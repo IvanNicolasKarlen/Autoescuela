@@ -5,19 +5,20 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 @Service("ServicioAlumnoValidaFechaElegida")
-public class ServicioAdminValidaFechaElegidaImpl implements ServicioAdminValidaFechaElegida {
+public class ServicioOrganizadorValidaFechaElegidaImpl implements ServicioOrganizadorValidaFechaElegida {
 	@Override
 	public Boolean validarFechas(Date fechaDesde, Date fechaHasta) {
 		Boolean result=false;
 		if(fechaHasta.before(fechaDesde))
 		{
 			
-			return result=true;
+			result=true;
 
 		}else
 		{
-			return result=false;
+			result=false;
 
 		}
+		return result;
 	}
 }
