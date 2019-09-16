@@ -22,7 +22,6 @@ public class  InstructorVehiculoEspecialidad{
 	@ManyToOne
 	private Vehiculo vehiculo;
 	
-	
 	@ManyToOne
 	private Agenda agenda;
 
