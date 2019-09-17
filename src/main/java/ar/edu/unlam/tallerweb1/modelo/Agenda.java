@@ -22,6 +22,9 @@ public class Agenda {
 	private Integer hora;
 	
 	@ManyToOne
+	private Alumno alumno;
+
+	@ManyToOne
 	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
 
 
@@ -51,6 +54,14 @@ public class Agenda {
 		this.hora = hora;
 	}
 
+	public Alumno getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+	
 	public InstructorVehiculoEspecialidad getInstructorVehiculoEspecialidad() {
 		return instructorVehiculoEspecialidad;
 	}
