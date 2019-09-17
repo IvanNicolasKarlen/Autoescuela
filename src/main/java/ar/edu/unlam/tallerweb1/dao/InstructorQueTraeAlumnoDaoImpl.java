@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
@@ -22,6 +23,10 @@ public class InstructorQueTraeAlumnoDaoImpl implements InstructorQueTraeAlumnoDa
 
 		final Session session = sessionFactory.getCurrentSession();
 		List <Alumno> milista = session.createCriteria(Alumno.class)
+								.createAlias("agenda", "agendabuscada")
+								.add(Restrictions.eq("agendabuscada", null))
+								.list();
+		return milista;
 				
 		
 		
