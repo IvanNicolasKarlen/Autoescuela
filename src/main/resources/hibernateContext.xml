@@ -11,7 +11,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/tallerwebtpfinal" />
 		<property name="username" value="root" />
-		<property name="password" value="Cuc41515" />
+		<property name="password" value="1234" />
 	</bean>
 
 	<!--Configuracion de la factory encargada de generar las sesiones con la base de datos, la misma -->
@@ -29,7 +29,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<!--Cambiar a true si se quiere ver por consola el codigo sql generado por hibernate-->
 				<!-- Habilitar el registro de todas las sentencias SQL generadas en la consola. -->
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<!-- Formatee la declaración SQL generada para que sea más legible, pero ocupa más espacio en la pantalla -->
 				<prop key="hibernate.format_sql">false</prop>
 				<!--Para indicar si hibernate genera el modelo de datos al startup-->

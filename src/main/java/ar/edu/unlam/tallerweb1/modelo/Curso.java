@@ -16,12 +16,18 @@ public class Curso {
 	private Long id;
 	private Integer precio;
 	private Integer cantClasesPracticas;
-	private Integer cantClasesTeoricas;
+	private String titulo;
 	private String descripcion;
 
 	
 	
 	
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -40,11 +46,11 @@ public class Curso {
 	public void setCantClasesPracticas(Integer cantClasesPracticas) {
 		this.cantClasesPracticas = cantClasesPracticas;
 	}
-	public Integer getCantClasesTeoricas() {
-		return cantClasesTeoricas;
+	public String titulo() {
+		return titulo;
 	}
-	public void setCantClasesTeoricas(Integer cantClasesTeoricas) {
-		this.cantClasesTeoricas = cantClasesTeoricas;
+	public void titulo(String titulo) {
+		this.titulo = titulo;
 	}
 	public String getDescripcion() {
 		return descripcion;

@@ -1,10 +1,13 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class  InstructorVehiculoEspecialidad{
@@ -23,8 +26,8 @@ public class  InstructorVehiculoEspecialidad{
 	private Vehiculo vehiculo;
 	
 	
-	@ManyToOne
-	private Agenda agenda;
+	@OneToMany
+	private List<Agenda> agendas;
 
 	public Long getId() {
 		return id;
@@ -58,13 +61,15 @@ public class  InstructorVehiculoEspecialidad{
 		this.vehiculo = vehiculo;
 	}
 
-	public Agenda getAgenda() {
-		return agenda;
+	public List<Agenda> getAgendas() {
+		return agendas;
 	}
 
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
+	public void setAgendas(List<Agenda> agendas) {
+		this.agendas = agendas;
 	}
+
+
 	
 
 	
