@@ -34,8 +34,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		// uniqueResult da error si se encuentran más de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.createCriteria(Usuario.class)
-				//.add(Restrictions.eq("email", usuario.getEmail()))
+				.add(Restrictions.eq("dni", usuario.getDni()))
 				.add(Restrictions.eq("password", usuario.getPassword()))
+				.add(Restrictions.eq("rol",usuario.getRol()))
 				.uniqueResult();
 	}
 	@Override

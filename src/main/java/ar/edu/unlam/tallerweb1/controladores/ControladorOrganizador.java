@@ -1,10 +1,12 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.TurnosViewModel;
+import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
+import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorAgregarCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorConvierteFecha;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCrearAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorValidaFechaElegida;
+import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 
 @Controller
 public class ControladorOrganizador {
@@ -23,55 +31,97 @@ public class ControladorOrganizador {
 	private ServicioOrganizadorConvierteFecha servicioOrganizadorConvierteFecha;
 	@Inject
 	private ServicioOrganizadorValidaFechaElegida servicioOrganizadorValidaFechaElegida;
+	@Inject
+	private ServicioOrganizadorAgregarCurso servicioOrganizadorAgregarCurso;
+	@Inject
+	private ServicioOrganizadorCrearAgenda servicioOrganizadorCrearAgenda;
+	@Inject
+	private ServicioVehiculo servicioVehiculo;
 	
-	@RequestMapping(path="/DesdeHasta")
-	public ModelAndView elegirFechaDesdeHasta(){
+	@RequestMapping(path="/agregarCurso")
+	public ModelAndView elegirFechaDesdeHasta(HttpServletRequest request){
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		ModelMap modelo = new ModelMap();
-		// Obtenemos fecha actual
-		LocalDate fechaActual = LocalDate.now();
-				 
-		// Convertimos la fecha a String con formato yyy-mm-dd
-		// para luego pasarlo al input date
-		// para indicar que inhabilite los dias anteriores a la fecha actual
-		String formatoFecha = fechaActual.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		modelo.put("formatoFecha", formatoFecha);
-		
-		return new ModelAndView("DesdeHasta",modelo);
-	}
-	
-	@RequestMapping(path="/fechaElegida")
-	public ModelAndView validarHorariosDeLaFechaElegida(
-//			TurnosViewModel esta clase esta en el paquete ViewModel que agregamos 
-//			nos permite recibir en el Controlador todos los datos desde el
-//			formulario que esta en la Vista
-			@ModelAttribute("curso") TurnosViewModel fecha){
-
-		ModelMap modelo = new ModelMap();
-		
-		// Servicio para convertir fecha String a Date
-		Date fechaDesde = servicioOrganizadorConvierteFecha.convertirFecha(fecha.getDesde());
-		Date fechaHasta = servicioOrganizadorConvierteFecha.convertirFecha(fecha.getHasta());
-		
-		Boolean resultado=servicioOrganizadorValidaFechaElegida.validarFechas(fechaDesde, fechaHasta);
-		
-		// Si la fechas Desde es mayor a la fecha Hasta, 
-		// redirijo al path /mensaje enviando un aviso por url 
-		if(resultado == true)
-		{
-			modelo.put("mensaje", "La fecha Desde no puede ser mayor a la fecha Hasta");
-			return new ModelAndView("DesdeHasta", modelo);
-		
+		if(rol.equals("Organizador")){
+			Curso curso = new Curso();
+			modelo.put("curso", curso);
 		}
-
-		modelo.put("desde",fechaDesde);
-		modelo.put("hasta", fechaHasta);
-		
-
-		return new ModelAndView("horas",modelo);
+		else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("agregarcursoOrg",modelo);
 	}
 	
+	@RequestMapping(path="/validarCurso")
+	public ModelAndView validarCurso(@ModelAttribute("curso")Curso curso, HttpServletRequest request){
+		ModelMap model = new ModelMap();
+
+		if(curso.getCantClasesPracticas()!=null&&!(curso.getDescripcion().isEmpty())&&curso.getDescripcion()!=null
+				&&curso.getPrecio()!=null&&curso.getTitulo()!=null&&!(curso.getTitulo().isEmpty())){
+			Boolean estado = servicioOrganizadorAgregarCurso.agregarCurso(curso);
+			if(estado){
+				model.put("mensaje1", "Curso añadido correctamente");
+				LocalDate desde = LocalDate.now();
+				LocalDate hasta = desde.plusDays(3);
+				String mensaje2 = servicioOrganizadorCrearAgenda.crearAgenda(desde, hasta);
+				model.put("mensaje2", mensaje2);
+			}else{
+				model.put("mensaje1", "Error al añadir curso");
+				
+			}
+		}else{
+			model.put("error", "Faltan completar datos");
+		}
+		return new ModelAndView("cursoOrganizador",model);
+	}
 	
+	@RequestMapping("/agregarVehiculo")
+	public ModelAndView agregarVehiculo(HttpServletRequest request){
+		ModelMap model = new ModelMap();
+		String rol = (String)request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Organizador")){
+			Vehiculo vehiculo = new Vehiculo();
+			model.put("vehiculo", vehiculo);
+		}
+		else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("agregarvehiculoOrg",model);
+	}
+	@RequestMapping("/validarVehiculo")
+	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv){
+		ModelMap model = new ModelMap();
+		if(miv.getEstado().isEmpty()||miv.getEstado()==null||miv.getPatente().isEmpty()||miv.getPatente()==null
+				||miv.getTipo().isEmpty()||miv.getTipo()==null){
+			model.put("error", "Rellene todos los campos");
+		}else{
+			if(servicioVehiculo.buscarVehiculo(miv)==null){
+				String msj = servicioVehiculo.guardarVehiculo(miv);
+				model.put("mensaje", msj);
+			}else{
+				model.put("error", "Ese vehiculo ya existe");
+			}
+		}
+		Vehiculo vehiculo = new Vehiculo();
+		model.put("vehiculo", vehiculo);
+		return new ModelAndView("agregarvehiculoOrg",model);
+	}
+	@RequestMapping("/agregarInstructor")
+	public ModelAndView agregarInstructor(HttpServletRequest request){
+		ModelMap model = new ModelMap();
+		String rol = (String)request.getAttribute("ROL");
+		if(rol.equals("Organizador")){
+			Instructor ins = new Instructor();
+			model.put("instructor", ins);
+		}
+		else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("agregarInstructorOrg",model);
+	}
+
 	
+}
 	
 
-}
+

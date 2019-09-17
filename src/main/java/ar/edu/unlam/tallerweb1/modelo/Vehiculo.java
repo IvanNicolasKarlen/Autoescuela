@@ -17,7 +17,8 @@ public class Vehiculo {
 	private String tipo;
 	
 	
-	
+	@OneToOne
+	private Especialidad especialidad;
 	@OneToOne
 	private Instructor instructor;
 	
@@ -50,6 +51,12 @@ public class Vehiculo {
 	}
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
+	}
+	public Especialidad getEspecialidad() {
+		return especialidad;
+	}
+	public void setEspecialidad(Especialidad especialidad) {
+		this.especialidad = especialidad;
 	}
 	
 	

@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public class Agenda {
 
@@ -22,12 +25,25 @@ public class Agenda {
 	private Integer hora;
 	
 	@ManyToOne
+<<<<<<< HEAD
 	private Alumno alumno;
 
 	@ManyToOne
+=======
+	@Cascade(CascadeType.SAVE_UPDATE)
+>>>>>>> 6e199082f1ae8d4eb5d08855a197df9862d2944c
 	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
+	
 
 
+	public Agenda() {
+
+	}
+	public Agenda(String fecha, Integer hora, InstructorVehiculoEspecialidad instructorVehiculoEspecialidad) {
+		this.fecha = fecha;
+		this.hora = hora;
+		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -70,15 +86,8 @@ public class Agenda {
 		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
 
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
+
+
 
 }

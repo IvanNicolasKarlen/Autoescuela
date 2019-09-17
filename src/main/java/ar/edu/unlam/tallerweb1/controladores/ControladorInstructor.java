@@ -36,7 +36,6 @@ public class ControladorInstructor {
 	@RequestMapping ("/indexInstructor")
 	public ModelAndView indexInstructor (HttpServletRequest request) {
 		
-		
 		return new ModelAndView ("indexInstructor");
 	}
 	
