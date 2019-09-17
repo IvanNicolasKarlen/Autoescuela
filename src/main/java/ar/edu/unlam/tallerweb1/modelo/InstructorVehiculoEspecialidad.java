@@ -25,14 +25,9 @@ public class  InstructorVehiculoEspecialidad{
 	@ManyToOne
 	private Vehiculo vehiculo;
 	
-<<<<<<< HEAD
-	@ManyToOne
-	private Agenda agenda;
-=======
 	
 	@OneToMany
 	private List<Agenda> agendas;
->>>>>>> 6e199082f1ae8d4eb5d08855a197df9862d2944c
 
 	public Long getId() {
 		return id;

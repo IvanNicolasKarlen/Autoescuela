@@ -25,17 +25,15 @@ public class Agenda {
 	private Integer hora;
 	
 	@ManyToOne
-<<<<<<< HEAD
-	private Alumno alumno;
-
-	@ManyToOne
-=======
 	@Cascade(CascadeType.SAVE_UPDATE)
->>>>>>> 6e199082f1ae8d4eb5d08855a197df9862d2944c
 	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
 	
+	
+	@ManyToOne
+	private Alumno alumno;
 
 
+	
 	public Agenda() {
 
 	}
@@ -70,14 +68,6 @@ public class Agenda {
 		this.hora = hora;
 	}
 
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
-	
 	public InstructorVehiculoEspecialidad getInstructorVehiculoEspecialidad() {
 		return instructorVehiculoEspecialidad;
 	}
@@ -86,7 +76,12 @@ public class Agenda {
 		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
 
-
+	public Alumno getAlumno() {
+		return alumno;
+	}
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
 
 
 
