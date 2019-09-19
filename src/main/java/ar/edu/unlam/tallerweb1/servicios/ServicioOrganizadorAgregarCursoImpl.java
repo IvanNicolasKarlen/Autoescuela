@@ -13,7 +13,7 @@ public class ServicioOrganizadorAgregarCursoImpl implements ServicioOrganizadorA
 	@Inject
 	private OrganizadorAgregarCursoDao agregarCursodao;
 	@Override
-	public Boolean agregarCurso(Curso curso) {
+	public Long agregarCurso(Curso curso) {
 		return agregarCursodao.agregarCurso(curso);
 	}
 

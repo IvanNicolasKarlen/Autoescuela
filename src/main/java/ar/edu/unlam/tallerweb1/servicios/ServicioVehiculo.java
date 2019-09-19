@@ -8,5 +8,6 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 public interface ServicioVehiculo {
 	List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad);
 	Vehiculo buscarVehiculo(Vehiculo vehiculo);
-	String guardarVehiculo(Vehiculo vehiculo);
+	Long guardarVehiculo(Vehiculo vehiculo);
+	Vehiculo buscarVehiculoPorId(Long id);
 }

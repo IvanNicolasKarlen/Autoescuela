@@ -38,11 +38,11 @@
 						
 						<form:input style="display:none" path="estado" id="estado" value="Funcionando"></form:input>
 						<label class="txt9"> Tipo: </label>
-						<form:select path="tipo" id="tipo">
-							<form:option value="Auto">Auto</form:option>
-							<form:option value="Moto">Moto</form:option>
-							<form:option value="Colectivo">Colectivo</form:option>
-						</form:select>
+						<select name="tipoE" id="tipoE">
+						<c:forEach items="${especialidades}" var="esp">
+							<option value="${esp.id}">${esp.tipo}</option>
+						</c:forEach>
+						</select>
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">

@@ -21,14 +21,10 @@ public class OrganizadorAgregarCursoDaoImpl implements OrganizadorAgregarCursoDa
 	@Inject
     private SessionFactory sessionFactory;
 	@Override
-	public Boolean agregarCurso(Curso curso) {
+	public Long agregarCurso(Curso curso) {
 		final Session sesion = sessionFactory.getCurrentSession();
 		Long id = (Long)sesion.save(curso);
-		if(id!=null){
-			return true;
-		}else{
-			return false;
-		}
+		return id;
 	}
 
 }

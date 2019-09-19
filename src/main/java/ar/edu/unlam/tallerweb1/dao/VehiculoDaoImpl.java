@@ -15,12 +15,13 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 @Repository
 public class VehiculoDaoImpl implements VehiculoDao {
 	@Inject
-	SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
 		final Session sesion = sessionFactory.getCurrentSession();
-		List<Vehiculo> vehiculos = sesion.createCriteria(Vehiculo.class).add(Restrictions.eq("especialidad",especialidad)).list();
+		List<Vehiculo> vehiculos = sesion.createCriteria(Vehiculo.class).add(Restrictions
+				.eq("especialidad",especialidad)).add(Restrictions.isNull("instructor")).list();
 		return vehiculos;
 	}
 
@@ -35,14 +36,16 @@ public class VehiculoDaoImpl implements VehiculoDao {
 	}
 
 	@Override
-	public String guardarVehiculo(Vehiculo vehiculo) {
+	public Long guardarVehiculo(Vehiculo vehiculo) {
 		final Session sesion = sessionFactory.getCurrentSession();
-		Long id = (Long)sesion.save(vehiculo);
-		if(id!=null){
-			return "Vehiculo añadido con éxito.";
-		}else{
-			return "Error al añadir el vehículo.";
-		}
+		return (Long)sesion.save(vehiculo);
+	
+	}
+
+	@Override
+	public Vehiculo buscarVehiculoPorId(Long id) {
+		return (Vehiculo)sessionFactory.getCurrentSession()
+				.createCriteria(Vehiculo.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 	
 }

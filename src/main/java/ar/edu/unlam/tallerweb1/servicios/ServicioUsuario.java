@@ -13,6 +13,6 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 public interface ServicioUsuario {
 
 	Usuario consultarUsuario(Usuario usuario);
-	String insertarUsuario(Usuario usuario);
+	Long insertarUsuario(Usuario usuario);
 	
 }
