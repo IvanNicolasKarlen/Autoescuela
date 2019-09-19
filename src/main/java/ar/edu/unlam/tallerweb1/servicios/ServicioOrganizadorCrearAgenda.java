@@ -4,5 +4,5 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public interface ServicioOrganizadorCrearAgenda {
-	String crearAgenda(LocalDate desde, LocalDate hasta);
+	Long crearAgenda(LocalDate desde, LocalDate hasta);
 }

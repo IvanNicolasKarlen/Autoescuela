@@ -49,12 +49,18 @@
 			</c:if>
 							
 			<!-- Fin instructor -->
-			<!-- Organizador -->
-			<c:if test="${rol=='Organizador'}">
-									
-			</c:if>
-			<!-- Fin organizador- -->
-			<c:if test="${usuarioId==null}">
+		<!-- Organizador -->
+
+		<c:if test="${rol=='Organizador'}">
+			<li><a href="index">Inicio</a></li>
+			<li><a href="agregarVehiculo">Agregar Vehiculo</a></li>
+			<li><a href="agregarCurso">Agregar Curso</a></li>
+			<li><a href="crearAgenda">Crear Agenda</a></li>
+			<li><a href="agregarInstructor-1">Agregar Instructor</a></li>
+		</c:if>
+
+		<!-- Fin organizador- -->
+		<c:if test="${usuarioId==null}">
 				<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Registrarse
 				</a>

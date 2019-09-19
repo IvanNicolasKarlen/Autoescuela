@@ -20,7 +20,8 @@ public class Instructor {
 	
 	@OneToMany
 	private List<Especialidad> especialidad;
-	
+	@OneToMany
+	private List<Vehiculo> vehiculos;
 	
 	
 	
@@ -42,6 +43,12 @@ public class Instructor {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public List<Vehiculo> getVehiculos() {
+		return vehiculos;
+	}
+	public void setVehiculos(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
 	
 }

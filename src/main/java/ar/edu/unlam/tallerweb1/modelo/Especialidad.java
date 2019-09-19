@@ -1,10 +1,12 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Especialidad {
@@ -13,52 +15,31 @@ public class Especialidad {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String tipo;
-	
-	
-	
-	@OneToOne
-	private Instructor instructor;
-
-
+	@OneToMany
+	private List<Vehiculo> vehiculos;
 
 	public Long getId() {
 		return id;
 	}
 
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public String getTipo() {
 		return tipo;
 	}
 
-
-
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-
-
-	public Instructor getInstructor() {
-		return instructor;
+	public List<Vehiculo> getVehiculo() {
+		return vehiculos;
 	}
 
-
-
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+	public void setVehiculo(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
-
-
-
-	
-	
-	
 	
 }

@@ -30,11 +30,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	private UsuarioDao servicioUsuarioDao;
 
 	@Override
-	public Usuario consultarUsuario (Usuario usuario) {
+	public Usuario consultarUsuario(Usuario usuario) {
 		return servicioUsuarioDao.consultarUsuario(usuario);
 	}
 	@Override
-	public String insertarUsuario(Usuario usuario){
+	public Long insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
 	

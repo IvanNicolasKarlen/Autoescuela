@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Vehiculo {
@@ -17,11 +21,12 @@ public class Vehiculo {
 	private String tipo;
 	
 	
-	@OneToOne
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Especialidad especialidad;
-	@OneToOne
+	@ManyToOne
 	private Instructor instructor;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -46,17 +51,18 @@ public class Vehiculo {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public Instructor getInstructor() {
-		return instructor;
-	}
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
-	}
+
 	public Especialidad getEspecialidad() {
 		return especialidad;
 	}
 	public void setEspecialidad(Especialidad especialidad) {
 		this.especialidad = especialidad;
+	}
+	public Instructor getInstructor() {
+		return instructor;
+	}
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
 	}
 	
 	

@@ -36,19 +36,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("dni", usuario.getDni()))
 				.add(Restrictions.eq("password", usuario.getPassword()))
-				.add(Restrictions.eq("rol",usuario.getRol()))
 				.uniqueResult();
 	}
 	@Override
-	public 	String insertarUsuario (Usuario usuario){
+	public 	Long insertarUsuario (Usuario usuario){
 		final Session session = sessionFactory.getCurrentSession();
-		session.save(usuario);
-		Usuario userPrueba = this.consultarUsuario(usuario);
-		if(userPrueba!= null){
-			return "Usuario creado con éxito";
-		}else{
-			return "Hubo un problema al crear su Usuario";
-		}
+		return (Long)session.save(usuario);		
 	}
 	
 	

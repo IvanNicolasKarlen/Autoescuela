@@ -82,20 +82,17 @@ public class ControladorUsuario {
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
-		if (usuarioBuscado != null) {
+		if (usuarioBuscado != null) {	
 			if(usuarioBuscado.getRol().equals(rol)){
 				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
-								
-				
 				return new ModelAndView("redirect:/index");
 			}else{
-				model.put("error", "Su usuario no coincide con el ROL elegido");
-			}
-
+				model.put("error", "El rol seleccionado no coincide con su usuario");
+			}		
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
-			model.put("error", "Usuario o clave incorrecta");
+			model.put("error", "Usuario, clave o rol incorrecto");
 		}
 		return new ModelAndView("login", model);
 	}
@@ -133,8 +130,11 @@ public class ControladorUsuario {
 					user.setRol("Alumno");
 					Alumno alumno = new Alumno();
 					user.setAlumno(alumno);
-					String mensaje = servicioUsuario.insertarUsuario(user);
-					model.put("mensaje", mensaje);
+					if(servicioUsuario.insertarUsuario(user)!=null){
+						model.put("mensaje", "Usuario creado con exito");
+					}else{
+						model.put("mensaje", "Error al crear el usuario");
+					}
 					return new ModelAndView("login",model);
 				}
 			}
