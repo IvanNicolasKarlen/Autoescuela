@@ -107,7 +107,7 @@ public class ControladorAlumno {
 		TablaCursoAlumno estadoCurso = servicioAlumnoFinalizoCurso.consultarSiFinalizoSuCurso(alumno,cursoElegido);
 	
 			//Si lo esta cursando    Y			  aun no lo termino
-		if ( ( cursando.size() > 0 ) && (estadoCurso.getEstado().equals("Cursando")) )
+		if ( ( cursando.size() > 0 ) && (estadoCurso.getEstadoDelCurso().equals("Cursando")) )
 		{
 			modelo.put("error","Debes finalizar el curso para agregar mas clases"); //Le avisa que no finalizo
 			
