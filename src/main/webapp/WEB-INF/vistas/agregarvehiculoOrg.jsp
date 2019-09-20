@@ -35,14 +35,15 @@
 						method="post">
 						<label class="txt9"> Patente </label>
 						<form:input type="text" path="patente" id="patente"></form:input>
-						
-						<form:input style="display:none" path="estado" id="estado" value="Funcionando"></form:input>
-						<label class="txt9"> Tipo: </label>
-						<select name="tipoE" id="tipoE">
-						<c:forEach items="${especialidades}" var="esp">
-							<option value="${esp.id}">${esp.tipo}</option>
+						<label class="txt9"> Modelo </label>
+						<form:input type="text" path="modelo" id="modelo"></form:input>
+						<label class="txt9"> Tipo de Vehiculo: </label>
+						<select path="tipoDeVehiculo">
+						<c:forEach items="$listatipovehiculos}" var="tdv">
+							<option value="${tdv}">${tdv.tipo}</option>
 						</c:forEach>
 						</select>
+						<form:input style="display:none" path="estado" id="estado" value="${estado}"/>
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">

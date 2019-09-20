@@ -27,7 +27,10 @@ public class ServicioOrganizadorCrearAgendaImpl implements ServicioOrganizadorCr
 			for(LocalDate date = desde; desde.isBefore(hasta); date = date.plusDays(1)){
 				for(InstructorVehiculoEspecialidad ive:listaIve){
 					for(Integer i=9;i<=18;i++){
-						agendas.add(new Agenda(date.toString(),i,ive));
+						agendas.add(new Agenda());
+						agendas.get(agendas.size()-1).setFecha(date.toString());
+						agendas.get(agendas.size()-1).setHora(i);
+						agendas.get(agendas.size()-1).setInstructorVehiculoEspecialidad(ive);
 					}
 				}
 			}

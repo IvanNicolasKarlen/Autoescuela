@@ -22,11 +22,14 @@ import ar.edu.unlam.ViewModel.TurnosViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEspecialidad;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorAgregarCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorAgregarInstructor;
@@ -35,6 +38,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCrearAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorValidaFechaElegida;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
 
 @Controller
 public class ControladorOrganizador {
@@ -57,6 +61,10 @@ public class ControladorOrganizador {
 	private ServicioUsuario servicioUsuario;
 	@Inject
 	private ServicioIVE servicioIve;
+	@Inject
+	private ServicioTipoDeVehiculo servicioTipoDeVehiculo;
+	@Inject
+	private ServicioEstadoDeVehiculo servicioEstadoDeVehiculo;
 	
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView elegirFechaDesdeHasta(HttpServletRequest request){
@@ -115,8 +123,10 @@ public class ControladorOrganizador {
 		if(rol.equals("Organizador")){
 			Vehiculo vehiculo = new Vehiculo();
 			model.put("vehiculo", vehiculo);
-			List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
-			model.put("especialidades", listaEspecialidades);
+			List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
+			model.put("listatipovehiculos", listaTipoVehiculo);
+			EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorEstadoActual("Funcionando");
+			model.put("estado",estadoVehiculo);
 		}
 		else{
 			return new ModelAndView("redirect:/index");
@@ -124,15 +134,12 @@ public class ControladorOrganizador {
 		return new ModelAndView("agregarvehiculoOrg",model);
 	}
 	@RequestMapping(path="/validarVehiculo",method=RequestMethod.POST)
-	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv,@RequestParam(value="tipoE")Long idEsp){
+	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv){
 		ModelMap model = new ModelMap();
-		if(miv.getEstado().isEmpty()||miv.getEstado()==null||miv.getPatente().isEmpty()||miv.getPatente()==null
-				||idEsp==null){
+		if(miv.getModelo().isEmpty()||miv.getModelo()==null||miv.getPatente().isEmpty()||miv.getPatente()==null||miv.getTipoDeVehiculo()==null||miv.getEstadoDeVehiculo()==null){
 			model.put("error", "Rellene todos los campos");
 		}else{
 			if(servicioVehiculo.buscarVehiculo(miv)==null){
-				Especialidad espBuscada = servicioEspecialidad.traerEspecialidadPorId(idEsp);
-				miv.setEspecialidad(espBuscada);
 				if(servicioVehiculo.guardarVehiculo(miv)!=null){
 					model.put("mensaje", "Vehiculo insertado exitosamente");
 				}else{
@@ -145,8 +152,10 @@ public class ControladorOrganizador {
 		}
 		Vehiculo vehiculo = new Vehiculo();
 		model.put("vehiculo", vehiculo);
-		List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
-		model.put("especialidades", listaEspecialidades);
+		List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
+		model.put("listatipovehiculos", listaTipoVehiculo);
+		EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorEstadoActual("Funcionando");
+		model.put("estado",estadoVehiculo);
 		return new ModelAndView("agregarvehiculoOrg",model);
 	}
 	@RequestMapping("/agregarInstructor-1")

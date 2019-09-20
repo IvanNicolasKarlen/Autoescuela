@@ -103,7 +103,7 @@
 								<select class="bo-rad-10 sizefull txt10 p-l-20" id="idV" name="idV">
 
 									<c:forEach items="${listaVehiculos}" var="lv">
-										<option value="${lv.id}">${lv.patente}</option>
+										<option value="${lv.id}">${lv.modelo} - ${lv.patente}</option>
 									</c:forEach>
 
 								</select>

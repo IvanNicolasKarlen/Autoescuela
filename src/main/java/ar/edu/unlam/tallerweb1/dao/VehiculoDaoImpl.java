@@ -20,16 +20,17 @@ public class VehiculoDaoImpl implements VehiculoDao {
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
 		final Session sesion = sessionFactory.getCurrentSession();
-		List<Vehiculo> vehiculos = sesion.createCriteria(Vehiculo.class).add(Restrictions
-				.eq("especialidad",especialidad)).add(Restrictions.isNull("instructor")).list();
+		List<Vehiculo> vehiculos = sesion.createCriteria(Vehiculo.class).createAlias("tipoDeVehiculo", "tipoBuscado")
+									.add(Restrictions.eq("tipoBuscado.especialidad", especialidad))
+									.list();
 		return vehiculos;
 	}
 
 	@Override
 	public Vehiculo buscarVehiculo(Vehiculo vehiculo) {
 		final Session sesion = sessionFactory.getCurrentSession();
-		Vehiculo vehiculoBuscado = (Vehiculo) sesion.createCriteria(Vehiculo.class).add(Restrictions
-								   	.eq("tipo",vehiculo.getTipo()))
+		Vehiculo vehiculoBuscado = (Vehiculo) sesion.createCriteria(Vehiculo.class)
+									.add(Restrictions.eq("modelo",vehiculo.getModelo()))
 									.add(Restrictions.eq("patente",vehiculo.getPatente()))
 									.uniqueResult();
 		return vehiculoBuscado; 

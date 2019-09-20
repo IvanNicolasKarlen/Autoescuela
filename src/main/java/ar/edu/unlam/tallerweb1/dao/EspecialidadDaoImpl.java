@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
+import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 @Repository
 public class EspecialidadDaoImpl implements EspecialidadDao {
 	@Inject
@@ -19,8 +20,10 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 	}
 	@Override
 	public Especialidad traerEspecialidadPorId(Long id) {
-		return (Especialidad) sessionFactory.getCurrentSession().createCriteria(Especialidad.class)
-				.add(Restrictions.eqOrIsNull("id", id)).uniqueResult();
+		/*return (Especialidad) sessionFactory.getCurrentSession().createCriteria(Especialidad.class)
+				.add(Restrictions.eqOrIsNull("id", id)).uniqueResult();*/
+		return (Especialidad)sessionFactory.getCurrentSession().get(Especialidad.class, id);
 	}
+
 
 }
