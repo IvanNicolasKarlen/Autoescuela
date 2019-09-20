@@ -19,18 +19,8 @@ public class Instructor {
 	private Usuario usuario; 
 	
 	@OneToMany
-	private List<Especialidad> especialidad;
-	@OneToMany
-	private List<Vehiculo> vehiculos;
-	
-	
-	
-	public List<Especialidad> getEspecialidad() {
-		return especialidad;
-	}
-	public void setEspecialidad(List<Especialidad> especialidad) {
-		this.especialidad = especialidad;
-	}
+	private List<InstructorVehiculoEspecialidad> instructoresVehiculosEspecialidades;
+
 	public Long getId() {
 		return id;
 	}
@@ -44,11 +34,13 @@ public class Instructor {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Vehiculo> getVehiculos() {
-		return vehiculos;
+	public List<InstructorVehiculoEspecialidad> getInstructoresVehiculosEspecialidades() {
+		return instructoresVehiculosEspecialidades;
 	}
-	public void setVehiculos(List<Vehiculo> vehiculos) {
-		this.vehiculos = vehiculos;
+	public void setInstructoresVehiculosEspecialidades(
+			List<InstructorVehiculoEspecialidad> instructoresVehiculosEspecialidades) {
+		this.instructoresVehiculosEspecialidades = instructoresVehiculosEspecialidades;
 	}
+
 	
 }

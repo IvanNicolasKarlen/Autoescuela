@@ -21,7 +21,7 @@ public class TablaCursoAlumno {
 	private Curso curso;
 	
 	@ManyToOne
-	private Estado estado;
+	private EstadoDelCurso estadoDelCurso;
 
 	public Long getId() {
 		return id;
@@ -47,17 +47,13 @@ public class TablaCursoAlumno {
 		this.curso = curso;
 	}
 
-	
-
-	public Estado getEstado() {
-		return estado;
+	public EstadoDelCurso getEstadoDelCurso() {
+		return estadoDelCurso;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setEstadoDelCurso(EstadoDelCurso estadoDelCurso) {
+		this.estadoDelCurso = estadoDelCurso;
 	}
-	
-	
 	
 	
 }

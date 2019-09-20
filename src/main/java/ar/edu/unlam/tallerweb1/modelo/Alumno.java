@@ -15,24 +15,12 @@ public class Alumno {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	
 	@OneToOne
 	private Usuario usuario; 
-	
 	@OneToMany
-	private List<Especialidad> especialidad;
+	private List<Agenda> agendas;
+
 	
-	
-	//Relacion con Clase 
-	
-	
-	
-	public List<Especialidad> getEspecialidad() {
-		return especialidad;
-	}
-	public void setEspecialidad(List<Especialidad> especialidad) {
-		this.especialidad = especialidad;
-	}
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +33,12 @@ public class Alumno {
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	public List<Agenda> getAgendas() {
+		return agendas;
+	}
+	public void setAgendas(List<Agenda> agendas) {
+		this.agendas = agendas;
 	}
 	
 	

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cuota {
@@ -17,8 +18,9 @@ public class Cuota {
 	private String fecha;
 	
 	@ManyToOne
-	private Usuario usuario;
-	
+	private Usuario usuario; //NO ESTOY SEGURA
+	@ManyToOne
+	private Curso curso;
 	
 	
 	public Long getId() {

@@ -16,7 +16,11 @@ public class Especialidad {
 	private Long id;
 	private String tipo;
 	@OneToMany
-	private List<Vehiculo> vehiculos;
+	private List<InstructorVehiculoEspecialidad> instructoresVehiculosEspecialidades;
+	@OneToMany
+	private List<TipoDeVehiculo> tiposDeVehiculos;
+	@OneToMany
+	private List<Curso> cursos;
 
 	public Long getId() {
 		return id;
@@ -34,12 +38,30 @@ public class Especialidad {
 		this.tipo = tipo;
 	}
 
-	public List<Vehiculo> getVehiculo() {
-		return vehiculos;
+	public List<InstructorVehiculoEspecialidad> getInstructoresVehiculosEspecialidades() {
+		return instructoresVehiculosEspecialidades;
 	}
 
-	public void setVehiculo(List<Vehiculo> vehiculos) {
-		this.vehiculos = vehiculos;
+	public void setInstructoresVehiculosEspecialidades(
+			List<InstructorVehiculoEspecialidad> instructoresVehiculosEspecialidades) {
+		this.instructoresVehiculosEspecialidades = instructoresVehiculosEspecialidades;
 	}
+
+	public List<TipoDeVehiculo> getTiposDeVehiculos() {
+		return tiposDeVehiculos;
+	}
+
+	public void setTiposDeVehiculos(List<TipoDeVehiculo> tiposDeVehiculos) {
+		this.tiposDeVehiculos = tiposDeVehiculos;
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+	
 	
 }

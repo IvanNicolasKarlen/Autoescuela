@@ -17,16 +17,12 @@ public class Vehiculo {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String patente;
-	private String estado;
-	private String tipo;
-	
-	
+	private String modelo;
 	@ManyToOne
-	@Cascade(CascadeType.SAVE_UPDATE)
-	private Especialidad especialidad;
+	private TipoDeVehiculo tipoDeVehiculo;
 	@ManyToOne
-	private Instructor instructor;
-
+	private EstadoDeVehiculo estadoDeVehiculo;
+	
 	public Long getId() {
 		return id;
 	}
@@ -39,32 +35,26 @@ public class Vehiculo {
 	public void setPatente(String patente) {
 		this.patente = patente;
 	}
-	public String getEstado() {
-		return estado;
+
+	public TipoDeVehiculo getTipoDeVehiculo() {
+		return tipoDeVehiculo;
 	}
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setTipoDeVehiculo(TipoDeVehiculo tipoDeVehiculo) {
+		this.tipoDeVehiculo = tipoDeVehiculo;
 	}
-	public String getTipo() {
-		return tipo;
+	public String getModelo() {
+		return modelo;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	public EstadoDeVehiculo getEstadoDeVehiculo() {
+		return estadoDeVehiculo;
+	}
+	public void setEstadoDeVehiculo(EstadoDeVehiculo estadoDeVehiculo) {
+		this.estadoDeVehiculo = estadoDeVehiculo;
 	}
 
-	public Especialidad getEspecialidad() {
-		return especialidad;
-	}
-	public void setEspecialidad(Especialidad especialidad) {
-		this.especialidad = especialidad;
-	}
-	public Instructor getInstructor() {
-		return instructor;
-	}
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
-	}
-	
 	
 	
 	
