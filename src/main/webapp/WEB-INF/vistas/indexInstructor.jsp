@@ -59,22 +59,87 @@
 				<div class="col-md-6 p-t-45 p-b-30">
 					<div class="wrap-text-welcome t-center">
 						
-						<div>
-						<br><br><br>
-						<br><br>
-						<br><br><br>
-						<br><br><br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
+					
+					
+					
+	<form:form action="buscarAlumnos" method="GET">
+					
+					<table class="table table-hover text-center mt-4" border="1" cellpadding="1" cellspacing="0">
+					<h4><b>Actualmente tiene estos alumnos a cargo:<br></h4>
+						<thead>
+							<tr>
+								<th class="enc">Nombre</th>
+								<th class="enc">Apellido</th>
+								<th class="enc">Horario</th>
+								<th class="enc"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="alum" items="${alumnos}">
+								<tr>
+									<td width="650" class="alt-celda margina-izq">${alum.nombre}</td>	
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<br>
+					<br>
+					<br>
+
+							<input class=" btn btn-success"	type="submit" value="Confirmar y continuar" />
+							<a><input class=" btn btn-danger" type="button" value="Cancelar" /></a>
+				</form:form>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 						
 						</div>
 						

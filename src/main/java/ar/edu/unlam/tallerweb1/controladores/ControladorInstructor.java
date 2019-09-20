@@ -41,28 +41,14 @@ public class ControladorInstructor {
 	
 	
 	
-	@RequestMapping(path="/buscarInstructorPorId")
-	public ModelAndView buscarInstructorPorId(HttpServletRequest request){
-		
-		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-		servicioInstructor.buscarInstructorPorId(idUsuario);
-
-		return new ModelAndView("indexInstructor");
-		
-	}
-	
-	
-	
 	@RequestMapping(path="/buscarAlumnos")
 	public ModelAndView BuscarTurnos (HttpServletRequest request) {
 		
 		ModelMap model = new ModelMap();
 		
-//		Long idUsuario = (Long) request.getSession().getAttribute("ID");
-//		servicioInstructor.buscarInstructorPorId(idUsuario);
-		
-		Long idInstructor= Long.parseLong(request.getSession().getAttribute("ID").toString());
-		
+		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+		servicioInstructor.buscarInstructorPorId(idInstructor);
+				
 		List <Agenda> agenda = servicioInstructorBuscarTurnos.buscarTurnos(idInstructor);
 		
 		List <Alumno> alumnos= servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(idInstructor);
@@ -73,21 +59,4 @@ public class ControladorInstructor {
 		return new ModelAndView ("turnosI",model);
 		
 	}
-	
-//	@RequestMapping (path="/traerAlumno")
-//	public ModelAndView trerAlumno (HttpServletRequest request) {
-//		
-//		ModelMap model = new ModelMap ();
-//		
-////		Long idInstructor= Long.parseLong(request.getSession().getAttribute("ID").toString());
-//				
-////		List <Agenda> agenda = servicioInstructorBuscarTurnos.buscarTurnos(idInstructor);
-//				
-//		Alumno alumno = servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(agenda);
-//		
-//		model.put("alumnosInstructor", alumno);
-//		
-//		return new ModelAndView ("AlumnosInstructor",model);
-//		
-//	}
 }
