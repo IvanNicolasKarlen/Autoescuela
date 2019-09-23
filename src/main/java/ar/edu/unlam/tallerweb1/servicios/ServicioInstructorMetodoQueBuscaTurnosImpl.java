@@ -11,7 +11,7 @@ import ar.edu.unlam.tallerweb1.dao.AlumnoMetodoQueBuscaCursosDao;
 import ar.edu.unlam.tallerweb1.dao.InstructorMetodoQueBuscaTurnosDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 
-@Service("ServicioInstructorMetodoQueBuscaTurnos")
+@Service("servicioInstructorMetodoQueBuscaTurnos")
 @Transactional
 
 public class ServicioInstructorMetodoQueBuscaTurnosImpl implements ServicioInstructorMetodoQueBuscaTurnos{

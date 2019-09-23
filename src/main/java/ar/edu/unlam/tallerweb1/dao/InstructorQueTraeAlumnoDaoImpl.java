@@ -25,21 +25,8 @@ public class InstructorQueTraeAlumnoDaoImpl implements InstructorQueTraeAlumnoDa
 		final Session session = sessionFactory.getCurrentSession();
 		List <Alumno> milista =  session.createCriteria(Alumno.class)
 								.createAlias("usuario", "usuarioBuscado")
-								.add(Restrictions.eq("usuarioBuscado.nombre",nombre ))
-								.add(Restrictions.eq("usuarioBuscado.apellido", apellido))
 								.list();
 		return milista;
-		
-	}
-
-	@Override
-	public List<Usuario> buscarAlumnosDeInstructor2(Long idInstructor, String nombre, String apellido) {
-		final Session session = sessionFactory.getCurrentSession();
-		List <Usuario> milista2 =  session.createCriteria(Usuario.class)
-								.add(Restrictions.eq("usuarioBuscado.nombre",nombre ))
-								.add(Restrictions.eq("usuarioBuscado.apellido", apellido))
-								.list();
-		return milista2;
 		
 	}
 

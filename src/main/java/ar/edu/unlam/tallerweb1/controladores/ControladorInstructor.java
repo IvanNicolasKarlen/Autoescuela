@@ -23,6 +23,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueGuardaFechas;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarInstructorPorId;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorMetodoQueBuscaTurnos;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorQueTraeAlumno;
+import ar.edu.unlam.tallerweb1.servicios.ServicioListarFecha;
 
 
 @Controller
@@ -37,6 +38,12 @@ public class ControladorInstructor {
 	
 	@Inject 
 	private ServicioInstructorQueTraeAlumno servicioInstructorQueTraeAlumno;
+	
+	@Inject 
+	private ServicioListarFecha servicioListarFecha;
+	
+	
+
 
 	@RequestMapping ("/indexInstructor")
 	public ModelAndView indexInstructor (HttpServletRequest request) {
@@ -51,7 +58,7 @@ public class ControladorInstructor {
 
 	
 	
-	@RequestMapping(path="/turnos")
+	@RequestMapping(path="/turnos", method = RequestMethod.GET)
 	public ModelAndView BuscarTurnos (HttpServletRequest request,String nombre, String apellido) {
 		
 		ModelMap model = new ModelMap();
@@ -66,13 +73,12 @@ public class ControladorInstructor {
 		List<Alumno>alumnos= new ArrayList();
 		alumnos= servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(idInstructor,nombre,apellido);
 		
-		
-		model.put("turnos", agenda);
+		model.put("agenda", agenda);
 		model.put("alumnosInstructor", alumnos);
 		model.put("idInst", idInstructor);
-		model.put("idInst", i.getUsuario().getNombre());
+		model.put("listadoFecha", servicioListarFecha.listaFecha());
 		
-		return new ModelAndView ("indexInstructor",model);
+		return new ModelAndView ("alumnosInstructor",model);
 		
 	}
 }

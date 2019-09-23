@@ -25,7 +25,6 @@ public class InstructorMetodoQueBuscaTurnosDaoImpl implements InstructorMetodoQu
 								.createAlias("iveBuscado.Instructor", "InstructorId")
 								.add(Restrictions.eq("InstructorId.id", idInstructor))
 								.list();
-		
 		return miLista;
 	}
 

@@ -10,7 +10,4 @@ public interface ServicioInstructorQueTraeAlumno {
 	
 	List <Alumno> buscarAlumnosDeInstructor (Long idInstructor,String nombre, String apellido);
 	
-	List <Usuario> buscarAlumnosDeInstructor2 (Long idInstructor,String nombre, String apellido);
-
-
 }
