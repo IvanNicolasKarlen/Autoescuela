@@ -19,38 +19,114 @@
 <%@ include file="../../parts/sidebar.jsp" %> 
 	<!-- fin sidebar -->
 	
-	<!-- Slide1 -->
-	<section class="section-slide">
-		<div class="wrap-slick1">
-			<div class="slick1">
-				<div class="item-slick1 item1-slick1" style="background-image: url(images/index.jpg);">
-					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-						<span class="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-							Bienvenido INSTRUCTOR
-						</span>
+	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 p-t-45 p-b-30">
+					<div class="wrap-text-welcome t-center">
+	
+	
+<form:form action="buscarAlumnos" method="GET">
+					
+					<table class="table table-hover text-center mt-4" border="1" cellpadding="1" cellspacing="0">
+					<h4><b>Actualmente tiene estos alumnos a cargo:<br></h4>
+						<thead>
+							<tr>
+								<th class="enc">Nombre</th>
+								<th class="enc">Apellido</th>
+								<th class="enc">Horario</th>
+								<th class="enc"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="alum" items="${alumnos}">
+								<tr>
+									<td width="650" class="alt-celda margina-izq">${alum.nombre}</td>	
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<br>
+					<br>
+					<br>
 
-						<h2 class="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-							a Autoescuela
-						</h2>
-						<c:if test="${usuarioId==null}">
-							<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-							
-								
-							</div>
-						</c:if>
-						<c:if test="${usuarioId!=null}">
-						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-							<!-- Button1 -->
-							<a href="alumnosInstructor" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Ver alumnos
-							</a>
+							<input class=" btn btn-success"	type="submit" value="Confirmar y continuar" />
+							<a><input class=" btn btn-danger" type="button" value="Cancelar" /></a>
+				</form:form>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+						
 						</div>
-						</c:if>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					</div>
-				</div>	
+				</div>
+
+				
 			</div>
 		</div>
 	</section>
+
 
 	
 	<!--									NOS PUEDE SERVIR PARA LA PARTE DEL REGISTRAR FECHA

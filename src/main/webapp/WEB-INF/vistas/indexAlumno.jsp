@@ -241,12 +241,10 @@
 						<span class="tit2 t-center">
 							Reservation
 						</span>
-
 						<h3 class="tit3 t-center m-b-35 m-t-2">
 							Book table
 						</h3>
 					</div>
-
 					<form class="wrap-form-booking">
 						<div class="row">
 							<div class="col-md-6">
@@ -254,17 +252,14 @@
 								<span class="txt9">
 									Date
 								</span>
-
 								<div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="my-calendar bo-rad-10 sizefull txt10 p-l-20" type="text" name="date">
 									<i class="btn-calendar fa fa-calendar ab-r-m hov-pointer m-r-18" aria-hidden="true"></i>
 								</div>
-
 								
 								<span class="txt9">
 									Time
 								</span>
-
 								<div class="wrap-inputtime size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									
 									<select class="selection-1" name="time">
@@ -289,12 +284,10 @@
 										<option>18:00</option>
 									</select>
 								</div>
-
 								
 								<span class="txt9">
 									People
 								</span>
-
 								<div class="wrap-inputpeople size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									
 									<select class="selection-1" name="people">
@@ -313,37 +306,30 @@
 									</select>
 								</div>
 							</div>
-
 							<div class="col-md-6">
 								
 								<span class="txt9">
 									Name
 								</span>
-
 								<div class="wrap-inputname size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="name" placeholder="Name">
 								</div>
-
 								
 								<span class="txt9">
 									Phone
 								</span>
-
 								<div class="wrap-inputphone size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="phone" placeholder="Phone">
 								</div>
-
 								
 								<span class="txt9">
 									Email
 								</span>
-
 								<div class="wrap-inputemail size12 bo2 bo-rad-10 m-t-3 m-b-23">
 									<input class="bo-rad-10 sizefull txt10 p-l-20" type="text" name="email" placeholder="Email">
 								</div>
 							</div>
 						</div>
-
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							
 							<button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
@@ -352,7 +338,6 @@
 						</div>
 					</form>
 				</div>
-
 				<div class="col-lg-6 p-b-30 p-t-18">
 					<div class="wrap-pic-booking size2 bo-rad-10 hov-img-zoom m-l-r-auto">
 						<img src="images/booking-01.jpg" alt="IMG-OUR">
@@ -361,7 +346,6 @@
 			</div>
 		</div>
 	</section>
-
 	<!-- Review -->
 	<section class="section-review p-t-115">
 		<!-- - -->

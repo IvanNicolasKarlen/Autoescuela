@@ -20,8 +20,9 @@ public class BuscarInstructorPorIdDaoImpl implements BuscarInstructorPorIdDao {
 	
 		
 		final Session session = sessionFactory.getCurrentSession();
+		Long id=(long) 1;
         return (Instructor) session.createCriteria(Instructor.class)
-                .add(Restrictions.eq("id", idUsuario))
+                .add(Restrictions.eq("id", id))
                 .uniqueResult();
     
 

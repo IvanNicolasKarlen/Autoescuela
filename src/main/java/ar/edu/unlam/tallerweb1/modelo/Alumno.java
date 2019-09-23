@@ -1,4 +1,5 @@
 package ar.edu.unlam.tallerweb1.modelo;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class Alumno {
 	@OneToOne
 	private Usuario usuario; 
 	@OneToMany
-	private List<Agenda> agendas;
+	private List<Agenda> agendas=new ArrayList();
 
 	
 	public Long getId() {

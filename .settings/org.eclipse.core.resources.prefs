@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/vistas/DesdeHasta.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/vistas/cursos.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/vistas/indexAdmin.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/vistas/indexInstructor.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/vistas/login.jsp=UTF-8
