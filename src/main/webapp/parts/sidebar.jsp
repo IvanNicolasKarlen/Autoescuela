@@ -52,11 +52,13 @@
 		<!-- Organizador -->
 
 		<c:if test="${rol=='Organizador'}">
-			<li><a href="index">Inicio</a></li>
-			<li><a href="agregarVehiculo">Agregar Vehiculo</a></li>
-			<li><a href="agregarCurso">Agregar Curso</a></li>
-			<li><a href="crearAgenda">Crear Agenda</a></li>
-			<li><a href="agregarInstructor-1">Agregar Instructor</a></li>
+			<li class="t-center m-b-13"><a href="index">Inicio</a></li>
+			<li class="t-center m-b-13"><a href="agregarVehiculo">Agregar Vehiculo</a></li>
+			<li class="t-center m-b-13"><a href="agregarCurso">Agregar Curso</a></li>
+			<li class="t-center m-b-13"><a href="agregarEspecialidad">Agregar Especialidad</a></li>
+			<li class="t-center m-b-13"><a href="agregarTipoVehiculo">Agregar Tipo de Vehiculo</a></li>
+			<li class="t-center m-b-13"><a href="crearAgenda">Crear Agenda</a></li>
+			<li class="t-center m-b-13"><a href="agregarInstructor-1">Agregar Instructor</a></li>
 		</c:if>
 
 		<!-- Fin organizador- -->
