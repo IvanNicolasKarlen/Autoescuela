@@ -11,8 +11,7 @@ select * from especialidad;
 select * from instructor;
 
 insert into instructorvehiculoespecialidad(instructor_id,vehiculo_id,especialidad_id)
-VALUES	(1,1,1),
-		(2,2,2);
+VALUES	(1,1,1);
 select * from instructorvehiculoespecialidad;
 select * from curso;
 select * from agenda;

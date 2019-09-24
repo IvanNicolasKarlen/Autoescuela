@@ -5,12 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.TipoDeVehiculoDao;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 
 @Service
+@Transactional
 public class ServicioTipoDeVehiculoImpl implements ServicioTipoDeVehiculo {
 	@Inject
 	private TipoDeVehiculoDao tipoDeVehiculoDao;

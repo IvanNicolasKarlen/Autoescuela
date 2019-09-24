@@ -157,7 +157,7 @@ public class ControladorOrganizador {
 			List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
 			model.put("listatipovehiculos", listaTipoVehiculo);
 			EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorEstadoActual("Funcionando");
-			model.put("estado",estadoVehiculo);
+			model.put("estado",estadoVehiculo.getId());
 		}
 		else{
 			return new ModelAndView("redirect:/index");

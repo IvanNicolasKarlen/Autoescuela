@@ -47,6 +47,14 @@
 						Precio:
 					</label>
 					<form:input type="number" path="precio" id="precio"></form:input>
+					<label class="txt9">
+						Especialidad: 
+					</label>
+					<select name="especialidadId" id="especialidadId">
+						<c:forEach items="${listaEspecialidades}" var="especialidades">
+							<option value="${especialidades.id}">${especialidades.tipo}</option>
+						</c:forEach>	
+					</select>
 				 	<div class="wrap-btn-booking flex-c-m m-t-6">
                         <button type="submit" class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
                             Continuar

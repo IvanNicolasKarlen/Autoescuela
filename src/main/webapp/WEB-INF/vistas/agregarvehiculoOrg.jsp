@@ -31,7 +31,7 @@
 			<div class="col-lg-12 p-b-30">
 				<div class="t-center">
 
-					<form:form modelAttribute="vehiculo" action="validarVehiculo"
+					<form:form modelAttribute="vehiculo" action="agregarVehiculo-2"
 						method="post">
 						<label class="txt9"> Patente </label>
 						<form:input type="text" path="patente" id="patente"></form:input>
@@ -39,11 +39,11 @@
 						<form:input type="text" path="modelo" id="modelo"></form:input>
 						<label class="txt9"> Tipo de Vehiculo: </label>
 						<select path="tipoDeVehiculo">
-						<c:forEach items="$listatipovehiculos}" var="tdv">
+						<c:forEach items="${listatipovehiculos}" var="tdv">
 							<option value="${tdv}">${tdv.tipo}</option>
 						</c:forEach>
 						</select>
-						<form:input style="display:none" path="estado" id="estado" value="${estado}"/>
+						<input style="display:none" name="estadoId" id="estado" value="${estado}"/>
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
