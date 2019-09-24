@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 
 @Repository
@@ -23,8 +24,18 @@ public class IveDaoImpl implements IveDao {
 		@Override
 		public List<InstructorVehiculoEspecialidad> traerListaIve(){
 			final Session sesion = sessionFactory.getCurrentSession();
+			@SuppressWarnings("unchecked")
 			List<InstructorVehiculoEspecialidad> listaIve = sesion.createCriteria(InstructorVehiculoEspecialidad.class)
-															.add(Restrictions.isNotNull("id")).list();
+															.list();
 			return listaIve;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad) {
+			final Session session = sessionFactory.getCurrentSession();
+			return (List<InstructorVehiculoEspecialidad>)
+					session.createCriteria(InstructorVehiculoEspecialidad.class)
+					.add(Restrictions.eq("especialidad", especialidad));
 		}
 }

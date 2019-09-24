@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unlam.tallerweb1.dao.TipoDeVehiculoDao;
+import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 
 @Service
@@ -17,5 +18,20 @@ public class ServicioTipoDeVehiculoImpl implements ServicioTipoDeVehiculo {
 	@Override
 	public List<TipoDeVehiculo> traerTiposDeVehiculos() {
 		return tipoDeVehiculoDao.traerTiposDeVehiculos();
+	}
+
+	@Override
+	public TipoDeVehiculo buscarTipoDeVehiculo(TipoDeVehiculo tipoVehiculo) {
+		return tipoDeVehiculoDao.buscarTipoDeVehiculo(tipoVehiculo);
+	}
+
+	@Override
+	public Long guardarTipoDeVehiculo(TipoDeVehiculo tipoVehiculo) {
+		return tipoDeVehiculoDao.guardarTipoDeVehiculo(tipoVehiculo);
+	}
+
+	@Override
+	public List<TipoDeVehiculo> buscarTipoDeVehiculoPorEspecialidad(Especialidad varEspecialidad) {
+		return tipoDeVehiculoDao.buscarTipoDeVehiculoPorEspecialidad(varEspecialidad);
 	}
 }

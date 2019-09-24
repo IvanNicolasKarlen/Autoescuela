@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import javax.inject.Inject;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,11 @@ public class EstadoDeVehiculoDaoImpl implements EstadoDeVehiculoDao {
 	@Override
 	public Long guardarEstado(EstadoDeVehiculo estadoDeVehiculo) {
 		return (Long)sessionFactory.getCurrentSession().save(estadoDeVehiculo);
+	}
+	@Override
+	public EstadoDeVehiculo buscarEstadoPorId(Long estadoId) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (EstadoDeVehiculo)session.get(EstadoDeVehiculo.class, estadoId);
 	}
 
 	
