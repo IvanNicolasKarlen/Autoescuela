@@ -7,8 +7,8 @@ import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarInstructorPorId;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarInstructorPorIdImpl;
-import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorQueTraeAlumno;
-import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorQueTraeAlumnoImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarAlumnosDelInstuctor;
+import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarAlumnosDelInstuctorImp;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
-public interface ServicioInstructorQueTraeAlumno {
+public interface ServicioBuscarAlumnosDelInstuctor {
 	
 	List <Alumno> buscarAlumnosDeInstructor (Long idInstructor,String nombre, String apellido);
 	

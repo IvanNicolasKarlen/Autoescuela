@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,11 +20,10 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueGuardaFechas;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarInstructorPorId;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorMetodoQueBuscaTurnos;
-import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorQueTraeAlumno;
-import ar.edu.unlam.tallerweb1.servicios.ServicioListarFecha;
+
 
 
 @Controller
@@ -37,11 +37,7 @@ public class ControladorInstructor {
 	private ServicioInstructorMetodoQueBuscaTurnos servicioInstructorBuscarTurnos;
 	
 	@Inject 
-	private ServicioInstructorQueTraeAlumno servicioInstructorQueTraeAlumno;
-	
-	@Inject 
-	private ServicioListarFecha servicioListarFecha;
-	
+	private ServicioAgenda servicioAgenda;
 
 	
 //	@RequestMapping(path="/turnos", method = RequestMethod.GET)
@@ -76,23 +72,24 @@ public class ControladorInstructor {
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
 	
 		ModelMap model = new ModelMap();
+		if(request.getSession().getAttribute("ROL").equals("Instructor"))
+		{
+			Long idInstructor = (Long) request.getSession().getAttribute("ID");
+	
+			List<Agenda> listaAgenda = new ArrayList();
+			listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
+			
+			List <Alumno> listaAlumno = new ArrayList();
+			listaAlumno = servicioAgenda.buscarNombreyApellidoDeAlumnosDeUnInstructor(idInstructor);
+			
+			model.put("listaAgenda", listaAgenda);
+			model.put("listaAlumno", listaAlumno);
+			
+			return new ModelAndView ("alumnosInstructor",model);
 		
-		Long idInstructor = (Long) request.getSession().getAttribute("id");
-		List <Agenda> listaAgenda = servicioAgenda.buscarAgendaPorIdInstructor(idInstructor);
-		
-		model.put("listaAgenda", listaAgenda);
-		
-		return new ModelAndView ("alumnosInstructor",model);
-		
+		}
+			else {
+		return new ModelAndView("login", model);
+			     }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

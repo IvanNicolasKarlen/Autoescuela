@@ -117,7 +117,7 @@
 		</div>
 	</section>
 	
-<<<<<<< HEAD
+
 	<!--									NOS PUEDE SERVIR PARA LA PARTE DEL REGISTRAR FECHA
 	<section class="section-booking bg1-pattern p-t-100 p-b-110">
 		<div class="container">
@@ -323,14 +323,6 @@
 									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
 									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
 								</div>
-=======
-	
-	
-	
-	
->>>>>>> 46c0d8275732a61d31f45f5b777f2d7ed08096e3
-
-
 
 
 

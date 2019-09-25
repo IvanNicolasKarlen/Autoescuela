@@ -114,21 +114,6 @@ public class ControladorAlumno {
 		//Saber si el alumno ya está haciendo este curso que selecciono
 		List <TablaCursoAlumno> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
 		
-<<<<<<< HEAD
-		//Saber si finalizo o no este curso que selecciono
-		TablaCursoAlumno estadoCurso = servicioAlumnoFinalizoCurso.consultarSiFinalizoSuCurso(alumno,cursoElegido);
-	
-			//Si lo esta cursando    Y			  aun no lo termino
-		if ( ( cursando.size() > 0 ) && (estadoCurso.getEstadoDelCurso().equals("Cursando")) )
-		{
-			modelo.put("error","Debes finalizar el curso para agregar mas clases"); //Le avisa que no finalizo
-			
-			//Trae todo el listado de todos los cursos
-			List<Curso> listaCursos =  servicioAlumnoBuscaCursos.buscarCursos();
-			
-			modelo.put("lista", listaCursos);
-			return new ModelAndView("cursos", modelo); 
-=======
 		
 		//Traigo los datos del alumno logueado
 				Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
@@ -142,7 +127,6 @@ public class ControladorAlumno {
 				
 				
 			}else{ 
->>>>>>> 46c0d8275732a61d31f45f5b777f2d7ed08096e3
 
 					modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 					//Trae todo el listado de todos los cursos

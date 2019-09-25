@@ -25,34 +25,42 @@
 				<div class="col-md-6 p-t-45 p-b-30">
 					<div class="wrap-text-welcome t-center">
 	
-					
+
 	<table class="table table-hover text-center mt-4" border="1" cellpadding="1" cellspacing="0">
 		<h4><b>Actualmente tiene estos alumnos a cargo:<br></h4>
 			<thead>
 				<tr>
-					<th class="enc">Nombre</th>
-					<th class="enc">Apellido</th>
 					<th class="enc">Día</th>
 					<th class="enc">Horario</th>
+					<th class="enc">Nombre</th>
+					<th class="enc">Apellido</th>
 				</tr>
 			</thead>
 				
 		<tbody>
-				<c:forEach var="variable" items="${listadoFecha}">
-						<tr>
-							<td class="alt-celda">${variable.fecha}</td>
-							<td class="alt-celda">${variable.hora}</td>
-						</tr>
-				</c:forEach>
+			<c:forEach items="${listaAgenda}" var="variable" >
+					<tr>
+						<td class="alt-celda"><h2>${variable.fecha}</h2></td>
+						<td class="alt-celda"><h2>${variable.hora}</h2></td>
+					</tr>
+			</c:forEach>
+			
+			<c:forEach items="${listaAlumno}" var="variable" >
+					<tr>
+						<td class="alt-celda"><h2>${variable.nombre}</h2></td>
+						<td class="alt-celda"><h2>${variable.apellido}</h2></td>
+					</tr>
+			</c:forEach>
+			
 		</tbody>
 	</table>
-
 						
 					</div>	
 				</div>
 			</div>
 		</div>
 	</section>
+	
 
 	<!-- Footer -->
 <%@ include file="../../parts/footer.jsp" %> 
