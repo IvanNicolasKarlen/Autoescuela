@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class Agenda {
+public class Agenda{
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -81,6 +81,10 @@ public class Agenda {
 	public void setAlumno(Alumno alumno) {
 		this.alumno = alumno;
 	}
+	
+	
+	
+		
 	
 
 }

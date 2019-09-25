@@ -1,4 +1,7 @@
 
+
+/*								ALUMNO					*/
+
 use tallerwebtpfinal;
 
 
@@ -13,31 +16,118 @@ select * from agenda;
 
 select * from tablacursoalumno;
 
+select * from estadodelcurso;
+
+select * from instructor;
+
+select * from usuario;
+
+select * from especialidad;
 
 
 
+/*****************************Para el alumno ejecutar todos estos insert******************/
 
-/* Guardar al menos un curso*/
+  Insert into Instructor (usuario_id) values (1);
+
+ Insert into especialidad (tipo) values ("Auto"),("Moto");
+ 
+Insert into estadodelcurso(estadodelcurso) values ("Cursando");
 
 
-
-Insert into curso (precio,
+Insert into curso (
 	 cantClasesPracticas,
-	 cantClasesTeoricas,
-	 descripcion) values (100, 10, 2, "Curso A");
- 
+	 descripcion,
+     precio,
+     titulo,
+     especialidad_id) values (2,"Curso A", 100,"Curso Para aprender a Manejar Auto" , 1);
 
- 
-Insert into curso (precio,
+Insert into curso (
 	 cantClasesPracticas,
-	 cantClasesTeoricas,
-	 descripcion) values (150, 12, 1, "Curso B");
-     
- 
+	 descripcion,
+     precio,
+     titulo,
+     especialidad_id) values (1,"Curso B", 100,"Curso Para aprender a Manejar Auto" , 1);
 
-    
-     /*Para probar que ande si finalizo el curso, correr esta sentencia*/
+Insert into curso (
+	 cantClasesPracticas,
+	 descripcion,
+     precio,
+     titulo,
+     especialidad_id) values (2,"Curso C", 100,"Curso Para aprender a Manejar Moto" , 2);
+
+Insert into agenda (fecha, hora) 
+values("18/09/2019", 1800),
+("19/09/2019", 1300),
+("20/09/2019", 1200),
+("21/09/2019", 1000);
+
+Insert into agenda (fecha, hora,alumno_id) values
+("22/09/2019", 1600,1);
+
+Insert into agenda (fecha, hora) 
+values("23/09/2019", 0900),
+("24/09/2019", 0900),
+("25/09/2019", 0900);
+
+/**************************************Hasta aca***************************/
 
 
-Update tablacursoalumno set estado= "Finalizado" where id=1;
 
+
+
+
+
+
+
+
+
+
+
+
+/************************************************************************/
+/*									ORGANIZADOR				*/
+/*Esta parte es del organizador, ejecutar PRIMERO todos estos inserts*/
+
+insert into Organizador(id)
+values (3);
+
+insert into usuario(id,apellido,dni,nombre,password,rol,organizador_id)
+values  (1,"Delgado",12345678,"Candelaria",123456,"Organizador",3);
+	
+select * from usuario;
+
+insert into estadodevehiculo(id, estadoActual)
+VALUES	(1,"Funcionando");
+
+
+/*************************** Hasta Aca *******************************/
+
+
+
+
+
+/*Despues esto: es del ORGANIZADOR tambien*/
+
+
+insert into instructor(id)
+values	(1),
+		(2);
+        
+insert into usuario(apellido,dni,nombre,password,rol,instructor_id)
+values	("Diaz",24123852,"Maria",123,"Instructor",1),
+		("Herrera",35987456,"Jorge",123,"Instructor",2);
+        
+select * from vehiculo;
+select * from especialidad;
+select * from instructor;
+
+insert into instructorvehiculoespecialidad(instructor_id,vehiculo_id,especialidad_id)
+VALUES	(1,1,1);
+select * from instructorvehiculoespecialidad;
+select * from curso;
+select * from agenda;
+
+
+
+/**********************************Fin*/
