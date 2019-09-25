@@ -51,6 +51,13 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 	
+	<h1>Fecha	-	Hora Disponibles:</h1>
+	<c:forEach items="${listaAgendas}" var="la">
+	
+	<p>- ${la.fecha}	-	${la.hora}</p>
+	
+	</c:forEach>
+	
 	
 		<h4 class="tit2 t-center m-b-35 m-t-2">
                  <label>Has quedado anotado en estos dias</label>

@@ -18,7 +18,6 @@ import java.util.TreeSet;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,14 +32,12 @@ import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoBuscarAlumno;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoBuscarCurso;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoBuscarEstado;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoConsultaEspecialidad;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoGuardaCurso;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoQueBuscaCursos;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoMetodoSiYaSeInscribioOnO;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumno;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoCurso;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoEspecialidad;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoEstado;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoAgenda;
+
 
 
 @Controller
@@ -51,23 +48,19 @@ public class ControladorAlumno {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	
 	@Inject
-	private ServicioAlumnoMetodoQueBuscaCursos servicioAlumnoBuscaCursos;
+	private ServicioAlumnoCurso servicioAlumnoCurso;
 	@Inject
-	private ServicioAlumnoMetodoSiYaSeInscribioOnO servicioAlumnoSiYaSeInscribioOnO;
+	private ServicioAlumnoEstado servicioAlumnoEstado;
 	@Inject
-	private ServicioAlumnoMetodoGuardaCurso servicioAlumnoGuardaCurso;
+	private ServicioAlumnoEspecialidad servicioAlumnoEspecialidad;
 	@Inject
-	private ServicioAlumnoBuscarAlumno servicioBuscarAlumno;
+	private ServicioAlumno servicioAlumno;
 	@Inject
-	private ServicioAlumnoBuscarEstado servicioBuscarEstado;
-	@Inject
-	private ServicioAlumnoConsultaEspecialidad servicioAlumnoConsultaEspecialidad;
-	@Inject
-	private ServicioAlumnoBuscarCurso  servicioBuscarCurso;
-	@Inject
-	private ServicioAlumnoTraerAgendasConFechasNoRepetidas servicioAlumnoTraerAgendasConFechasNoRepetidas;
-	@Inject
-	private ServicioAlumnoGuardarAlumnoEnAgenda servicioAlumnoGuardarAlumnoEnAgenda;
+	private ServicioAlumnoAgenda servicioAlumnoAgenda;
+	
+	
+	
+	
 	
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno() {
@@ -84,7 +77,7 @@ public class ControladorAlumno {
 		ModelMap modelo = new ModelMap();
 		
 		//Trae todo el listado de todos los cursos
-		List<Curso> listaCursos =  servicioAlumnoBuscaCursos.buscarCursos();
+		List<Curso> listaCursos =  servicioAlumnoCurso.buscarCursos();
 		
 	
 		modelo.put("lista", listaCursos);
@@ -110,56 +103,56 @@ public class ControladorAlumno {
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
 		//Datos del curso Elegido
-		Curso curso = servicioBuscarCurso.buscarCurso(cursoElegido);
+		Curso curso = servicioAlumnoCurso.buscarCurso(cursoElegido);
 		
 		//Busco el id del estado que dice "Cursando"
-		EstadoDelCurso estado = servicioBuscarEstado.buscarEstadoCursando();
+		EstadoDelCurso estado = servicioAlumnoEstado.buscarEstadoCursando();
 		
 		//Buscar la especialidad del curso elegido
-		Especialidad especialidad = servicioAlumnoConsultaEspecialidad.consultarEspecialidadCursoElegido(cursoElegido);
+		Especialidad especialidad = servicioAlumnoEspecialidad.consultarEspecialidadCursoElegido(cursoElegido);
 		
-		//Saber si el alumno ya est√° haciendo este curso que selecciono
-		List <TablaCursoAlumno> cursando = servicioAlumnoSiYaSeInscribioOnO.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
+		//Saber si el alumno ya est· haciendo este curso que selecciono
+		List <TablaCursoAlumno> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
 		
 		
 		//Traigo los datos del alumno logueado
-				Alumno alumno = servicioBuscarAlumno.buscarAlumno(idAlumno);
+				Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 						
 				TablaCursoAlumno cursoAlumno = new TablaCursoAlumno();	
 		
 		if(cursando.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{
 				//Guardar en la tablaCursoAlumno el curso y el alumno
-				servicioAlumnoGuardaCurso.guardarCurso(alumno, cursoElegido, cursoAlumno, estado);
+			servicioAlumnoCurso.guardarCurso(alumno, curso, cursoAlumno, estado);
 				
 				
 			}else{ 
 
 					modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 					//Trae todo el listado de todos los cursos
-					List<Curso> listaCursos =  servicioAlumnoBuscaCursos.buscarCursos();
+					List<Curso> listaCursos =  servicioAlumnoCurso.buscarCursos();
 					
 					modelo.put("lista", listaCursos);
 					return new ModelAndView("cursos", modelo); //Todavia no curso nada
 					
 			}
 		
-	
-	//Traer todas las fechas con disponibilidad
-	TreeSet<Agenda> agendas=servicioAlumnoTraerAgendasConFechasNoRepetidas.traerAgendasConFechasNoRepetidas(curso);
+		//Traer todas las fechas con disponibilidad
+		TreeSet<Agenda> agendas=servicioAlumnoAgenda.traerAgendasConFechasNoRepetidas(curso);
 
-	
-	if(!agendas.isEmpty())
-	{
-		//Guardar alumno en la Agenda
-		servicioAlumnoGuardarAlumnoEnAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendas,alumno,curso);
-			
-	}else{
-		modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
-	}
-			
-	modelo.put("listaAgendas", agendas);
-	
+		
+		if(!agendas.isEmpty())
+		{
+			//Guardar alumno en la Agenda
+			servicioAlumnoAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendas,alumno,curso);
+				
+		}else{
+			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
+		}
+				
+		modelo.put("listaAgendas", agendas);
+		
+
 
 		return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
 		}

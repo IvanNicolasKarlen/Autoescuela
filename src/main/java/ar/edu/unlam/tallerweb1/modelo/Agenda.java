@@ -16,7 +16,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class Agenda{
+public class Agenda implements Comparable{
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -82,9 +82,13 @@ public class Agenda{
 		this.alumno = alumno;
 	}
 	
-	
-	
+	@Override
+	public int compareTo(Object o) {
+		Agenda a = (Agenda)o;
+		String nombreObjeto = a.getFecha().toLowerCase();
+		String nombreThis = this.getFecha().toLowerCase();
+		return( nombreThis.compareTo( nombreObjeto ) );
 		
-	
+	}
 
 }
