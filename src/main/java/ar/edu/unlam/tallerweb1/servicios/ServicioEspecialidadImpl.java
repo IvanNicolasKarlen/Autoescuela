@@ -25,4 +25,14 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 		return especialidadDao.traerEspecialidadPorId(id);
 		
 	}
+
+	@Override
+	public Especialidad traerEspecialidadPorNombre(String tipoEsp) {
+		return especialidadDao.traerEspecialidadPorNombre(tipoEsp);
+	}
+
+	@Override
+	public Long guardarEspecialidad(Especialidad especialidad) {
+		return especialidadDao.guardarEspecialidad(especialidad);
+	}
 }

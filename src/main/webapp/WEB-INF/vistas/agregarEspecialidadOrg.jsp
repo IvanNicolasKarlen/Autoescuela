@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <head>
-<title>Home</title>
+<title>Agregar Tipo de Vehiculo</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -19,8 +19,7 @@
 	<%@ include file="../../parts/sidebar.jsp"%>
 	<!-- fin sidebar -->
 
-	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
+
 
 	<!-- En este h4 se muestra el error si es que hay alguno -->
 	<h4 class="t-center text-danger">${mensaje}</h4>
@@ -30,26 +29,16 @@
 		<div class="row">
 			<div class="col-lg-12 p-b-30">
 				<div class="t-center">
-
-					<form:form modelAttribute="vehiculo" action="agregarVehiculo-2"
-						method="post">
-						<label class="txt9"> Patente </label>
-						<form:input type="text" path="patente" id="patente"></form:input>
-						<label class="txt9"> Modelo </label>
-						<form:input type="text" path="modelo" id="modelo"></form:input>
-						<label class="txt9"> Tipo de Vehiculo: </label>
-						<select path="tipoDeVehiculo">
-						<c:forEach items="${listatipovehiculos}" var="tdv">
-							<option value="${tdv}">${tdv.tipo}</option>
-						</c:forEach>
-						</select>
-						<input style="display:none" name="estadoId" id="estado" value="${estado}"/>
+					<h1>Agregar Especialidad</h1>
+					<hr/>
+					<form method="get" action="AgregarEspecialidad">
+						<label class="txt9"> Nombre de Especialidad: </label>
+						<input type="text" name="tipo" id="tipo"></input>
 						<div class="wrap-btn-booking flex-c-m m-t-6">
-							<button type="submit"
-								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
-								Continuar</button>
+							<input type="submit"></input>
 						</div>
-					</form:form>
+					</form>
+					<a href="index">Volver a Inicio</a>
 				</div>
 			</div>
 		</div>

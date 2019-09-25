@@ -19,219 +19,105 @@
 <%@ include file="../../parts/sidebar.jsp" %> 
 	<!-- fin sidebar -->
 	
-	<!-- Slide1 -->
-	<section class="section-slide">
-		<div class="wrap-slick1">
-			<div class="slick1">
-				<div class="item-slick1 item1-slick1" style="background-image: url(images/index.jpg);">
-					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
-						<span class="caption1-slide1 txt1 t-center animated visible-false m-b-15" data-appear="fadeInDown">
-							Bienvenido ALUMNO 
-						</span>
-
-						<h2 class="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
-							a Autoescuela
-						</h2>
-						<c:if test="${usuarioId==null}">
-							<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-							<!-- Button1 -->
-								<a href="registro" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Registrarse
-								</a>
-							</div>
-						</c:if>
-						<c:if test="${usuarioId!=null}">
-						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-							<!-- Button1 -->
-							<a href="cursos" class="btn1 flex-c-m size1 txt3 trans-0-4">
-								Ver cursos
-							</a>
-						</div>
-						</c:if>
-					</div>
-				</div>	
-			</div>
-		</div>
-	</section>
-
+	
+	
+	
 	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
+	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 p-t-45 p-b-30">
 					<div class="wrap-text-welcome t-center">
-						<span class="tit2 t-center">
-							Curso de Autoescuela
-						</span>
+						
 
 						<h3 class="tit3 t-center m-b-35 m-t-5">
-							Bienvenido
+							Aun no te has anotado
 						</h3>
 
 						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Comenza a tomar tus clases de manejo con nosotros, te estamos esperando.
+							Dirigite a nuestro calendario para reservar tus dias y horarios.
 						</p>
 
-						<a href="nosotros" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-								Conocenos
-							</a>
+						<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					Anotarme
+				</a>
 					</div>
 				</div>
 
 				<div class="col-md-6 p-b-30">
 					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index2.jpg" alt="IMG-OUR">
+						<img src="images/index4.jpg" alt="IMG-OUR">
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	
 
-	<!-- Intro -->
-	<section class="section-intro">
 
-		<div class="content-intro bg-white p-t-77 p-b-133">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index6.jpg" alt="IMG-INTRO"></a>
-							</div>
 
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Precauciones
-								</h4></a>
 
-								<p class="m-b-20">
-								Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
-								</p>
 
-							</div>
-						</div>
-					</div>
 
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index7.jpg" style="height:370px" alt="IMG-INTRO"></a>
-							</div>
 
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Comodidad
-								</h4></a>
 
-								<p class="m-b-20">
-									Aliquam eget aliquam magna, quis posuere risus ac justo ipsum nibh urna
-								</p>
 
-							</div>
-						</div>
-					</div>
 
-					<div class="col-md-4 p-t-30">
-						<!-- Block1 -->
-						<div class="blo1">
-							<div class="wrap-pic-blo1 bo-rad-10 hov-img-zoom">
-								<a href="#"><img src="images/index2.jpg" style="height:370px" alt="IMG-INTRO"></a>
-							</div>
 
-							<div class="wrap-text-blo1 p-t-35">
-								<a href="#"><h4 class="txt5 color0-hov trans-0-4 m-b-13">
-									Excelente servicio
-								</h4></a>
-
-								<p class="m-b-20">
-									Sed ornare ligula eget tortor tempor, quis porta tellus dictum.
-								</p>
-
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Our menu -->
-	<section class="section-ourmenu bg2-pattern p-t-115 p-b-120">
+<section class="section-ourmenu bg2-pattern p-t-115 p-b-120">
 		<div class="container">
 			<div class="title-section-ourmenu t-center m-b-22">
 				<span class="tit2 t-center">
-					Recibidos
+					
 				</span>
 
 				<h3 class="tit5 t-center m-t-2">
-					Nuestros alumnos
+					Tus clases
 				</h3>
 			</div>
 
-			<div class="row">
-				<div class="col-md-8">
-					<div class="row">
-						<div class="col-sm-6">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index10.jpg" alt="IMG-MENU">
-
+			
+			
+			
+			
+			
+			
+			
+			<div class="card text-center">
+  <div class="card-header">
+    <div class="wrap-text-blo1  text-center ">
+								<h4 class="txt5 color0-hov trans-0-4 m-b-13">
+									Clase 1 
+								</h4>
+	</div>
+  </div>
+  <div class="card-body">
+   <p class="m-b-20">
+								<b>Fecha:</b> 21/09/2019 
+								</p>
+								<p class="m-b-20">
+								<b>Horario:</b> 14:00 hrs
+								</p>
+								<p class="m-b-20">
+								<b>Instructor:</b> Cesar Millan
+								</p>
+								<p class="m-b-20">
+								<b>Auto:</b> Vento color Rojo
+								</p>
 								
-							</div>
-						</div>
-
-						<div class="col-sm-6">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index11.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index15.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index12.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-						<div class="col-12">
-							<!-- Item our menu -->
-							<div class="item-ourmenu bo-rad-10 hov-img-zoom pos-relative m-t-30">
-								<img src="images/index13.jpg" alt="IMG-MENU">
-
-								
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
+    <button href="reservation.html" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					Modificar
+				</button>
+  </div>
+  
+</div>
+<a href="fechas" class="btn3 flex-c-m size13 txt11 m-t-20 trans-0-4 m-l-r-auto">
+					Agregar clases
+				</a>
 		</div>
 	</section>
-
-
 	
+<<<<<<< HEAD
 	<!--									NOS PUEDE SERVIR PARA LA PARTE DEL REGISTRAR FECHA
 	<section class="section-booking bg1-pattern p-t-100 p-b-110">
 		<div class="container">
@@ -437,20 +323,15 @@
 									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
 									<i class="fa fa-star p-l-1" aria-hidden="true"></i>
 								</div>
+=======
+	
+	
+	
+	
+>>>>>>> 46c0d8275732a61d31f45f5b777f2d7ed08096e3
 
-								<div class="more-review txt4 t-center animated visible-false m-t-32" data-appear="fadeInUp">
-									Guillermo Franchella -— Buenos Aires
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 
-			</div>
 
-			<div class="wrap-slick3-dots m-t-30"></div>
-		</div>
-	</section>
 
 
 	<!-- Footer -->

@@ -24,8 +24,7 @@
 			<div class="col-lg-12 p-b-30">
 				<div class="t-center">
 					
-					<h3>${mensaje1}</h3>
-					<h3>${mensaje2}</h3>
+					<h3>${mensaje}</h3>
 					<h3>${error}</h3>
 					<p>
 						<a href="index">Volver al inicio</a>
