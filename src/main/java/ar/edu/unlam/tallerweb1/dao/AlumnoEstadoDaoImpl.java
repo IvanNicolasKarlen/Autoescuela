@@ -7,25 +7,25 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
 
-@Repository("AlumnoBuscarCursoDao")
-public class AlumnoBuscarCursoDaoImpl implements AlumnoBuscarCursoDao {
-
+@Repository("AlumnoEstadoDao")
+public class AlumnoEstadoDaoImpl implements AlumnoEstadoDao {
 	
 	@Inject
 	private SessionFactory sessionfactory;
 
 	@Override
-	public Curso buscarCurso(Curso cursoElegido) {
+	public EstadoDelCurso buscarEstadoCursando() {
 		final Session session = sessionfactory.getCurrentSession();
-		
-		return (Curso) session.createCriteria(Curso.class)
-				.add(Restrictions.eq("id",cursoElegido.getId()))
+
+		String estado = "Cursando";
+		return(EstadoDelCurso) session.createCriteria(EstadoDelCurso.class)
+				.add(Restrictions.eq("estadoDelCurso", estado))
 				.uniqueResult();
-		
-		
 	}
 	
 	
+	
+
 }
