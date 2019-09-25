@@ -21,7 +21,8 @@ public class ListadoFechaDaoImp implements ListadoFechaDao {
 	@Override
 	public List<Agenda> listaFecha() {
 		final Session session = sessionFactory.getCurrentSession();
-		listaFecha = session.createCriteria(Agenda.class).list();
+		listaFecha = session.createCriteria(Agenda.class)
+					.list();
 		return (listaFecha);
 	}
 

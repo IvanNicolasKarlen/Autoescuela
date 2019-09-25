@@ -44,9 +44,6 @@
 							<td class="alt-celda">${variable.hora}</td>
 						</tr>
 				</c:forEach>
-				
-				
-				
 		</tbody>
 	</table>
 

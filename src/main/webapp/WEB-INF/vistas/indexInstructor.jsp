@@ -41,7 +41,7 @@
 						<c:if test="${usuarioId!=null}">
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<a href="alumnosInstructor" class="btn1 flex-c-m size1 txt3 trans-0-4">
+							<a href="AlumnosDelInstructor" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Ver alumnos
 							</a>
 						</div>

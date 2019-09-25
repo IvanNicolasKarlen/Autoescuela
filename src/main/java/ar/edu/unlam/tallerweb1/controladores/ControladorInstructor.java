@@ -42,43 +42,57 @@ public class ControladorInstructor {
 	@Inject 
 	private ServicioListarFecha servicioListarFecha;
 	
-	
-
-
-	@RequestMapping ("/indexInstructor")
-	public ModelAndView indexInstructor (HttpServletRequest request) {
-		return new ModelAndView ("indexInstructor");
-	}
-	
-
-	@RequestMapping ("/alumnosInstructor")
-	public ModelAndView alumnosInstructor (HttpServletRequest request) {
-		return new ModelAndView ("alumnosInstructor");
-	}
 
 	
+//	@RequestMapping(path="/turnos", method = RequestMethod.GET)
+//	public ModelAndView BuscarTurnos (HttpServletRequest request) {
+//		
+//		ModelMap model = new ModelMap();
+//		
+//		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+//
+//		idInstructor=3L;
+//		
+//		Instructor i= new Instructor();
+//		i=servicioInstructor.buscarInstructorPorId(idInstructor);
+//		
+//		System.out.println("xxxxxxxxxxxx"+ i.getId() +" "+ i.getId()+i.getUsuario().getApellido());
+//			
+//		List <Agenda> agenda = servicioInstructorBuscarTurnos.buscarTurnos(idInstructor);
+//	
+//		List<Alumno>alumnos= new ArrayList();
+//		alumnos= servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(idInstructor,nombre,apellido);
+//		
+//		model.put("agenda", agenda);
+//		model.put("alumnosInstructor", alumnos);
+//		model.put("idInst", idInstructor);
+//		model.put("listadoFecha", servicioListarFecha.listaFecha());
+//		
+//		return new ModelAndView ("alumnosInstructor",model);
+//		
+//	}
 	
-	@RequestMapping(path="/turnos", method = RequestMethod.GET)
-	public ModelAndView BuscarTurnos (HttpServletRequest request,String nombre, String apellido) {
-		
+	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
+	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
+	
 		ModelMap model = new ModelMap();
 		
-		Long idInstructor = (Long) request.getSession().getAttribute("ID");
-	
-		Instructor i= new Instructor();
-		i=servicioInstructor.buscarInstructorPorId(idInstructor);
-			
-		List <Agenda> agenda = servicioInstructorBuscarTurnos.buscarTurnos(idInstructor);
-	
-		List<Alumno>alumnos= new ArrayList();
-		alumnos= servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(idInstructor,nombre,apellido);
+		Long idInstructor = (Long) request.getSession().getAttribute("id");
+		List <Agenda> listaAgenda = servicioAgenda.buscarAgendaPorIdInstructor(idInstructor);
 		
-		model.put("agenda", agenda);
-		model.put("alumnosInstructor", alumnos);
-		model.put("idInst", idInstructor);
-		model.put("listadoFecha", servicioListarFecha.listaFecha());
+		model.put("listaAgenda", listaAgenda);
 		
 		return new ModelAndView ("alumnosInstructor",model);
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

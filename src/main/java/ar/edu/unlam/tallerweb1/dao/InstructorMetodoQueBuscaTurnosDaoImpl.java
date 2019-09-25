@@ -8,10 +8,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 
 @Repository("InstructorMetodoQueBuscaTurnosDao")
+@Transactional
 public class InstructorMetodoQueBuscaTurnosDaoImpl implements InstructorMetodoQueBuscaTurnosDao{
 
 	@Inject
@@ -19,8 +21,8 @@ public class InstructorMetodoQueBuscaTurnosDaoImpl implements InstructorMetodoQu
 	
 	@Override
 	public List<Agenda> buscarTurnos(Long idInstructor) {
-		final Session session = sessionFactory.getCurrentSession();
-		List <Agenda> miLista =  session.createCriteria(Agenda.class)
+
+		List <Agenda> miLista =  sessionFactory.getCurrentSession().createCriteria(Agenda.class)
 								.createAlias("InstructorVehiculoEspecialidad", "iveBuscando")
 								.createAlias("iveBuscado.Instructor", "InstructorId")
 								.add(Restrictions.eq("InstructorId.id", idInstructor))
