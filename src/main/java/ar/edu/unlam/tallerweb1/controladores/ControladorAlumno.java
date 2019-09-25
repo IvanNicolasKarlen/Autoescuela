@@ -64,6 +64,10 @@ public class ControladorAlumno {
 	private ServicioAlumnoConsultaEspecialidad servicioAlumnoConsultaEspecialidad;
 	@Inject
 	private ServicioAlumnoBuscarCurso  servicioBuscarCurso;
+	@Inject
+	private ServicioAlumnoTraerAgendasConFechasNoRepetidas servicioAlumnoTraerAgendasConFechasNoRepetidas;
+	@Inject
+	private ServicioAlumnoGuardarAlumnoEnAgenda servicioAlumnoGuardarAlumnoEnAgenda;
 	
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno() {
@@ -114,7 +118,7 @@ public class ControladorAlumno {
 		//Buscar la especialidad del curso elegido
 		Especialidad especialidad = servicioAlumnoConsultaEspecialidad.consultarEspecialidadCursoElegido(cursoElegido);
 		
-		//Saber si el alumno ya est· haciendo este curso que selecciono
+		//Saber si el alumno ya est√° haciendo este curso que selecciono
 		List <TablaCursoAlumno> cursando = servicioAlumnoSiYaSeInscribioOnO.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
 		
 		
@@ -141,7 +145,20 @@ public class ControladorAlumno {
 			}
 		
 	
+	//Traer todas las fechas con disponibilidad
+	TreeSet<Agenda> agendas=servicioAlumnoTraerAgendasConFechasNoRepetidas.traerAgendasConFechasNoRepetidas(curso);
+
 	
+	if(!agendas.isEmpty())
+	{
+		//Guardar alumno en la Agenda
+		servicioAlumnoGuardarAlumnoEnAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendas,alumno,curso);
+			
+	}else{
+		modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
+	}
+			
+	modelo.put("listaAgendas", agendas);
 	
 
 		return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
