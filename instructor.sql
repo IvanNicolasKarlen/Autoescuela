@@ -1,38 +1,45 @@
 create schema tallerwebtpfinal;
+use tallerwebtpfinal;
 
-insert into instructorvehiculoespecialidad (id,agenda_id,especialidad_id,instructor_id,vehiculo_id) values (1,1,1,1,1);
-insert into instructorvehiculoespecialidad (id,agenda_id,especialidad_id,instructor_id,vehiculo_id) values (2,2,2,2,2);
-insert into instructorvehiculoespecialidad (id,agenda_id,especialidad_id,instructor_id,vehiculo_id) values (3,3,3,3,3instructor);
+-- insert into especialidad (tipo) values('tipo1');
+-- insert into especialidad (tipo) values('tipo2');
+-- insert into especialidad (tipo) values('tipo3');
 
-insert into instructor (id,usuario_id) values (1,1);
-insert into instructor (id,usuario_id) values (2,2);
-insert into instructor (id,usuario_id) values (3,3);
+-- insert into tipodevehiculo (tipo, especialidad_id) values ("tipo1",1);
 
-insert into especialidad (id,tipo,instructor_id) values(1, 'tipo1',1);
-insert into especialidad (id,tipo,instructor_id) values(2, 'tipo2',2);
-insert into especialidad (id,tipo,instructor_id) values(3, 'tipo3',3);
+-- insert into curso (cantClasesPracticas,cantClasesTeoricas,descripcion,precio,titulo,especialidad_id)
+-- values (5,5,"descripcion1",1500,"titulo1",1);
 
-insert into vehiculo (id,estado,patente,tipo,instructor_id) values (1, 'nuevo','ASIT','tipoP',1);
-insert into vehiculo (id,estado,patente,tipo,instructor_id) values (2, 'nuevo','ASITD','tipoA',2);
-insert into vehiculo (id,estado,patente,tipo,instructor_id) values (3, 'nuevo','ASITA','tipoB',3);
+-- insert into estadodevehiculo (estadoActual) values ("estado1");
 
-insert into agenda (id,fecha,hora) values (1,'11-02-19', 1200);
-insert into agenda (id,fecha,hora) values (1,'12-02-19', 1300);
-insert into agenda (id,fecha,hora) values (1,'13-02-19', 1400);
+insert into alumno (usuario_id) values (1);
+insert into alumno (usuario_id) values (2);
+insert into alumno (usuario_id) values (3);
 
-insert into alumno (id,usuario_id) values (1,1);
-insert into alumno (id,usuario_id) values (2,2);
-insert into alumno (id,usuario_id) values (2,2);
+insert into instructor (usuario_id) values (1);
+insert into instructor (usuario_id) values (2);
 
-insert into organizador (id,usuario_id) values (1,1);
-insert into organizador (id,usuario_id) values (2,2);
-insert into organizador (id,usuario_id) values (3,3);
-
-insert into usuario (id,apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
-values (1, 'Pardo',12345678,'sebas@hotmail.com','Sebastian', 'contra1','Instructor',1,1,1);
-
-insert into usuario (id,apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
-values (2, 'Borgeat',14725863,'andres@hotmail.com','Andres', 'contra2','Instructor',2,2,2);
+-- insert into vehiculo (estado,patente,tipo,instructor_id,modelo,estadoDeVehiculo_id,tipoDeVehiculo_id) 
+-- values ('nuevo','ASIT','tipoP',null,'model1',null,null);
 
 
+insert into instructorvehiculoespecialidad (especialidad_id,instructor_id,vehiculo_id) values (null,1,null);
+insert into instructorvehiculoespecialidad (especialidad_id,instructor_id,vehiculo_id) values (null,null,null);
+insert into instructorvehiculoespecialidad (especialidad_id,instructor_id,vehiculo_id) values (null,null,null);
 
+insert into agenda (fecha, hora, instructorVehiculoEspecialidad_id) values ("2019/11/11", 1400,1),
+                                        ("2019/12/12", 1500,2),
+                                        ("2019/10/10", 1700,3);
+
+Insert into agenda (fecha, hora,alumno_id) values
+("2019/10/11", 1600,1);
+
+insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
+             values ('Pardo',12345678,'sebas@hotmail.com','Sebastian', 'contra1','Instructor',null,null,null);
+
+insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
+values ('Borgeat',14725863,'andres@hotmail.com','Andres', 'contra2','Instructor',null,null,null);
+
+insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
+             values ('Iracheta',39625638,'juli@hotmail.com','Julieta', 'qa','Organizador',null,null,null);
+             

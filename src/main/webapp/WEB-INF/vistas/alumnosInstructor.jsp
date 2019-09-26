@@ -40,8 +40,8 @@
 		<tbody>
 			<c:forEach items="${listaAgenda}" var="variable" >
 					<tr>
-						<td class="alt-celda"><h2>${variable.fecha}</h2></td>
-						<td class="alt-celda"><h2>${variable.hora}</h2></td>
+						<td class="alt-celda"><h3>${variable.fecha}</h3></td>
+						<td class="alt-celda"><h3>${variable.hora}</h3></td>
 					</tr>
 			</c:forEach>
 			

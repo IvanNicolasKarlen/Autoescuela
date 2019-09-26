@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.controladores;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,20 +22,9 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
-import ar.edu.unlam.tallerweb1.servicios.ServicioBuscarInstructorPorId;
-import ar.edu.unlam.tallerweb1.servicios.ServicioInstructorMetodoQueBuscaTurnos;
-
-
 
 @Controller
 public class ControladorInstructor {
-
-	@Inject
-	private ServicioBuscarInstructorPorId servicioInstructor;
-	
-	
-	@Inject
-	private ServicioInstructorMetodoQueBuscaTurnos servicioInstructorBuscarTurnos;
 	
 	@Inject 
 	private ServicioAgenda servicioAgenda;
