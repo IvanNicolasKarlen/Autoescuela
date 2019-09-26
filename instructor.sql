@@ -32,14 +32,14 @@ insert into agenda (fecha, hora, instructorVehiculoEspecialidad_id) values ("201
                                         ("2019/10/10", 1700,3);
 
 Insert into agenda (fecha, hora,alumno_id) values
-("2019/10/11", 1600,1);
+("2019/10/11", 1600,3);
 
 insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
-             values ('Pardo',12345678,'sebas@hotmail.com','Sebastian', 'contra1','Instructor',null,null,null);
+             values ('Pardo',12345678,'sebas@hotmail.com','Sebastian', 'contra1','Instructor',3,null,null);
 
 insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
 values ('Borgeat',14725863,'andres@hotmail.com','Andres', 'contra2','Instructor',null,null,null);
 
 insert into usuario (apellido,dni,email,nombre,password,rol,alumno_id,instructor_id,organizador_id) 
-             values ('Iracheta',39625638,'juli@hotmail.com','Julieta', 'qa','Organizador',null,null,null);
+             values ('Iracheta',39625638,'juli@hotmail.com','Julieta', 'qa','Alumno',null,null,null);
              
