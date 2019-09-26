@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,67 +44,53 @@
 	<!-- Sidebar -->
 <%@ include file="../../parts/sidebar.jsp" %> 
 	<!-- fin sidebar -->
-
-	
-	
-	
 	
 	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
-	
-	<h1>Fecha	-	Hora Disponibles:</h1>
-	<c:forEach items="${listaAgendas}" var="la">
-	
-	<p>- ${la.fecha}	-	${la.hora}</p>
-	
-	</c:forEach>
-	
+	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">	
 	
 		<h4 class="tit2 t-center m-b-35 m-t-2">
-                 <label>Has quedado anotado en estos dias</label>
+                 <label>Te organizamos este cronograma</label>
 					</h4>
-				 
+		 
 		
-	<div class="row">
-<div class="col-md-4 ">
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de Auto</h2>
-		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase 1</h5>
-		
-		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: 12/10/2019<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> 16:00<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
-		
-</div>		
-<div class="col-md-4 ">
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de Auto</h2>
-		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase 2</h5>
-		
-		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: 15/10/2019<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> 14:00<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
-		
-</div>
-<div class="col-md-4 b-22">
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de Auto</h2>
-		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase 3</h5>
-		
-		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: 16/10/2019<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> 13:00<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
-		
-</div>
+<div class="row">
+<c:set var = "i" value = "${0}" />
 
+
+<c:forEach items="${listaAgendas}" var="la">	
+
+<div class="col-md-4 ">
+<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${curso}</h2>
+ <c:set var="i" value="${ i+1}"/>
+		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
+		          
 		
+		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
+		
+		<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
+		
+		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
+		
+</div>
+</c:forEach>	
+	
+	
 	</div>
+	<div class="card-body">
+  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" path="id" name="id" value="${lc.id}">
+					ANOTARME
+  </button>
+   
+  		</div>
+  		
+  		
+  	<div class="card-body">
+  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" path="id" name="id" value="${lc.id}">
+					MODIFICAR
+  </button>
+   
+  		</div>
 	</section>
 	
 	

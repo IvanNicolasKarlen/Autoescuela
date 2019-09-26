@@ -18,24 +18,6 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 	@Inject
     private SessionFactory sessionFactory;
-	
-	@Override
-	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso) {
-		
-		final Session session = sessionFactory.getCurrentSession();
-		
-		List <Agenda> result = session.createCriteria(Agenda.class)
-				.add(Restrictions.isNull("alumno.id"))
-				.setMaxResults(curso.getCantClasesPracticas())
-				.list();
-		
-		// creamos un treeSet para agregar las agendas sin que se 
-		// repitan las fechas
-		TreeSet<Agenda> agendas = new TreeSet<Agenda>();
-		agendas.addAll(result);
-			
-		return agendas ;
-	}
 
 	@Override
 	public void guardarAlumnoConSuCursoElegidoEnLaAgenda(Agenda agenda) {
@@ -43,5 +25,15 @@ public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 		session.update(agenda);
 
 	}
+
+	@Override
+	public List<Agenda> traerAgendasDisponibles() {
+		final Session session = sessionFactory.getCurrentSession();
+		List <Agenda> agendas = session.createCriteria(Agenda.class)
+				.add(Restrictions.isNull("alumno.id"))
+				.list();
+		return agendas;
+	}
+
 
 }

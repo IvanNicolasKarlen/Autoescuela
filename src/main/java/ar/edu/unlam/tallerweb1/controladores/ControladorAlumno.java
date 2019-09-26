@@ -138,19 +138,24 @@ public class ControladorAlumno {
 			}
 		
 		//Traer todas las fechas con disponibilidad
-		TreeSet<Agenda> agendas=servicioAlumnoAgenda.traerAgendasConFechasNoRepetidas(curso);
+		List<Agenda> agendas= servicioAlumnoAgenda.traerAgendasDisponibles();
+
+		TreeSet<Agenda> agendasSinDuplicados = servicioAlumnoAgenda.eliminarLasAgendasConFechasDuplicadas(agendas);
+
+		TreeSet<Agenda> agendasListas = servicioAlumnoAgenda.eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(agendasSinDuplicados,curso);
 
 		
 		if(!agendas.isEmpty())
 		{
 			//Guardar alumno en la Agenda
-			servicioAlumnoAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendas,alumno,curso);
+			servicioAlumnoAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendasListas,alumno,curso);
 				
 		}else{
 			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
 		}
 				
-		modelo.put("listaAgendas", agendas);
+		modelo.put("listaAgendas", agendasListas);
+		modelo.put("curso", curso.getEspecialidad().getTipo());
 		
 
 

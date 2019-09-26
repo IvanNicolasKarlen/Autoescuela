@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
 import java.util.TreeSet;
 
 import javax.inject.Inject;
@@ -20,9 +21,16 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 	private AlumnoAgendaDao  alumnoAgendaDao;
 	
 	@Override
-	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
+	public TreeSet<Agenda> eliminarLasAgendasConFechasDuplicadas(List<Agenda> agendas) {
 
-		return alumnoAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
+		// creamos un treeSet para agregar las agendas sin que se 
+		// repitan las fechas
+															// reverseOrder ordena los elementos
+															// en forma descendente
+				TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
+				agendasDesc.addAll(agendas);
+				
+		return agendasDesc;
 	}
 	
 
@@ -38,6 +46,28 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 	
 		}
 		
+	}
+
+
+
+	@Override
+	public List<Agenda> traerAgendasDisponibles() {
+		return alumnoAgendaDao.traerAgendasDisponibles();
+	}
+
+
+
+	@Override
+	public TreeSet<Agenda> eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(TreeSet<Agenda> agendasSinDuplicados, Curso curso) {
+		//Elimino los objetos cunando la cantidad de elementos supera la cantidad
+		// de clases del curso 
+		agendasSinDuplicados.removeIf((Agenda a) -> agendasSinDuplicados.size() > curso.getCantClasesPracticas());
+					
+		// Ordeno las agendas con las fechas en forma ascendente
+		TreeSet<Agenda> agendasAsc = new TreeSet<Agenda>();
+		agendasAsc.addAll(agendasSinDuplicados);	
+		return agendasAsc;
+					
 	}
 
 }
