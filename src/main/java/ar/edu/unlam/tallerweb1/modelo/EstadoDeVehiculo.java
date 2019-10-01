@@ -20,7 +20,7 @@ public class EstadoDeVehiculo {
 	private String estadoActual;
 	
 	@OneToMany
-	private List<EstadoDeVehiculo> estadosDeVehiculos; 
+	private List<Vehiculo> vehiculos; 
 	
 	public Long getId() {
 		return id;
@@ -38,13 +38,14 @@ public class EstadoDeVehiculo {
 		this.estadoActual = estadoActual;
 	}
 
-	public List<EstadoDeVehiculo> getEstadosDeVehiculos() {
-		return estadosDeVehiculos;
+	public List<Vehiculo> getVehiculos() {
+		return vehiculos;
 	}
 
-	public void setEstadosDeVehiculos(List<EstadoDeVehiculo> estadosDeVehiculos) {
-		this.estadosDeVehiculos = estadosDeVehiculos;
+	public void setVehiculos(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
+	
 
 	
 

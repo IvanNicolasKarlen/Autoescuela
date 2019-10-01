@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
-import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 
 public interface ServicioAlumnoCurso {
 
@@ -14,9 +14,9 @@ public interface ServicioAlumnoCurso {
 
 	Curso buscarCurso(Curso cursoElegido);
 
-	List<TablaCursoAlumno> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoDelCurso estado,
+	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoDelCurso estado,
 			Especialidad especialidad);
 
-	void guardarCurso(Alumno alumno, Curso cursoElegido, TablaCursoAlumno cursoAlumno, EstadoDelCurso estado);
+	void guardarCurso(Alumno alumno, Curso cursoElegido, Inscripcion cursoAlumno, EstadoDelCurso estado);
 
 }

@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
-import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
@@ -112,13 +112,13 @@ public class ControladorAlumno {
 		Especialidad especialidad = servicioAlumnoEspecialidad.consultarEspecialidadCursoElegido(cursoElegido);
 		
 		//Saber si el alumno ya está haciendo este curso que selecciono
-		List <TablaCursoAlumno> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
+		List <Inscripcion> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
 		
 		
 		//Traigo los datos del alumno logueado
 				Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 						
-				TablaCursoAlumno cursoAlumno = new TablaCursoAlumno();	
+				Inscripcion cursoAlumno = new Inscripcion();	
 		
 		if(cursando.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{

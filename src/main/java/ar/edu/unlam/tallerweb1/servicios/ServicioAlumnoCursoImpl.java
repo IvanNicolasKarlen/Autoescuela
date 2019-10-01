@@ -12,7 +12,7 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
-import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 
 @Service("ServicioAlumnoCursoImpl")
 @Transactional
@@ -34,14 +34,14 @@ public class ServicioAlumnoCursoImpl implements ServicioAlumnoCurso {
 	}
 
 	@Override
-	public List<TablaCursoAlumno> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoDelCurso estado,
+	public List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoDelCurso estado,
 			Especialidad especialidad) {
 		
 		return alumoCursoDao.consultarSiYaSeInscribioAUnCurso( idAlumno, estado, especialidad);
 	}
 
 	@Override
-	public void guardarCurso(Alumno alumno, Curso cursoElegido, TablaCursoAlumno cursoAlumno, EstadoDelCurso estado) {
+	public void guardarCurso(Alumno alumno, Curso cursoElegido, Inscripcion cursoAlumno, EstadoDelCurso estado) {
 		alumoCursoDao.guardarCurso( alumno,  cursoElegido,  cursoAlumno,  estado);
 		
 	}

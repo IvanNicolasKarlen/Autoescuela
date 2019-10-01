@@ -1,10 +1,13 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cascade;
@@ -22,6 +25,8 @@ public class Vehiculo {
 	private TipoDeVehiculo tipoDeVehiculo;
 	@ManyToOne
 	private EstadoDeVehiculo estadoDeVehiculo;
+	@OneToMany
+	private List<InstructorVehiculoEspecialidad> ives;
 	
 	public Long getId() {
 		return id;
@@ -53,6 +58,12 @@ public class Vehiculo {
 	}
 	public void setEstadoDeVehiculo(EstadoDeVehiculo estadoDeVehiculo) {
 		this.estadoDeVehiculo = estadoDeVehiculo;
+	}
+	public List<InstructorVehiculoEspecialidad> getIves() {
+		return ives;
+	}
+	public void setIves(List<InstructorVehiculoEspecialidad> ives) {
+		this.ives = ives;
 	}
 
 	
