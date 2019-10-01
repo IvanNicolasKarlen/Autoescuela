@@ -130,6 +130,14 @@ public class Usuario {
 	public void setOrganizador(Organizador organizador) {
 		this.organizador = organizador;
 	}
+
+	public List<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
+	}
 	
 	
 	
