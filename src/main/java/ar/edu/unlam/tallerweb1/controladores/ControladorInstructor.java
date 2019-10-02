@@ -29,35 +29,7 @@ public class ControladorInstructor {
 	@Inject 
 	private ServicioAgenda servicioAgenda;
 
-	
-//	@RequestMapping(path="/turnos", method = RequestMethod.GET)
-//	public ModelAndView BuscarTurnos (HttpServletRequest request) {
-//		
-//		ModelMap model = new ModelMap();
-//		
-//		Long idInstructor = (Long) request.getSession().getAttribute("ID");
-//
-//		idInstructor=3L;
-//		
-//		Instructor i= new Instructor();
-//		i=servicioInstructor.buscarInstructorPorId(idInstructor);
-//		
-//		System.out.println("xxxxxxxxxxxx"+ i.getId() +" "+ i.getId()+i.getUsuario().getApellido());
-//			
-//		List <Agenda> agenda = servicioInstructorBuscarTurnos.buscarTurnos(idInstructor);
-//	
-//		List<Alumno>alumnos= new ArrayList();
-//		alumnos= servicioInstructorQueTraeAlumno.buscarAlumnosDeInstructor(idInstructor,nombre,apellido);
-//		
-//		model.put("agenda", agenda);
-//		model.put("alumnosInstructor", alumnos);
-//		model.put("idInst", idInstructor);
-//		model.put("listadoFecha", servicioListarFecha.listaFecha());
-//		
-//		return new ModelAndView ("alumnosInstructor",model);
-//		
-//	}
-	
+
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
 	
@@ -79,7 +51,7 @@ public class ControladorInstructor {
 		
 		}
 			else {
-		return new ModelAndView("login", model);
+		return new ModelAndView("login", model); 
 			     }
 	}
 }
