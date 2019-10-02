@@ -11,7 +11,11 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/tallerwebtpfinal" />
 		<property name="username" value="root" />
+<<<<<<< HEAD
 		<property name="password" value="46598842" />
+=======
+		<property name="password" value="11021998" />
+>>>>>>> c828800e903ac4695ebc3a817ba48743f310825c
 	</bean>
 
 	<!--Configuracion de la factory encargada de generar las sesiones con la base de datos, la misma -->

@@ -15,7 +15,7 @@ public class EstadoDelCurso {
 	private Long id;
 	private String estadoDelCurso;
 	@OneToMany
-	private List<TablaCursoAlumno> tablasCursoAlumnos;
+	private List<Curso> cursos;
 	public Long getId() {
 		return id;
 	}
@@ -28,11 +28,12 @@ public class EstadoDelCurso {
 	public void setEstadoDelCurso(String estadoDelCurso) {
 		this.estadoDelCurso = estadoDelCurso;
 	}
-	public List<TablaCursoAlumno> getTablasCursoAlumnos() {
-		return tablasCursoAlumnos;
+	public List<Curso> getCursos() {
+		return cursos;
 	}
-	public void setTablasCursoAlumnos(List<TablaCursoAlumno> tablasCursoAlumnos) {
-		this.tablasCursoAlumnos = tablasCursoAlumnos;
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
+
 	
 }

@@ -1,10 +1,13 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -15,15 +18,9 @@ public class Asistencia {
 	private Long id;
 	private String estado;
 	
-	@ManyToOne
-	private Alumno alumno;
 	
-
-	@ManyToOne
-	private Instructor instructor;
-	
-	@OneToOne
-	private Agenda agenda;
+	@OneToMany
+	private List<Agenda> agendas;
 	
 	
 	public Long getId() {
@@ -38,25 +35,11 @@ public class Asistencia {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
-	
-	public Agenda getAgenda() {
-		return agenda;
+	public List<Agenda> getAgendas() {
+		return agendas;
 	}
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
-	}
-	public Alumno getAlumno() {
-		return alumno;
-	}
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
-	public Instructor getInstructor() {
-		return instructor;
-	}
-	public void setInstructor(Instructor instructor) {
-		this.instructor = instructor;
+	public void setAgendas(List<Agenda> agendas) {
+		this.agendas = agendas;
 	}
 	
 	

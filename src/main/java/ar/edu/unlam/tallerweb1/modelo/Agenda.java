@@ -23,15 +23,16 @@ public class Agenda implements Comparable{
 	private Long id;
 	private String fecha;
 	private Integer hora;
-	
+	private Boolean clasePagada;
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
 	@ManyToOne
-	private Curso curso;
-	@ManyToOne
-	private Alumno alumno;
+	private Inscripcion inscripcion;
 
+	@ManyToOne
+	private Asistencia asistencia;
+	
 	public Long getId() {
 		return id;
 	}
@@ -39,8 +40,6 @@ public class Agenda implements Comparable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public String getFecha() {
 		return fecha;
@@ -65,23 +64,24 @@ public class Agenda implements Comparable{
 	public void setInstructorVehiculoEspecialidad(InstructorVehiculoEspecialidad instructorVehiculoEspecialidad) {
 		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
-
-	public Curso getCurso() {
-		return curso;
+	
+	public Inscripcion getInscripcion() {
+		return inscripcion;
 	}
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	public void setInscripcion(Inscripcion inscripcion) {
+		this.inscripcion = inscripcion;
 	}
 	
+	
+	public Asistencia getAsistencia() {
+		return asistencia;
+	}
+
+	public void setAsistencia(Asistencia asistencia) {
+		this.asistencia = asistencia;
+	}
+
 	@Override
 	public int compareTo(Object o) {
 		Agenda a = (Agenda)o;
@@ -91,4 +91,16 @@ public class Agenda implements Comparable{
 		
 	}
 
+<<<<<<< HEAD
 }
+=======
+	public Boolean getClasePagada() {
+		return clasePagada;
+	}
+
+	public void setClasePagada(Boolean clasePagada) {
+		this.clasePagada = clasePagada;
+	}
+	
+}
+>>>>>>> c828800e903ac4695ebc3a817ba48743f310825c

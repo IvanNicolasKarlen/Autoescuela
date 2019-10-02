@@ -19,8 +19,12 @@ public class Alumno {
 	@OneToOne
 	private Usuario usuario; 
 	@OneToMany
+<<<<<<< HEAD
 	private List<Agenda> agendas=new ArrayList();
 
+=======
+	private List<Inscripcion> inscripciones;
+>>>>>>> c828800e903ac4695ebc3a817ba48743f310825c
 	
 	public Long getId() {
 		return id;
@@ -35,14 +39,12 @@ public class Alumno {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Agenda> getAgendas() {
-		return agendas;
+	public List<Inscripcion> getInscripciones() {
+		return inscripciones;
 	}
-	public void setAgendas(List<Agenda> agendas) {
-		this.agendas = agendas;
+	public void setInscripciones(List<Inscripcion> inscripciones) {
+		this.inscripciones = inscripciones;
 	}
-	
-	
-	
+
 	
 }
