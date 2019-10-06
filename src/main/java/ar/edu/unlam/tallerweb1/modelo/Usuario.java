@@ -1,18 +1,14 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -25,9 +21,11 @@ public class Usuario {
 	private Long id;
 	private String password;
 	private Integer dni;
+	private String nombreDeUsuario;
 	private String nombre;
 	private String email;
 	private String apellido;
+	private String rol;
 
 	@OneToOne
 	@Cascade(value = CascadeType.SAVE_UPDATE)
@@ -42,22 +40,7 @@ public class Usuario {
 	@Cascade(value = CascadeType.SAVE_UPDATE)
 	private Organizador organizador;
 	
-	@JoinTable(
-			name = "relacion_usuario_rol",
-			joinColumns = @JoinColumn(name = "fk_Usuario", nullable = false),
-			inverseJoinColumns = @JoinColumn(name="fk_Rol", nullable = false)
-			
-			)
-	@ManyToMany 
-	private List<Rol> roles;
-	
-	  public void agregarRol(Rol rol){
-	        if(this.roles == null){
-	            this.roles = new ArrayList<>();
-	        }
-	        
-	        this.roles.add(rol);
-	    }
+
 
 	public Long getId() {
 		return id;
@@ -131,13 +114,23 @@ public class Usuario {
 		this.organizador = organizador;
 	}
 
-	public List<Rol> getRoles() {
-		return roles;
+	public String getRol() {
+		return rol;
 	}
 
-	public void setRoles(List<Rol> roles) {
-		this.roles = roles;
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
+
+	public String getNombreDeUsuario() {
+		return nombreDeUsuario;
+	}
+
+	public void setNombreDeUsuario(String nombreDeUsuario) {
+		this.nombreDeUsuario = nombreDeUsuario;
+	}
+
+	
 	
 	
 	
