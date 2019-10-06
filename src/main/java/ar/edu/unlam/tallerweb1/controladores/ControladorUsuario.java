@@ -48,7 +48,7 @@ public class ControladorUsuario {
 							break;
 			default: 
 			}
-			return new ModelAndView(vistaindex,model);
+			return new ModelAndView("index",model);
 	
 		}
 
@@ -83,16 +83,14 @@ public class ControladorUsuario {
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {	
-			if(usuarioBuscado.getRoles().equals(rol)){
-				request.getSession().setAttribute("ROL", usuarioBuscado.getRoles());
+			
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
 				return new ModelAndView("redirect:/index");
-			}else{
-				model.put("error", "El rol seleccionado no coincide con su usuario");
-			}		
+				
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
-			model.put("error", "Usuario, clave o rol incorrecto");
+			model.put("error", "Nombre de Usuario o clave incorrecta");
 		}
 		return new ModelAndView("login", model);
 	}
@@ -116,7 +114,8 @@ public class ControladorUsuario {
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
 		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
-				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null){
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null
+				||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null){
 			model.put("error", "Por favor complete los campos obligatorios");
 		}
 		else{
@@ -127,7 +126,7 @@ public class ControladorUsuario {
 				if(usuarioBuscado != null){
 					model.put("error","Ya existe un usuario con esos datos");
 				}else{
-					user.setRoles("Alumno");
+					user.setRol("Alumno");
 					Alumno alumno = new Alumno();
 					user.setAlumno(alumno);
 					if(servicioUsuario.insertarUsuario(user)!=null){
@@ -143,37 +142,6 @@ public class ControladorUsuario {
 		return new ModelAndView("registro",model);
 	}
 
-	
-	
-	@RequestMapping(path = "/fechas")
-	public ModelAndView registrarFecha(){
-		ModelMap model = new ModelMap();
-		Usuario usuario = new Usuario();
-		model.put("usuario",usuario);
-		return new ModelAndView("fechas",model);
-	}
-	
-	
-
-	@RequestMapping(path = "/validarFechas", method = RequestMethod.POST)
-	public ModelAndView validarFechas(@ModelAttribute("clase") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha, String hora)
-	{
-		ModelMap modelo = new ModelMap();
-		
-		//servicioRegistrarClases.consultoHorariosDisponibles( fecha, usuario);
-		
-		return new ModelAndView("registrarClases",modelo);
-
-	}
-	
-	
-	@RequestMapping(path = "/horas")
-	public ModelAndView registrarHora(){
-		ModelMap model = new ModelMap();
-		Usuario usuario = new Usuario();
-		model.put("usuario",usuario);
-		return new ModelAndView("horas",model);
-	}
 	@RequestMapping(path = "/cerrarSesion")
 	public ModelAndView cerrarSesion(HttpServletRequest request){
 		request.getSession().removeAttribute("ROL");

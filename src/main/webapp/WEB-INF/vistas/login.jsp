@@ -52,12 +52,12 @@
                         
                         <div class="col-md-4">
                             <span class="txt9">
-									DNI
+									Nombre de Usuario:
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
                                 <form:input class="bo-rad-10 sizefull txt10 p-l-20"
-                                       type="number" id="dni" path="dni"></form:input>
+                                       type="text" id="nombreDeUsuario" path="nombreDeUsuario"></form:input>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -71,18 +71,6 @@
                             </div>
                         </div>
                          <div class="col-md-4">
-                         <span class="txt9">
-                         	Usted es...
-                         </span>
-                        	  <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-                                <select class="bo-rad-10 sizefull txt10 p-l-20"
-                                       id="rol" name="rol">
-                                 <option value="Alumno" >Soy Alumno</option>
-                                 <option value="Instructor" >Soy Instructor</option>  
-                                 <option value="Organizador" >Soy Organizador</option>  
-                                 </select>
-                            </div>
-                       </div>
 
                     <div class="wrap-btn-booking flex-c-m m-t-6">
                         <!-- Button3 -->
