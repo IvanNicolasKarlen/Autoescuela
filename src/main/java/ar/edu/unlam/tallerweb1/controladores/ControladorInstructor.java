@@ -29,9 +29,6 @@ public class ControladorInstructor {
 	@Inject 
 	private ServicioAgenda servicioAgenda;
 
-<<<<<<< HEAD
-
-=======
 	
 //	@RequestMapping(path="/turnos", method = RequestMethod.GET)
 //	public ModelAndView BuscarTurnos (HttpServletRequest request) {
@@ -61,7 +58,6 @@ public class ControladorInstructor {
 //		
 //	}
 	
->>>>>>> c828800e903ac4695ebc3a817ba48743f310825c
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
 	
@@ -83,11 +79,7 @@ public class ControladorInstructor {
 		
 		}
 			else {
-<<<<<<< HEAD
-		return new ModelAndView("login", model); 
-=======
 		return new ModelAndView("login", model);
->>>>>>> c828800e903ac4695ebc3a817ba48743f310825c
 			     }
 	}
 }

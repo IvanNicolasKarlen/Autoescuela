@@ -91,9 +91,6 @@ public class Agenda implements Comparable{
 		
 	}
 
-<<<<<<< HEAD
-}
-=======
 	public Boolean getClasePagada() {
 		return clasePagada;
 	}
@@ -103,4 +100,3 @@ public class Agenda implements Comparable{
 	}
 	
 }
->>>>>>> c828800e903ac4695ebc3a817ba48743f310825c

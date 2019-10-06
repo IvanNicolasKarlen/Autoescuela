@@ -62,7 +62,7 @@
                         </div>
                         <div class="col-md-4">
                             <span class="txt9">
-									ContraseÃ±a
+									Contraseña
 								</span>
 
                             <div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">

@@ -83,8 +83,8 @@ public class ControladorUsuario {
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {	
-			if(usuarioBuscado.getRol().equals(rol)){
-				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			if(usuarioBuscado.getRoles().equals(rol)){
+				request.getSession().setAttribute("ROL", usuarioBuscado.getRoles());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
 				return new ModelAndView("redirect:/index");
 			}else{
@@ -127,7 +127,7 @@ public class ControladorUsuario {
 				if(usuarioBuscado != null){
 					model.put("error","Ya existe un usuario con esos datos");
 				}else{
-					user.setRol("Alumno");
+					user.setRoles("Alumno");
 					Alumno alumno = new Alumno();
 					user.setAlumno(alumno);
 					if(servicioUsuario.insertarUsuario(user)!=null){

@@ -137,8 +137,6 @@ public class Usuario {
 
 	public void setRoles(List<Rol> roles) {
 		this.roles = roles;
-	}
-	
-	
+	}	
 	
 }
