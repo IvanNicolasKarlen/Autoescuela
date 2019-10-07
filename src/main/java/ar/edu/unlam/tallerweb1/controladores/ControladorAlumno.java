@@ -154,38 +154,7 @@ public class ControladorAlumno {
 //
 //		TreeSet<Agenda> agendasListas = servicioAlumnoAgenda.eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(agendasSinDuplicados,curso);
 
-		
-		
-		
-		
-		//*******************************************************
-		
-//		if(!agendas.isEmpty())
-//		{
-//			//Guardar alumno en la Agenda
-//			Inscripcion inscripcion =servicioAlumnoInscripcion.buscarInscripcion(alumno, curso);
-//			servicioAlumnoInscripcion.guardarInscripcionEnLaAgenda(agendasListas,inscripcion);
-//			
-//		}else{
-//			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
-//		}
-//				
-//		modelo.put("listaAgendas", agendasListas);
-//		modelo.put("curso", curso.getEspecialidad().getTipo());
-//		
-//
-//
-//		return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
-//		}
-//		
-//		return new ModelAndView("redirect:/index");
-//
-//	}
-
-
-
-		//*******************************************************
-		
+				
 		
 		//Traer todas las fechas con disponibilidad
 				TreeSet<Agenda> agendas=servicioAlumnoAgenda.traerAgendasDisponibles(curso);
@@ -207,14 +176,7 @@ public class ControladorAlumno {
 				
 				return new ModelAndView("redirect:/index");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@RequestMapping(path="/inscripcion")
 	public ModelAndView inscribirAlumnoEnElCurso(
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
@@ -243,13 +205,13 @@ public class ControladorAlumno {
 				
 				
 				
-				//*************************************
+				
 			Boolean resultado = servicioAlumnoAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel,curso);
 				
 				//Si las fechas que me asignaron no fueron ocupadas
 				if(resultado == true)
 				{
-			//**************************************************Anotarme
+			//Anotarme
 					
 						
 					
@@ -292,8 +254,7 @@ public class ControladorAlumno {
 								return new ModelAndView("cursos", modelo); //Todavia no curso nada
 								
 						}	
-//******************************************************************
-	//***************************
+
 					
 				}else{
 
@@ -319,10 +280,7 @@ public class ControladorAlumno {
 				}
 					
 					
-	//****************************************
-					
-					
-					
+			
 			
 				
 			}else{////////////////////////////////////////////////////// fin if ln 193
