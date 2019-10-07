@@ -8,7 +8,6 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 
 public interface AlumnoAgendaDao {
-	void guardarAlumnoConSuCursoElegidoEnLaAgenda(Agenda a);
 	List<Agenda> traerAgendasDisponibles();
 
 

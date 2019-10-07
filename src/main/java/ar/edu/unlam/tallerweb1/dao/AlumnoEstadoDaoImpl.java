@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 
 @Repository("AlumnoEstadoDao")
 public class AlumnoEstadoDaoImpl implements AlumnoEstadoDao {
@@ -16,12 +17,12 @@ public class AlumnoEstadoDaoImpl implements AlumnoEstadoDao {
 	private SessionFactory sessionfactory;
 
 	@Override
-	public EstadoDelCurso buscarEstadoCursando() {
+	public EstadoInscripcion buscarEstadoCursando() {
 		final Session session = sessionfactory.getCurrentSession();
 
-		String estado = "Cursando";
-		return(EstadoDelCurso) session.createCriteria(EstadoDelCurso.class)
-				.add(Restrictions.eq("estadoDelCurso", estado))
+	
+		return(EstadoInscripcion) session.createCriteria(EstadoInscripcion.class)
+				.add(Restrictions.eq("estado", "Cursando"))
 				.uniqueResult();
 	}
 	

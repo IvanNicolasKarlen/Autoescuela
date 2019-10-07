@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.AlumnoEstadoDao;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 
 @Service("ServicioAlumnoEstado")
 @Transactional
@@ -16,7 +17,7 @@ public class ServicioAlumnoEstadoImpl implements ServicioAlumnoEstado {
 	private AlumnoEstadoDao alumnoEstadoDao;
 
 	@Override
-	public EstadoDelCurso buscarEstadoCursando() {
+	public EstadoInscripcion buscarEstadoCursando() {
 		// TODO Auto-generated method stub
 		return alumnoEstadoDao.buscarEstadoCursando();
 	}

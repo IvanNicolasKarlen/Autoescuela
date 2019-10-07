@@ -9,7 +9,6 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 
 public interface ServicioAlumnoAgenda {
 	
-	void guardarAlumnoConSuCursoElegidoEnLaAgenda(TreeSet<Agenda> agenda, Alumno alumno, Curso cursoElegido);
 	
 	List<Agenda> traerAgendasDisponibles();
 	

@@ -32,8 +32,9 @@ import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumno;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoCurso;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoEspecialidad;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoEstado;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoAgenda;
@@ -47,8 +48,7 @@ public class ControladorAlumno {
 	// un objeto de una clase que implemente la interface servicioUsuario, dicha clase debe estar anotada como
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	
-	@Inject
-	private ServicioAlumnoCurso servicioAlumnoCurso;
+
 	@Inject
 	private ServicioAlumnoEstado servicioAlumnoEstado;
 	@Inject
@@ -57,6 +57,8 @@ public class ControladorAlumno {
 	private ServicioAlumno servicioAlumno;
 	@Inject
 	private ServicioAlumnoAgenda servicioAlumnoAgenda;
+	@Inject
+	private ServicioAlumnoInscripcion servicioAlumnoInscripcion;
 	
 	
 	
@@ -77,7 +79,7 @@ public class ControladorAlumno {
 		ModelMap modelo = new ModelMap();
 		
 		//Trae todo el listado de todos los cursos
-		List<Curso> listaCursos =  servicioAlumnoCurso.buscarCursos();
+		List<Curso> listaCursos =  servicioAlumnoInscripcion.buscarCursos();
 		
 	
 		modelo.put("lista", listaCursos);
@@ -103,34 +105,34 @@ public class ControladorAlumno {
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
 		//Datos del curso Elegido
-		Curso curso = servicioAlumnoCurso.buscarCurso(cursoElegido);
+		Curso curso = servicioAlumnoInscripcion.buscarCurso(cursoElegido);
 		
 		//Busco el id del estado que dice "Cursando"
-		EstadoDelCurso estado = servicioAlumnoEstado.buscarEstadoCursando();
+		EstadoInscripcion estado = servicioAlumnoEstado.buscarEstadoCursando();
 		
 		//Buscar la especialidad del curso elegido
 		Especialidad especialidad = servicioAlumnoEspecialidad.consultarEspecialidadCursoElegido(cursoElegido);
 		
 		//Saber si el alumno ya está haciendo este curso que selecciono
-		List <Inscripcion> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
+		List <Inscripcion> inscripcionCurso = servicioAlumnoInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
 		
 		
 		//Traigo los datos del alumno logueado
 				Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 						
-				Inscripcion cursoAlumno = new Inscripcion();	
+				Inscripcion Tablainscripcion = new Inscripcion();	
 		
-		if(cursando.isEmpty() ) //Todavia ese curso que eligio no esta anotado
+		if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{
 				//Guardar en la tablaCursoAlumno el curso y el alumno
-			servicioAlumnoCurso.guardarCurso(alumno, curso, cursoAlumno, estado);
-				
+			servicioAlumnoInscripcion.guardarInscripcion(alumno, curso, Tablainscripcion, estado);
+			
 				
 			}else{ 
 
 					modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 					//Trae todo el listado de todos los cursos
-					List<Curso> listaCursos =  servicioAlumnoCurso.buscarCursos();
+					List<Curso> listaCursos =  servicioAlumnoInscripcion.buscarCursos();
 					
 					modelo.put("lista", listaCursos);
 					return new ModelAndView("cursos", modelo); //Todavia no curso nada
@@ -148,8 +150,10 @@ public class ControladorAlumno {
 		if(!agendas.isEmpty())
 		{
 			//Guardar alumno en la Agenda
-			servicioAlumnoAgenda.guardarAlumnoConSuCursoElegidoEnLaAgenda(agendasListas,alumno,curso);
-				
+			Inscripcion inscripcion =servicioAlumnoInscripcion.buscarInscripcion(alumno, curso);
+
+			servicioAlumnoInscripcion.guardarInscripcionEnLaAgenda(agendasListas,inscripcion);
+			
 		}else{
 			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
 		}

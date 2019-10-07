@@ -32,7 +32,7 @@ public class ServicioOrganizadorCrearAgendaImpl implements ServicioOrganizadorCr
 						agendas.get(agendas.size()-1).setFecha(date.toString());
 						agendas.get(agendas.size()-1).setHora(i);
 						agendas.get(agendas.size()-1).setInstructorVehiculoEspecialidad(ive);
-						agendas.get(agendas.size()-1).setCurso(curso);
+						//agendas.get(agendas.size()-1).setCurso(curso);
 					}
 				}
 			}

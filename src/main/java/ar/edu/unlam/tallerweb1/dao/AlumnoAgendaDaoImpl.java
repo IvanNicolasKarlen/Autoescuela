@@ -19,12 +19,6 @@ public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 	@Inject
     private SessionFactory sessionFactory;
 
-	@Override
-	public void guardarAlumnoConSuCursoElegidoEnLaAgenda(Agenda agenda) {
-		final Session session = sessionFactory.getCurrentSession();
-		session.update(agenda);
-
-	}
 
 	@Override
 	public List<Agenda> traerAgendasDisponibles() {

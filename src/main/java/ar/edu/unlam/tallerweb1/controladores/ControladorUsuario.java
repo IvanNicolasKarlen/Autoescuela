@@ -48,7 +48,7 @@ public class ControladorUsuario {
 							break;
 			default: 
 			}
-			return new ModelAndView("index",model);
+			return new ModelAndView(vistaindex,model);
 	
 		}
 
@@ -76,7 +76,7 @@ public class ControladorUsuario {
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request,@RequestParam(name="rol")String rol) {
+	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
@@ -114,8 +114,10 @@ public class ControladorUsuario {
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
 		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
-				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null
-				||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null){
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null)
+			
+				//||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null)
+{
 			model.put("error", "Por favor complete los campos obligatorios");
 		}
 		else{

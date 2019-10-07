@@ -35,18 +35,6 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 	
 
 
-	@Override
-	public void guardarAlumnoConSuCursoElegidoEnLaAgenda(TreeSet<Agenda> agenda, Alumno alumno, Curso cursoElegido) {
-		for(Agenda a: agenda)
-		{
-			
-			a.setAlumno(alumno);
-			a.setCurso(cursoElegido);
-			alumnoAgendaDao.guardarAlumnoConSuCursoElegidoEnLaAgenda(a);
-	
-		}
-		
-	}
 
 
 
