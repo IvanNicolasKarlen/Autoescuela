@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -8,6 +9,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.dao.AlumnoAgendaDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
@@ -39,8 +41,8 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 
 
 	@Override
-	public List<Agenda> traerAgendasDisponibles() {
-		return alumnoAgendaDao.traerAgendasDisponibles();
+	public TreeSet<Agenda> traerAgendasDisponibles(Curso curso) {
+		return alumnoAgendaDao.traerAgendasDisponibles(curso);
 	}
 
 
@@ -56,6 +58,19 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 		agendasAsc.addAll(agendasSinDuplicados);	
 		return agendasAsc;
 					
+	}
+
+
+
+	@Override
+	public List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso) {
+		List<Agenda> listaAgendas  = new ArrayList();
+		for(Long id: idAgendasDepurado){
+			Agenda agendaBuscada = alumnoAgendaDao.buscarAgendasElegidas(id, curso);
+			listaAgendas.add(agendaBuscada);
+		}
+		
+		return listaAgendas;
 	}
 
 }

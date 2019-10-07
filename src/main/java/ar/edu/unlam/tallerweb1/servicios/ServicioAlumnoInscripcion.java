@@ -15,7 +15,7 @@ public interface ServicioAlumnoInscripcion {
 
 	List<Curso> buscarCursos();
 
-	Curso buscarCurso(Curso cursoElegido);
+	Curso buscarCurso(Long long1);
 
 	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado,
 			Especialidad especialidad);
@@ -24,7 +24,10 @@ public interface ServicioAlumnoInscripcion {
 
 	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
-	void guardarInscripcionEnLaAgenda(TreeSet<Agenda> agendasListas, Inscripcion inscripcion);
+	//void guardarInscripcionEnLaAgenda(TreeSet<Agenda> agendasListas, Inscripcion inscripcion);
+
+	void guardarInscripcionEnLaAgenda(List<Agenda> agendasElegidas, Inscripcion inscripcion);
+
 
 
 

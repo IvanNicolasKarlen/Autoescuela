@@ -7,6 +7,15 @@
 	<title>Contact</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!-- ============================================================================================== -->
+	
 <!--===============================================================================================-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
 <!--===============================================================================================-->
@@ -49,18 +58,23 @@
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">	
 	
 		<h4 class="tit2 t-center m-b-35 m-t-2">
-                 <label>Te organizamos este cronograma</label>
+                 <label>${mensaje}</label>
 					</h4>
 		 
 		
-<div class="row">
+
 <c:set var = "i" value = "${0}" />
 
+<form:form class="wrap-form-reservation size32 m-l-r-auto" method="POST" modelAttribute="agendasViewModel" action="inscripcion">
 
+<input name="idCurso" path=idCurso type="text"  value="${cursoSeleccionado.id}"/>
+<div class="row">
 <c:forEach items="${listaAgendas}" var="la">	
 
 <div class="col-md-4 ">
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${curso}</h2>
+<input name="idAgendas[${la.id}]" type="text"  value="${la.id}"/>
+
+<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
  <c:set var="i" value="${ i+1}"/>
 		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
 		          
@@ -72,25 +86,34 @@
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
 		
+		
+		
+<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
+          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
+        </button>
+		
 </div>
-</c:forEach>	
+
+</c:forEach>
+</div>	
+	
+	</br>
+	</br>
+<div class="card-body">
+  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					ACEPTAR INSCRIPCION
+  </button>
+  </div>
 	
 	
-	</div>
-	<div class="card-body">
-  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" path="id" name="id" value="${lc.id}">
-					ANOTARME
-  </button>
-   
-  		</div>
   		
   		
-  	<div class="card-body">
-  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto" path="id" name="id" value="${lc.id}">
-					MODIFICAR
-  </button>
-   
-  		</div>
+  		<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					CANCELAR
+	</a>
+  		
+  		</form:form>
+  		
 	</section>
 	
 	

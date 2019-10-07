@@ -31,7 +31,7 @@ public class ServicioAlumnoInscripcionImpl implements ServicioAlumnoInscripcion 
 	}
 
 	@Override
-	public Curso buscarCurso(Curso cursoElegido) {
+	public Curso buscarCurso(Long cursoElegido) {
 		
 		return alumoInscripcionDao.buscarCurso( cursoElegido);
 	}
@@ -56,7 +56,7 @@ public class ServicioAlumnoInscripcionImpl implements ServicioAlumnoInscripcion 
 	}
 
 	@Override
-	public void guardarInscripcionEnLaAgenda(TreeSet<Agenda> agendasListas, Inscripcion inscripcion) {
+	public void guardarInscripcionEnLaAgenda(List<Agenda> agendasListas, Inscripcion inscripcion) {
 		for(Agenda a: agendasListas)
 		{
 			a.setInscripcion(inscripcion);

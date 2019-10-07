@@ -34,11 +34,11 @@ public class AlumnoInscripcionDaoImpl implements AlumnoInscripcionDao {
 	}
 
 	@Override
-	public Curso buscarCurso(Curso cursoElegido) {
+	public Curso buscarCurso(Long cursoElegidoid) {
 final Session session = sessionfactory.getCurrentSession();
 		
 		return (Curso) session.createCriteria(Curso.class)
-				.add(Restrictions.eq("id",cursoElegido.getId()))
+				.add(Restrictions.eq("id",cursoElegidoid))
 				.uniqueResult();
 		
 	}
@@ -48,10 +48,11 @@ final Session session = sessionfactory.getCurrentSession();
 			Especialidad especialidad) {
 		final Session session = sessionfactory.getCurrentSession();
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
-					.createAlias("curso.especialidad", "ce")
+					.createAlias("curso", "cur")
+					.createAlias("cur.especialidad", "ce")
 					.add(Restrictions.eq("ce.id", especialidad.getId()))
 					.add(Restrictions.eq("alumno.id", idAlumno))
-					.add(Restrictions.eq("estado.id", estado.getId()))
+					.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
 					.list();
 		return l;
 	}
@@ -63,7 +64,7 @@ final Session session = sessionfactory.getCurrentSession();
 		cursoAlumno.setCurso(curso);
 		cursoAlumno.setAlumno(alumno);
 		cursoAlumno.setEstadoInscripcion(estado);		
-		
+		session.save(cursoAlumno);
 		
 		
 	}

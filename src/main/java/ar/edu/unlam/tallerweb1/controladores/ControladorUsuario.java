@@ -114,9 +114,9 @@ public class ControladorUsuario {
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
 		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
-				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null)
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null
 			
-				//||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null)
+				||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null)
 {
 			model.put("error", "Por favor complete los campos obligatorios");
 		}

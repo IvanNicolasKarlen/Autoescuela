@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
@@ -105,7 +106,7 @@ public class ControladorAlumno {
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
 		//Datos del curso Elegido
-		Curso curso = servicioAlumnoInscripcion.buscarCurso(cursoElegido);
+		Curso curso = servicioAlumnoInscripcion.buscarCurso(cursoElegido.getId());
 		
 		//Busco el id del estado que dice "Cursando"
 		EstadoInscripcion estado = servicioAlumnoEstado.buscarEstadoCursando();
@@ -124,11 +125,129 @@ public class ControladorAlumno {
 		
 		if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{
-				//Guardar en la tablaCursoAlumno el curso y el alumno
-			servicioAlumnoInscripcion.guardarInscripcion(alumno, curso, Tablainscripcion, estado);
+			
+			//Seleccionar curso
+			
+			modelo.put("cursoSeleccionado", curso);
+			
+	
+			//**Guardar en la tablaCursoAlumno el curso y el alumno
+			//**servicioAlumnoInscripcion.guardarInscripcion(alumno, curso, Tablainscripcion, estado);
 			
 				
 			}else{ 
+				
+				modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
+				//Trae todo el listado de todos los cursos
+				List<Curso> listaCursos =  servicioAlumnoInscripcion.buscarCursos();
+				
+				modelo.put("lista", listaCursos);
+				return new ModelAndView("cursos", modelo); //Todavia no curso nada
+					
+					
+			}
+
+		//*******************************************************
+		
+		
+		//Traer todas las fechas con disponibilidad
+				TreeSet<Agenda> agendas=servicioAlumnoAgenda.traerAgendasDisponibles(curso);
+
+				if(agendas.isEmpty())
+				{
+					modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
+						
+				}else{
+					modelo.put("listaAgendas", agendas);
+					modelo.put("listaAgendassize", agendas.size());
+					
+				}
+				
+				modelo.put("mensaje", "Te ofrecemos este cronograma de clases");
+				modelo.put("especialidad", curso.getEspecialidad().getTipo());
+				return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
+				}
+				
+				return new ModelAndView("redirect:/index");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(path="/inscripcion")
+	public ModelAndView inscribirAlumnoEnElCurso(
+			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
+			HttpServletRequest request )
+	{
+		ModelMap modelo = new ModelMap();
+		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		{
+			
+			//Sesion
+			Long idAlumno = (Long) request.getSession().getAttribute("ID");
+		
+			//Busco el id del estado que dice "Cursando"
+			EstadoInscripcion estado = servicioAlumnoEstado.buscarEstadoCursando();
+			//Datos del curso Elegido
+			Curso curso = servicioAlumnoInscripcion.buscarCurso(agendasViewModel.getIdCurso());
+			
+			//Buscar la especialidad del curso elegido
+			Especialidad especialidad = servicioAlumnoEspecialidad.consultarEspecialidadCursoElegido(curso);
+			
+			//Saber si el alumno ya está haciendo este curso que selecciono
+			List <Inscripcion> inscripcionCurso = servicioAlumnoInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
+			
+			if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
+			{
+			
+					
+//					//Saber si el alumno ya está haciendo este curso que selecciono
+//					List <TablaCursoAlumno> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
+//							
+					
+					if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
+						{
+							
+						//Traigo los datos del alumno logueado
+						Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+						
+						// Datos de las agendas elegidas
+						List<Agenda> agendasElegidas = servicioAlumnoAgenda.buscarAgendasElegidas(agendasViewModel.getIdAgendasDepurado(), curso);
+						
+						 Inscripcion Tablainscripcion =new Inscripcion(); 
+						
+							//Guardar curso
+//							servicioAlumnoCurso.guardarCurso(alumno,agendasViewModel.getIdCurso(), cursoAlumno, estado);
+//							
+						servicioAlumnoInscripcion.guardarInscripcion(alumno, curso, Tablainscripcion, estado);
+
+						//Guardar alumno en la Agenda
+						Inscripcion inscripcion =servicioAlumnoInscripcion.buscarInscripcion(alumno, curso);
+			
+						servicioAlumnoInscripcion.guardarInscripcionEnLaAgenda(agendasElegidas,inscripcion);
+						
+						modelo.put("mensaje", "Tu inscripcion se realizo con exito");
+									
+							
+						}else{ 
+
+								modelo.put("error","No podes anotarte en el mismo curso más de una vez"); //Le avisa que no finalizo
+								//Trae todo el listado de todos los cursos
+								List<Curso> listaCursos =  servicioAlumnoInscripcion.buscarCursos();
+								
+								modelo.put("lista", listaCursos);
+								return new ModelAndView("cursos", modelo); //Todavia no curso nada
+								
+						}		
+					
+			
+				
+			}////////////////////////////////////////////////////// fin if ln 193
+		else{
 
 					modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 					//Trae todo el listado de todos los cursos
@@ -138,38 +257,34 @@ public class ControladorAlumno {
 					return new ModelAndView("cursos", modelo); //Todavia no curso nada
 					
 			}
-		
-		//Traer todas las fechas con disponibilidad
-		List<Agenda> agendas= servicioAlumnoAgenda.traerAgendasDisponibles();
-
-		TreeSet<Agenda> agendasSinDuplicados = servicioAlumnoAgenda.eliminarLasAgendasConFechasDuplicadas(agendas);
-
-		TreeSet<Agenda> agendasListas = servicioAlumnoAgenda.eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(agendasSinDuplicados,curso);
-
-		
-		if(!agendas.isEmpty())
-		{
-			//Guardar alumno en la Agenda
-			Inscripcion inscripcion =servicioAlumnoInscripcion.buscarInscripcion(alumno, curso);
-
-			servicioAlumnoInscripcion.guardarInscripcionEnLaAgenda(agendasListas,inscripcion);
 			
-		}else{
-			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
-		}
-				
-		modelo.put("listaAgendas", agendasListas);
-		modelo.put("curso", curso.getEspecialidad().getTipo());
+					
+			
+		modelo.put("curso2", agendasViewModel.getIdCurso());
+		modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
+		modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
 		
-
-
-		return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
-		}
 		
+		
+		
+		return new ModelAndView("cursoAgenda",modelo); 
+		
+		}
 		return new ModelAndView("redirect:/index");
-
+		
+		
 	}
+		
+	
 
 
 	
-}
+	
+	
+	
+	
+}	
+		
+		
+	
+

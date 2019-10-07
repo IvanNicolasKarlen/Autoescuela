@@ -15,7 +15,7 @@ public interface AlumnoInscripcionDao {
 
 	List<Curso> buscarCursos();
 
-	Curso buscarCurso(Curso cursoElegido);
+	Curso buscarCurso(Long cursoElegido);
 
 	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado,
 			Especialidad especialidad);

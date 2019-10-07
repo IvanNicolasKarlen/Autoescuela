@@ -21,12 +21,51 @@ public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 
 
 	@Override
-	public List<Agenda> traerAgendasDisponibles() {
-		final Session session = sessionFactory.getCurrentSession();
-		List <Agenda> agendas = session.createCriteria(Agenda.class)
-				.add(Restrictions.isNull("alumno.id"))
+	public TreeSet<Agenda> traerAgendasDisponibles(Curso curso ) {
+//		final Session session = sessionFactory.getCurrentSession();
+//		List <Agenda> agendas = session.createCriteria(Agenda.class)
+//				.add(Restrictions.isNull("inscripcion.id"))
+//				.list();
+//		return agendas;
+		
+final Session session = sessionFactory.getCurrentSession();
+		
+		List <Agenda> result = session.createCriteria(Agenda.class)
+				.add(Restrictions.isNull("inscripcion.id"))
+				.createAlias("instructorVehiculoEspecialidad", "ive")
+				.add(Restrictions.eq("ive.especialidad.id", curso.getEspecialidad().getId()))
+				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.setMaxResults(curso.getCantClasesPracticas())
 				.list();
-		return agendas;
+		
+		
+		// creamos un treeSet para agregar las agendas sin que se 
+		// repitan las fechas
+		TreeSet<Agenda> agendas = new TreeSet<Agenda>();
+		agendas.addAll(result);
+			
+		return agendas ;
+		
+		
+	}
+
+
+	@Override
+	public Agenda buscarAgendasElegidas(Long idAgenda, Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		Agenda a = (Agenda) session.createCriteria(Agenda.class)
+				.add(Restrictions.eq("id",idAgenda))
+				.add(Restrictions.isNull("inscripcion.id"))
+				.createAlias("instructorVehiculoEspecialidad", "ive")
+				.createAlias("ive.especialidad", "esp")
+				.add(Restrictions.eq("esp.id", curso.getEspecialidad().getId()))
+				.createAlias("instructorVehiculoEspecialidad.vehiculo", "ve")
+				.createAlias("ve.estadoDeVehiculo", "estadoVehiculo")
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.uniqueResult();
+				
+		return a;
 	}
 
 
