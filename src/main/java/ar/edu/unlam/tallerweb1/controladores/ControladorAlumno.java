@@ -146,6 +146,43 @@ public class ControladorAlumno {
 					
 					
 			}
+		
+		//Traer todas las fechas con disponibilidad
+//		List<Agenda> agendas= servicioAlumnoAgenda.traerAgendasDisponibles();
+//
+//		TreeSet<Agenda> agendasSinDuplicados = servicioAlumnoAgenda.eliminarLasAgendasConFechasDuplicadas(agendas);
+//
+//		TreeSet<Agenda> agendasListas = servicioAlumnoAgenda.eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(agendasSinDuplicados,curso);
+
+		
+		
+		
+		
+		//*******************************************************
+		
+//		if(!agendas.isEmpty())
+//		{
+//			//Guardar alumno en la Agenda
+//			Inscripcion inscripcion =servicioAlumnoInscripcion.buscarInscripcion(alumno, curso);
+//			servicioAlumnoInscripcion.guardarInscripcionEnLaAgenda(agendasListas,inscripcion);
+//			
+//		}else{
+//			modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
+//		}
+//				
+//		modelo.put("listaAgendas", agendasListas);
+//		modelo.put("curso", curso.getEspecialidad().getTipo());
+//		
+//
+//
+//		return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
+//		}
+//		
+//		return new ModelAndView("redirect:/index");
+//
+//	}
+
+
 
 		//*******************************************************
 		
@@ -203,7 +240,19 @@ public class ControladorAlumno {
 			
 			if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{
-			
+				
+				
+				
+				//*************************************
+			Boolean resultado = servicioAlumnoAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel,curso);
+				
+				//Si las fechas que me asignaron no fueron ocupadas
+				if(resultado == true)
+				{
+			//**************************************************Anotarme
+					
+						
+					
 					
 //					//Saber si el alumno ya está haciendo este curso que selecciono
 //					List <TablaCursoAlumno> cursando = servicioAlumnoCurso.consultarSiYaSeInscribioAUnCurso(idAlumno, estado,especialidad);
@@ -242,12 +291,41 @@ public class ControladorAlumno {
 								modelo.put("lista", listaCursos);
 								return new ModelAndView("cursos", modelo); //Todavia no curso nada
 								
-						}		
+						}	
+//******************************************************************
+	//***************************
+					
+				}else{
+
+					//Buscarle otras fechas
+					
+					//Traer todas las fechas con disponibilidad
+					TreeSet<Agenda> agendas=servicioAlumnoAgenda.traerAgendasDisponibles(curso);
+
+					if(agendas.isEmpty())
+					{
+						modelo.put("error", "No hay mas fechas disponibles para realizar una cursada");
+							
+					}else{
+						modelo.put("listaAgendas", agendas);
+						modelo.put("listaAgendassize", agendas.size());
+						
+					}
+					
+					modelo.put("mensaje", "Una de las clases ha sido ocupada. Te buscamos clases nuevas");
+					return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
+				
+					
+				}
+					
+					
+	//****************************************
+					
+					
 					
 			
 				
-			}////////////////////////////////////////////////////// fin if ln 193
-		else{
+			}else{////////////////////////////////////////////////////// fin if ln 193
 
 					modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 					//Trae todo el listado de todos los cursos

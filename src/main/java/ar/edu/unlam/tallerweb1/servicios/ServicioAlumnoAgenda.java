@@ -17,6 +17,8 @@ public interface ServicioAlumnoAgenda {
 
 	TreeSet<Agenda> eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(TreeSet<Agenda> agendasSinDuplicados, Curso curso);
 
+	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(AgendasViewModel agendasViewModel, Curso curso);
+
 	List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso);
 
 }
