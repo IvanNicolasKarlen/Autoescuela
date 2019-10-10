@@ -125,13 +125,14 @@ public class ControladorOrganizador {
 	public ModelAndView validarAgenda(@RequestParam(name="especialidadId")Long espid,
 			@RequestParam(name="horaComienzo")Integer horaC,
 			@RequestParam(name="horaFinal")Integer horaF,
+			@RequestParam(name="hastaD") Integer hastaD,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
-			if((horaC<horaF)&&espid!=null){
+			if((horaC<horaF)&&espid!=null&&hastaD>1&&hastaD<=60&&hastaD!=null){
 				LocalDate desde = LocalDate.now();
-				LocalDate hasta = desde.plusDays(2);
+				LocalDate hasta = desde.plusDays(hastaD);
 				
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(espid);
 				List <InstructorVehiculoEspecialidad> listaIvePorEsp = servicioIve.traerListaIvePorEspecialidad(especialidad);

@@ -42,13 +42,17 @@
 						</div>
 						<div class=" t-center m-b-5 m-t-20">
 							<label class="txt9">Seleccione a que horario comenzaran a
-								impartirse las clases: </label>
+								impartirse las clases (horario militar, ejemplo:1500): </label>
 							<input name="horaComienzo" type="number" min="0900" max="1700" />
 						</div>
 						<div class=" t-center m-b-5 m-t-20">
 							<label class="txt9">Seleccione a que horario terminaran
 								las clases: </label>
 							<input name="horaFinal" type="number" min="1000" max="1800" />
+						</div>
+						<div class=" t-center m-b-5 m-t-20">
+							<label class="txt9">Seleccione para cuantos dias desea crear la agenda: </label>
+							<input name="hastaD" type="number" min="1" max="60" />
 						</div>
 						<p class="m-t-10">El horario de inicio no debe ser mayor al
 							horario final</p>
