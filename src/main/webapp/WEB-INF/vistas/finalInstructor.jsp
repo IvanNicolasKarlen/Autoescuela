@@ -26,24 +26,8 @@
 					
 					<h3>${mensaje}</h3>
 					<h3>${error}</h3>
-					<form action="validarInstructor" method="post">
-					<label class="txt9">Seleccione el vehiculo: </label>
-						<select class="bo-rad-10 sizefull txt10 p-l-20" id="idv"
-							name="idv">
-
-							<c:forEach items="${listaV}" var="v">
-								<option value="${v.id}">${v.modelo} - ${v.patente}</option>
-							</c:forEach>
-
-						</select> 
-						<input style="display:none" name="iveId" value="${iveId}"> 
-						<div class="wrap-btn-booking flex-c-m m-t-6">
-							<button type="submit"
-								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
-								Continuar</button>
-						</div>
-					</form>
-					
+					<h1>Tu  vieja :D</h1>
+					<hr>
 					<p>
 						<a href="index">Volver al inicio</a>
 					</p>

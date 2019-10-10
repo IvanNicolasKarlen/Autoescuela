@@ -25,49 +25,21 @@
 		<div class="row">
 			<div class="col-lg-12 p-b-30">
 				<div class="t-center">
+				<hr>
+				<hr>
 					<h4 class="t-center text-danger">${mensaje}</h4>
 	<h4 class="t-center text-danger">${error}</h4>
 
 					
-					<form action="validarAgenda" method="post">
-					
-					
-						<div class=" t-center m-b-5 m-t-20">
-						<label for="especialidadId">Seleccione el curso para el q desea crear la agenda:</label>
-							<select name="especialidadId">
-								<c:forEach items="${listaEspecialidades}" var="esp">
-									<option value="${esp.id}">${esp.tipo}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class=" t-center m-b-5 m-t-20">
-							<label class="txt9">Seleccione a que horario comenzaran a
-								impartirse las clases: </label>
-							<input name="horaComienzo" type="number" min="0900" max="1700" />
-						</div>
-						<div class=" t-center m-b-5 m-t-20">
-							<label class="txt9">Seleccione a que horario terminaran
-								las clases: </label>
-							<input name="horaFinal" type="number" min="1000" max="1800" />
-						</div>
-						<p class="m-t-10">El horario de inicio no debe ser mayor al
-							horario final</p>
-						<div class="wrap-btn-booking flex-c-m m-t-6">
-							<!-- Button3 -->
-							<button type="submit"
-								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
-								Continuar</button>
-						</div>
-
-					</form>
-
+	<hr>
+	<div>
 					<a href="index">Volver a Inicio</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	</section>
-	</section>
+
 	<!-- Footer -->
 	<%@ include file="../../parts/footer.jsp"%>
 	<!-- fin footer  -->

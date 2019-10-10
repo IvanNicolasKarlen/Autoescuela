@@ -48,7 +48,7 @@ public class ControladorUsuario {
 							break;
 			default: 
 			}
-			return new ModelAndView("index",model);
+			return new ModelAndView(vistaindex,model);
 	
 		}
 
@@ -76,7 +76,7 @@ public class ControladorUsuario {
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request,@RequestParam(name="rol")String rol) {
+	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
