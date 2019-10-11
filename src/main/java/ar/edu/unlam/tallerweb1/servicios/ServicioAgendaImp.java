@@ -7,20 +7,17 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ar.edu.unlam.tallerweb1.dao.ServicioAgendaDao;
+import ar.edu.unlam.tallerweb1.dao.AgendaDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Service("servicioAgenda")
 @Transactional
 public class ServicioAgendaImp implements ServicioAgenda{
 	@Inject
-	private ServicioAgendaDao  servicioAgendaDao;
+	private AgendaDao  agendaDao;
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
-		return servicioAgendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
-	}
-	@Override
-	public List<Alumno> buscarNombreyApellidoDeAlumnosDeUnInstructor(Long idInstructor) {
-		return servicioAgendaDao.buscarNombreyApellidoDeAlumnosDeUnInstructor(idInstructor);
+		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 	}
 }

@@ -26,8 +26,8 @@
 					<div class="wrap-text-welcome t-center">
 	
 
-	<table class="table table-hover text-center mt-4" border="1" cellpadding="1" cellspacing="0">
-		<h4><b>Actualmente tiene estos alumnos a cargo:<br></h4>
+	<center><table class="table table-hover text-center mt-4" border="1" cellpadding="1" cellspacing="0">
+		<h4><b>Actualmente tiene estos alumnos a su cargo:<br></h4>
 			<thead>
 				<tr>
 					<th class="enc">Día</th>
@@ -37,24 +37,17 @@
 				</tr>
 			</thead>
 				
-		<tbody>
-			<c:forEach items="${listaAgenda}" var="variable" >
+			<tbody>
+			<c:forEach items="${listaAgenda}" var="verFechas" >
 					<tr>
-						<td class="alt-celda"><h3>${variable.fecha}</h3></td>
-						<td class="alt-celda"><h3>${variable.hora}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>				
 					</tr>
-			</c:forEach>
-			
-			<c:forEach items="${listaAlumno}" var="variable" >
-					<tr>
-						<td class="alt-celda"><h2>${variable.nombre}</h2></td>
-						<td class="alt-celda"><h2>${variable.apellido}</h2></td>
-					</tr>
-			</c:forEach>
-			
-		</tbody>
-	</table>
-						
+			</c:forEach>	
+			</tbody>
+			</table></center>	
 					</div>	
 				</div>
 			</div>

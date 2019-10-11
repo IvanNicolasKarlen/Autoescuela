@@ -29,7 +29,7 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<!--Cambiar a true si se quiere ver por consola el codigo sql generado por hibernate-->
 				<!-- Habilitar el registro de todas las sentencias SQL generadas en la consola. -->
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<!-- Formatee la declaración SQL generada para que sea más legible, pero ocupa más espacio en la pantalla -->
 				<prop key="hibernate.format_sql">false</prop>
 				<!--Para indicar si hibernate genera el modelo de datos al startup-->
