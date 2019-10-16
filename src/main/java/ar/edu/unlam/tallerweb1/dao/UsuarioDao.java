@@ -14,7 +14,7 @@ public interface UsuarioDao {
 	
 	Usuario consultarUsuario (Usuario usuario);
 	Long insertarUsuario (Usuario usuario);
-	
+	List<Usuario> traerAlumnos(Long idInstructor);
 	
 
 	

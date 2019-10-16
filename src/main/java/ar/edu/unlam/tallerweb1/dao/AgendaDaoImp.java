@@ -15,7 +15,7 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
-@Repository("servicioAgendaDao")
+@Repository("agendaDao")
 public class AgendaDaoImp implements AgendaDao {
 
 	@Inject

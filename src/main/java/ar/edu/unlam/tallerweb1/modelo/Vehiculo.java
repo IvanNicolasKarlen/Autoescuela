@@ -66,8 +66,7 @@ public class Vehiculo {
 		this.ives = ives;
 	}
 
-	
-	
+
 	
 	
 	
