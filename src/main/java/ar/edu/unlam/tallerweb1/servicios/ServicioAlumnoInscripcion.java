@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import java.util.List;
 import java.util.TreeSet;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
@@ -17,8 +18,7 @@ public interface ServicioAlumnoInscripcion {
 
 	Curso buscarCurso(Long long1);
 
-	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado,
-			Especialidad especialidad);
+	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, Curso cursoElegido);
 	
 	void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion tablainscripcion, EstadoInscripcion estado);
 
@@ -27,6 +27,10 @@ public interface ServicioAlumnoInscripcion {
 	//void guardarInscripcionEnLaAgenda(TreeSet<Agenda> agendasListas, Inscripcion inscripcion);
 
 	void guardarInscripcionEnLaAgenda(List<Agenda> agendasElegidas, Inscripcion inscripcion);
+
+	void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, AgendasViewModel agendasViewModel);
+
+	List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno);
 
 
 

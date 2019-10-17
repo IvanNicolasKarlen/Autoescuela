@@ -57,64 +57,32 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">	
 	
-		<h4 class="tit2 t-center m-b-35 m-t-2">
-                 <label>${mensaje}</label>
-					</h4>
-		 
-		
+		<h1>id cursoooo ${curso2}</h1>
+<h1>Cantidad de agendas ${agendas2size}</h1>
 
-<c:set var = "i" value = "${0}" />
 
-<form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="agendasViewModel" action="inscripcion">
+<c:forEach items="${agendas2}" var="a">
 
-<input name="idCurso" path=idCurso type="text"  value="${cursoSeleccionado.id}"/>
+<h1>id agenda ${a}</h1>
 
-	
-<div class="row">
-<c:forEach items="${listaAgendas}" var="la">
-<div class="col-md-4 ">
-
-<input name="idAgendas[${la.id}]" type="text"  value="${la.id}"/>
-
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
- <c:set var="i" value="${ i+1}"/>
-		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
-		          
-		
-		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
-		
-		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
-		
-		
-		<br>
-<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
-          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
-        </button>
-		
-</div>
 
 </c:forEach>
-</div>	
-	
-	</br>
-	</br>
+
+		 
+		<h4 class="tit2 t-center m-b-35 m-t-2">
+                 <label>Has sido anotado exitosamente</label>
+					</h4>
+		
+
 <div class="card-body">
-  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					ACEPTAR INSCRIPCION
+  <button href="indexAlumno" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					CONTINUAR
   </button>
   </div>
 	
 	
   		
-  		
-  		<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					CANCELAR
-	</a>
-  		
-  		</form:form>
+ 
   		
 	</section>
 	

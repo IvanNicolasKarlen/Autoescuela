@@ -17,14 +17,15 @@ public interface AlumnoInscripcionDao {
 
 	Curso buscarCurso(Long cursoElegido);
 
-	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado,
-			Especialidad especialidad);
+	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado, Especialidad especialidad);
 
 	void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion tablaInscripcion, EstadoInscripcion estado);
 
 	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
 	void guardarInscripcionEnLaAgenda(Agenda a);
+
+	List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado);
 
 
 }

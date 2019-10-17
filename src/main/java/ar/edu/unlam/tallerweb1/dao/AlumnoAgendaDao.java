@@ -8,9 +8,10 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 
 public interface AlumnoAgendaDao {
-	TreeSet<Agenda> traerAgendasDisponibles(Curso curso);
 
 	Agenda buscarAgendasElegidas(Long a, Curso curso);
+
+	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
 
 
 }

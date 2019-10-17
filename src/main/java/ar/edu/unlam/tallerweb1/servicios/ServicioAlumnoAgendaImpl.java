@@ -35,18 +35,6 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 		return agendasDesc;
 	}
 	
-
-
-
-
-
-	@Override
-	public TreeSet<Agenda> traerAgendasDisponibles(Curso curso) {
-		return alumnoAgendaDao.traerAgendasDisponibles(curso);
-	}
-
-
-
 	@Override
 	public TreeSet<Agenda> eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso(TreeSet<Agenda> agendasSinDuplicados, Curso curso) {
 		//Elimino los objetos cunando la cantidad de elementos supera la cantidad
@@ -62,8 +50,18 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 
 
 
-
-
+	@Override
+	public List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso) {
+		List<Agenda> listaAgendas  = new ArrayList();
+		for(Long id: idAgendasDepurado){
+			Agenda agendaBuscada = alumnoAgendaDao.buscarAgendasElegidas(id, curso);
+			listaAgendas.add(agendaBuscada);
+		}
+		
+		return listaAgendas;
+	}
+	
+	
 
 	@Override
 	public Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(AgendasViewModel agendasViewModel, Curso curso) {
@@ -109,20 +107,12 @@ public class ServicioAlumnoAgendaImpl implements ServicioAlumnoAgenda {
 		return false;
 	}
 
-
-
-
-
-
+	
 	@Override
-	public List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso) {
-		List<Agenda> listaAgendas  = new ArrayList();
-		for(Long id: idAgendasDepurado){
-			Agenda agendaBuscada = alumnoAgendaDao.buscarAgendasElegidas(id, curso);
-			listaAgendas.add(agendaBuscada);
-		}
-		
-		return listaAgendas;
+	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
+
+		return alumnoAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
 	}
+	
 
 }

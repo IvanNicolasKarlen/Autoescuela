@@ -13,14 +13,31 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
-@Repository("AlumnoAgendaDao")
-public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
+@Repository("servicioAgendaDao")
+public class AgendaDaoImp implements AgendaDao {
+
 	@Inject
     private SessionFactory sessionFactory;
-
-
 	
+	List <Agenda> miLista;
+	List <Usuario> miListaAlumno;
+	
+	@Override
+	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
+		final Session session = sessionFactory.getCurrentSession();
+		miLista = session.createCriteria(Agenda.class)
+				.add(Restrictions.isNotNull("inscripcion"))
+				.createAlias("instructorVehiculoEspecialidad", "iveBuscado")
+				.createAlias("iveBuscado.instructor", "instructorId")
+				.add(Restrictions.eq("instructorId.id", idInstructor))
+				.list();
+		return miLista;
+	}
+	
+	
+	/***************************************Alumno**************************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso) {
 		
@@ -44,13 +61,6 @@ public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 			
 		return agendas ;
 	}
-	
-	
-	
-	
-	
-	
-
 
 	@Override
 	public Agenda buscarAgendasElegidas(Long id, Curso curso) {
@@ -71,6 +81,5 @@ public class AlumnoAgendaDaoImpl implements AlumnoAgendaDao {
 	
 	
 	
-
 
 }

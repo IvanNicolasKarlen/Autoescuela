@@ -29,6 +29,7 @@ public class AlumnoInscripcionDaoImpl implements AlumnoInscripcionDao {
 		final Session session = sessionfactory.getCurrentSession();
 		
 		List<Curso> milista = session.createCriteria(Curso.class)
+				.createAlias("especialidad", "especialidad")
 								.list();
 		return milista;
 	}
@@ -44,9 +45,11 @@ final Session session = sessionfactory.getCurrentSession();
 	}
 
 	@Override
-	public List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado,
-			Especialidad especialidad) {
+	public List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, EstadoInscripcion estado, Especialidad especialidad) {
 		final Session session = sessionfactory.getCurrentSession();
+		
+		
+		
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 					.createAlias("curso", "cur")
 					.createAlias("cur.especialidad", "ce")
@@ -60,6 +63,7 @@ final Session session = sessionfactory.getCurrentSession();
 	@Override
 	public void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion cursoAlumno, EstadoInscripcion estado) {
 		final Session session = sessionfactory.getCurrentSession();
+		
 		
 		cursoAlumno.setCurso(curso);
 		cursoAlumno.setAlumno(alumno);
@@ -75,6 +79,8 @@ final Session session = sessionfactory.getCurrentSession();
 		return (Inscripcion) session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id",alumno.getId()))
 				.add(Restrictions.eq("curso.id",curso.getId()))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
 				.uniqueResult();
 		
 	}
@@ -84,6 +90,18 @@ final Session session = sessionfactory.getCurrentSession();
 		final Session session = sessionfactory.getCurrentSession();
 		session.update(a);
 		
+	}
+
+	@Override
+	public List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado) {
+		final Session session = sessionfactory.getCurrentSession();
+		
+		List<Inscripcion> lista = session.createCriteria(Inscripcion.class)
+				.add(Restrictions.eq("alumno.id",idAlumno))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.list();
+		return lista;
 	}
 
 

@@ -30,6 +30,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	private UsuarioDao servicioUsuarioDao;
 
 	@Override
+	public List<Usuario> traerAlumnos(Long idInstructor) {
+		return servicioUsuarioDao.traerAlumnos(idInstructor);
+	}
+	
+	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
 		return servicioUsuarioDao.consultarUsuario(usuario);
 	}

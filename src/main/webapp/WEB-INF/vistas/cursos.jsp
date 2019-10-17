@@ -128,14 +128,13 @@
 
 	<div class="card col-xs-6 col-md-4" style="width: 18rem;">
   <div class="card-body">
-    <h5 class="card-title text-center bg-info text-white">5 CLASES</h5>
+    <h5 class="card-title text-center bg-info text-white">${lc.cantClasesPracticas} CLASES</h5>
     <p class="card-text text-center">Clases de 1 hora</p>
-	<p class="card-text text-center  bg-light text-dark">Auto</p>
+	<p class="card-text text-center  bg-light text-dark">${lc.especialidad.tipo}</p>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Conocimiento de comandos y maniobras</li>
-    <li class="list-group-item">Funcionamiento y manejo en transito real</li>
-    <li class="list-group-item">Posibilidad de contratar clases de refuerzo</li>
+    <li class="list-group-item">${lc.descripcion}</li>
+    <li class="list-group-item">${lc.titulo}</li>
     <li class="list-group-item">Posibilidad de elegir los dias</li>
   </ul>
  		 <div class="card-body">
