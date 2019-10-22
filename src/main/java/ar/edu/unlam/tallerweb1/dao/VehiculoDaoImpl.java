@@ -45,8 +45,20 @@ public class VehiculoDaoImpl implements VehiculoDao {
 
 	@Override
 	public Vehiculo buscarVehiculoPorId(Long id) {
-		return (Vehiculo)sessionFactory.getCurrentSession()
-				.createCriteria(Vehiculo.class).add(Restrictions.eq("id", id)).uniqueResult();
+		final Session sesion = sessionFactory.getCurrentSession();
+		return (Vehiculo) sesion.get(Vehiculo.class, id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Vehiculo> obtenerVehiculosSinInstructorPorEspecialidad(Especialidad esp) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Vehiculo>) session.createCriteria(Vehiculo.class)
+								.createAlias("tipoDeVehiculo", "tipoBuscado")
+								.createAlias("tipoBuscado.especialidad", "especialidadBuscada")
+								.createAlias("especialidadBuscada.instructoresVehiculosEspecialidades", "iveBuscada")
+								.add(Restrictions.isNull("iveBuscada.instructor"))
+								.list();
 	}
 	
 }

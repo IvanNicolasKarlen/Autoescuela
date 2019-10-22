@@ -106,20 +106,7 @@
 									id="pass2" name="pass2"></input>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<span class="txt9"> Seleccione Especialidad* </span>
-
-							<div class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
-								
-
-									<c:forEach items="${listaEsp}" var="esp">
-										<input type="checkbox" id="listaEsp" name="listaEsp" value="${esp.id}" />
-										<label for="listaEsp">${esp.tipo}</label>
-									</c:forEach>
-
-								
-							</div>
-						</div>
+						
 					</div>
 
 					<div class="wrap-btn-booking flex-c-m m-t-6">

@@ -17,7 +17,7 @@
 						<nav class="menu">
 							<ul class="main_menu">
 							<!-- Estos son los links q se muestran sin usuario-->
-							<c:if test="${usuarioId==null}">
+							<c:if test="${rol==null}">
 								<li>
 									<a href="index">Inicio</a>
 								</li>
@@ -54,7 +54,7 @@
 								<li><a href="agregarVehiculo">Agregar Vehiculo</a></li>
 								<li><a href="agregarCurso">Agregar Curso</a></li>
 								<li><a href="crearAgenda">Crear Agenda</a></li>
-								<li><a href="agregarInstructor-1">Agregar Instructor</a></li>
+								<li><a href="agregarInstructor">Agregar Instructor</a></li>
 							</c:if>
 							<!-- Fin organizador- -->
 							</ul>

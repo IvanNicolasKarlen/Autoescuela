@@ -23,30 +23,27 @@
 		<div class="row">
 			<div class="col-lg-12 p-b-30">
 				<div class="t-center">
-					
 					<h3>${mensaje}</h3>
 					<h3>${error}</h3>
-					<form action="validarInstructor" method="post">
-					<label class="txt9">Seleccione el vehiculo: </label>
-						<select class="bo-rad-10 sizefull txt10 p-l-20" id="idv"
-							name="idv">
-
-							<c:forEach items="${listaV}" var="v">
-								<option value="${v.id}">${v.modelo} - ${v.patente}</option>
+					<hr>
+					<hr>
+					<form action="agregarVehiculoEspecialidad-2" method="post">
+						<select name="especialidadId">
+							<c:forEach items="${listaEspecialidades}" var="lesp">
+								<option value="${lesp.id}">${lesp.tipo}</option>
 							</c:forEach>
-
-						</select> 
-						<input style="display:none" name="iveId" value="${iveId}"> 
+						</select>
+						<input style="display:none" value="${idInstructor}" name="idInstructor">
 						<div class="wrap-btn-booking flex-c-m m-t-6">
 							<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
-								Continuar</button>
+								Siguiente</button>
 						</div>
 					</form>
+				</div>
+				<div class="t-center">
 					
-					<p>
-						<a href="index">Volver al inicio</a>
-					</p>
+				
 				</div>
 			</div>
 		</div>

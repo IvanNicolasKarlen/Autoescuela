@@ -23,16 +23,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.TurnosViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Asistencia;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAsistencia;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEspecialidad;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculoImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDelCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorInstructor;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorConvierteFecha;
@@ -45,7 +50,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
 
 @Controller
 public class ControladorOrganizador {
-	
+
 	@Inject
 	private ServicioOrganizadorConvierteFecha servicioOrganizadorConvierteFecha;
 	@Inject
@@ -68,7 +73,11 @@ public class ControladorOrganizador {
 	private ServicioTipoDeVehiculo servicioTipoDeVehiculo;
 	@Inject
 	private ServicioEstadoDeVehiculo servicioEstadoDeVehiculo;
-	
+	@Inject
+	private ServicioEstadoDelCurso servicioEstadoDelCurso;
+	@Inject
+	private ServicioAsistencia servicioAsistencia;
+
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
@@ -78,34 +87,43 @@ public class ControladorOrganizador {
 			modelo.put("curso", curso);
 			List<Especialidad> especialidades = servicioEspecialidad.traerListaDeEspecialidades();
 			modelo.put("listaEspecialidades", especialidades);
+			modelo.put("rol", rol);
 		}
 		else{
 			return new ModelAndView("redirect:/index");
 		}
 		return new ModelAndView("agregarcursoOrg",modelo);
 	}
-	
+
 	@RequestMapping(path="/validarCurso",method=RequestMethod.POST)
 	public ModelAndView validarCurso(@ModelAttribute("curso")Curso curso, 
 			HttpServletRequest request,
 			@RequestParam(name="especialidadId")Long especialidadId){
 		ModelMap model = new ModelMap();
-
-		if(curso.getCantClasesPracticas()!=null&&!(curso.getDescripcion().isEmpty())&&curso.getDescripcion()!=null
-				&&curso.getPrecio()!=null&&curso.getTitulo()!=null&&!(curso.getTitulo().isEmpty())||especialidadId!=null){
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Organizador")){
+			if(curso.getCantClasesPracticas()!=null&&!(curso.getDescripcion().isEmpty())&&curso.getDescripcion()!=null
+					&&curso.getPrecio()!=null&&curso.getTitulo()!=null&&!(curso.getTitulo().isEmpty())||especialidadId!=null){
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(especialidadId);
+				EstadoDelCurso estadoDelCurso = servicioEstadoDelCurso.traerEstadoDelCursoPorNombre("Disponible");
 				curso.setEspecialidad(especialidad);
-			if(servicioOrganizadorCurso.buscarCurso(curso)==null){
-				if(servicioOrganizadorCurso.agregarCurso(curso)!=null){
-					model.put("mensaje","Curso añadido correctamente");
+				curso.setEstadoDelCurso(estadoDelCurso);
+				model.put("rol", rol);
+				if(servicioOrganizadorCurso.buscarCurso(curso)==null){
+					if(servicioOrganizadorCurso.agregarCurso(curso)!=null){
+						model.put("mensaje","Curso añadido correctamente");
+					}else{
+						model.put("error", "Error al añadir curso. Intente nuevamente");
+					}
 				}else{
-					model.put("error", "Error al añadir curso. Intente nuevamente");
+					model.put("error", "¡Este curso ya existe!");
 				}
 			}else{
-				model.put("error", "¡Este curso ya existe!");
+				model.put("error", "Faltan completar datos");
 			}
+
 		}else{
-			model.put("error", "Faltan completar datos");
+			return new ModelAndView("redirect:/index");
 		}
 		return new ModelAndView("cursoOrganizador",model);
 	}
@@ -113,14 +131,15 @@ public class ControladorOrganizador {
 	public ModelAndView crearAgenda(HttpServletRequest request){
 		ModelMap model = new ModelMap();		
 		if(request.getSession().getAttribute("ROL").equals("Organizador")){
-				List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
-				model.put("listaEspecialidades", listaEspecialidades);
+			List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
+			model.put("listaEspecialidades", listaEspecialidades);
+			model.put("rol",(String)request.getSession().getAttribute("ROL"));
 		}else{
 			return new ModelAndView("redirect:/index");
 		}
 		return new ModelAndView("crearAgendaOrg",model);
 	}
-	
+
 	@RequestMapping(path="/validarAgenda", method=RequestMethod.POST)
 	public ModelAndView validarAgenda(@RequestParam(name="especialidadId")Long espid,
 			@RequestParam(name="horaComienzo")Integer horaC,
@@ -130,13 +149,15 @@ public class ControladorOrganizador {
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			if((horaC<horaF)&&espid!=null&&hastaD>1&&hastaD<=60&&hastaD!=null){
 				LocalDate desde = LocalDate.now();
 				LocalDate hasta = desde.plusDays(hastaD);
-				
+
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(espid);
 				List <InstructorVehiculoEspecialidad> listaIvePorEsp = servicioIve.traerListaIvePorEspecialidad(especialidad);
-				if(servicioOrganizadorCrearAgenda.crearAgenda(desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
+				Asistencia asistencia = servicioAsistencia.traerAsistenciaPorNombre("En espera"); 
+				if(servicioOrganizadorCrearAgenda.crearAgenda(asistencia, desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
 					model.put("mensaje", "¡Agenda Creada con Éxito!");
 				}else{
 					model.put("error", "Hubo un problema al crear la agenda");
@@ -149,12 +170,13 @@ public class ControladorOrganizador {
 		}
 		return new ModelAndView("verificarAgenda",model);
 	}
-	
+
 	@RequestMapping("/agregarVehiculo")
 	public ModelAndView agregarVehiculo(HttpServletRequest request){
 		ModelMap model = new ModelMap();
 		String rol = (String)request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			Vehiculo vehiculo = new Vehiculo();
 			model.put("vehiculo", vehiculo);
 			List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
@@ -168,39 +190,49 @@ public class ControladorOrganizador {
 		return new ModelAndView("agregarvehiculoOrg",model);
 	}
 	@RequestMapping(path="/agregarVehiculo-2",method=RequestMethod.POST)
-	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv,@RequestParam(name="estadoId")Long estadoId){
+	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv,
+			@RequestParam(name="estadoId")Long estadoId,
+			HttpServletRequest request){
 		ModelMap model = new ModelMap();
-		if(miv.getModelo().isEmpty()||miv.getModelo()==null||miv.getPatente().isEmpty()||miv.getPatente()==null||estadoId==null){
-			model.put("error", "Rellene todos los campos");
-		}else{
-			if(servicioVehiculo.buscarVehiculo(miv)==null){
-				EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorId(estadoId);
-				miv.setEstadoDeVehiculo(estadoVehiculo);
-				if(servicioVehiculo.guardarVehiculo(miv)!=null){
-					model.put("mensaje", "Vehiculo insertado exitosamente");
-				}else{
-					model.put("mensaje", "Error al insertar vehiculo");
-				}
-				
+		String rol = (String)request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			if(miv.getModelo().isEmpty()||miv.getModelo()==null||miv.getPatente().isEmpty()||miv.getPatente()==null||estadoId==null){
+				model.put("error", "Rellene todos los campos");
 			}else{
-				model.put("error", "Ese vehiculo ya existe");
+				if(servicioVehiculo.buscarVehiculo(miv)==null){
+					EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorId(estadoId);
+					miv.setEstadoDeVehiculo(estadoVehiculo);
+					if(servicioVehiculo.guardarVehiculo(miv)!=null){
+						model.put("mensaje", "Vehiculo insertado exitosamente");
+					}else{
+						model.put("mensaje", "Error al insertar vehiculo");
+					}
+
+				}else{
+					model.put("error", "Ese vehiculo ya existe");
+				}
 			}
+			Vehiculo vehiculo = new Vehiculo();
+			model.put("vehiculo", vehiculo);
+			List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
+			model.put("listatipovehiculos", listaTipoVehiculo);
+			EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorEstadoActual("Funcionando");
+			model.put("estado",estadoVehiculo);
+		}else{
+			return new ModelAndView("redirect:/index");
 		}
-		Vehiculo vehiculo = new Vehiculo();
-		model.put("vehiculo", vehiculo);
-		List<TipoDeVehiculo> listaTipoVehiculo = servicioTipoDeVehiculo.traerTiposDeVehiculos();
-		model.put("listatipovehiculos", listaTipoVehiculo);
-		EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.buscarEstadoPorEstadoActual("Funcionando");
-		model.put("estado",estadoVehiculo);
 		return new ModelAndView("agregarvehiculoOrg",model);
 	}
 
-	
+
 	@RequestMapping("/agregarEspecialidad")
 	public ModelAndView agregarEspecialidad(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
-			return new ModelAndView("agregarEspecialidadOrg");
+			model.put("rol", rol);
+			return new ModelAndView("agregarEspecialidadOrg");	
 		}
 		else{
 			return new ModelAndView("redirect:/index");
@@ -212,6 +244,7 @@ public class ControladorOrganizador {
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			if(servicioEspecialidad.traerEspecialidadPorNombre(tipoEsp)==null){
 				Especialidad especialidad = new Especialidad();
 				especialidad.setTipo(tipoEsp);
@@ -229,12 +262,13 @@ public class ControladorOrganizador {
 		}
 		return new ModelAndView("agregarEspecialidadOrg",model);
 	}
-	
+
 	@RequestMapping("/agregarTipoVehiculo")
 	public ModelAndView agregarTipoDeVehiculo(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			TipoDeVehiculo tipoVehiculo = new TipoDeVehiculo();
 			List <Especialidad> especialidades = servicioEspecialidad.traerListaDeEspecialidades();
 			model.put("listaEspecialidades",especialidades);
@@ -252,6 +286,7 @@ public class ControladorOrganizador {
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			if(servicioTipoDeVehiculo.buscarTipoDeVehiculo(tipoVehiculo)==null){
 				if(servicioTipoDeVehiculo.guardarTipoDeVehiculo(tipoVehiculo)!=null){
 					model.put("mensaje", "Tipo de Vehiculo: " +tipoVehiculo.getTipo() +" Guardado con éxito.");
@@ -271,16 +306,15 @@ public class ControladorOrganizador {
 		model.put("tipoDeVehiculo", tipoDeVehiculoNuevo);
 		return new ModelAndView("agregarTipoVehiculoOrg",model);
 	}
-	
+
 	@RequestMapping(path="/agregarInstructor")
 	public ModelAndView agregarInstructor(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
 			Usuario usuario = new Usuario();
-			List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
-			model.put("listaEsp", listaEspecialidades);
 			model.put("usuario", usuario);
+			model.put("rol", rol);
 		}else{
 			return new ModelAndView("redirect:/index");
 		}
@@ -288,10 +322,11 @@ public class ControladorOrganizador {
 	}
 	@RequestMapping(path="/agregarInstructor2", method=RequestMethod.POST)
 	public ModelAndView agregarInstructor2(@ModelAttribute("usuario")Usuario user,@RequestParam(name="pass2")String password2,
-			HttpServletRequest request, @RequestParam(name="listaEsp")List<Especialidad> listaEspecialidad){
+			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
+			model.put("rol", rol);
 			if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
 					user.getDni()==null||user.getDni().toString().length()!=8
 					||user.getPassword().isEmpty()||user.getPassword()==null||user.getNombreDeUsuario().isEmpty()
@@ -306,15 +341,16 @@ public class ControladorOrganizador {
 					}else{
 						Instructor instructor = new Instructor();
 						instructor.setUsuario(user);
-						model.put("ins", instructor.getId());
-						
-						for(Especialidad esp:listaEspecialidad){
-							InstructorVehiculoEspecialidad ive = new InstructorVehiculoEspecialidad();
-							ive.setInstructor(instructor);
-							ive.setEspecialidad(esp);
-							servicioIve.guardarIve(ive);
+						user.setInstructor(instructor);
+						servicioUsuario.insertarUsuario(user);
+						Long idInstructor = user.getInstructor().getId();
+						if(idInstructor!=null){
+							model.put("mensaje", "Instructor añadido con exito.");
+							model.put("idInstructor", idInstructor);
+						}else{
+							model.put("error", "Hubo un problema al crear Instructor");
 						}
-						model.put("listaEspecialidades", listaEspecialidad);
+
 					}
 				}
 			}
@@ -324,52 +360,144 @@ public class ControladorOrganizador {
 		}
 		return new ModelAndView("agregarInstructorOrg2",model);
 	}
-	@RequestMapping(path="/seleccionarVehiculoParaInstructor", method=RequestMethod.POST)
-	public ModelAndView agregarInstructor3(@RequestParam(name="eps")Long idEspecialidad,
-			@RequestParam(name="idInstructor") Long idInstructor,
-	HttpServletRequest request){
+	@RequestMapping(path="/agregarVehiculoEspecialidad", method=RequestMethod.POST)
+	public ModelAndView agregarInstructor3(@RequestParam(name="idIns")Long idInstructor,
+			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
-			if(idEspecialidad!=null&&idInstructor!=null){
-				Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(idEspecialidad);
-				Instructor ins = servicioOrganizadorInstructor.buscarInstructorPorId(idInstructor);
-				InstructorVehiculoEspecialidad ive = servicioIve.traerIveProInstructorEspecialidad(esp, ins);
-				List<Vehiculo> vehiculos = servicioVehiculo.obtenerVehiculoPorEspecialidad(esp);
-				model.put("listaV", vehiculos);
-				model.put("iveId", ive.getId());
+			model.put("rol", rol);
+			if(idInstructor!=null){
+				List<Especialidad> listaEsp= servicioEspecialidad.traerListaDeEspecialidades();
+				model.put("listaEspecialidades", listaEsp);
+				model.put("idInstructor", idInstructor);
 			}else{
-				model.put("error", "Seleccione una especialidad válida");
+				model.put("error", "No hay ningun organizador seleccionado");
 			}
 		}	
-	else{
-		return new ModelAndView("redirect:/index");
+		else{
+			return new ModelAndView("redirect:/index");
 		}
-	return new ModelAndView("agregarInstructor3",model);
+		return new ModelAndView("agregarVEOrg",model);
 	}
-	@RequestMapping(path="/validarInstructor", method=RequestMethod.POST)
-	public ModelAndView agregarInstructor4(@RequestParam(name="idv")Long idVehiculo,
-			@RequestParam(name="iveId") Long idIVE,
-	HttpServletRequest request){
+	@RequestMapping(path="/agregarVehiculoEspecialidad-2", method=RequestMethod.POST)
+	public ModelAndView agregarInstructor4(@RequestParam(name="especialidadId")Long espId,
+			@RequestParam(name="idInstructor")Long idInstructor,
+			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
-			Vehiculo v = servicioVehiculo.buscarVehiculoPorId(idVehiculo);
-			InstructorVehiculoEspecialidad ive = servicioIve.buscarIvePorId(idIVE);
-			ive.setVehiculo(v);
-			if(servicioIve.guardarIve(ive)!=null){
-				model.put("mensaje", "Instructor añadido con exito");
-				model.put("instructor", ive.getInstructor());
+			model.put("rol", rol);
+			Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(espId);
+			if(idInstructor!=null&&esp!=null){
+				List<Vehiculo>listaV= servicioVehiculo.obtenerVehiculosSinInstructorPorEspecialidad(esp);
+				model.put("listaVehiculos", listaV);
+				model.put("idInstructor", idInstructor);
+				model.put("especialidadId", espId);
 			}else{
-				model.put("error", "Hubo un problema al agregar el vehiculo al instructor");
+				model.put("error", "Hay un error con los datos seleccionados. Verifique que seleccionó una especialidad e instructor válidos");
 			}
-		}	
-	else{
-		return new ModelAndView("redirect:/index");
+
+		}else{
+			return new ModelAndView("redirect:/index");
 		}
-	return new ModelAndView("finalInstructor",model);
+		return new ModelAndView("agregarVEOrg2",model);
 	}
 
+	@RequestMapping(path="/agregarIVE", method=RequestMethod.POST)
+	public ModelAndView agregarInstructor5(@RequestParam(name="idInstructor")Long idIns,
+			@RequestParam(name="especialidadId")Long idEsp,
+			@RequestParam(name="idVehiculo")Long idVeh,
+			HttpServletRequest request){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(idEsp);
+			Vehiculo vehiculo = servicioVehiculo.buscarVehiculoPorId(idVeh);
+			if(idIns!=null&&esp!=null&&vehiculo!=null){
+				Instructor inst = servicioOrganizadorInstructor.buscarInstructorPorId(idIns);
+				InstructorVehiculoEspecialidad ive = new InstructorVehiculoEspecialidad();
+				ive.setEspecialidad(esp);
+				ive.setInstructor(inst);
+				ive.setVehiculo(vehiculo);
+				model.put("idInstructor", idIns);
+				if(servicioIve.guardarIve(ive)!=null){
+					model.put("mensaje", "Instructor, Vehiculo y Especialidad guardados con éxito");
+					model.put("iveGuardada", true);
+				}else{
+					model.put("error", "Hubo un error al guardar los datos. Por favor, intente nuevamente.");
+				}
+			}else{
+				model.put("error", "Hay un error con los datos seleccionados. Verifique que seleccionó "
+						+ "una especialidad, instructor y vehiculo válidos");
+			}
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("agregarInstructorOrg2", model);
+	}
+	
+	@RequestMapping(path="/verCursos")
+	public ModelAndView mostrarCursos(HttpServletRequest request){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			List<Curso> listaCursos = servicioOrganizadorCurso.traerListaDeCursos();
+			if(listaCursos.isEmpty()){
+				model.put("mensaje", "Aun no hay ningun curso creado. Añada alguno primero");
+			}else{
+				model.put("listaCursos", listaCursos);
+			}
+			
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("cursosOrg",model);
+	}
+	@RequestMapping(path="/modificarCurso/{idCurso}")
+	public ModelAndView ModificarCursos(HttpServletRequest request,
+			@PathVariable(value="idCurso")String idCurso){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("cursosOrg",model);
+	}
+	@RequestMapping(path="/eliminarCurso/{idCurso}")
+	public ModelAndView EliminarCurso(HttpServletRequest request,
+			@PathVariable(value="idCurso")Long idCurso,
+			@RequestParam(name="confir",required=false)String confirmacion){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			Curso curso = servicioOrganizadorCurso.buscarCursoPorId(idCurso);
+			if(curso!=null){
+				if(confirmacion==null){
+					model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
+				}else{
+					switch(confirmacion){
+					case "si": servicioOrganizadorCurso.eliminarCurso(curso);
+								if(servicioOrganizadorCurso.buscarCurso(curso)==null)
+								model.put("mensaje", "Curso eliminado correctamente");
+					case "no": return new ModelAndView("redirect:/verCursos");
+					
+					default: return new ModelAndView("redirect:/verCursos");
+					}
+				}
+			}else{
+				model.put("error", "El curso seleccionado no existe");
+			}
 
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("cursosOrg",model);
+	}
 
 }

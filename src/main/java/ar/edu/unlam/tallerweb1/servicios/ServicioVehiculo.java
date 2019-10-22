@@ -10,4 +10,5 @@ public interface ServicioVehiculo {
 	Vehiculo buscarVehiculo(Vehiculo vehiculo);
 	Long guardarVehiculo(Vehiculo vehiculo);
 	Vehiculo buscarVehiculoPorId(Long id);
+	List<Vehiculo> obtenerVehiculosSinInstructorPorEspecialidad(Especialidad esp);
 }

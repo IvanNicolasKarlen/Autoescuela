@@ -34,4 +34,9 @@ public class ServicioOrganizadorCursoImpl implements ServicioOrganizadorCurso {
 		return organizadorCursoDao.buscarCursoPorId(cursoid);
 	}
 
+	@Override
+	public void eliminarCurso(Curso curso) {
+		organizadorCursoDao.eliminarCurso(curso);
+	}
+
 }

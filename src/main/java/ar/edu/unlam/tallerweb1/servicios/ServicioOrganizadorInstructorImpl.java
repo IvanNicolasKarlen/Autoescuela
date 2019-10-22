@@ -16,8 +16,8 @@ public class ServicioOrganizadorInstructorImpl implements ServicioOrganizadorIns
 	private OrganizadorInstructorDao organizadorInstructorDao;
 	
 	@Override
-	public Long agregarInstructor(Usuario usuario, Instructor instructor) {
-		return organizadorInstructorDao.agregarInstructor(instructor,usuario);
+	public Long agregarInstructor(Instructor instructor) {
+		return organizadorInstructorDao.agregarInstructor(instructor);
 	}
 
 	@Override

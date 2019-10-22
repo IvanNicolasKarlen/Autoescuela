@@ -23,32 +23,23 @@
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 	
 	<!-- En este h4 se muestra el error si es que hay alguno -->
-		<h4 class="t-center text-danger">${mensaje}</h4>
-		<h4 class="t-center text-danger">${error}</h4>
+		
 		<section class="section-reservation bg1-pattern p-t-100 p-b-113">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 p-b-30">
                 <div class="t-center">
-
-					<form action="seleccionarVehiculoParaInstructor" method="post">
-						<label class="txt9"> Seleccione Especialidad para la que desea agregar el Vehiculo: </label> 
-						<select class="bo-rad-10 sizefull txt10 p-l-20" id="eps"
-							name="eps">
-
-							<c:forEach items="${listaEspecialidades}" var="les">
-								<option value="${les.id}">${les.tipo}</option>
-							</c:forEach>
-
-						</select> 
-						<input style="display:none" name="idInstructor" value="${ins.id}"> 
-						<div class="wrap-btn-booking flex-c-m m-t-6">
-							<button type="submit"
+					<h4 class="t-center text-danger">${mensaje}</h4>
+					<h4 class="t-center text-danger">${error}</h4>
+					<form method="post" action="agregarVehiculoEspecialidad">
+						<input name="idIns" value="${idInstructor}" style="display:none"/>
+						<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
-								Continuar</button>
-						</div>
+								Agregar Especialidades y Vehiculos</button>
 					</form>
-
+					<c:if test="${iveGuardada==true}">
+						<a href="index">Volver a Inicio</a>
+					</c:if>
 				</div>
 			</div>
 		</div>

@@ -14,9 +14,8 @@ public class OrganizadorInstructorDaoImpl implements OrganizadorInstructorDao {
 	@Inject
 	private SessionFactory sessionFactory;
 	@Override
-	public Long agregarInstructor(Instructor instructor, Usuario usuario) {
+	public Long agregarInstructor(Instructor instructor) {
 		final Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(usuario);
 		return (Long)session.save(instructor);
 
 	}

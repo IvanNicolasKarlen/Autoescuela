@@ -10,4 +10,5 @@ public interface EspecialidadDao {
 	Especialidad traerEspecialidadPorId(Long id);
 	Especialidad traerEspecialidadPorNombre(String tipoEsp);
 	Long guardarEspecialidad(Especialidad especialidad);
+	List<Especialidad> traerEspecialidadesQueUnInstructorNoTenga(Long idInstructor);
 }

@@ -40,4 +40,10 @@ public class OrganizadorCursoDaoImpl implements OrganizadorCursoDao {
 		return (Curso)session.get(Curso.class, cursoid);
 	}
 
+	@Override
+	public void eliminarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.delete(curso);
+	}
+
 }

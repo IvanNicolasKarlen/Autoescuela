@@ -35,4 +35,9 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	public Long guardarEspecialidad(Especialidad especialidad) {
 		return especialidadDao.guardarEspecialidad(especialidad);
 	}
+
+	@Override
+	public List<Especialidad> traerEspecialidadesQueUnInstructorNoTenga(Long idInstructor) {
+		return especialidadDao.traerEspecialidadesQueUnInstructorNoTenga(idInstructor);
+	}
 }

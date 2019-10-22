@@ -9,10 +9,10 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import ar.edu.unlam.tallerweb1.dao.AsistenciaDao;
 import ar.edu.unlam.tallerweb1.dao.OrganizadorCrearAgendaDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
-
+import ar.edu.unlam.tallerweb1.modelo.Asistencia;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 @Service
 @Transactional
@@ -20,7 +20,8 @@ public class ServicioOrganizadorCrearAgendaImpl implements ServicioOrganizadorCr
 	@Inject
 	private OrganizadorCrearAgendaDao organizadorCrearAgendaDao;
 
-		public Long crearAgenda(LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
+
+		public Long crearAgenda(Asistencia asistencia, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
 			List <Agenda> agendas = new ArrayList<Agenda>();
 			for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
 				for(InstructorVehiculoEspecialidad ive:listaIve){
@@ -29,6 +30,8 @@ public class ServicioOrganizadorCrearAgendaImpl implements ServicioOrganizadorCr
 						ag.setFecha(date.toString());
 						ag.setHora(i);
 						ag.setInstructorVehiculoEspecialidad(ive);
+						ag.setAsistencia(asistencia);
+						ag.setClasePagada(false);
 						agendas.add(ag);
 					}
 				}
