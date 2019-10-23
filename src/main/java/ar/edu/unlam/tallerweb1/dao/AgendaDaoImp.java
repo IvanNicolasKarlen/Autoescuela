@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.SimpleExpression;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
@@ -21,18 +23,16 @@ public class AgendaDaoImp implements AgendaDao {
 	@Inject
     private SessionFactory sessionFactory;
 	
-	List <Agenda> miLista;
-	List <Usuario> miListaAlumno;
-	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		final Session session = sessionFactory.getCurrentSession();
-		miLista = session.createCriteria(Agenda.class)
-				.add(Restrictions.isNotNull("inscripcion"))
+		return session.createCriteria(Agenda.class)
 				.createAlias("instructorVehiculoEspecialidad", "iveBuscado")
 				.createAlias("iveBuscado.instructor", "instructorId")
+				.add(Restrictions.isNotNull("inscripcion"))
 				.add(Restrictions.eq("instructorId.id", idInstructor))
 				.list();
-		return miLista;
 	}
+
+	
 }

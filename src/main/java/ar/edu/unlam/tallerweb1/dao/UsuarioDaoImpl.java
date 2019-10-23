@@ -30,13 +30,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Override
 	public List<Usuario> traerAlumnos(Long idInstructor) {
 		final Session session = sessionFactory.getCurrentSession();
-			List <Usuario> resultado = session.createCriteria(Usuario.class)
+			return session.createCriteria(Usuario.class)
 			.add(Restrictions.eq("rol", "Alumno"))
 			.setProjection(Projections.projectionList()
 			.add(Projections.distinct(Projections.property("email")))
 			)
 			.list();
-		return resultado;
+		
 		}
 	
 	
