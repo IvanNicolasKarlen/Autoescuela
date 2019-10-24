@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <head>
-	<title>Home</title>
+	<title>Agregar Curso</title>
 	<!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->

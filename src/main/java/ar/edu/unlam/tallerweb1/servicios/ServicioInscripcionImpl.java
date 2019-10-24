@@ -9,14 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
-import ar.edu.unlam.tallerweb1.dao.AlumnoEspecialidadDao;
+import ar.edu.unlam.ViewModel.CursosViewModel;
 import ar.edu.unlam.tallerweb1.dao.EspecialidadDao;
 import ar.edu.unlam.tallerweb1.dao.EstadoDao;
 import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.dao.InscripcionDao;
 import ar.edu.unlam.tallerweb1.dao.AgendaDao;
+import ar.edu.unlam.tallerweb1.dao.AlumnoDao;
+import ar.edu.unlam.tallerweb1.dao.AsistenciaDao;
+import ar.edu.unlam.tallerweb1.dao.CursoDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Asistencia;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
@@ -34,6 +38,12 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 	private EspecialidadDao especialidadDao;
 	@Inject
 	private AgendaDao agendaDao;
+	@Inject
+	private CursoDao  cursoDao;
+	@Inject
+	private AlumnoDao alumnoDao;
+	@Inject
+	private AsistenciaDao asistenciaDao;
 	
 	/********************************** ALUMNO **************************************************/
 	@Override
@@ -98,6 +108,88 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		}
 
 	}
+
+
+
+	@Override
+	public List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno) {
+		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
+				
+		 
+		return inscripcionDao.traerLosCursosEnQueSeEncuentraAnotado(idAlumno, estado);
+	}
+
+
+
+	@Override
+	public Inscripcion buscarCursoAEliminar(Long idEspecialidad, Long idAlumno) {
+		// 
+		return inscripcionDao.buscarCursoAEliminar( idEspecialidad,  idAlumno);
+	}
+
+
+
+	@Override
+	public void eliminarInscripcionDelAlumnoYSusClasesDelCurso(Long idCurso, Long idAlumno) {
+		
+						/*Eliminar las clases de la agenda del alumno tal y de la inscripcion tal*/
+		
+		
+		Inscripcion inscripcionBuscada = inscripcionDao.cursoQueQuieroEliminar(idCurso, idAlumno);
+		
+		
+		System.out.println("INSCRIPCION");
+		System.out.println(inscripcionBuscada.getId());
+		
+		
+		List<Agenda> misClases = agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idAlumno, inscripcionBuscada.getId());
+		
+		Asistencia asistenciaEnEspera = asistenciaDao.traigoElEstadoEnEspera();
+		
+		for(Agenda a: misClases)
+		{
+			a.setInscripcion(null);
+			a.setClasePagada(null);
+			a.setAsistencia(asistenciaEnEspera);
+			
+			inscripcionDao.guardarInscripcionEnLaAgenda(a);
+		}
+		
+		
+		/*
+		List<Agenda> misClases = agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idAlumno, idEspecialidad);
+		
+		Asistencia asistenciaEnEspera = asistenciaDao.traigoElEstadoEnEspera();
+		for(Agenda a: misClases)
+		{
+			a.setInscripcion(null);
+			a.setClasePagada(null);
+			a.setAsistencia(asistenciaEnEspera);
+			
+			inscripcionDao.guardarInscripcionEnLaAgenda(a);
+		}
+		*/
+								/*Eliminar la inscripcion del alumno tal con el curso tal
+		
+		Traigo el obj inscripcion para saber el curso y el obj Alumno para poder reutilizar el metodo de abajo
+		Inscripcion inscripcion = inscripcionDao.buscarCursoAEliminarDelAlumno( idAlumno, idEspecialidad); 
+		Alumno alumno = alumnoDao.buscarAlumno( idAlumno);
+		
+		Inscripcion inscripcionEliminar = inscripcionDao.buscarInscripcion(alumno, inscripcion.getCurso());
+		
+		
+		inscripcionEliminar.setAlumno(null);
+		inscripcionEliminar.setCurso(null);
+		inscripcionEliminar.setEstadoInscripcion(null);
+		inscripcionDao.eliminarInscripcionDelAlumno(inscripcionEliminar);*/
+		
+	}
+
+
+
+	
 
 	
 }

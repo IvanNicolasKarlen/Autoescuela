@@ -16,6 +16,9 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 public class ServicioVehiculoImpl implements ServicioVehiculo {
 	@Inject
 	private VehiculoDao vehiculoDao;
+	
+	
+	/********************************ORGANIZADOR**************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
 		return vehiculoDao.obtenerVehiculoPorEspecialidad(especialidad);
@@ -31,6 +34,10 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
 	@Override
 	public Vehiculo buscarVehiculoPorId(Long id) {
 		return vehiculoDao.buscarVehiculoPorId(id);
+	}
+	@Override
+	public List<Vehiculo> obtenerVehiculosSinInstructorPorEspecialidad(Especialidad esp) {
+		return vehiculoDao.obtenerVehiculosSinInstructorPorEspecialidad(esp);
 	}
 
 }

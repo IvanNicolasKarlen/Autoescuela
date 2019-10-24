@@ -14,6 +14,9 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 public class OrganizadorCursoDaoImpl implements OrganizadorCursoDao {
 	@Inject
 	private SessionFactory sessionFactory;
+	
+	
+	/***********************************ORGANIZADOR*********************************/
 	@Override
 	public Long agregarCurso(Curso curso) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -39,5 +42,12 @@ public class OrganizadorCursoDaoImpl implements OrganizadorCursoDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Curso)session.get(Curso.class, cursoid);
 	}
+
+	@Override
+	public void eliminarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.delete(curso);
+	}
+
 
 }

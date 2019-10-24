@@ -22,6 +22,17 @@ public interface InscripcionDao {
 	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
 	void guardarInscripcionEnLaAgenda(Agenda a);
+
+	List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno, EstadoInscripcion estado);
+
+	Inscripcion buscarCursoAEliminar(Long idCurso, Long idAlumno);
+
+	void eliminarInscripcionDelAlumno(Inscripcion inscripcionEliminar);
+
+	Inscripcion buscarCursoAEliminarDelAlumno(Long idAlumno, Long idEspecialidad);
+
+	Inscripcion cursoQueQuieroEliminar(Long idCurso, Long idAlumno);
+	
 	
 	/****************************************************************/
 

@@ -6,6 +6,8 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 
 public interface OrganizadorCursoDao {
 
+	
+	/************************************ORGANIZADOR***************************/
 	Long agregarCurso(Curso curso);
 
 	Curso buscarCurso(Curso curso);
@@ -13,4 +15,5 @@ public interface OrganizadorCursoDao {
 	List<Curso> traerListaDeCursos();
 
 	Curso buscarCursoPorId(Long cursoid);
-}
+	
+	void eliminarCurso(Curso curso);}

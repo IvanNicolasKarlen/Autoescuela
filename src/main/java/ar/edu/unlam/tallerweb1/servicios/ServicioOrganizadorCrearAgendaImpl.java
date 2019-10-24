@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.IveDao;
 import ar.edu.unlam.tallerweb1.dao.OrganizadorCrearAgendaDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
+import ar.edu.unlam.tallerweb1.modelo.Asistencia;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 
@@ -22,24 +23,28 @@ public class ServicioOrganizadorCrearAgendaImpl implements ServicioOrganizadorCr
 	private OrganizadorCrearAgendaDao organizadorCrearAgendaDao;
 	@Inject
 	private IveDao iveDao;
-		public Long crearAgenda(Curso curso, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF){
-			List <Agenda> agendas = new ArrayList<Agenda>(); 
-			List <InstructorVehiculoEspecialidad> listaIve = iveDao.traerListaIve();
-			for(LocalDate date = desde; desde.isBefore(hasta); date = date.plusDays(1)){
-				for(InstructorVehiculoEspecialidad ive:listaIve){
-					for(Integer i=horaC;i<=horaF;i++){
-						agendas.add(new Agenda());
-						agendas.get(agendas.size()-1).setFecha(date.toString());
-						agendas.get(agendas.size()-1).setHora(i);
-						agendas.get(agendas.size()-1).setInstructorVehiculoEspecialidad(ive);
-						//agendas.get(agendas.size()-1).setCurso(curso);
-					}
+	
+	
+	/************************************ORGANIZADOR******************************/
+	public Long crearAgenda(Asistencia asistencia, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
+		List <Agenda> agendas = new ArrayList<Agenda>();
+		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
+			for(InstructorVehiculoEspecialidad ive:listaIve){
+				for(Integer i=horaC;i<=horaF;i=i+100){
+					Agenda ag = new Agenda();
+					ag.setFecha(date.toString());
+					ag.setHora(i);
+					ag.setInstructorVehiculoEspecialidad(ive);
+					ag.setAsistencia(asistencia);
+					ag.setClasePagada(false);
+					agendas.add(ag);
 				}
 			}
-			Long id=null;
-			for(Agenda varAgendas:agendas){
-				id = organizadorCrearAgendaDao.crearAgenda(varAgendas);
-			}
-			return id;
 		}
+		Long id=null;
+		for(Agenda varAgendas:agendas){
+			id = organizadorCrearAgendaDao.crearAgenda(varAgendas);
+		}
+		return id;
+	}
 }

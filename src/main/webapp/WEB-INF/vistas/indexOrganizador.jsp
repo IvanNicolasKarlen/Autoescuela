@@ -29,7 +29,7 @@
 							Bienvenidx Organizadxr
 						</h2>
 							<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-								<a href="cursosOrganizador" class="btn1 flex-c-m size1 txt3 trans-0-4">
+								<a href="verCursos" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Ver cursos
 								</a>
 							</div>

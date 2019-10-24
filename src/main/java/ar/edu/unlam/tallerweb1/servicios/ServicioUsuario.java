@@ -12,8 +12,11 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 // Interface que define los metodos del Servicio de Usuarios.
 public interface ServicioUsuario {
 
+	/***************************** INSTRUCTOR *******************************/
 	Usuario consultarUsuario(Usuario usuario);
 	Long insertarUsuario(Usuario usuario);
 	List <Usuario> traerAlumnos(Long idInstructor);
+	
+	/***********************************************************************/
 	
 }

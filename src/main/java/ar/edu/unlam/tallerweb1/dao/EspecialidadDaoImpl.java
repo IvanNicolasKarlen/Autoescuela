@@ -41,6 +41,17 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Long)session.save(especialidad);
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Especialidad> traerEspecialidadesQueUnInstructorNoTenga(Long idInstructor) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Especialidad>) session.createCriteria(Especialidad.class)
+									.createAlias("instructoresVehiculosEspecialidades", "iveBuscada")
+									.createAlias("iveBuscada.instructor", "instructorBuscado")
+									.add(Restrictions.not(Restrictions.eq("instructorBuscado.id", idInstructor)))
+									.list();
+	}
+
 	
 	
 	

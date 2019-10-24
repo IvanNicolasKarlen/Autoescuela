@@ -30,8 +30,9 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		
 		List<Inscripcion> lista = session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id",idAlumno))
-				.createAlias("estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.createAlias("curso", "cur")
+				.createAlias("estadoInscripcion", "estadoInscripcionBuscado")
+				.add(Restrictions.eq("estadoInscripcionBuscado.estado", "Cursando"))
 				.list();
 		return lista;
 	}
@@ -85,8 +86,73 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		session.update(a);
 		
 	}
+
+	@Override
+	public List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno, EstadoInscripcion estado) {
+		final Session session = sessionfactory.getCurrentSession();
+		
+		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
+				.add(Restrictions.eq("alumno.id", idAlumno))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.list();
+	return l;
+	}
+
 	
 	
+	@Override
+	public Inscripcion buscarCursoAEliminar(Long idEspecialidad, Long idAlumno) {
+		final Session session = sessionfactory.getCurrentSession();
+		
+		Inscripcion a = (Inscripcion) session.createCriteria(Inscripcion.class)
+				.add(Restrictions.eq("alumno.id",idAlumno))
+				.createAlias("curso.especialidad", "especialidad")
+				.add(Restrictions.eq("especialidad.id",idEspecialidad))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.uniqueResult();
+				
+		return a;
+	}
+
+	@Override
+	public void eliminarInscripcionDelAlumno(Inscripcion inscripcionEliminar) {
+		final Session session = sessionfactory.getCurrentSession();
+		
+		session.update(inscripcionEliminar);
+		
+	}
+
+
+	@Override
+	public Inscripcion buscarCursoAEliminarDelAlumno(Long idEspecialidad, Long idAlumno) {
+final Session session = sessionfactory.getCurrentSession();
+		
+		return (Inscripcion) session.createCriteria(Inscripcion.class)
+				.add(Restrictions.eq("alumno.id",idAlumno))
+				.createAlias("curso.especialidad", "especialidad")
+				.add(Restrictions.eq("especialidad.id",idEspecialidad))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.uniqueResult();
+		
+	}
+
+	@Override
+	public Inscripcion cursoQueQuieroEliminar(Long idCurso, Long idAlumno) {
+final Session session = sessionfactory.getCurrentSession();
+		
+		return (Inscripcion) session.createCriteria(Inscripcion.class)
+				.createAlias("alumno", "alumno")
+				.add(Restrictions.eq("alumno.id",idAlumno))
+				.createAlias("curso", "curso")
+				.add(Restrictions.eq("curso.id",idCurso))
+				.createAlias("estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.uniqueResult();
+	}
+
 	
 	
 	

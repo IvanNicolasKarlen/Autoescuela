@@ -10,21 +10,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
+import ar.edu.unlam.ViewModel.CursosViewModel;
 import ar.edu.unlam.tallerweb1.dao.AgendaDao;
+import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 @Service("servicioAgenda")
 @Transactional
 public class ServicioAgendaImp implements ServicioAgenda{
 	@Inject
-	private AgendaDao  agendaDao;
-	
+	private AgendaDao  servicioAgendaDao;
+	@Inject
+	private EstadoInscripcionDao estadoinscripcionDao;
 	
 	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
-		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
+		return servicioAgendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 	}
 	
 	
@@ -32,7 +37,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
 
-		return agendaDao.traerAgendasConFechasNoRepetidas(Curso);
+		return servicioAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
 	}
 	
 	
@@ -50,7 +55,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			try
 			{
 				// *metodo
-				Agenda aBuscada=agendaDao.buscarAgendasElegidas(a, curso); //alumnoAgendaDao
+				Agenda aBuscada=servicioAgendaDao.buscarAgendasElegidas(a, curso); //alumnoAgendaDao
 				
 				//comparamos que el id de la agenda buscada
 				// sea igual que el de la agenda que le pasamos por parametro
@@ -80,6 +85,63 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		
 		return false;
 	}
+	
+	
+	@Override
+	public List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno) {
+		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
+		
+		return servicioAgendaDao.traerTodasLasClasesQueEstaAnotado(idAlumno);
+	}
+	
+	
+	
+	@Override
+	public List<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(CursosViewModel cursosViewModel, Long idAlumno) {
+		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
+		
+		 List<Agenda> listaAgregarInscripcion  = new ArrayList();
+		 
+		 for(Long c: cursosViewModel.getListaCursos())
+		 {
+			 
+		List<Agenda> listaInscripcion = servicioAgendaDao.traerTodasLasClasesQueSeEncuentraAnotado(c, estado, idAlumno);
+		
+		listaAgregarInscripcion.addAll(listaInscripcion);
+		 }
+		 
+		return listaAgregarInscripcion;
+	}
+	@Override
+	public List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno) {
+		
+		return servicioAgendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad, idAlumno);
+	}
+	@Override
+	public Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno) {
+		
+		
+		
+		return servicioAgendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
+	}
+	
+	@Override
+	public void eliminarClaseDeLaAgenda(Long idAgendaSeleccionado, Long idAlumno) {
+	
+		Agenda agenda= servicioAgendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
+		
+		agenda.setInscripcion(null);
+		
+		//Eliminar esta clase
+		 servicioAgendaDao.eliminarClaseDeLaAgenda(agenda);
+		
+	}
+	
+	
 
 	
 }

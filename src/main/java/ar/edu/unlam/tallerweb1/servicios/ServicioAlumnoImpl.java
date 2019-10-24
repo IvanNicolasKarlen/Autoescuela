@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -18,6 +20,12 @@ public class ServicioAlumnoImpl implements ServicioAlumno {
 	@Override
 	public Alumno buscarAlumno(Long idAlumno) {
 		return alumnoDao.buscarAlumno( idAlumno);
+	}
+
+	@Override
+	public List<Alumno> buscarAlumnos(String nombre,String apellido) {
+
+			return alumnoDao.buscarAlumnos(nombre,apellido);
 	}
 	
 	

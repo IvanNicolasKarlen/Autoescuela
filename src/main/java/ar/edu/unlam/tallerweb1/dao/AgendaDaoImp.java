@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 
 @Repository("servicioAgendaDao")
 public class AgendaDaoImp implements AgendaDao {
@@ -22,19 +23,21 @@ public class AgendaDaoImp implements AgendaDao {
     private SessionFactory sessionFactory;
 	
 	List <Agenda> miLista;
-	List <Usuario> miListaAlumno;
+	List <Alumno> miListaAlumno;
 	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		final Session session = sessionFactory.getCurrentSession();
-		miLista = session.createCriteria(Agenda.class)
-				.add(Restrictions.isNotNull("inscripcion"))
+		return session.createCriteria(Agenda.class)
 				.createAlias("instructorVehiculoEspecialidad", "iveBuscado")
 				.createAlias("iveBuscado.instructor", "instructorId")
+				.add(Restrictions.isNotNull("inscripcion"))
 				.add(Restrictions.eq("instructorId.id", idInstructor))
 				.list();
-		return miLista;
 	}
+
+	
+
 	
 	
 	/***************************************Alumno**************************************/
@@ -78,8 +81,95 @@ public class AgendaDaoImp implements AgendaDao {
 				
 		return a;
 	}
+
+	@Override
+	public List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno) {
+final Session session = sessionFactory.getCurrentSession();
+		
+		List<Agenda> lista = session.createCriteria(Agenda.class)
+				.createAlias("inscripcion.alumno", "alumno")
+				.add(Restrictions.eq("alumno.id", idAlumno))
+				.createAlias("asistencia", "asistencia")
+				.add(Restrictions.eq("asistencia.estado", "En espera"))
+				.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.list();
+		return lista;
+	}
 	
 	
+	
+	@Override
+	public List<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		List<Agenda> lista = session.createCriteria(Agenda.class)
+				.createAlias("inscripcion.alumno", "alumno")
+				.add(Restrictions.eq("alumno.id", idAlumno))
+				.createAlias("asistencia", "asistencia")
+				.add(Restrictions.eq("asistencia.estado", "En espera"))
+				.createAlias("inscripcion.curso", "curso")
+				.add(Restrictions.eq("curso.id",c))
+				.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.list();
+		return lista;
+		
+	}
+					//Alumno 1				Inscripcion 2 Especialidad 2
+	@Override
+	public List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idInscripcion, Long idAlumno) {
+		 final Session session = sessionFactory.getCurrentSession();
+		 
+		 List<Agenda> lista = session.createCriteria(Agenda.class)
+					.createAlias("inscripcion.alumno", "alumno")
+					.add(Restrictions.eq("alumno.id", idAlumno))
+					.add(Restrictions.eq("inscripcion.id", idInscripcion))
+					.list();
+		 
+		 return lista;
+		 
+		 
+		 /*List<Agenda> lista = session.createCriteria(Agenda.class)
+					.createAlias("inscripcion.alumno", "alumno")
+					.add(Restrictions.eq("alumno.id", idAlumno))
+					.createAlias("inscripcion.curso.especialidad", "especialidad")
+					.add(Restrictions.eq("especialidad.id",idEspecialidad))
+					.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
+					.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+					.list();
+			return lista;*/
+	}
+
+	
+	
+	
+	@Override
+	public Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Agenda a = (Agenda) session.createCriteria(Agenda.class)
+				.add(Restrictions.eq("id",idAgendaSeleccionado))
+				.createAlias("inscripcion.alumno", "alumno")
+				.add(Restrictions.eq("alumno.id",idAlumno))
+				.uniqueResult();
+				
+		return a;
+	}
+
+	@Override
+	public void eliminarClaseDeLaAgenda(Agenda agenda) {
+		final Session session = sessionFactory.getCurrentSession();
+	
+		session.update(agenda);
+		
+	}
+
+	
+
+	
+	
+	/***************************************************************************************/
 	
 
 }

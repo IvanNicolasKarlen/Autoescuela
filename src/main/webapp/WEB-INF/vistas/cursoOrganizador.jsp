@@ -26,8 +26,15 @@
 					
 					<h3>${mensaje}</h3>
 					<h3>${error}</h3>
+					<hr>
+					<p>
+						<a href="verCursos">Ver cursos</a>
+					</p>
 					<p>
 						<a href="index">Volver al inicio</a>
+					</p>
+					<p>
+						<a href="agregarCurso">Agregar nuevo curso</a>
 					</p>
 				</div>
 			</div>

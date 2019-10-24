@@ -45,6 +45,11 @@ select * from instructorvehiculoespecialidad;
  Insert into especialidad (tipo) values ("Auto"),("Moto");
 
 
+ Insert into asistencia(estado) 
+ values("Presente"),
+ ("Ausente"),
+ ("En espera");
+ 
 insert into estadodevehiculo(estadoActual) values ("Disponible");
 insert into vehiculo( modelo ,patente,estadoDeVehiculo_id) values("Suran","AA 234 CD",1),("Gol Rojo", "CKD 273",1);
 insert into instructorvehiculoespecialidad(especialidad_id, instructor_id, vehiculo_id)
@@ -81,16 +86,12 @@ Insert into curso (
 
 /*Update tablacursoalumno set estado= "Finalizado" where id=1;*/
 
-Insert into agenda (fecha, hora,instructorvehiculoespecialidad_id) 
-values("18/09/2019", 1800,1),
-("19/09/2019", 1300,1),
-("20/09/2019", 1200,2),
-("21/09/2019", 1000,1);
-
-Insert into agenda (fecha, hora,instructorvehiculoespecialidad_id) values
-("22/09/2019", 1600,1);
-
-Insert into agenda (fecha, hora,instructorvehiculoespecialidad_id) 
-values("23/09/2019", 0900,1),
-("24/09/2019", 0900,2),
-("25/09/2019", 0900,3);
+Insert into agenda (fecha, hora,asistencia,instructorvehiculoespecialidad_id) 
+values("18/09/2019", 1800,3,1),
+("19/09/2019", 1300,3,1),
+("20/09/2019", 1200,3,2),
+("21/09/2019", 1000,3,1),
+("22/09/2019", 1600,3,1),
+("23/09/2019", 0900,3,1),
+("24/09/2019", 0900,3,2),
+("25/09/2019", 0900,3,3);

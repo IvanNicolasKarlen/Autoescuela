@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
+import ar.edu.unlam.ViewModel.CursosViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
@@ -59,44 +60,49 @@ public class ControladorAlumno {
 	@Inject
 	private ServicioCurso servicioCurso;
 	
-	
-	
-	
-
-	
-	
-	
+	/*NO VA
+	@RequestMapping("/vistaX")
+	public ModelAndView prueba(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel) {
+		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		{
+			ModelMap modelo = new ModelMap();
+			
+		try{	
+			if(agendasViewModel.getIdAgendaSeleccionada().SIZE == 0)
+			{
+			modelo.put("mensaje", "Ingreso al try");	
+			
+			}
+		}catch(NullPointerException e)
+		{
+			modelo.put("mensaje", "Ingreso al catch");
+		}
+			
+			
+			modelo.put("curso", agendasViewModel.getIdCurso());
+			modelo.put("idAgenda", agendasViewModel.getIdAgendaSeleccionada());
+			
+		return new ModelAndView("vistaX",modelo);
+		}
+		return new ModelAndView("redirect:/index");
+	}*/
 	
 	
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno(HttpServletRequest request) {
 		if(request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
-			ModelMap modelo = new ModelMap();
-		//Sesion
-		Long idAlumno = (Long) request.getSession().getAttribute("ID");
-										//servicioAlumnoInscripcion
-		List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno);
-		
-		
-		if(cursando.isEmpty())
-		{
-			modelo.put("inscripto", null);
-			modelo.put("num", 0);
-			modelo.put("tam", cursando.size());
 			
-		}else{
-				modelo.put("inscripto", cursando);
-				modelo.put("num", 1);
-				modelo.put("tam", cursando.size());
-			 }
-		
 		return new ModelAndView("indexAlumno");
 		}
 		return new ModelAndView("redirect:/index");
 	}
 	
 	
+
+	
+	
+	/*Trae todos los cursos cargador por el Organizador*/
 	@RequestMapping(path="/listadoCursos")
 	public ModelAndView mostrarCursos(HttpServletRequest request){
 		
@@ -115,6 +121,8 @@ public class ControladorAlumno {
 		
 	return new ModelAndView("redirect:/index");
 	}
+	
+	
 	
 	
 	
@@ -260,9 +268,196 @@ public class ControladorAlumno {
 		} //// fin If Session
 		return new ModelAndView("redirect:/index");
 	}
+	
+	
+	
+	
+	
+	
+
+	/*Muestra todas las clases que esta realizando todas juntas*/
+	@RequestMapping(path="/listadoFechas")
+	public ModelAndView DiasDeCursada(HttpServletRequest request){
+		
+	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	{
+		ModelMap modelo = new ModelMap();
+				
+				//Sesion
+				Long idAlumno = (Long) request.getSession().getAttribute("ID");
+												
+				List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno);//servicioAlumnoInscripcion
+				
+				
+				if(cursando.isEmpty())
+				{
+					modelo.put("num", cursando.size());
+				}else{
+					
+					List<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(idAlumno);
+						
+					modelo.put("num", cursando.size());
+					modelo.put("listadoClases", listadoDeClases);
+					modelo.put("listaCursos", cursando);
+					 }
+				
+				return new ModelAndView("fechaYHorasDeCadaCurso", modelo);
+	}
+		
+	return new ModelAndView("redirect:/index");
+	}
+	
+	
+	
+	/*Trae solo las clases de la especialidad que selecciono en los filtros*/
+	@RequestMapping(path="/clasesDelCurso")
+	public ModelAndView VistaDePruebas(HttpServletRequest request, @RequestParam(name="id") Long idEspecialidad ){
+		
+		ModelMap modelo = new ModelMap();
+		
+		//Sesion
+		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+		
+		//Traer las clases del filtro elegido Agenda
+		List<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,idAlumno);//servicioAlumnoInscripcion
+		
+		
+		//Traer solo los filtros Inscripcion
+		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(idAlumno);
+		
+		/*Por si cambia el id de la url*/
+		if(clasesDeUnSoloCurso.isEmpty())
+			modelo.put("error", "No estas realizando ese curso");
+		
+		/*Para mostrar los cursos que esta realizando y que los pueda eliminar*/
+		List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno);//servicioAlumnoInscripcion
+		
+		
+		/*Si no tiene curso, se le pedira que se registre a alguno*/
+		if(cursando.isEmpty())
+		{
+			modelo.put("num", cursando.size());
+		}else{
+				/*Sino, se le mostrara las clases que eligio del filtro*/
+			modelo.put("num", cursando.size());
+			/*Los cursos que esta realizando, para poder eliminarlos*/
+			modelo.put("listaCursos", cursando);
+			 }
+		
+		modelo.put("listadoDeClases", clasesDeUnSoloCurso);
+		modelo.put("listadoDeFiltros",listadoDeFiltros );
+		
+	
+		
+		return new ModelAndView("clasesElegidasEnElFiltroDeAlumno", modelo);
+	}
+	
+
+	
+	/*Vista que pregunta si esta seguro eliminar la clase seleccionada*/
+	@RequestMapping(path="/mostrarAlerta")
+	public ModelAndView mostrarSiQuiereEliminarUnaClaseOno(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
+		
+		ModelMap modelo = new ModelMap();
+		
+		//Sesion
+		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+	
+		
+		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
+		try{
+		agendasViewModel.getIdAgendaSeleccionada().equals(null);
+		
+	
+		}catch(NullPointerException e){
+		
+			/*Si no quiere eliminar una clase*/
+			/*Mostramos el curso a eliminar*/
+			Inscripcion alumnoEnCurso = servicioInscripcion.buscarCursoAEliminar(agendasViewModel.getIdCurso(), idAlumno);
+			
+			modelo.put("nombreEspecialidad", alumnoEnCurso);
+			modelo.put("mensaje", "¿Deseas eliminar este curso?");
+			
+			modelo.put("bandera", 1);
+		}
+			
+		
+			/*Si no envio un curso para eliminar, entonces quiere eliminar una clase*/
+			try{
+		agendasViewModel.getIdCurso().equals(null);
+			
+			}catch(NullPointerException e)
+			{
+			//Traer la clase que selecciono para eliminar
+			Agenda agenda = servicioAgenda.traerClaseQueQuiereEliminar(agendasViewModel.getIdAgendaSeleccionada(),idAlumno);
+			
+			modelo.put("listadoClases", agendasViewModel.getIdAgendas());
+			modelo.put("curso", agendasViewModel.getIdCurso());
+			modelo.put("agenda", agenda);
+			modelo.put("mensaje", "¿Deseas eliminar esta clase?");
+			
+			
+			modelo.put("bandera", 2);
+			}
+		
+		
+		
+				
+		
+		
+		return new ModelAndView("alertaEliminar", modelo);
+	}
+	
+	
+	/*Confirmado el metodo de Eliminar la clase seleccionada*/
+	@RequestMapping(path="/eliminarClase")
+	public ModelAndView eliminarUnaClase(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
+		
+		ModelMap modelo = new ModelMap();
+	
+		//Sesion
+		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+		
+		
+		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
+		try{
+		
+			agendasViewModel.getIdAgendaSeleccionada().equals(null);
+		
+		}catch(NullPointerException e){
+		
+			servicioInscripcion.eliminarInscripcionDelAlumnoYSusClasesDelCurso(agendasViewModel.getIdCurso(),idAlumno);
+			modelo.put("mensaje", "Se te ha eliminado del curso correctamente");
+		}
+		
+		
+		/*Si no envio un curso para eliminar, entonces quiere eliminar una clase*/
+		try{
+		
+			agendasViewModel.getIdCurso().equals(null);
+
+		}catch(NullPointerException e){
+			
+			//Eliminar esta clase
+			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),idAlumno);
+			 modelo.put("mensaje", "Se ha eliminado la clase seleccionada correctamente");
+		}
+		
+		
+		
+		
+		
+		
+		
+		return new ModelAndView("Eliminada", modelo);
+	}
+	
+	
+	
+	
+	
 			
 }	
 		
 		
 	
-

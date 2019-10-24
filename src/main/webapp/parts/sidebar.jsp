@@ -40,7 +40,15 @@
 			<!-- FIN DEL IF usuarioID==null -->
 			<!-- if rol=='alumno' -->
 			<c:if test="${rol=='Alumno'}">
-									
+					<li>
+									<a href="index">Inicio</a>
+								</li>
+								<li>
+									<a href="listadoCursos">Anotarme</a>
+								</li>
+								<li>
+									<a href="listadoFechas">Mis clases</a>
+								</li>				
 			</c:if>
 			<!-- FIN ALUMNO -->
 			<!-- Instructor -->
@@ -49,7 +57,7 @@
 			</c:if>
 							
 			<!-- Fin instructor -->
-		<!-- Organizador -->
+			<!-- Organizador -->
 
 		<c:if test="${rol=='Organizador'}">
 			<li class="t-center m-b-13"><a href="index">Inicio</a></li>

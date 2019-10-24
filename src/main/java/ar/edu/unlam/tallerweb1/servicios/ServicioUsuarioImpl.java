@@ -29,6 +29,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Inject
 	private UsuarioDao servicioUsuarioDao;
 
+	/************************************* ORGANIZADOR *******************************/
 	@Override
 	public List<Usuario> traerAlumnos(Long idInstructor) {
 		return servicioUsuarioDao.traerAlumnos(idInstructor);
@@ -42,6 +43,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Long insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
-	
+	/*************************************************************************/
 	
 }

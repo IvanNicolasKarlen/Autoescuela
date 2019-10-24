@@ -15,6 +15,8 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	@Inject
 	private EspecialidadDao especialidadDao;
 
+	/***************************************ORGANIZADOR*********************/
+	
 	@Override
 	public List<Especialidad> traerListaDeEspecialidades() {
 		return especialidadDao.traerListaDeEspecialidades();
@@ -34,5 +36,10 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	@Override
 	public Long guardarEspecialidad(Especialidad especialidad) {
 		return especialidadDao.guardarEspecialidad(especialidad);
+	}
+
+	@Override
+	public List<Especialidad> traerEspecialidadesQueUnInstructorNoTenga(Long idInstructor) {
+		return especialidadDao.traerEspecialidadesQueUnInstructorNoTenga(idInstructor);
 	}
 }
