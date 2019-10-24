@@ -30,6 +30,12 @@ public interface ServicioAgenda {
 
 	void eliminarClaseDeLaAgenda(Long idAgendaSeleccionado, Long idAlumno);
 
+	List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso);
+
+	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
+
+	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
+
 	
 	/********************************************************************/
 

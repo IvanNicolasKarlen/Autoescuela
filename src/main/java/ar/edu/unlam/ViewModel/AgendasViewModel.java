@@ -12,6 +12,7 @@ public class AgendasViewModel {
 	private List<Long> idAgendas;
 	private Long idCurso;
 	private Long idAgendaSeleccionada;
+	private Long idAgendaEditar;
 	
 
 	public List<Long> getIdAgendasDepurado() {
@@ -50,6 +51,14 @@ public class AgendasViewModel {
 
 	public void setIdAgendaSeleccionada(Long idAgendaSeleccionada) {
 		this.idAgendaSeleccionada = idAgendaSeleccionada;
+	}
+
+	public Long getIdAgendaEditar() {
+		return idAgendaEditar;
+	}
+
+	public void setIdAgendaEditar(Long idAgendaEditar) {
+		this.idAgendaEditar = idAgendaEditar;
 	}
 
 	

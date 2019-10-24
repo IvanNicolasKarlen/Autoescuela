@@ -37,7 +37,17 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
 
-		return servicioAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
+		 TreeSet<Agenda> agendasSinDuplicados= servicioAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
+			
+			//eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso
+			agendasSinDuplicados.removeIf((Agenda a) -> agendasSinDuplicados.size() > Curso.getCantClasesPracticas());
+			
+			// Ordeno las agendas con las fechas en forma ascendente
+			TreeSet<Agenda> agendasAsc = new TreeSet<Agenda>();
+			agendasAsc.addAll(agendasSinDuplicados);	
+			return agendasAsc;
+		
+		
 	}
 	
 	
@@ -140,7 +150,40 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		 servicioAgendaDao.eliminarClaseDeLaAgenda(agenda);
 		
 	}
+
+
+	@Override
+	public List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso) {
+		List<Agenda> listaAgendas  = new ArrayList();
+		for(Long id: idAgendasDepurado){
+			Agenda agendaBuscada = servicioAgendaDao.buscarAgendasElegidas(id, curso);
+			listaAgendas.add(agendaBuscada);
+		}
+		
+		return listaAgendas;
+	}
+
+
+	@Override
+	public List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas) 
+	{
+
+		List<Agenda> agen = servicioAgendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
+		for(Long idAgenda: idAgendas)
+		{
+			agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
+		}
 	
+		return agen ;
+	}
+
+
+	@Override
+	public List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendas, Long idAgendaEditar) {
+		idAgendas.removeIf((Long id )-> id == idAgendaEditar);
+		idAgendas.add(idAgendaSeleccionada);
+		return idAgendas;
+	}
 	
 
 	

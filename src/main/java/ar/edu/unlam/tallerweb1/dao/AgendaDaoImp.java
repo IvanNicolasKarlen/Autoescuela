@@ -43,26 +43,29 @@ public class AgendaDaoImp implements AgendaDao {
 	/***************************************Alumno**************************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso) {
-		
-		final Session session = sessionFactory.getCurrentSession();
+	final Session session = sessionFactory.getCurrentSession();
 		
 		List <Agenda> result = session.createCriteria(Agenda.class)
+				//* permite que no traiga duplicados
+//				.setProjection(Projections.projectionList())
+//				.add((Criterion) Projections.distinct(Projections.property("fecha")))
 				.add(Restrictions.isNull("inscripcion.id"))
 				.createAlias("instructorVehiculoEspecialidad", "ive")
 				.add(Restrictions.eq("ive.especialidad.id", curso.getEspecialidad().getId()))
 				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
 				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
-				
-				.setMaxResults(curso.getCantClasesPracticas())
 				.list();
 		
-		
-		// creamos un treeSet para agregar las agendas sin que se 
-		// repitan las fechas
-		TreeSet<Agenda> agendas = new TreeSet<Agenda>();
-		agendas.addAll(result);
-			
-		return agendas ;
+	
+				// creamos un treeSet para agregar las agendas sin que se 
+				// repitan las fechas
+																	// reverseOrder ordena los elementos
+																	// en forma descendente
+				TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
+				agendasDesc.addAll(result);
+						
+				return agendasDesc;
+	
 	}
 
 	@Override
@@ -163,6 +166,26 @@ final Session session = sessionFactory.getCurrentSession();
 	
 		session.update(agenda);
 		
+	}
+
+
+
+
+
+	@Override
+	public List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas)
+	{
+		final Session session = sessionFactory.getCurrentSession();
+		
+		List<Agenda> result =  session.createCriteria(Agenda.class)
+				.add(Restrictions.isNull("inscripcion.id"))
+				.createAlias("instructorVehiculoEspecialidad", "ive")
+				.add(Restrictions.eq("ive.especialidad.id", curso.getEspecialidad().getId()))
+				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.list();
+
+		return result;
 	}
 
 	

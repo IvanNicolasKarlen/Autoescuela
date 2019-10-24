@@ -7,8 +7,6 @@
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
 </head>
-<body class="animsition">
-
 	<!-- Header -->
 <%@ include file="../../parts/header.jsp" %> 
 	<!-- fin header -->
@@ -28,7 +26,7 @@
 		 
 		
 
-<c:set var = "i" value = "${0}" />
+<c:set var = "i" value = "0" />
 
 <form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="agendasViewModel" action="inscripcion">
 
@@ -55,9 +53,7 @@
 		
 		
 		<br>
-<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
-          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
-        </button>
+
 		
 </div>
 
@@ -80,6 +76,28 @@
 	</a>
   		
   		</form:form>
+  		
+  	<form:form  method="POST" modelAttribute="agendasViewModel" action="seleccionarAgenda">
+	
+		<c:forEach items="${listaAgendas}" var="la">
+			<div class="col-md-4 ">
+			<input name="idAgendas[${la.id}]" type="hidden" value="${la.id}"></input>
+			</div>
+		</c:forEach>
+		<input  name="idCurso" type="hidden" value="${cursoSeleccionado.id}"></input>
+	
+	<div class="card-body">
+	  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+						MODIFICAR
+	  </button>
+	</div>
+	
+</form:form>	
+  		
+  		
+  
+  		
+  		
   		
 	</section>
 	

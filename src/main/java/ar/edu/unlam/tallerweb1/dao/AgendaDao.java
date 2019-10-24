@@ -36,6 +36,8 @@ public interface AgendaDao {
 
 	void eliminarClaseDeLaAgenda(Agenda agenda);
 
+	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
+
 
 	
 	/*******************************************************************/
