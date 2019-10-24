@@ -468,23 +468,27 @@ public class ControladorOrganizador {
 		}
 		return new ModelAndView("cursosOrg",model);
 	}
-	@RequestMapping(path="/eliminarCurso/{idCurso}")
+	@RequestMapping(path="/eliminarCurso/{idCurso}", method=RequestMethod.GET)
 	public ModelAndView EliminarCurso(HttpServletRequest request,
 			@PathVariable(value="idCurso")Long idCurso,
-			@RequestParam(name="confir",required=false)String confirmacion){
+			@RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
+		String vista = "cursosEditDeleteConfirmacionOrg";
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
+			model.put("idC", idCurso);
 			Curso curso = servicioOrganizadorCurso.buscarCursoPorId(idCurso);
 			if(curso!=null){
-				if(confirmacion==null){
+				if(confirmacion.equals("noConfirmado")){
 					model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
 				}else{
 					switch(confirmacion){
 					case "si": servicioOrganizadorCurso.eliminarCurso(curso);
-								if(servicioOrganizadorCurso.buscarCurso(curso)==null)
+								if(servicioOrganizadorCurso.buscarCurso(curso)==null){
 								model.put("mensaje", "Curso eliminado correctamente");
+								vista= "cursosOrg";
+								}
 					case "no": return new ModelAndView("redirect:/verCursos");
 					
 					default: return new ModelAndView("redirect:/verCursos");
@@ -497,7 +501,7 @@ public class ControladorOrganizador {
 		}else{
 			return new ModelAndView("redirect:/index");
 		}
-		return new ModelAndView("cursosOrg",model);
+		return new ModelAndView(vista,model);
 	}
 
 }
