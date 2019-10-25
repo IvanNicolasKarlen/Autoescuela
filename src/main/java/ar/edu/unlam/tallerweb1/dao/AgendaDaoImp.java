@@ -33,6 +33,26 @@ public class AgendaDaoImp implements AgendaDao {
 				.add(Restrictions.eq("instructorId.id", idInstructor))
 				.list();
 	}
+	
+	@Override
+	public List<Agenda> buscarAlumnos(String nombre,String apellido) {
+		final Session session = sessionFactory.getCurrentSession();
+		Criteria criteria =  session.createCriteria(Agenda.class)
+				.createAlias("inscripcion", "inscripcionBuscada")
+				.createAlias("inscripcionBuscada.alumno", "alumnoBuscado")
+				.createAlias("alumnoBuscado.usuario", "usuarioBuscado");
+				
+				if(apellido != null) {
+				criteria.add(Restrictions.like("usuarioBuscado.apellido","%" + apellido + "%"));
+				}
+				
+				if(nombre != null) {
+					criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
+				}
+			
+				return criteria.list();
+		
+	}
 
 	
 }

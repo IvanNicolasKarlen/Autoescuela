@@ -30,81 +30,82 @@
 					<div class="wrap-text-welcome t-center">
 	
 
-
-
-
 	<!-- ******************************BUSCA NOMBRE Y APELLIDO****************************** -->
-<form class="form-inline" method="GET"  action="buscadorDeAlumnos">
-        <div class="container">
-                  <div class="form-group mb-2">
-                        	<label for="nombre" class="col-sm-2 col-md-3 control-label"><b>Nombre:</b></label>
-                        <div class="col-sm-10 col-md-9">
-                            <input type="text" name="nombre" id="nombre" class="form-control">
-                        </div>
-                    </div><br>
+
+<form:form class="form-inline" method="GET"  action="buscadorDeAlumnos">   
+<h1><p class="tit2 text-center m-t-80">Buscador de alumnos</p></h1>    
+<div class="form-group mb-2">
+	
+	<b class="tit2 text-center m-t-80">Nombre:</b><label for="nombre" class="col-sm-2 col-md-3 control-label"></label>
+         <div class="col-sm-10 col-md-9">
+            <input type="text" name="nombre" id="nombre" class="form-control">
+         </div>
+ </div><br>
                   
-                   <div class="form-group mb-2">
-                       	    <label for="apellido" class="col-sm-2 col-md-3 control-label"><b>Apellido:</b></label>
-                        <div class="col-sm-10 col-md-9">
-                            <input type="text" name="apellido" id="apellido" class="form-control">
-                        </div>
-                   </div><br>
-                     
-					<button class="btn btn-primary" type="submit" id="btnBuscar">Buscar <i class="fa fa-search"></i></button>
-</div>
-</form><br><br>
+<div class="form-group mb-2">
+    <b class="tit2 text-center m-t-80">Apellido:</b> <label for="apellido" class="col-sm-2 col-md-3 control-label"></label>
+         <div class="col-sm-10 col-md-9">
+            <input type="text" name="apellido" id="apellido" class="form-control">
+          </div>
+ </div><br>
+                   
+	<div class="col-sm-10 col-md-9">
+		<button class="btn btn-primary" type="submit" name="btnBuscar">Buscar <i class="fa fa-search"></i></button>
+	</div>				
+	</form:form>
 
 
-		
-   <!-- ******************************MUESTRA CANTIDAD DE FECHAS QUE TIENE TRABAJO****************************** -->	
-   	 
-   <body>
-      <c:set var = "string1" value = "${listaAgenda}"/>
-      	<div class="w3-right-align">		
-      <p><b><h5>· Usted tiene esta cantidad de fechas para dar clases: ${fn:length(string1)}</h5></b></p><br>
-       </div>
-   </body>
-  
-   
-   <!-- ***************************************MUESTRA CANTIDAD DE ALUMNOS SIN REPETIR************************** -->
-   
-   <body>
-      <c:set var = "string1" value = "${traerAlumnos}"/>
-      <p><b><h5>· Usted tiene esta cantidad de alumnos inscriptos: ${fn:length(string1)}</h5></b></p>
-   </body>
-   
-  
-  
-  
-  
-  
-   <!-- **********************************MUESTRA NOMBRE Y FECHA *********************************************** -->
+<!-- ********************************************************************************************************************* -->
 
+<form class="form-inline" method="GET"  action="buscadorDeAlumnos">
 <table class="table table-hover text-center mt-4" border="3" cellpadding="1" cellspacing="0">
-			<thead>
+         <tbody>
+         
+<c:if test="${ocultar == 'mensaje' }">		
+           	<thead>       
 				<tr class="w3-red">
-					<th><center>Día</center></th>
-					<th><center>Horario</center></th>
-					<th><center>Nombre</center></th>
-					<th><center>Apellido</center></th>
+					<th class="enc"><center>Nombre</center></th>
+					<th class="enc"><center>Apellido</center></th>	
+					<th class="enc"><center>Fecha</center></th>	
+					<th class="enc"><center>Hora</center></th>	
 				</tr>
 			</thead>
-		<tbody>
-			<c:forEach items="${listaAgenda}" var="verFechas" >
+</c:if>
+               <c:forEach items="${buscarAlumnos}" var="verFechas" >
 					<tr>
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>				
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>		
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
-						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>				
+						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>							
 					</tr>
 			</c:forEach>	
-		</tbody>
-	</table>	
+			
+        </tbody>
+   </table>  
+  </form>
+<br><br>
+
+   <!-- ******************************MUESTRA CANTIDAD DE FECHAS QUE TIENE TRABAJO****************************** -->	
+
+<c:if test="${ocultar == 'mensaje'}">		
+      <c:set var = "string1" value = "${listaAgenda}"/>
+      	<div class="w3-right-align">		
+      <p><b><h6>· Usted tiene en total esta cantidad de fechas para dar clases: ${fn:length(string1)}</h6></b></p>
+       </div>
+</c:if>
+
+   
+   <!-- ***************************************MUESTRA CANTIDAD DE ALUMNOS SIN REPETIR************************** -->
+<c:if test="${ocultar == 'mensaje'}">		
+      <c:set var = "string1" value = "${traerAlumnos}"/>
+      <p><b><h6>· Usted tiene en total esta cantidad de alumnos inscriptos: ${fn:length(string1)}</h6></b></p>
+</c:if>
+    
 					</div>	
 				</div>
 			</div>
 		</div>	
-	</section>
+</section>
 	
 
 	<!-- Footer -->

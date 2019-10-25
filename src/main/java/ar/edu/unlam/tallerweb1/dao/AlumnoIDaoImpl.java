@@ -30,7 +30,7 @@ public class AlumnoIDaoImpl implements AlumnoIDao {
 				if(nombre != null) {
 					criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
 				}
-				
+			
 				return criteria.list();
 		
 	}

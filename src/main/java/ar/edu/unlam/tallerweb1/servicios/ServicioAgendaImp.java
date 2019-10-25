@@ -24,5 +24,11 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 	}
 	
+	@Override
+	public List<Agenda> buscarAlumnos(String nombre,String apellido) {
+
+			return agendaDao.buscarAlumnos(nombre,apellido);
+	
+}
 	
 }

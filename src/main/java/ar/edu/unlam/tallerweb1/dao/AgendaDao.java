@@ -8,5 +8,6 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface AgendaDao {
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
+	List<Agenda> buscarAlumnos(String nombre,String apellido);
 	
 }

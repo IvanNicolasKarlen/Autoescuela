@@ -29,25 +29,13 @@ public class ControladorInstructor {
 	
 	@Inject
 	private ServicioAlumnoI servicioAlumno;
-
+	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
 	
 		ModelMap model = new ModelMap();
 		if(request.getSession().getAttribute("ROL").equals("Instructor"))
-		{
-			Long idInstructor = (Long) request.getSession().getAttribute("ID");
-			
-			List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
-			
-			List <Usuario> traerAlumnos = servicioUsuario.traerAlumnos(idInstructor);
-			
-
-			model.put("listaAgenda", listaAgenda);
-			model.put("traerAlumnos",traerAlumnos);
-			
-			
-		
+		{		
 				return new ModelAndView ("alumnosInstructor",model);
 		}else {
 				return new ModelAndView("login", model);
@@ -55,19 +43,24 @@ public class ControladorInstructor {
 	}
 	
 	
-	
 	@RequestMapping(value="/buscadorDeAlumnos", method = RequestMethod.GET)
 	public ModelAndView buscarAlumnos ( @RequestParam (name="nombre",required=false)  String nombre,
-										@RequestParam(name="apellido",required=false)String apellido,
-										HttpServletRequest request) {
-		ModelMap model = new ModelMap();
-		List<Alumno> buscarAlumnos =servicioAlumno.buscarAlumnos(nombre,apellido);
-		model.put("buscarAlumnos", buscarAlumnos);
-		
-		return new ModelAndView ("buscadorDeFechas",model);
-		
-		
-	}
-	
+										@RequestParam (name="apellido",required=false)String apellido,
+										HttpServletRequest request){
 
-}
+		ModelMap model = new ModelMap();
+		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(nombre,apellido);
+		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
+		List <Usuario> traerAlumnos = servicioUsuario.traerAlumnos(idInstructor);
+		
+		model.put("listaAgenda", listaAgenda);
+		model.put("traerAlumnos",traerAlumnos);
+		model.put("buscarAlumnos", buscarAlumnos);
+		model.put("ocultar", "mensaje");
+				
+		return new ModelAndView ("alumnosInstructor",model);
+				
+		
+						}		
+	}

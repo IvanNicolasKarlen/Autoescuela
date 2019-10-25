@@ -22,10 +22,5 @@ public class ServicioAlumnoImpl implements ServicioAlumnoI {
 	public List<Alumno> buscarAlumnos(String nombre,String apellido) {
 
 			return alumnoDao.buscarAlumnos(nombre,apellido);
-
-		
-	
-		
-		
 	
 }}
