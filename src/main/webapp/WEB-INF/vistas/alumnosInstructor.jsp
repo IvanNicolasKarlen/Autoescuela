@@ -86,7 +86,7 @@
                <c:forEach items="${buscarAlumnos}" var="verFechas" >
 					<tr>
 						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>				
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>		
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>		
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
 						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>							
 					</tr>
@@ -101,7 +101,7 @@
 
 <c:if test="${ocultar == 'mensaje'}">		
       <c:set var = "string1" value = "${listaAgenda}"/>	
-      <p><b><h5>· Usted tiene en total ${fn:length(string1)} fechas para dar clases</h5></b></p>
+      <p><b><h5>· Usted tiene en total ${fn:length(string1)} fechas para dar clases</h5></b></p><br>
 </c:if>
 
    
