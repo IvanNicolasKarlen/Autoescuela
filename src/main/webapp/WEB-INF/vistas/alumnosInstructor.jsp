@@ -32,21 +32,33 @@
 
 	<!-- ******************************BUSCA NOMBRE Y APELLIDO****************************** -->
 
-<form:form class="form-inline" method="GET"  action="buscadorDeAlumnos">   
-<h1><p class="tit2 text-center m-t-80">Buscador de alumnos</p></h1>    
+<form:form method="GET"  action="buscadorDeAlumnos">   
+<h3 class="tit3 text-center">Buscador de alumnos</h3><br><br>
+
+
 <div class="form-group mb-2">
-	
-	<b class="tit2 text-center m-t-80">Nombre:</b><label for="nombre" class="col-sm-2 col-md-3 control-label"></label>
+	<div class="container">
+		<div class="wrap-text-welcome t-center">
+	<b class="tit2 text-center m-t-90">Nombre:</b><label for="nombre" class="col-sm-2 col-md-3 control-label"></label>
          <div class="col-sm-10 col-md-9">
             <input type="text" name="nombre" id="nombre" class="form-control">
          </div>
+       </div>
+    </div>
  </div><br>
+ 
+
+ 
                   
 <div class="form-group mb-2">
-    <b class="tit2 text-center m-t-80">Apellido:</b> <label for="apellido" class="col-sm-2 col-md-3 control-label"></label>
+	<div class="container">
+		<div class="tit2 text-center m-t-80">
+	<b class="tit2 text-center m-t-90">Apellido:</b><label for="apellido" class="col-sm-2 col-md-3 control-label"></label>
          <div class="col-sm-10 col-md-9">
             <input type="text" name="apellido" id="apellido" class="form-control">
-          </div>
+         </div>
+       </div>
+    </div>
  </div><br>
                    
 	<div class="col-sm-10 col-md-9">

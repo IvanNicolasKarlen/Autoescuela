@@ -8,13 +8,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
-import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAlumnoI;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
@@ -26,9 +23,6 @@ public class ControladorInstructor {
 	
 	@Inject 
 	private ServicioUsuario servicioUsuario;
-	
-	@Inject
-	private ServicioAlumnoI servicioAlumno;
 	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
