@@ -100,17 +100,15 @@
    <!-- ******************************MUESTRA CANTIDAD DE FECHAS QUE TIENE TRABAJO****************************** -->	
 
 <c:if test="${ocultar == 'mensaje'}">		
-      <c:set var = "string1" value = "${listaAgenda}"/>
-      	<div class="w3-right-align">		
-      <p><b><h6>· Usted tiene en total esta cantidad de fechas para dar clases: ${fn:length(string1)}</h6></b></p>
-       </div>
+      <c:set var = "string1" value = "${listaAgenda}"/>	
+      <p><b><h5>· Usted tiene en total ${fn:length(string1)} fechas para dar clases</h5></b></p>
 </c:if>
 
    
    <!-- ***************************************MUESTRA CANTIDAD DE ALUMNOS SIN REPETIR************************** -->
 <c:if test="${ocultar == 'mensaje'}">		
       <c:set var = "string1" value = "${traerAlumnos}"/>
-      <p><b><h6>· Usted tiene en total esta cantidad de alumnos inscriptos: ${fn:length(string1)}</h6></b></p>
+      <p><b><h5>· Usted tiene en total ${fn:length(string1)} alumnos inscriptos</h5></b></p>
 </c:if>
     
 					</div>	
