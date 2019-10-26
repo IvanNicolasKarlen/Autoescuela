@@ -7,11 +7,15 @@ import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 
 public interface CursoDao {
 
-	List<Curso> buscarCursos();
+	Long agregarCurso(Curso curso);
 
-	Curso buscarCurso(Long cursoElegido);
-
+	Curso buscarCurso(Curso curso);
 	
+	List<Curso> traerListaDeCursos();
+
+	Curso buscarCursoPorId(Long cursoid);
+	
+	void eliminarCurso(Curso curso);
 
 
 }

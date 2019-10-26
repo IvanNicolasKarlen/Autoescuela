@@ -189,7 +189,13 @@ final Session session = sessionFactory.getCurrentSession();
 	}
 
 	
+	@Override
+	public Long crearAgenda(Agenda agenda) {
+		final Session sesion = sessionFactory.getCurrentSession();
+			Long id = (Long)sesion.save(agenda);
+		return id;
 
+	}
 	
 	
 	/***************************************************************************************/

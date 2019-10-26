@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -16,20 +17,22 @@ import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 @Service("servicioAgenda")
 @Transactional
 public class ServicioAgendaImp implements ServicioAgenda{
 	@Inject
-	private AgendaDao  servicioAgendaDao;
+	private AgendaDao  agendaDao;
 	@Inject
 	private EstadoInscripcionDao estadoinscripcionDao;
 	
 	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
-		return servicioAgendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
+		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 	}
 	
 	
@@ -37,7 +40,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
 
-		 TreeSet<Agenda> agendasSinDuplicados= servicioAgendaDao.traerAgendasConFechasNoRepetidas(Curso);
+		 TreeSet<Agenda> agendasSinDuplicados= agendaDao.traerAgendasConFechasNoRepetidas(Curso);
 			
 			//eliminarAgendasQueSuperanLaCantidadDeClasesDelCurso
 			agendasSinDuplicados.removeIf((Agenda a) -> agendasSinDuplicados.size() > Curso.getCantClasesPracticas());
@@ -65,7 +68,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			try
 			{
 				// *metodo
-				Agenda aBuscada=servicioAgendaDao.buscarAgendasElegidas(a, curso); //alumnoAgendaDao
+				Agenda aBuscada=agendaDao.buscarAgendasElegidas(a, curso); //alumnoAgendaDao
 				
 				//comparamos que el id de la agenda buscada
 				// sea igual que el de la agenda que le pasamos por parametro
@@ -103,7 +106,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		//Busco el id del estado que dice "Cursando"
 		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
 		
-		return servicioAgendaDao.traerTodasLasClasesQueEstaAnotado(idAlumno);
+		return agendaDao.traerTodasLasClasesQueEstaAnotado(idAlumno);
 	}
 	
 	
@@ -119,7 +122,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		 for(Long c: cursosViewModel.getListaCursos())
 		 {
 			 
-		List<Agenda> listaInscripcion = servicioAgendaDao.traerTodasLasClasesQueSeEncuentraAnotado(c, estado, idAlumno);
+		List<Agenda> listaInscripcion = agendaDao.traerTodasLasClasesQueSeEncuentraAnotado(c, estado, idAlumno);
 		
 		listaAgregarInscripcion.addAll(listaInscripcion);
 		 }
@@ -129,25 +132,25 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno) {
 		
-		return servicioAgendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad, idAlumno);
+		return agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad, idAlumno);
 	}
 	@Override
 	public Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno) {
 		
 		
 		
-		return servicioAgendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
+		return agendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
 	}
 	
 	@Override
 	public void eliminarClaseDeLaAgenda(Long idAgendaSeleccionado, Long idAlumno) {
 	
-		Agenda agenda= servicioAgendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
+		Agenda agenda= agendaDao.traerClaseQueQuiereEliminar( idAgendaSeleccionado,  idAlumno);
 		
 		agenda.setInscripcion(null);
 		
 		//Eliminar esta clase
-		 servicioAgendaDao.eliminarClaseDeLaAgenda(agenda);
+		 agendaDao.eliminarClaseDeLaAgenda(agenda);
 		
 	}
 
@@ -156,7 +159,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	public List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso) {
 		List<Agenda> listaAgendas  = new ArrayList();
 		for(Long id: idAgendasDepurado){
-			Agenda agendaBuscada = servicioAgendaDao.buscarAgendasElegidas(id, curso);
+			Agenda agendaBuscada = agendaDao.buscarAgendasElegidas(id, curso);
 			listaAgendas.add(agendaBuscada);
 		}
 		
@@ -168,7 +171,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	public List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas) 
 	{
 
-		List<Agenda> agen = servicioAgendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
+		List<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
 		for(Long idAgenda: idAgendas)
 		{
 			agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
@@ -185,6 +188,26 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return idAgendas;
 	}
 	
-
+	public Long crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
+		List <Agenda> agendas = new ArrayList<Agenda>();
+		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
+			for(InstructorVehiculoEspecialidad ive:listaIve){
+				for(Integer i=horaC;i<=horaF;i=i+100){
+					Agenda ag = new Agenda();
+					ag.setFecha(date.toString());
+					ag.setHora(i);
+					ag.setInstructorVehiculoEspecialidad(ive);
+					ag.setAsistencia(estadoDeAgenda);
+					ag.setClasePagada(false);
+					agendas.add(ag);
+				}
+			}
+		}
+		Long id=null;
+		for(Agenda varAgendas:agendas){
+			id = agendaDao.crearAgenda(varAgendas);
+		}
+		return id;
+	}
 	
 }

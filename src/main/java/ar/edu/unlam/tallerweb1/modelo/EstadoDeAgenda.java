@@ -11,13 +11,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Asistencia {
+public class EstadoDeAgenda {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String estado;
-	
+	private String detalle;
 	
 	@OneToMany
 	private List<Agenda> agendas;
@@ -40,6 +40,12 @@ public class Asistencia {
 	}
 	public void setAgendas(List<Agenda> agendas) {
 		this.agendas = agendas;
+	}
+	public String getDetalle() {
+		return detalle;
+	}
+	public void setDetalle(String detalle) {
+		this.detalle = detalle;
 	}
 	
 	

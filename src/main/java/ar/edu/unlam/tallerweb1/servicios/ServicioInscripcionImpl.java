@@ -16,11 +16,11 @@ import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.dao.InscripcionDao;
 import ar.edu.unlam.tallerweb1.dao.AgendaDao;
 import ar.edu.unlam.tallerweb1.dao.AlumnoDao;
-import ar.edu.unlam.tallerweb1.dao.AsistenciaDao;
+import ar.edu.unlam.tallerweb1.dao.EstadoDeAgendaDao;
 import ar.edu.unlam.tallerweb1.dao.CursoDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
-import ar.edu.unlam.tallerweb1.modelo.Asistencia;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
@@ -43,7 +43,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 	@Inject
 	private AlumnoDao alumnoDao;
 	@Inject
-	private AsistenciaDao asistenciaDao;
+	private EstadoDeAgendaDao estadoDeAgendaDao;
 	
 	/********************************** ALUMNO **************************************************/
 	@Override
@@ -146,7 +146,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		
 		List<Agenda> misClases = agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idAlumno, inscripcionBuscada.getId());
 		
-		Asistencia asistenciaEnEspera = asistenciaDao.traigoElEstadoEnEspera();
+		EstadoDeAgenda asistenciaEnEspera = estadoDeAgendaDao.traigoElEstadoEnEspera();
 		
 		for(Agenda a: misClases)
 		{
@@ -161,7 +161,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		/*
 		List<Agenda> misClases = agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idAlumno, idEspecialidad);
 		
-		Asistencia asistenciaEnEspera = asistenciaDao.traigoElEstadoEnEspera();
+		EstadoDeAgenda asistenciaEnEspera = estadoDeAgendaDao.traigoElEstadoEnEspera();
 		for(Agenda a: misClases)
 		{
 			a.setInscripcion(null);

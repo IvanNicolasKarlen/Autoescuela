@@ -12,7 +12,7 @@ import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 public interface AgendaDao {
 	
 	/************************ORGANIZADOR**************************************/
-
+	Long crearAgenda(Agenda agenda);
 	
 	
 	/*********************** INSTRUCTOR *********************************/

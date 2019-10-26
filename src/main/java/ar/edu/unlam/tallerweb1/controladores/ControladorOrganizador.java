@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.TurnosViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
-import ar.edu.unlam.tallerweb1.modelo.Asistencia;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
@@ -33,17 +33,17 @@ import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
-import ar.edu.unlam.tallerweb1.servicios.ServicioAsistencia;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEspecialidad;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculoImpl;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDelCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorInstructor;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorConvierteFecha;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCrearAgenda;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCurso;
-import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorValidaFechaElegida;
+import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
+import ar.edu.unlam.tallerweb1.servicios.ServicioConvertirFecha;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
+import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
+import ar.edu.unlam.tallerweb1.servicios.ServicioValidarFechaElegida;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
@@ -52,19 +52,19 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
 public class ControladorOrganizador {
 
 	@Inject
-	private ServicioOrganizadorConvierteFecha servicioOrganizadorConvierteFecha;
+	private ServicioConvertirFecha servicioConvertirFecha;
 	@Inject
-	private ServicioOrganizadorValidaFechaElegida servicioOrganizadorValidaFechaElegida;
+	private ServicioValidarFechaElegida servicioValidarFechaElegida;
 	@Inject
-	private ServicioOrganizadorCurso servicioOrganizadorCurso;
+	private ServicioCurso servicioCurso;
 	@Inject
-	private ServicioOrganizadorCrearAgenda servicioOrganizadorCrearAgenda;
+	private ServicioAgenda servicioAgenda;
 	@Inject
 	private ServicioVehiculo servicioVehiculo;
 	@Inject 
 	private ServicioEspecialidad servicioEspecialidad;
 	@Inject
-	private ServicioOrganizadorInstructor servicioOrganizadorInstructor;
+	private ServicioInstructor servicioInstructor;
 	@Inject
 	private ServicioUsuario servicioUsuario;
 	@Inject
@@ -76,7 +76,7 @@ public class ControladorOrganizador {
 	@Inject
 	private ServicioEstadoDelCurso servicioEstadoDelCurso;
 	@Inject
-	private ServicioAsistencia servicioAsistencia;
+	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
 
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
@@ -109,8 +109,8 @@ public class ControladorOrganizador {
 				curso.setEspecialidad(especialidad);
 				curso.setEstadoDelCurso(estadoDelCurso);
 				model.put("rol", rol);
-				if(servicioOrganizadorCurso.buscarCurso(curso)==null){
-					if(servicioOrganizadorCurso.agregarCurso(curso)!=null){
+				if(servicioCurso.buscarCurso(curso)==null){
+					if(servicioCurso.agregarCurso(curso)!=null){
 						model.put("mensaje","Curso añadido correctamente");
 					}else{
 						model.put("error", "Error al añadir curso. Intente nuevamente");
@@ -156,8 +156,8 @@ public class ControladorOrganizador {
 
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(espid);
 				List <InstructorVehiculoEspecialidad> listaIvePorEsp = servicioIve.traerListaIvePorEspecialidad(especialidad);
-				Asistencia asistencia = servicioAsistencia.traerAsistenciaPorNombre("En espera"); 
-				if(servicioOrganizadorCrearAgenda.crearAgenda(asistencia, desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
+				EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("En espera"); 
+				if(servicioAgenda.crearAgenda(estadoDeAgenda, desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
 					model.put("mensaje", "¡Agenda Creada con Éxito!");
 				}else{
 					model.put("error", "Hubo un problema al crear la agenda");
@@ -416,7 +416,7 @@ public class ControladorOrganizador {
 			Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(idEsp);
 			Vehiculo vehiculo = servicioVehiculo.buscarVehiculoPorId(idVeh);
 			if(idIns!=null&&esp!=null&&vehiculo!=null){
-				Instructor inst = servicioOrganizadorInstructor.buscarInstructorPorId(idIns);
+				Instructor inst = servicioInstructor.buscarInstructorPorId(idIns);
 				InstructorVehiculoEspecialidad ive = new InstructorVehiculoEspecialidad();
 				ive.setEspecialidad(esp);
 				ive.setInstructor(inst);
@@ -444,7 +444,7 @@ public class ControladorOrganizador {
 		ModelMap model = new ModelMap();
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
-			List<Curso> listaCursos = servicioOrganizadorCurso.traerListaDeCursos();
+			List<Curso> listaCursos = servicioCurso.traerListaDeCursos();
 			if(listaCursos.isEmpty()){
 				model.put("mensaje", "Aun no hay ningun curso creado. Añada alguno primero");
 			}else{
@@ -478,14 +478,14 @@ public class ControladorOrganizador {
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			model.put("idC", idCurso);
-			Curso curso = servicioOrganizadorCurso.buscarCursoPorId(idCurso);
+			Curso curso = servicioCurso.buscarCursoPorId(idCurso);
 			if(curso!=null){
 				if(confirmacion.equals("noConfirmado")){
 					model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
 				}else{
 					switch(confirmacion){
-					case "si": servicioOrganizadorCurso.eliminarCurso(curso);
-								if(servicioOrganizadorCurso.buscarCurso(curso)==null){
+					case "si": servicioCurso.eliminarCurso(curso);
+								if(servicioCurso.buscarCurso(curso)==null){
 								model.put("mensaje", "Curso eliminado correctamente");
 								vista= "cursosOrg";
 								}

@@ -17,7 +17,7 @@
 						<nav class="menu">
 							<ul class="main_menu">
 							<!-- Estos son los links q se muestran sin usuario-->
-							<c:if test="${usuarioId==null}">
+							<c:if test="${rol==null}">
 								<li>
 									<a href="index">Inicio</a>
 								</li>
@@ -52,6 +52,15 @@
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
+									<li>
+										<a href="index">Inicio</a>
+									</li>
+									<li>
+										<a href="AlumnosDelInstructor">Mis Alumnos</a>
+									</li>
+									<li>
+										<a href="buscadorDeAlumnos">Buscador de Alumnos</a>
+									</li>
 									
 								</c:if>
 							
@@ -73,10 +82,10 @@
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
-						<c:if test="${usuarioId!=null}">
+						<c:if test="${rol!=null}">
 							<a href="cuenta"><b class="text-danger">Mi cuenta</b></a>
 						</c:if>
-						<c:if test="${usuarioId==null}">
+						<c:if test="${rol==null}">
 							<a href="login"><b class="text-danger">Ingresar</b></a>
 						</c:if>	
 					<!-- fin del IF -->	

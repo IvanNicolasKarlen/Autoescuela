@@ -10,34 +10,35 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
-import ar.edu.unlam.tallerweb1.modelo.Asistencia;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 
-@Repository("AsistenciaDao")
-public class AsistenciaDaoImpl implements AsistenciaDao {
+@Repository("EstadoDeAgendaDao")
+public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 
 	@Inject
 	private SessionFactory sessionFactory;
 
 /************************************************ORGANIZADOR***************************/
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Asistencia> traerListaDeAsistencia() {
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
 		Session session = sessionFactory.getCurrentSession();
-		return (List<Asistencia>) session.createCriteria(Asistencia.class)
+		return (List<EstadoDeAgenda>) session.createCriteria(EstadoDeAgenda.class)
 									.list();
 	}
 
 	@Override
-	public Asistencia traerAsistenciaPorNombre(String estado) {
+	public EstadoDeAgenda traerEstadoDeAgendaPorNombre(String estado) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Asistencia) session.createCriteria(Asistencia.class)
+		return (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
 							.add(Restrictions.eq("estado", estado)).uniqueResult();
 	}
 
 	@Override
-	public Asistencia traerAsistenciaPorId(Long id) {
+	public EstadoDeAgenda traerEstadoDeAgendaPorId(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (Asistencia) session.get(Asistencia.class, id);
+		return (EstadoDeAgenda) session.get(EstadoDeAgenda.class, id);
 	}
 	
 	
@@ -45,10 +46,10 @@ public class AsistenciaDaoImpl implements AsistenciaDao {
 	
 	/***************************************ALUMNO********************************/
 	@Override
-	public Asistencia traigoElEstadoEnEspera() {
+	public EstadoDeAgenda traigoElEstadoEnEspera() {
 		final Session session = sessionFactory.getCurrentSession();
 		
-		Asistencia a = (Asistencia) session.createCriteria(Asistencia.class)
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
 				.add(Restrictions.eq("estado","En espera"))
 				.uniqueResult();
 				

@@ -29,19 +29,32 @@ public class ServicioCursoImpl implements ServicioCurso{
 	
 	
 	
-	@Override
-	public List<Curso> buscarCursos() {
-	
-		return cursoDao.buscarCursos() ;
-	}
 	
 	
 	@Override
-	public Curso buscarCurso(Long cursoElegido) {
-		
-		return cursoDao.buscarCurso( cursoElegido);
+	public Long agregarCurso(Curso curso) {
+		return cursoDao.agregarCurso(curso);
 	}
 
+	@Override
+	public Curso buscarCurso(Curso curso) {
+		return cursoDao.buscarCurso(curso);
+	}
+
+	@Override
+	public List<Curso> traerListaDeCursos() {
+		return cursoDao.traerListaDeCursos();
+	}
+
+	@Override
+	public Curso buscarCursoPorId(Long cursoid) {
+		return cursoDao.buscarCursoPorId(cursoid);
+	}
+
+	@Override
+	public void eliminarCurso(Curso curso) {
+		cursoDao.eliminarCurso(curso);
+	}
 
 	
 }

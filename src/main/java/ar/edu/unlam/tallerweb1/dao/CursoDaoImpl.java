@@ -22,27 +22,38 @@ import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 public class CursoDaoImpl implements CursoDao {
 	
 	@Inject 
-	private SessionFactory sessionfactory;
+	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Curso> buscarCursos() {
-		final Session session = sessionfactory.getCurrentSession();
-		
-		List<Curso> milista = session.createCriteria(Curso.class)
-				.createAlias("especialidad", "especialidad")
-								.list();
-		return milista;
+	public Long agregarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Long)session.save(curso);
 	}
-	
-	
+
 	@Override
-	public Curso buscarCurso(Long cursoElegidoid) {
-final Session session = sessionfactory.getCurrentSession();
-		
-		return (Curso) session.createCriteria(Curso.class)
-				.add(Restrictions.eq("id",cursoElegidoid))
-				.uniqueResult();
-		
+	public Curso buscarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Curso)session.createCriteria(Curso.class)
+				.add(Restrictions.eq("titulo", curso.getTitulo())).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Curso> traerListaDeCursos() {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Curso>)session.createCriteria(Curso.class).list();
+	}
+
+	@Override
+	public Curso buscarCursoPorId(Long cursoid) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Curso)session.get(Curso.class, cursoid);
+	}
+
+	@Override
+	public void eliminarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.delete(curso);
 	}
 
 	

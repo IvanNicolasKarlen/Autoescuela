@@ -111,7 +111,7 @@ public class ControladorAlumno {
 		ModelMap modelo = new ModelMap();
 		
 		//Trae todo el listado de todos los cursos
-		List<Curso> listaCursos =  servicioCurso.buscarCursos();//servicioAlumnoInscripcion
+		List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();//servicioAlumnoInscripcion
 		
 	
 		modelo.put("lista", listaCursos);
@@ -139,7 +139,7 @@ public class ControladorAlumno {
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 	
 		//Datos del curso Elegido
-		Curso curso = servicioCurso.buscarCurso(cursoElegido.getId());//servicioAlumnoInscripcion
+		Curso curso = servicioCurso.buscarCursoPorId(cursoElegido.getId());//servicioAlumnoInscripcion
 
 		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, cursoElegido); //servicioAlumnoInscripcion
 			
@@ -168,7 +168,7 @@ public class ControladorAlumno {
 				
 				modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 				//Trae todo el listado de todos los cursos
-				List<Curso> listaCursos =  servicioCurso.buscarCursos();//servicioAlumnoInscripcion
+				List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();//servicioAlumnoInscripcion
 				modelo.put("lista", listaCursos);
 				return new ModelAndView("cursos", modelo); //Todavia no curso nada		
 			}
@@ -199,7 +199,7 @@ public class ControladorAlumno {
 			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 
 			//Datos del curso Elegido
-			Curso curso = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
+			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
 			
 			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);//servicioAlumnoInscripcion
 							
@@ -250,7 +250,7 @@ public class ControladorAlumno {
 				modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 				
 				//Trae todo el listado de todos los cursos
-				List<Curso> listaCursos =  servicioCurso.buscarCursos();//servicioAlumnoInscripcion
+				List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();//servicioAlumnoInscripcion
 					
 				modelo.put("lista", listaCursos);
 				return new ModelAndView("cursos", modelo); //Todavia no curso nada
@@ -467,7 +467,7 @@ public class ControladorAlumno {
 			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 
 			//Datos del curso Elegido
-			Curso curso = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());
+			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
 			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
 							
@@ -485,7 +485,7 @@ public class ControladorAlumno {
 				
 				List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( agendasViewModel.getIdAgendasDepurado(),  curso);
 			
-			Curso curso1 = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());		
+			Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
 			modelo.put("mensaje", "Seleccione la agenda que desee modificar");
 			modelo.put("listaAgendas", datosAgendas);
 			modelo.put("cursoSeleccionado", curso);
@@ -523,7 +523,7 @@ public class ControladorAlumno {
 				modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 				
 				//Trae todo el listado de todos los cursos
-				List<Curso> listaCursos =  servicioCurso.buscarCursos();
+				List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
 					
 				modelo.put("lista", listaCursos);
 				return new ModelAndView("cursos", modelo); //Todavia no curso nada
@@ -561,7 +561,7 @@ public class ControladorAlumno {
 			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 
 			//Datos del curso Elegido
-			Curso curso = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());
+			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
 			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
 							
@@ -584,7 +584,7 @@ public class ControladorAlumno {
 				List<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendas());
 
 				//Datos del curso Elegido
-				Curso curso1 = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());		
+				Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
 				modelo.put("mensaje", "Elige la nueva agenda");
 				modelo.put("listaAgendas", agendasViewModel.getIdAgendasDepurado());
 				modelo.put("agendasAlternativas", agendasAlternativas);
@@ -624,7 +624,7 @@ public class ControladorAlumno {
 				modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 				
 				//Trae todo el listado de todos los cursos
-				List<Curso> listaCursos =  servicioCurso.buscarCursos();
+				List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
 					
 				modelo.put("lista", listaCursos);
 				return new ModelAndView("cursos", modelo); //Todavia no curso nada
@@ -661,7 +661,7 @@ public ModelAndView modificarAgenda(
 		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 
 		//Datos del curso Elegido
-		Curso curso = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());
+		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 		
 		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
 						
@@ -681,7 +681,7 @@ if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 
 
 			//Datos del curso Elegido
-			Curso curso1 = servicioCurso.buscarCurso(agendasViewModel.getIdCurso());		
+			Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
 			modelo.put("mensaje", "Agenda modificada con exito");
 			modelo.put("listaAgendas", datosAgendas);
 			modelo.put("cursoSeleccionado", curso);
@@ -720,7 +720,7 @@ if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
 			
 			//Trae todo el listado de todos los cursos
-			List<Curso> listaCursos =  servicioCurso.buscarCursos();
+			List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
 				
 			modelo.put("lista", listaCursos);
 			return new ModelAndView("cursos", modelo); //Todavia no curso nada
