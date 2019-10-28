@@ -17,6 +17,8 @@ public class VehiculoDaoImpl implements VehiculoDao {
 	@Inject
 	private SessionFactory sessionFactory;
 
+	
+	/******************************************ORGANIZADOR**************************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
 		final Session sesion = sessionFactory.getCurrentSession();

@@ -31,7 +31,7 @@ public class Agenda implements Comparable{
 	private Inscripcion inscripcion;
 
 	@ManyToOne
-	private Asistencia asistencia;
+	private EstadoDeAgenda estadoDeAgenda;
 	
 	public Long getId() {
 		return id;
@@ -74,12 +74,12 @@ public class Agenda implements Comparable{
 	}
 	
 	
-	public Asistencia getAsistencia() {
-		return asistencia;
+	public EstadoDeAgenda getAsistencia() {
+		return estadoDeAgenda;
 	}
 
-	public void setAsistencia(Asistencia asistencia) {
-		this.asistencia = asistencia;
+	public void setAsistencia(EstadoDeAgenda estadoDeAgenda) {
+		this.estadoDeAgenda = estadoDeAgenda;
 	}
 
 	@Override

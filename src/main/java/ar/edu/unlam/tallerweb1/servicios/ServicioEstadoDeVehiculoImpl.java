@@ -13,6 +13,8 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 public class ServicioEstadoDeVehiculoImpl implements ServicioEstadoDeVehiculo {
 	@Inject
 	private EstadoDeVehiculoDao estadoDeVehiculoDao;
+
+	/*******************************ORGANIZADOR***********************/
 	@Override
 	public EstadoDeVehiculo buscarEstadoPorEstadoActual(String estadoActual) {
 		return estadoDeVehiculoDao.buscarEstadoPorEstadoActual(estadoActual);
@@ -25,5 +27,6 @@ public class ServicioEstadoDeVehiculoImpl implements ServicioEstadoDeVehiculo {
 	public EstadoDeVehiculo buscarEstadoPorId(Long estadoId) {
 		return estadoDeVehiculoDao.buscarEstadoPorId(estadoId);
 	}
+	
 	
 }

@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 
 public interface VehiculoDao {
+	/**********************************ORGANIZADOR*****************************/
 	List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad);
 	Vehiculo buscarVehiculo(Vehiculo vehiculo);
 	Long guardarVehiculo(Vehiculo vehiculo);

@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 
 public interface ServicioIVE {
+	/****************************ORGANIZADOR******************************/
 	Long guardarIve(InstructorVehiculoEspecialidad ive);
 	List <InstructorVehiculoEspecialidad> traerListaIve();
 	List <InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad);

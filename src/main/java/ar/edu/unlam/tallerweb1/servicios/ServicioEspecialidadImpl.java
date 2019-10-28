@@ -15,6 +15,8 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 	@Inject
 	private EspecialidadDao especialidadDao;
 
+	/***************************************ORGANIZADOR*********************/
+	
 	@Override
 	public List<Especialidad> traerListaDeEspecialidades() {
 		return especialidadDao.traerListaDeEspecialidades();

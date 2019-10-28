@@ -39,15 +39,33 @@
 							<!-- Fin del los links sin user-->
 							<!-- Estos se van a mostrar si sos alumno -->
 								<c:if test="${rol=='Alumno'}">
-									
+									<li>
+									<a href="index">Inicio</a>
+								</li>
+								<li>
+									<a href="listadoCursos">Anotarme</a>
+								</li>
+								<li>
+									<a href="listadoFechas">Mis clases</a>
+								</li>
 								</c:if>
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
+									<li>
+										<a href="index">Inicio</a>
+									</li>
+									<li>
+										<a href="AlumnosDelInstructor">Mis Alumnos</a>
+									</li>
+									<li>
+										<a href="buscadorDeAlumnos">Buscador de Alumnos</a>
+									</li>
 									
 								</c:if>
 							
 							<!-- Fin instructor -->
+							<!-- Organizador -->
 							<!-- Organizador -->
 							<c:if test="${rol=='Organizador'}">
 								<li><a href="index">Inicio</a></li>

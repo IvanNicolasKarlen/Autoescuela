@@ -18,40 +18,42 @@ public class IveDaoImpl implements IveDao {
 	@Inject
 	private SessionFactory sessionFactory;
 	
-		public Long guardarIve(InstructorVehiculoEspecialidad ive){
-			return (Long)sessionFactory.getCurrentSession().save(ive);
-		}
+	
+	/****************************************ORGANIZADOR******************************************/
+	public Long guardarIve(InstructorVehiculoEspecialidad ive){
+		return (Long)sessionFactory.getCurrentSession().save(ive);
+	}
 
-		@Override
-		public List<InstructorVehiculoEspecialidad> traerListaIve(){
-			final Session sesion = sessionFactory.getCurrentSession();
-			@SuppressWarnings("unchecked")
-			List<InstructorVehiculoEspecialidad> listaIve = sesion.createCriteria(InstructorVehiculoEspecialidad.class)
-															.list();
-			return listaIve;
-		}
-
+	@Override
+	public List<InstructorVehiculoEspecialidad> traerListaIve(){
+		final Session sesion = sessionFactory.getCurrentSession();
 		@SuppressWarnings("unchecked")
-		@Override
-		public List<InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad) {
-			final Session session = sessionFactory.getCurrentSession();
-			return (List<InstructorVehiculoEspecialidad>)
-					session.createCriteria(InstructorVehiculoEspecialidad.class)
-					.add(Restrictions.eq("especialidad", especialidad)).list();
-		}
+		List<InstructorVehiculoEspecialidad> listaIve = sesion.createCriteria(InstructorVehiculoEspecialidad.class)
+														.list();
+		return listaIve;
+	}
 
-		@Override
-		public InstructorVehiculoEspecialidad traerIvePorInstructorEspecialidad(Especialidad esp, Instructor ins) {
-			final Session session = sessionFactory.getCurrentSession();
-			return (InstructorVehiculoEspecialidad) session.createCriteria(InstructorVehiculoEspecialidad.class)
-					.add(Restrictions.eq("especialidad", esp))
-					.add(Restrictions.eq("instructor", ins))
-					.uniqueResult();
-		}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<InstructorVehiculoEspecialidad>)
+				session.createCriteria(InstructorVehiculoEspecialidad.class)
+				.add(Restrictions.eq("especialidad", especialidad)).list();
+	}
 
-		@Override
-		public InstructorVehiculoEspecialidad buscarIvePorId(Long idIVE) {
-			final Session session = sessionFactory.getCurrentSession();
-			return (InstructorVehiculoEspecialidad) session.get(InstructorVehiculoEspecialidad.class, idIVE);
-		}
+	@Override
+	public InstructorVehiculoEspecialidad traerIvePorInstructorEspecialidad(Especialidad esp, Instructor ins) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (InstructorVehiculoEspecialidad) session.createCriteria(InstructorVehiculoEspecialidad.class)
+				.add(Restrictions.eq("especialidad", esp))
+				.add(Restrictions.eq("instructor", ins))
+				.uniqueResult();
+	}
+
+	@Override
+	public InstructorVehiculoEspecialidad buscarIvePorId(Long idIVE) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (InstructorVehiculoEspecialidad) session.get(InstructorVehiculoEspecialidad.class, idIVE);
+	}
 }

@@ -17,6 +17,8 @@ import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 public class ServicioIVEImpl implements ServicioIVE {
 	@Inject
 	private IveDao iveDao;
+	
+	/********************************organizador************************/
 	@Override
 	public Long guardarIve(InstructorVehiculoEspecialidad ive) {
 		return iveDao.guardarIve(ive);

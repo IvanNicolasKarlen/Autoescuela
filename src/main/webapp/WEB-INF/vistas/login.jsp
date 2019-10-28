@@ -37,7 +37,7 @@
             <div class="col-lg-12 p-b-30">
                 <div class="t-center">
 						<span class="tit2 t-center">
-							Bienvenidx
+							Bienvenido
 						</span>
 
                     <h3 class="tit3 t-center m-b-35 m-t-2">

@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,22 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Inject
     private SessionFactory sessionFactory;
 
+	/****************************************** INSTRUCTOR **************************************/
+	
+	@Override
+	public List<Usuario> traerAlumnos(Long idInstructor) {
+		final Session session = sessionFactory.getCurrentSession();
+			return session.createCriteria(Usuario.class)
+			.add(Restrictions.eq("rol", "Alumno"))
+			.setProjection(Projections.projectionList()
+			.add(Projections.distinct(Projections.property("email")))
+			)
+			.list();
+		
+		}
+	
+	
+	
 	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
 
@@ -50,6 +67,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	
 	
 	
+	
+	
+	
+	
+	
+	/****************************************************************************************/
 	
 	
 	

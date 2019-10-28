@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unlam.tallerweb1.dao.OrganizadorCrearAgendaDao;
+
 import ar.edu.unlam.tallerweb1.dao.VehiculoDao;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
@@ -16,6 +16,9 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 public class ServicioVehiculoImpl implements ServicioVehiculo {
 	@Inject
 	private VehiculoDao vehiculoDao;
+	
+	
+	/********************************ORGANIZADOR**************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
 		return vehiculoDao.obtenerVehiculoPorEspecialidad(especialidad);

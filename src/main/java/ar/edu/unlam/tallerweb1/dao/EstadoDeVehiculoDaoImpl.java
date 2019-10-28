@@ -12,6 +12,9 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 public class EstadoDeVehiculoDaoImpl implements EstadoDeVehiculoDao {
 	@Inject
 	private SessionFactory sessionFactory;
+	
+	
+	/****************************ORGANIZADOR**********************************/
 	@Override
 	public EstadoDeVehiculo buscarEstadoPorEstadoActual(String estadoActual) {
 		return (EstadoDeVehiculo) sessionFactory.getCurrentSession().createCriteria(EstadoDeVehiculo.class)
@@ -26,7 +29,6 @@ public class EstadoDeVehiculoDaoImpl implements EstadoDeVehiculoDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (EstadoDeVehiculo)session.get(EstadoDeVehiculo.class, estadoId);
 	}
-
 	
 
 }

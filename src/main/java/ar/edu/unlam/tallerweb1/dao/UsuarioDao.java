@@ -12,8 +12,13 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 // Interface que define los metodos del DAO de Usuarios.
 public interface UsuarioDao {
 	
+	/************************************** INSTRUCTOR **************************************/
 	Usuario consultarUsuario (Usuario usuario);
 	Long insertarUsuario (Usuario usuario);
+	List<Usuario> traerAlumnos(Long idInstructor);
+	
+	
+	/***************************************************************************************/
 	
 	
 
