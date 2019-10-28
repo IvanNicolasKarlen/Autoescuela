@@ -26,6 +26,11 @@ public class Inscripcion {
 	@OneToMany
 	private List<Agenda> agendas;
 	
+	@ManyToOne
+	private EstadoInscripcion estadoInscripcion;
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +62,16 @@ public class Inscripcion {
 	public void setAgendas(List<Agenda> agendas) {
 		this.agendas = agendas;
 	}
+
+	public EstadoInscripcion getEstadoInscripcion() {
+		return estadoInscripcion;
+	}
+
+	public void setEstadoInscripcion(EstadoInscripcion estadoInscripcion) {
+		this.estadoInscripcion = estadoInscripcion;
+	}
+	
+	
 	
 	
 }

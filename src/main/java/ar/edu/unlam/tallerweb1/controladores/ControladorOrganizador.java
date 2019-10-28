@@ -28,6 +28,7 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
@@ -43,6 +44,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorInstructor;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorConvierteFecha;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCrearAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorCurso;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioOrganizadorValidaFechaElegida;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
@@ -77,6 +79,8 @@ public class ControladorOrganizador {
 	private ServicioEstadoDelCurso servicioEstadoDelCurso;
 	@Inject
 	private ServicioAsistencia servicioAsistencia;
+	@Inject
+	private ServicioOrganizadorInscripcion servicioInscripcion;
 
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
@@ -458,15 +462,26 @@ public class ControladorOrganizador {
 	}
 	@RequestMapping(path="/modificarCurso/{idCurso}")
 	public ModelAndView ModificarCursos(HttpServletRequest request,
-			@PathVariable(value="idCurso")String idCurso){
+			@PathVariable(value="idCurso")Long idCurso){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
+		String vista = "cursosOrg";
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
+			Curso curso = servicioOrganizadorCurso.buscarCursoPorId(idCurso);
+			if(curso!=null){
+				model.put("curso", curso);
+				List <EstadoDelCurso> estadosCurso = servicioEstadoDelCurso.traerListaDeEstadoDeLosCursos();
+				model.put("estadosCursos", estadosCurso);
+				
+				vista = "modificarCursosOrg";
+			}else{
+				model.put("error","El curso seleccionado no existe.");
+			}
 		}else{
 			return new ModelAndView("redirect:/index");
 		}
-		return new ModelAndView("cursosOrg",model);
+		return new ModelAndView(vista,model);
 	}
 	@RequestMapping(path="/eliminarCurso/{idCurso}", method=RequestMethod.GET)
 	public ModelAndView EliminarCurso(HttpServletRequest request,
@@ -481,14 +496,24 @@ public class ControladorOrganizador {
 			Curso curso = servicioOrganizadorCurso.buscarCursoPorId(idCurso);
 			if(curso!=null){
 				if(confirmacion.equals("noConfirmado")){
-					model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
+					List<Inscripcion> listaInscripciones = servicioInscripcion.traerInscripcionesDeUnCurso(curso);
+					if(listaInscripciones.isEmpty()){
+						model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
+					}else{
+						model.put("error", "El curso seleccionado no puede eliminarse porque hay alumnos aún cursandolo"
+								+ "Si lo desea, puede cambiar su estado para que nadie más se inscriba.");
+						vista = "cursosOrg";
+					}
+					
 				}else{
 					switch(confirmacion){
 					case "si": servicioOrganizadorCurso.eliminarCurso(curso);
 								if(servicioOrganizadorCurso.buscarCurso(curso)==null){
 								model.put("mensaje", "Curso eliminado correctamente");
-								vista= "cursosOrg";
+								}else{
+									model.put("error", "Hubo un problema al eliminar el curso, intente nuevamente.");
 								}
+								vista= "cursosOrg";
 					case "no": return new ModelAndView("redirect:/verCursos");
 					
 					default: return new ModelAndView("redirect:/verCursos");

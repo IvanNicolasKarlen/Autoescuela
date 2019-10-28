@@ -64,10 +64,10 @@
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
-						<c:if test="${usuarioId!=null}">
+						<c:if test="${rol!=null}">
 							<a href="cuenta"><b class="text-danger">Mi cuenta</b></a>
 						</c:if>
-						<c:if test="${usuarioId==null}">
+						<c:if test="${rol==null}">
 							<a href="login"><b class="text-danger">Ingresar</b></a>
 						</c:if>	
 					<!-- fin del IF -->	

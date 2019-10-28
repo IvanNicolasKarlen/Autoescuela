@@ -6,12 +6,12 @@
 
 		<!-- - -->
 		<ul class="menu-sidebar p-t-95 p-b-70">
-			<c:if test="${usuarioId!=null}">
+			<c:if test="${rol!=null}">
 			<a href="cuenta" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
 					Mi Cuenta
 				</a>
 			</c:if>
-			<c:if test="${usuarioId==null}">
+			<c:if test="${rol==null}">
 				<a href="login" class="btn3 flex-c-m size13  txt11 trans-5-4 m-b-10 m-l-r-auto">
 					Ingresar
 				</a>
@@ -62,12 +62,12 @@
 		</c:if>
 
 		<!-- Fin organizador- -->
-		<c:if test="${usuarioId==null}">
+		<c:if test="${rol==null}">
 				<a href="registro" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Registrarse
 				</a>
 			</c:if>
-			<c:if test="${usuarioId!=null}">
+			<c:if test="${rol!=null}">
 				<a href="cerrarSesion" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					Salir
 				</a>
