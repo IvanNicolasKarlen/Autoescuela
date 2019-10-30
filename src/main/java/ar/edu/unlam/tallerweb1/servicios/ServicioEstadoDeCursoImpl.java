@@ -31,4 +31,5 @@ public class ServicioEstadoDeCursoImpl implements ServicioEstadoDelCurso {
 		return estadoDelCursoDao.traerEstadoDelCursoPorId(id);
 	}
 
+
 }

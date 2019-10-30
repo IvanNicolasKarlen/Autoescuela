@@ -1,5 +1,9 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
-public interface ServicioEstadoInscripcion {
+import java.util.List;
 
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+
+public interface ServicioEstadoInscripcion {
+	Boolean verificarQueElCursoNoTengaInscripcionesEnCurso(List<Inscripcion> listaInscripciones);
 }

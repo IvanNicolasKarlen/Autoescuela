@@ -7,6 +7,7 @@
 <head>
 	<title>Agregar Curso</title>
 	<!-- meta, css, vendor, etc. -->
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
 </head>
@@ -17,6 +18,7 @@
 	<!-- fin header -->
 	<!-- Sidebar -->
 <%@ include file="../../parts/sidebar.jsp" %> 
+
 	<!-- fin sidebar -->
 	
 	<!-- Welcome -->
@@ -29,16 +31,46 @@
         <div class="row">
             <div class="col-lg-12 p-b-30">
                 <div class="t-center">
-
-		<form:form modelAttribute="curso" action="validarCurso" method="post">
+	<c:if test="${estado == 'cursando'}">
 					<label class="txt9">
-						Titulo del curso:
+						Titulo del curso: ${curso.titulo}
 					</label>
-					<form:input type="text" path="titulo" id="titulo"></form:input>
+				 	<label class="txt9">
+						Descripcion: ${curso.descripcion}
+					</label>
+				 	<label class="txt9">
+						Cantidad de clases: ${curso.cantClasesPracticas}
+					</label>
+					<label class="txt9">
+						Precio: ${curso.precio}
+					</label>
+					<label class="txt9">
+						Especialidad: ${curso.especialidad.tipo}
+					</label>
+					<label>
+						Estado del Curso: 
+					</label>
+					<select name="estadoTipo" id="estadoTipo">
+						<c:forEach items="${estadosDeCursos}" var="edc">
+							<option>${edc.estadoDelCurso}</option>
+						</c:forEach>	
+					</select>
+				 	<div class="wrap-btn-booking flex-c-m m-t-6">
+                        <a id="linkModificacion" href="${context}/modificarCurso/${curso.id}">Modificar Estado del Curso</a>  
+                    </div> 
+	</c:if>
+	<c:if test="${empty estado}">
+		<form:form modelAttribute="curso" action="${context}/modificarCurso-2" method="post">
+					<label class="txt9">
+						Titulo del curso: ${curso.titulo}
+					</label>
+					<p></p>
 				 	<label class="txt9">
 						Descripcion:
 					</label>
-					<form:input type="textarea" path="descripcion" id="descripcion"></form:input>
+					<form:textarea path="descripcion" id="descripcion"></form:textarea>
+					<form:input type="text" path="titulo" id="titulo" value="${curso.titulo}" style="display:none"></form:input>
+
 				 	<label class="txt9">
 						Cantidad de clases:
 					</label>
@@ -48,20 +80,24 @@
 					</label>
 					<form:input type="number" path="precio" id="precio"></form:input>
 					<label class="txt9">
-						Especialidad: 
+						Especialidad: ${curso.especialidad.tipo}
 					</label>
-					<select name="especialidadId" id="especialidadId">
-						<c:forEach items="${listaEspecialidades}" var="especialidades">
-							<option value="${especialidades.id}">${especialidades.tipo}</option>
+					
+					<select name="estadoId" id="estadoId">
+						<c:forEach items="${estadosDeCursos}" var="edc">
+							<option value="${edc.id}">${edc.estadoDelCurso}</option>
 						</c:forEach>	
 					</select>
+					<form:input path="id" value="${curso.id}" style="display:none" />
+					<input name="cursoId" value="${curso.id}" style="display:none" />
+					<input name="especialidadId" value="${curso.especialidad.id}" style="display:none" />
 				 	<div class="wrap-btn-booking flex-c-m m-t-6">
                         <button type="submit" class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
                             Continuar
                         </button>   
                     </div> 
         </form:form>
-        
+     </c:if>   
 				</div>
 			</div>
 		</div>
@@ -73,6 +109,7 @@
 
 	<!-- Footer -->
 <%@ include file="../../parts/footer.jsp" %> 
+<script src="${context}/js/changeValue.js"></script>
 	<!-- fin footer  -->
 </body>
 </html>

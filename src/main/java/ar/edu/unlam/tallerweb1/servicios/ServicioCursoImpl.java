@@ -56,5 +56,10 @@ public class ServicioCursoImpl implements ServicioCurso{
 		cursoDao.eliminarCurso(curso);
 	}
 
+	@Override
+	public void modificarCurso(Curso curso) {
+		cursoDao.modificarCurso(curso);
+	}
+
 	
 }

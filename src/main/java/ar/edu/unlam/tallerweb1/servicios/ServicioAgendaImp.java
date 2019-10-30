@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -190,11 +192,12 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	
 	public Long crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
 		List <Agenda> agendas = new ArrayList<Agenda>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
 			for(InstructorVehiculoEspecialidad ive:listaIve){
 				for(Integer i=horaC;i<=horaF;i=i+100){
 					Agenda ag = new Agenda();
-					ag.setFecha(date.toString());
+					ag.setFecha(date.format(formatter));
 					ag.setHora(i);
 					ag.setInstructorVehiculoEspecialidad(ive);
 					ag.setAsistencia(estadoDeAgenda);

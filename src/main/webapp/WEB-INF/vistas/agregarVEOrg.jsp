@@ -5,7 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<title>Curso</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
+<title>Agregar Especialidad a Instructor</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -27,7 +28,7 @@
 					<h3>${error}</h3>
 					<hr>
 					<hr>
-					<form action="agregarVehiculoEspecialidad-2" method="post">
+					<form action="${context}/agregarVehiculoEspecialidad-2" method="post">
 						<select name="especialidadId">
 							<c:forEach items="${listaEspecialidades}" var="lesp">
 								<option value="${lesp.id}">${lesp.tipo}</option>

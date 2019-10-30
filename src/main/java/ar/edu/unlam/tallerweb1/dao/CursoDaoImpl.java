@@ -56,6 +56,12 @@ public class CursoDaoImpl implements CursoDao {
 		session.delete(curso);
 	}
 
+	@Override
+	public void modificarCurso(Curso curso) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(curso);
+	}
+
 	
 	
 	

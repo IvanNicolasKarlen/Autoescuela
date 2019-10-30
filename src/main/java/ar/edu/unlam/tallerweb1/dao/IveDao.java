@@ -14,4 +14,5 @@ public interface IveDao {
 	List<InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad);
 	InstructorVehiculoEspecialidad traerIvePorInstructorEspecialidad(Especialidad esp, Instructor ins);
 	InstructorVehiculoEspecialidad buscarIvePorId(Long idIVE);
+	List<InstructorVehiculoEspecialidad> traerIvePorInstructor(Instructor ins);
 }

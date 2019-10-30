@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<head>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <title>Agregar Tipo de Vehiculo</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>

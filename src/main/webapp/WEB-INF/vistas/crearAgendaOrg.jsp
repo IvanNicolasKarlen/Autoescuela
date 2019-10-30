@@ -5,7 +5,8 @@
 <html lang="en">
 <head>
 <head>
-<title>Home</title>
+<title>Crear Agenda</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -29,7 +30,7 @@
 	<h4 class="t-center text-danger">${error}</h4>
 
 					
-					<form action="validarAgenda" method="post">
+					<form action="${context}/validarAgenda" method="post">
 					
 					
 						<div class=" t-center m-b-5 m-t-20">
@@ -65,7 +66,7 @@
 
 					</form>
 
-					<a href="index">Volver a Inicio</a>
+					<a href="${context}/index">Volver a Inicio</a>
 				</div>
 			</div>
 		</div>

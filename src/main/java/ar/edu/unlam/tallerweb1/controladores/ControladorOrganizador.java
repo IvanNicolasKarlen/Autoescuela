@@ -38,7 +38,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioEspecialidad;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculoImpl;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDelCurso;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
+import ar.edu.unlam.tallerweb1.servicios.ServicioInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
 import ar.edu.unlam.tallerweb1.servicios.ServicioConvertirFecha;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
@@ -77,6 +79,8 @@ public class ControladorOrganizador {
 	private ServicioEstadoDelCurso servicioEstadoDelCurso;
 	@Inject
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
+	@Inject
+	private ServicioEstadoInscripcion servicioEstadoInscripcion;
 
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
@@ -99,7 +103,7 @@ public class ControladorOrganizador {
 	public ModelAndView validarCurso(@ModelAttribute("curso")Curso curso, 
 			HttpServletRequest request,
 			@RequestParam(name="especialidadId")Long especialidadId){
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap(); 
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		if(rol.equals("Organizador")){
 			if(curso.getCantClasesPracticas()!=null&&!(curso.getDescripcion().isEmpty())&&curso.getDescripcion()!=null
@@ -129,7 +133,7 @@ public class ControladorOrganizador {
 	}
 	@RequestMapping(path="/crearAgenda")
 	public ModelAndView crearAgenda(HttpServletRequest request){
-		ModelMap model = new ModelMap();		
+		ModelMap model = new ModelMap(); 	
 		if(request.getSession().getAttribute("ROL").equals("Organizador")){
 			List<Especialidad> listaEspecialidades = servicioEspecialidad.traerListaDeEspecialidades();
 			model.put("listaEspecialidades", listaEspecialidades);
@@ -147,7 +151,7 @@ public class ControladorOrganizador {
 			@RequestParam(name="hastaD") Integer hastaD,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			if((horaC<horaF)&&espid!=null&&hastaD>1&&hastaD<=60&&hastaD!=null){
@@ -156,7 +160,7 @@ public class ControladorOrganizador {
 
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(espid);
 				List <InstructorVehiculoEspecialidad> listaIvePorEsp = servicioIve.traerListaIvePorEspecialidad(especialidad);
-				EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("En espera"); 
+				EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("Disponible"); 
 				if(servicioAgenda.crearAgenda(estadoDeAgenda, desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
 					model.put("mensaje", "¡Agenda Creada con Éxito!");
 				}else{
@@ -173,7 +177,7 @@ public class ControladorOrganizador {
 
 	@RequestMapping("/agregarVehiculo")
 	public ModelAndView agregarVehiculo(HttpServletRequest request){
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		String rol = (String)request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
@@ -193,7 +197,7 @@ public class ControladorOrganizador {
 	public ModelAndView validarVehiculo(@ModelAttribute("vehiculo") Vehiculo miv,
 			@RequestParam(name="estadoId")Long estadoId,
 			HttpServletRequest request){
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		String rol = (String)request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
@@ -229,7 +233,7 @@ public class ControladorOrganizador {
 	@RequestMapping("/agregarEspecialidad")
 	public ModelAndView agregarEspecialidad(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			return new ModelAndView("agregarEspecialidadOrg");	
@@ -242,7 +246,7 @@ public class ControladorOrganizador {
 	@RequestMapping("/AgregarEspecialidad")
 	public ModelAndView validarEspecialidad(@RequestParam(name="tipo")String tipoEsp, HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			if(servicioEspecialidad.traerEspecialidadPorNombre(tipoEsp)==null){
@@ -266,7 +270,7 @@ public class ControladorOrganizador {
 	@RequestMapping("/agregarTipoVehiculo")
 	public ModelAndView agregarTipoDeVehiculo(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			TipoDeVehiculo tipoVehiculo = new TipoDeVehiculo();
@@ -284,7 +288,7 @@ public class ControladorOrganizador {
 	public ModelAndView validarTipoDeVehiculo(@ModelAttribute("tipoDeVehiculo")TipoDeVehiculo tipoVehiculo,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			if(servicioTipoDeVehiculo.buscarTipoDeVehiculo(tipoVehiculo)==null){
@@ -310,7 +314,7 @@ public class ControladorOrganizador {
 	@RequestMapping(path="/agregarInstructor")
 	public ModelAndView agregarInstructor(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			Usuario usuario = new Usuario();
 			model.put("usuario", usuario);
@@ -324,7 +328,7 @@ public class ControladorOrganizador {
 	public ModelAndView agregarInstructor2(@ModelAttribute("usuario")Usuario user,@RequestParam(name="pass2")String password2,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
@@ -364,11 +368,13 @@ public class ControladorOrganizador {
 	public ModelAndView agregarInstructor3(@RequestParam(name="idIns")Long idInstructor,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			if(idInstructor!=null){
-				List<Especialidad> listaEsp= servicioEspecialidad.traerListaDeEspecialidades();
+				List<Especialidad> listaEsp= servicioEspecialidad
+											 .traerEspecialidadesQueUnInstructorNoTenga(servicioInstructor
+											 .buscarInstructorPorId(idInstructor));
 				model.put("listaEspecialidades", listaEsp);
 				model.put("idInstructor", idInstructor);
 			}else{
@@ -385,7 +391,7 @@ public class ControladorOrganizador {
 			@RequestParam(name="idInstructor")Long idInstructor,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap();  
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(espId);
@@ -410,7 +416,7 @@ public class ControladorOrganizador {
 			@RequestParam(name="idVehiculo")Long idVeh,
 			HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap(); 
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(idEsp);
@@ -441,7 +447,7 @@ public class ControladorOrganizador {
 	@RequestMapping(path="/verCursos")
 	public ModelAndView mostrarCursos(HttpServletRequest request){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap(); 
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
 			List<Curso> listaCursos = servicioCurso.traerListaDeCursos();
@@ -458,22 +464,101 @@ public class ControladorOrganizador {
 	}
 	@RequestMapping(path="/modificarCurso/{idCurso}")
 	public ModelAndView ModificarCursos(HttpServletRequest request,
-			@PathVariable(value="idCurso")String idCurso){
+			@PathVariable(value="idCurso")Long idCurso){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap(); 
+		String vista = "cursosOrg";
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
+			Curso curso = servicioCurso.buscarCursoPorId(idCurso);
+			if(curso!=null){
+				vista = "modificarCurso";
+				if(curso.getEstadoDelCurso().equals("Cursando")){
+					model.put("estado", "cursando");
+					model.put("mensaje", "Hay alumnos cursando el Curso seleccionado. "
+							+ "Para modificarlo completamente deberá esperar a que no haya nadie cursando."
+							+ "Para que nadie más se inscriba, cambie el estado del curso.");
+				}
+				List <EstadoDelCurso> estadosCurso = servicioEstadoDelCurso.traerListaDeEstadoDeLosCursos();
+				model.put("estadosDeCursos", estadosCurso);
+				model.put("curso", curso);
+			}else{
+				model.put("error", "El curso seleccionado no existe.");
+			}
+		}else{
+			return new ModelAndView("redirect:/index");
+			}
+		return new ModelAndView(vista,model);
+	}
+	@RequestMapping(path="/modificarCurso-2", method=RequestMethod.POST)
+	public ModelAndView verificarModificacionDeCurso(HttpServletRequest request,
+			@ModelAttribute("curso")Curso cursoM,
+			@RequestParam(name="estadoId")Long estadoId,
+			@RequestParam(name="cursoId")Long cursoId,
+			@RequestParam(name="especialidadId")Long espId){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap(); 
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			if(cursoM.getCantClasesPracticas()!=null&&!(cursoM.getDescripcion().isEmpty())&&cursoM.getDescripcion()!=null
+			   &&cursoM.getPrecio()!=null&&cursoM.getTitulo()!=null&&!(cursoM.getTitulo().isEmpty())||estadoId!=null
+			   ||cursoId!=null||espId!=null){
+				EstadoDelCurso  estadoCurso= servicioEstadoDelCurso.traerEstadoDelCursoPorId(estadoId);
+				Especialidad esp = servicioEspecialidad.traerEspecialidadPorId(espId);
+				cursoM.setEspecialidad(esp);
+				cursoM.setEstadoDelCurso(estadoCurso);
+				servicioCurso.modificarCurso(cursoM);
+				if(servicioCurso.buscarCurso(cursoM).getId().equals(cursoId)){
+					model.put("mensaje", "Curso modificado correctamente");
+				}else{
+					model.put("error", "Ha surgido un error al modificar el curso. Por favor, intente nuevamente");
+				}
+			}else{
+				model.put("error", "Faltan completar datos");
+			}
+
 		}else{
 			return new ModelAndView("redirect:/index");
 		}
-		return new ModelAndView("cursosOrg",model);
+		return new ModelAndView("cursoOrganizador",model);
 	}
+	@RequestMapping(path="/modificarCurso-2/{cursoId}/{estadoCurso}", method=RequestMethod.GET)
+	public ModelAndView modificarEstadoDeUnCurso(HttpServletRequest request,
+			@PathVariable(value="cursoId")Long cursoId,
+			@PathVariable(value="estadoCurso")String estadoCurso){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap(); 
+		model.put("rol", rol);
+		if(rol.equals("Organizador")){
+			Curso curso = servicioCurso.buscarCursoPorId(cursoId);
+			if(curso!=null){
+				EstadoDelCurso estadoDelCurso = servicioEstadoDelCurso.traerEstadoDelCursoPorNombre(estadoCurso);
+				if(estadoDelCurso!=null){
+					curso.setEstadoDelCurso(estadoDelCurso);
+					servicioCurso.modificarCurso(curso);
+					if(servicioCurso.buscarCurso(curso).getEstadoDelCurso().equals(estadoDelCurso)){
+						model.put("mensaje", "Estado del curso" +curso.getTitulo() +" modificado correctamente");
+					}else{
+						model.put("error", "El estado del curso" +curso.getTitulo() +"no ha podido modificarse. Intente nuevamente");
+					}
+				}else{
+					model.put("error", "El estado de curso seleccionado no es válido");
+				}
+			}else{
+				model.put("error", "El curso seleccionado no existe");
+			}
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("cursoOrganizador",model);
+	}
+	
 	@RequestMapping(path="/eliminarCurso/{idCurso}", method=RequestMethod.GET)
 	public ModelAndView EliminarCurso(HttpServletRequest request,
 			@PathVariable(value="idCurso")Long idCurso,
 			@RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion){
 		String rol = (String)request.getSession().getAttribute("ROL");
-		ModelMap model = new ModelMap();
+		ModelMap model = new ModelMap(); 
 		String vista = "cursosEditDeleteConfirmacionOrg";
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
@@ -484,11 +569,20 @@ public class ControladorOrganizador {
 					model.put("confirmacion", "¿Esta seguro de querer eliminar el curso seleccionado: " +curso.getTitulo() +"?");
 				}else{
 					switch(confirmacion){
-					case "si": servicioCurso.eliminarCurso(curso);
-								if(servicioCurso.buscarCurso(curso)==null){
+					case "si": 	vista= "cursosOrg";
+						if(servicioEstadoInscripcion.verificarQueElCursoNoTengaInscripcionesEnCurso(curso.getInscripciones())){
+							servicioCurso.eliminarCurso(curso);
+							if(servicioCurso.buscarCurso(curso)==null){
 								model.put("mensaje", "Curso eliminado correctamente");
-								vista= "cursosOrg";
+								}else{
+									model.put("error", "Ha ocurrido un error: El curso no ha podido eliminarse. Intente nuevamente.");
 								}
+						}else{
+						model.put("error", "El curso no puede eliminarse porque aún hay Inscripciones en curso."
+								+ "<p>Recomendamos cambiar el estado de curso para que nadie pueda inscribirse, y volver a intentar luego "
+								+ "que las inscripciones hayan finalizado.</p>");
+							}
+								
 					case "no": return new ModelAndView("redirect:/verCursos");
 					
 					default: return new ModelAndView("redirect:/verCursos");

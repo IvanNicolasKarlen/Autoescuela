@@ -16,7 +16,8 @@ import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 public class EspecialidadDaoImpl implements EspecialidadDao {
 	@Inject
 	private SessionFactory sessionFactory;
-	
+	@Inject
+	private IveDao iveDao;
 	/************************************** Organizador ***********************/
 	
 	@SuppressWarnings("unchecked")

@@ -5,6 +5,7 @@
 <html lang="en">
 
 <head>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <title>Ver Cursos</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
@@ -30,11 +31,13 @@
 					<div class="col-lg-12 p-b-30">
 						<div class="t-center">
 						<h4 class="t-center text-danger">${mensaje}</h4>
+						<h4 class="t-center text-danger">${error}</h4>
 						<table class="table table-striped">
 							<th>Nombre</th>
 							<th>Estado</th>
 							<th>Descripcion</th>
 							<th>Precio</th>
+							<th>Clases</th>
 							<th>Modificar</th>
 							<th>Eliminar</th>
 							<c:forEach items="${listaCursos}" var="lc">
@@ -43,13 +46,14 @@
 									<td>${lc.estadoDelCurso.estadoDelCurso}</td>
 									<td>${lc.descripcion}</td>
 									<td>$${lc.precio}</td>
-									<td><a href="modificarCurso/${lc.id}"><i class="fa fa-edit"></i></a></td>
-									<td><a href="eliminarCurso/${lc.id}"><i class="fa fa-trash"></i></a></td>
+									<td>${lc.cantClasesPracticas}</td>
+									<td><a href="${context}/modificarCurso/${lc.id}"><i class="fa fa-edit"></i></a></td>
+									<td><a href="${context}/eliminarCurso/${lc.id}"><i class="fa fa-trash"></i></a></td>
 							</tr>
 							</c:forEach>	
 						</table>
 						
-						<a href="agregarCurso">Agregar nuevo Curso</a>
+						<a href="${context}/agregarCurso">Agregar nuevo Curso</a>
 						</div>
 					</div>
 				</div>
