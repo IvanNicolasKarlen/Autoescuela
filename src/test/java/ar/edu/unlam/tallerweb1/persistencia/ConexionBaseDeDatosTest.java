@@ -2,7 +2,6 @@ package ar.edu.unlam.tallerweb1.persistencia;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
@@ -13,7 +12,9 @@ import static org.assertj.core.api.Assertions.*;
 // de spring
 public class ConexionBaseDeDatosTest extends SpringTest{
 
-    @Test
+	
+	/************************************* INSTRUCTOR **************************************/
+	@Test
     @Transactional @Rollback(true)
     public void pruebaConexion(){
         assertThat(getSession().isConnected()).isTrue();
@@ -37,5 +38,8 @@ public class ConexionBaseDeDatosTest extends SpringTest{
     	getSession().delete(i);
     	Instructor i2 = getSession().get(Instructor.class, i.getId());
     	assertThat(i2).isNull();
-}
+    }
+    
+    
+    /*************************************************************************************/
 }

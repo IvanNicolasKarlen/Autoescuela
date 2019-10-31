@@ -130,23 +130,8 @@ public class Usuario {
 		this.nombreDeUsuario = nombreDeUsuario;
 	}
 
-	public boolean equals( Object objeto ) {
-		if (objeto == null) return false; 
-
-		Usuario usuario = (Usuario)objeto; 
-		if (this.getDni().equals(usuario.getDni()) )
-		return true;
-
-		return false;
-		} 
-		
-		
-
-		public int hashCode() {
-			return this.getDni().hashCode();
-			}
-		
 	
-
+	
+	
 	
 }

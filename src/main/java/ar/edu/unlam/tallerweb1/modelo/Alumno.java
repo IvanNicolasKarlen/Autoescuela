@@ -39,8 +39,6 @@ public class Alumno {
 	public void setInscripciones(List<Inscripcion> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
-	
 
-		
 	
 }

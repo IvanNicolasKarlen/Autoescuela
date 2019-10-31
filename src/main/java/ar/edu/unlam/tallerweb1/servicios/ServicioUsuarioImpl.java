@@ -1,10 +1,14 @@
 package ar.edu.unlam.tallerweb1.servicios;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import ar.edu.unlam.tallerweb1.dao.UsuarioDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
@@ -25,9 +29,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Inject
 	private UsuarioDao servicioUsuarioDao;
 
+	/************************************* ORGANIZADOR *******************************/
 	@Override
-	public List<Usuario> traerAlumnos(Long idInstructor) {
-		return servicioUsuarioDao.traerAlumnos(idInstructor);
+	public List<Usuario> traerAlumnos() {
+		return servicioUsuarioDao.traerAlumnos();
 	}
 	
 	@Override
@@ -38,6 +43,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Long insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
-	
+	/*************************************************************************/
 	
 }

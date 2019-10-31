@@ -26,19 +26,8 @@ public class Inscripcion {
 	@OneToMany
 	private List<Agenda> agendas;
 	
-	
-	
-	
-	
-	
-	
 	@ManyToOne
 	private EstadoInscripcion estadoInscripcion;
-	
-	
-	
-	
-	
 	
 	
 	

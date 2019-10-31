@@ -27,13 +27,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Inject
     private SessionFactory sessionFactory;
 
+	/****************************************** INSTRUCTOR **************************************/
+	
 	@Override
-	public List<Usuario> traerAlumnos(Long idInstructor) {
+	public List<Usuario> traerAlumnos() {
 		final Session session = sessionFactory.getCurrentSession();
 			return session.createCriteria(Usuario.class)
 			.add(Restrictions.eq("rol", "Alumno"))
 			.setProjection(Projections.projectionList()
-			.add(Projections.distinct(Projections.property("email")))
+			.add(Projections.distinct(Projections.property("nombreDeUsuario")))
 			)
 			.list();
 		
@@ -65,6 +67,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	
 	
 	
+	
+	
+	
+	
+	
+	/****************************************************************************************/
 	
 	
 	

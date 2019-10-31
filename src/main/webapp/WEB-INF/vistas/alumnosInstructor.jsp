@@ -26,45 +26,31 @@
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-6 p-t-45 p-b-30">
+				<div class="col-lg-12 p-b-30">
+					<div class="t-center">
 					<div class="wrap-text-welcome t-center">
 	
 
 	<!-- ******************************BUSCA NOMBRE Y APELLIDO****************************** -->
 
-<form:form method="GET"  action="buscadorDeAlumnos">   
+  <form:form method="GET"  action="buscadorDeAlumnos"> 
 <h3 class="tit3 text-center">Buscador de alumnos</h3><br><br>
 
 
-<div class="form-group mb-2">
-	<div class="container">
-		<div class="wrap-text-welcome t-center">
-	<b class="tit2 text-center m-t-90">Nombre:</b><label for="nombre" class="col-sm-2 col-md-3 control-label"></label>
-         <div class="col-sm-10 col-md-9">
-            <input type="text" name="nombre" id="nombre" class="form-control">
-         </div>
-       </div>
-    </div>
- </div><br>
- 
 
- 
-                  
-<div class="form-group mb-2">
+	<div class="container">	
+	<b class="tit2 text-center m-t-90">Nombre:</b><label for="nombre"></label>
+            <input type="text" name="nombre" id="nombre" class="form-control">
+ </div><br><br>
+  
 	<div class="container">
-		<div class="tit2 text-center m-t-80">
-	<b class="tit2 text-center m-t-90">Apellido:</b><label for="apellido" class="col-sm-2 col-md-3 control-label"></label>
-         <div class="col-sm-10 col-md-9">
+	<b class="tit2 text-center m-t-90">Apellido:</b><label for="apellido"></label>
             <input type="text" name="apellido" id="apellido" class="form-control">
-         </div>
-       </div>
-    </div>
- </div><br>
-                   
-	<div class="col-sm-10 col-md-9">
+ </div><br><br>
+
 		<button class="btn btn-primary" type="submit" name="btnBuscar">Buscar <i class="fa fa-search"></i></button>
-	</div>				
-	</form:form>
+			
+</form:form><br><br>
 
 
 <!-- ********************************************************************************************************************* -->
@@ -80,6 +66,7 @@
 					<th class="enc"><center>Apellido</center></th>	
 					<th class="enc"><center>Fecha</center></th>	
 					<th class="enc"><center>Hora</center></th>	
+					<th class="enc"><center>Cancelación</center></th>	
 				</tr>
 			</thead>
 </c:if>
@@ -88,7 +75,12 @@
 						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>				
 						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>		
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
-						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>							
+						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
+						
+							  
+							
+						<!-- <td><a href="cancelacionDeClases"><b>Cancelar<b></a></td> -->
+						<td><a href="cancelacionDeClases?idAgenda=${verFechas.id}">Cancelar</a></td>
 					</tr>
 			</c:forEach>	
 			
@@ -114,7 +106,7 @@
 					</div>	
 				</div>
 			</div>
-		</div>	
+		</div>	</div>
 </section>
 	
 
