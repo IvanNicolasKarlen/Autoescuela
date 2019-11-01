@@ -64,4 +64,6 @@ public class IveDaoImpl implements IveDao {
 		return (List<InstructorVehiculoEspecialidad>) session.createCriteria(InstructorVehiculoEspecialidad.class)
 				.add(Restrictions.eq("instructor", ins)).list();
 	}
+
+
 }

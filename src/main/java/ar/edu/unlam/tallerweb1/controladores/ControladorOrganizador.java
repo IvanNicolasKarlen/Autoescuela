@@ -161,7 +161,7 @@ public class ControladorOrganizador {
 				Especialidad especialidad = servicioEspecialidad.traerEspecialidadPorId(espid);
 				List <InstructorVehiculoEspecialidad> listaIvePorEsp = servicioIve.traerListaIvePorEspecialidad(especialidad);
 				EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("Disponible"); 
-				if(servicioAgenda.crearAgenda(estadoDeAgenda, desde, hasta, horaC, horaF,listaIvePorEsp)!=null){
+				if(servicioAgenda.crearAgenda(estadoDeAgenda, desde, hasta, horaC, horaF,listaIvePorEsp)){
 					model.put("mensaje", "¡Agenda Creada con Éxito!");
 				}else{
 					model.put("error", "Hubo un problema al crear la agenda");
@@ -445,12 +445,21 @@ public class ControladorOrganizador {
 	}
 	
 	@RequestMapping(path="/verCursos")
-	public ModelAndView mostrarCursos(HttpServletRequest request){
+	public ModelAndView mostrarCursos(HttpServletRequest request, 
+			@RequestParam(name="espFiltro", required=false, defaultValue="")String espFiltro){
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap(); 
 		if(rol.equals("Organizador")){
 			model.put("rol", rol);
-			List<Curso> listaCursos = servicioCurso.traerListaDeCursos();
+			List<Curso> listaCursos = new ArrayList<Curso>();
+			List<Especialidad> listaEsp = servicioEspecialidad.traerListaDeEspecialidades();
+			model.put("listaesp", listaEsp);
+			if(espFiltro.isEmpty()||espFiltro==null||espFiltro.equals("")){
+				listaCursos = servicioCurso.traerListaDeCursos();
+			}else{
+				listaCursos = servicioCurso.traerCursosPorEspecialidad(espFiltro);
+			}
+			
 			if(listaCursos.isEmpty()){
 				model.put("mensaje", "Aun no hay ningun curso creado. Añada alguno primero");
 			}else{
@@ -596,6 +605,30 @@ public class ControladorOrganizador {
 			return new ModelAndView("redirect:/index");
 		}
 		return new ModelAndView(vista,model);
+	}
+	
+	@RequestMapping(path="/busquedaUsuarios", method=RequestMethod.GET)
+	public ModelAndView BuscarUsuarios(HttpServletRequest request,
+			@RequestParam(name="Nombre",required=false)String nombre,
+			@RequestParam(name="Apellido",required=false)String apellido,
+			@RequestParam(name="nombreUsuario",required=false)String nombreUsuario,
+			@RequestParam(name="dni",required=false)Integer dni,
+			@RequestParam(name="traer",required=false, defaultValue="")String traer){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			if(traer.equals("Alumno")||traer.equals("Instructor")||traer.equals("Todo")){
+				List<Usuario> listaUsuarios = servicioUsuario.traerUsuarios(nombre,apellido,nombreUsuario,dni,traer);
+				if(listaUsuarios.isEmpty()){
+					model.put("error", "No se ha encontrado ningún Usuario :(");
+				}
+				model.put("listaUsuarios", listaUsuarios);
+			}
+	}else{
+		return new ModelAndView("redirect:/index");
+	}
+	return new ModelAndView("busquedaUsuariosOrg",model);
 	}
 
 }

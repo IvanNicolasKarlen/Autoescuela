@@ -189,28 +189,65 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		idAgendas.add(idAgendaSeleccionada);
 		return idAgendas;
 	}
+	/*********************************o r g a n i z a d x r *************************/
 	
-	public Long crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
+	public Boolean crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
 		List <Agenda> agendas = new ArrayList<Agenda>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
 			for(InstructorVehiculoEspecialidad ive:listaIve){
 				for(Integer i=horaC;i<=horaF;i=i+100){
 					Agenda ag = new Agenda();
-					ag.setFecha(date.format(formatter));
-					ag.setHora(i);
-					ag.setInstructorVehiculoEspecialidad(ive);
-					ag.setAsistencia(estadoDeAgenda);
-					ag.setClasePagada(false);
-					agendas.add(ag);
+					String fecha = date.format(formatter);
+					List<Agenda> agendaComprobacion = agendaDao.traerAgendaPorFechayHora(fecha, i);
+					System.out.println(fecha +" .hora: " +i);
+					if(agendaComprobacion.isEmpty()){
+						ag.setFecha(fecha);
+						ag.setHora(i);
+						ag.setInstructorVehiculoEspecialidad(ive);
+						ag.setAsistencia(estadoDeAgenda);
+						ag.setClasePagada(false);
+						agendas.add(ag);
+					}else{
+						for(Agenda agFechaHora:agendaComprobacion){
+							if((agFechaHora.getInstructorVehiculoEspecialidad()
+									.getInstructor().getId())!=(ive.getInstructor().getId())){
+								System.out.println("ENTRO AL IF");
+								System.out.println("ComprobacionAgenda: " +agFechaHora.getInstructorVehiculoEspecialidad()
+									.getInstructor().getId());
+								System.out.println("Ive:" +ive.getInstructor().getId());
+								ag.setFecha(fecha);
+								ag.setHora(i);
+								ag.setInstructorVehiculoEspecialidad(ive);
+								ag.setAsistencia(estadoDeAgenda);
+								ag.setClasePagada(false);
+								agendas.add(ag);
+							}
+						}
+					}
+					
+					
+					
 				}
 			}
 		}
 		Long id=null;
+		Integer cantidad = 0;
 		for(Agenda varAgendas:agendas){
 			id = agendaDao.crearAgenda(varAgendas);
+			if(id!=null){
+				cantidad++;
+			}
 		}
-		return id;
+		
+		return (cantidad.equals(agendas.size()));
+		
+	}
+
+
+	@Override
+	public List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora) {
+		return agendaDao.traerAgendaPorFechayHora(fecha,hora);
 	}
 	
 }

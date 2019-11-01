@@ -60,6 +60,7 @@
 			<li class="t-center m-b-13"><a href="${context}/index">Inicio</a></li>
 			<li class="t-center m-b-13"><a href="${context}/agregarVehiculo">Agregar Vehiculo</a></li>
 			<li class="t-center m-b-13"><a href="${context}/agregarCurso">Agregar Curso</a></li>
+			<li class="t-center m-b-13"><a href="${context}/busquedaUsuarios">Buscar Usuarios</a></li>
 			<li class="t-center m-b-13"><a href="${context}/agregarEspecialidad">Agregar Especialidad</a></li>
 			<li class="t-center m-b-13"><a href="${context}/agregarTipoVehiculo">Agregar Tipo de Vehiculo</a></li>
 			<li class="t-center m-b-13"><a href="${context}/crearAgenda">Crear Agenda</a></li>

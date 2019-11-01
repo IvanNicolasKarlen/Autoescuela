@@ -70,10 +70,10 @@
 							<!-- Organizador -->
 							<c:if test="${rol=='Organizador'}">
 								<li><a href="${context}/index">Inicio</a></li>
-								<li><a href="${context}/agregarVehiculo">Agregar Vehiculo</a></li>
 								<li><a href="${context}/agregarCurso">Agregar Curso</a></li>
 								<li><a href="${context}/crearAgenda">Crear Agenda</a></li>
 								<li><a href="${context}/agregarInstructor">Agregar Instructor</a></li>
+								<li><a href="${context}/busquedaUsuarios">Buscar Usuarios</a></li>	
 							</c:if>
 							<!-- Fin organizador- -->
 							</ul>

@@ -61,5 +61,10 @@ public class ServicioCursoImpl implements ServicioCurso{
 		cursoDao.modificarCurso(curso);
 	}
 
+	@Override
+	public List<Curso> traerCursosPorEspecialidad(String especialidad) {
+		return cursoDao.traerCursosPorEspecialidad(especialidad);
+	}
+
 	
 }

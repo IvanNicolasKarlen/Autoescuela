@@ -19,5 +19,7 @@ public interface CursoDao {
 
 	void modificarCurso(Curso curso);
 
+	List<Curso> traerCursosPorEspecialidad(String especialidad);
+
 
 }

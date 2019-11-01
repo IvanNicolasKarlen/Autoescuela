@@ -24,14 +24,14 @@ VALUES	("Camioneta",2),
 insert into vehiculo(patente,modelo,tipoDeVehiculo_id,estadoDeVehiculo_id)
 VALUES	("XYZ-123","Honda 2003",2,1),
 		("FGH-978","Mercedes Benz 4x4",1,1),
+        ("NKJ-978","Mercedes Benz 500x",1,1),
         ("GRF-987","Scooter x32",2,1);
 insert into estadodeagenda(estado,detalle)
 values("Disponible","Puede inscribirse");
-select * from estadodeagenda;
+
 insert into instructor(id)
 VALUES	(60),(70);
-select * from especialidad;
-select * from vehiculo;
+
 select * from instructor;
 insert into instructorvehiculoespecialidad(especialidad_id,instructor_id,vehiculo_id)
 VALUES	(1,60,1),
@@ -39,4 +39,4 @@ VALUES	(1,60,1),
 SELECT * FROM instructorvehiculoespecialidad;
 
 select * from curso;
-select * from agenda;
+select * from agenda as a inner join instructorvehiculoespecialidad as ive on a.instructorvehiculoespecialidad_id=ive.id where instructor_id=71 and a.fecha='02-11-2019' and hora=1000;

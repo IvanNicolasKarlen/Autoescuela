@@ -188,13 +188,27 @@ final Session session = sessionFactory.getCurrentSession();
 		return result;
 	}
 
-	
+	/*******************************O R G A N I Z A D X R *//////////////////////////
 	@Override
 	public Long crearAgenda(Agenda agenda) {
 		final Session sesion = sessionFactory.getCurrentSession();
 			Long id = (Long)sesion.save(agenda);
 		return id;
 
+	}
+
+
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Agenda>) session.createCriteria(Agenda.class)
+								.add(Restrictions.eq("fecha", fecha))
+								.add(Restrictions.eq("hora",hora))
+								.list();
 	}
 	
 	

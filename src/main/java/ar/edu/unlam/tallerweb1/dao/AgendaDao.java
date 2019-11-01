@@ -39,6 +39,9 @@ public interface AgendaDao {
 	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
 
 
+	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
+
+
 	
 	/*******************************************************************/
 }

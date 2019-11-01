@@ -109,7 +109,7 @@
 
 	<!-- Footer -->
 <%@ include file="../../parts/footer.jsp" %> 
-<script src="${context}/js/changeValue.js"></script>
+<script src="${context}/js/mainCande.js"></script>
 	<!-- fin footer  -->
 </body>
 </html>
