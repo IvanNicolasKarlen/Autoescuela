@@ -37,6 +37,5 @@ insert into instructorvehiculoespecialidad(especialidad_id,instructor_id,vehicul
 VALUES	(1,60,1),
 		(2,70,2);
 SELECT * FROM instructorvehiculoespecialidad;
-
+select * from usuario;
 select * from curso;
-select * from agenda as a inner join instructorvehiculoespecialidad as ive on a.instructorvehiculoespecialidad_id=ive.id where instructor_id=71 and a.fecha='02-11-2019' and hora=1000;

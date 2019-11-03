@@ -43,5 +43,5 @@ public interface ServicioAgenda {
 	/********************************************************************/
 	Boolean crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve);
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
-	
+
 }

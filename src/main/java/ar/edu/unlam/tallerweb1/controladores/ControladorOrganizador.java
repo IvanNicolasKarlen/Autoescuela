@@ -22,6 +22,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.TurnosViewModel;
+import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
@@ -343,6 +344,7 @@ public class ControladorOrganizador {
 					if(servicioUsuario.consultarUsuario(user)!=null){
 						model.put("error", "Ya existe un Usuario con esos datos");
 					}else{
+						user.setRol("Instructor");
 						Instructor instructor = new Instructor();
 						instructor.setUsuario(user);
 						user.setInstructor(instructor);
@@ -431,6 +433,9 @@ public class ControladorOrganizador {
 				if(servicioIve.guardarIve(ive)!=null){
 					model.put("mensaje", "Instructor, Vehiculo y Especialidad guardados con éxito");
 					model.put("iveGuardada", true);
+					if(servicioEspecialidad.traerListaDeEspecialidades().size()==servicioIve.traerListaIvePorInstructor(inst).size()){
+						model.put("instructorListo", true);
+					}
 				}else{
 					model.put("error", "Hubo un error al guardar los datos. Por favor, intente nuevamente.");
 				}
@@ -630,5 +635,6 @@ public class ControladorOrganizador {
 	}
 	return new ModelAndView("busquedaUsuariosOrg",model);
 	}
+	
 
 }

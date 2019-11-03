@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -197,40 +198,20 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
 			for(InstructorVehiculoEspecialidad ive:listaIve){
 				for(Integer i=horaC;i<=horaF;i=i+100){
-					Agenda ag = new Agenda();
 					String fecha = date.format(formatter);
-					List<Agenda> agendaComprobacion = agendaDao.traerAgendaPorFechayHora(fecha, i);
-					System.out.println(fecha +" .hora: " +i);
-					if(agendaComprobacion.isEmpty()){
+					if(agendaDao.traerAgendaPorFechaHoraInstructor(fecha, i, ive.getInstructor())==null){
+						Agenda ag = new Agenda();
 						ag.setFecha(fecha);
 						ag.setHora(i);
 						ag.setInstructorVehiculoEspecialidad(ive);
 						ag.setAsistencia(estadoDeAgenda);
 						ag.setClasePagada(false);
 						agendas.add(ag);
-					}else{
-						for(Agenda agFechaHora:agendaComprobacion){
-							if((agFechaHora.getInstructorVehiculoEspecialidad()
-									.getInstructor().getId())!=(ive.getInstructor().getId())){
-								System.out.println("ENTRO AL IF");
-								System.out.println("ComprobacionAgenda: " +agFechaHora.getInstructorVehiculoEspecialidad()
-									.getInstructor().getId());
-								System.out.println("Ive:" +ive.getInstructor().getId());
-								ag.setFecha(fecha);
-								ag.setHora(i);
-								ag.setInstructorVehiculoEspecialidad(ive);
-								ag.setAsistencia(estadoDeAgenda);
-								ag.setClasePagada(false);
-								agendas.add(ag);
-							}
-						}
 					}
-					
-					
-					
 				}
 			}
 		}
+		
 		Long id=null;
 		Integer cantidad = 0;
 		for(Agenda varAgendas:agendas){
@@ -249,5 +230,6 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	public List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora) {
 		return agendaDao.traerAgendaPorFechayHora(fecha,hora);
 	}
-	
+
+
 }

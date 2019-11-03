@@ -50,17 +50,17 @@ public class ServicioEspecialidadImpl implements ServicioEspecialidad {
 		List <Especialidad> especialidadesRetorno = new ArrayList<Especialidad>();
 		for(Especialidad esp:especialidades){
 			for(InstructorVehiculoEspecialidad ive:listaIve){
-				System.out.println("Ive lista:" +ive.getEspecialidad().getTipo());
 				if(!(ive.getEspecialidad().equals(esp))){
 					especialidadesRetorno.add(esp);
-					System.out.println("Especialidad lista:" +esp.getTipo());
 				}
 			}
 		}
+		
 		if(listaIve.isEmpty()){
 			return especialidades;
 		}
-		else {return especialidadesRetorno;
+		else {
+			return especialidadesRetorno;
 		}
 	}
 }

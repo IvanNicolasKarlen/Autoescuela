@@ -15,6 +15,7 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
 
 @Repository("servicioAgendaDao")
 public class AgendaDaoImp implements AgendaDao {
@@ -210,6 +211,26 @@ final Session session = sessionFactory.getCurrentSession();
 								.add(Restrictions.eq("hora",hora))
 								.list();
 	}
+
+
+
+
+
+	@Override
+	public Agenda traerAgendaPorFechaHoraInstructor(String fecha, Integer hora, Instructor instructor) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Agenda) session.createCriteria(Agenda.class)
+						.createAlias("instructorVehiculoEspecialidad", "iveBuscada")
+						.add(Restrictions.eq("fecha", fecha))
+						.add(Restrictions.eq("hora",hora))
+						.add(Restrictions.eq("iveBuscada.instructor", instructor))
+						.uniqueResult();
+	}
+
+
+
+
+
 	
 	
 	/***************************************************************************************/

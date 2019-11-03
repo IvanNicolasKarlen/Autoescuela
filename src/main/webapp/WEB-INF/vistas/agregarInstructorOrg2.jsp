@@ -31,12 +31,14 @@
                 <div class="t-center">
 					<h4 class="t-center text-danger">${mensaje}</h4>
 					<h4 class="t-center text-danger">${error}</h4>
+					<c:if test="${empty instructorListo}">
 					<form method="post" action="${context}/agregarVehiculoEspecialidad">
 						<input name="idIns" value="${idInstructor}" style="display:none"/>
 						<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
 								Agregar Especialidades y Vehiculos</button>
 					</form>
+					</c:if>
 					<c:if test="${iveGuardada==true}">
 						<a href="index">Volver a Inicio</a>
 					</c:if>
