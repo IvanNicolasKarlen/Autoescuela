@@ -41,6 +41,15 @@
 							<!-- Estos se van a mostrar si sos alumno -->
 								<c:if test="${rol=='Alumno'}">
 									<li>
+<<<<<<< HEAD
+									<a href="index">Inicio</a>
+								</li>
+								<li>
+									<a href="listadoCursos">Anotarme</a>
+								</li>
+								<li>
+									<a href="listadoFechas">Mis clases</a>
+=======
 									<a href="${context}/index">Inicio</a>
 								</li>
 								<li>
@@ -48,12 +57,22 @@
 								</li>
 								<li>
 									<a href="${context}/listadoFechas">Mis clases</a>
+>>>>>>> d91836232065313d4af5c21b979648917e9a0719
 								</li>
 								</c:if>
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
 									<li>
+<<<<<<< HEAD
+										<a href="index">Inicio</a>
+									</li>
+									<li>
+										<a href="AlumnosDelInstructor">Mis Alumnos</a>
+									</li>
+									<li>
+										<a href="buscadorDeAlumnos">Buscador de Alumnos</a>
+=======
 										<a href="${context}/index">Inicio</a>
 									</li>
 									<li>
@@ -61,6 +80,7 @@
 									</li>
 									<li>
 										<a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a>
+>>>>>>> d91836232065313d4af5c21b979648917e9a0719
 									</li>
 									
 								</c:if>
@@ -83,11 +103,19 @@
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
+<<<<<<< HEAD
+						<c:if test="${rol!=null}">
+							<a href="cuenta"><b class="text-danger">Mi cuenta</b></a>
+						</c:if>
+						<c:if test="${rol==null}">
+							<a href="login"><b class="text-danger">Ingresar</b></a>
+=======
 						<c:if test="${not empty rol}">
 							<a href="${context}/cuenta"><b class="text-danger">Mi cuenta</b></a>
 						</c:if>
 						<c:if test="${empty rol}">
 							<a href="${context}/login"><b class="text-danger">Ingresar</b></a>
+>>>>>>> d91836232065313d4af5c21b979648917e9a0719
 						</c:if>	
 					<!-- fin del IF -->	
 
