@@ -231,6 +231,20 @@ final Session session = sessionFactory.getCurrentSession();
 
 
 
+	@Override
+	public Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Agenda)session.createCriteria(Agenda.class)
+				.createAlias("inscripcion", "inscripcionBuscada")
+				.add(Restrictions.eq("fecha", fecha))
+				.add(Restrictions.eq("inscripcionBuscada.alumno", alumno))
+				.uniqueResult();
+	}
+
+
+
+
+
 	
 	
 	/***************************************************************************************/

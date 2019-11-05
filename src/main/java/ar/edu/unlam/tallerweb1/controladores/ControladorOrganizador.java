@@ -636,5 +636,29 @@ public class ControladorOrganizador {
 	return new ModelAndView("busquedaUsuariosOrg",model);
 	}
 	
+	@RequestMapping(path="buscarAgendasOrg/{nombreUsuario}")
+	public ModelAndView buscarAgendasDeUsuarios(@PathVariable(value="nombreUsuario")String nombreUser,
+			HttpServletRequest request,
+			@RequestParam(name="fecha", required=false, defaultValue="nada")String fecha){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			Usuario user = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
+			model.put("user", user);
+			List<Agenda> listaAg = new ArrayList<Agenda>();
+			if(fecha.equals("nada")){
+				listaAg= servicioAgenda.traerTodasLasClasesQueEstaAnotado(user.getId());
+			}else{
+				listaAg.add(servicioAgenda.traerAgendaPorFechaYAlumno(user.getAlumno(), fecha));
+			}
+			model.put("listaAgenda", listaAg);
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		
+		return new ModelAndView("buscarAgendasOrg",model);
+	}
+	
 
 }

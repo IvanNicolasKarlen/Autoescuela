@@ -43,6 +43,9 @@ public interface AgendaDao {
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
 
 	Agenda traerAgendaPorFechaHoraInstructor(String fecha, Integer hora, Instructor instructor);
+
+
+	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);
 	
 	/*******************************************************************/
 }

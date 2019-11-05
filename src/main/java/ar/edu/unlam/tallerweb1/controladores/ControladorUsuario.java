@@ -130,6 +130,7 @@ public class ControladorUsuario {
 				}else{
 					user.setRol("Alumno");
 					Alumno alumno = new Alumno();
+					alumno.setUsuario(user);
 					user.setAlumno(alumno);
 					if(servicioUsuario.insertarUsuario(user)!=null){
 						model.put("mensaje", "Usuario creado con exito");

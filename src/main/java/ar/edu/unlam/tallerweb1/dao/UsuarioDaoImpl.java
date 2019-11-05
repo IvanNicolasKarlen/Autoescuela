@@ -97,6 +97,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (List<Usuario>) query.list();
 		
 	}
+
+
+
+	@Override
+	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.createCriteria(Usuario.class)
+						.add(Restrictions.like("nombreDeUsuario", nombreUser)).uniqueResult();
+	}
 	
 	
 	

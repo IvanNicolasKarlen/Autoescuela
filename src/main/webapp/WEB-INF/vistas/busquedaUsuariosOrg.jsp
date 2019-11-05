@@ -78,6 +78,7 @@
 			<th>Apellido</th>
 			<th>DNI</th>
 			<th>Rol</th>
+			<th>Agendas</th>
 			<c:forEach items="${listaUsuarios}" var="lu">
 				<tr>
 					<td>${lu.nombreDeUsuario}</td>
@@ -85,6 +86,8 @@
 					<td>${lu.apellido}</td>
 					<td>${lu.dni}</td>
 					<td>${lu.rol}</td>
+					<td><a href="${context}/buscarAgendasOrg/${lu.nombreDeUsuario}"><i
+									class="fa fa-search"></i></a></td>
 				</tr>
 			</c:forEach>
 		</table>

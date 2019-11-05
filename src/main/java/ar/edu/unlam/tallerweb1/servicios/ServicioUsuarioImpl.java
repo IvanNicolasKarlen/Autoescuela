@@ -50,5 +50,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 			String traer) {
 		return servicioUsuarioDao.traerUsuarios(nombre,apellido,nombreUsuario,dni,traer);
 	}
+
+	@Override
+	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
+		return servicioUsuarioDao.traerUsuarioPorNombreUsuario(nombreUser);
+	}
 	
 }

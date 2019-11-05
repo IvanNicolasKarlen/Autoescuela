@@ -232,4 +232,10 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	}
 
 
+	@Override
+	public Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha) {
+		return agendaDao.traerAgendaPorFechaYAlumno(alumno,fecha);
+	}
+
+	
 }
