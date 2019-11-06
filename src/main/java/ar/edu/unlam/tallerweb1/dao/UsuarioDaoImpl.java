@@ -4,11 +4,15 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -27,22 +31,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Inject
     private SessionFactory sessionFactory;
 
-	/****************************************** INSTRUCTOR **************************************/
-	
-	@Override
-	public List<Usuario> traerAlumnos() {
-		final Session session = sessionFactory.getCurrentSession();
-			return session.createCriteria(Usuario.class)
-			.add(Restrictions.eq("rol", "Alumno"))
-			.setProjection(Projections.projectionList()
-			.add(Projections.distinct(Projections.property("nombreDeUsuario")))
-			)
-			.list();
-		
-		}
-	
-	
-	
+	/****************************************** INSTRUCTOR **************************************/	
 	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
 

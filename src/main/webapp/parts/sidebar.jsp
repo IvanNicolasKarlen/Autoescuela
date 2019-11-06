@@ -48,7 +48,6 @@
 			<!-- Instructor -->
 		<c:if test="${rol=='Instructor'}">
 			<li><a href="index">Inicio</a></li>
-			<li><a href="AlumnosDelInstructor">Mis Alumnos</a></li>
 			<li><a href="buscadorDeAlumnos">Buscador de Alumnos</a></li>
 		</c:if>
 

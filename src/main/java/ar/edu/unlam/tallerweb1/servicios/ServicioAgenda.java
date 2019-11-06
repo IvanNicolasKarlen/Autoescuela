@@ -17,9 +17,10 @@ public interface ServicioAgenda {
 	/******************************INSTRUCTOR******************************/
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
 	List<Agenda> buscarAlumnos(String nombre,String apellido);
+	List<Agenda> traerFechasDisponibles();
 	void updateEstadoDeAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
-	
+
 	/******************************Alumno******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
 

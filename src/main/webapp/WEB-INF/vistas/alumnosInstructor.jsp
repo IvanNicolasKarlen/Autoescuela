@@ -64,6 +64,7 @@
 				<tr class="w3-red">
 					<th class="enc"><center>Nombre</center></th>
 					<th class="enc"><center>Apellido</center></th>	
+					<th class="enc"><center>Dni</center></th>	
 					<th class="enc"><center>Fecha</center></th>	
 					<th class="enc"><center>Hora</center></th>	
 					<th class="enc"><center>Cancelación</center></th>	
@@ -73,13 +74,11 @@
                <c:forEach items="${buscarAlumnos}" var="verFechas" >
 					<tr>
 						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>				
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>		
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.dni}</h3></td>		
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
 						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
 						
-							  
-							
-						<!-- <td><a href="cancelacionDeClases"><b>Cancelar<b></a></td> -->
 						<td><a href="cancelacionDeClases?idAgenda=${verFechas.id}">Cancelar</a></td>
 					</tr>
 			</c:forEach>	
@@ -102,6 +101,9 @@
       <c:set var = "string1" value = "${traerAlumnos}"/>
       <p><b><h5>· Usted tiene en total ${fn:length(string1)} alumnos inscriptos</h5></b></p>
 </c:if>
+
+<H2>${traerAlumnosSize}</H2>
+
     
 					</div>	
 				</div>

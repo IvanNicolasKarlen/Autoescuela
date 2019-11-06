@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -227,6 +228,20 @@ final Session session = sessionFactory.getCurrentSession();
 	public Agenda buscarAgendaPorId(Long idAgenda) {
 		Session session = sessionFactory.getCurrentSession();
 		return (Agenda) session.get(Agenda.class, idAgenda);
+	}
+
+	@Override
+	public List<Agenda> traerFechasDisponibles() {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Agenda.class)
+				.createAlias("estadoDeAgenda", "estadoBuscado")
+				.createAlias("inscripcion", "inscripcionBuscada")
+				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
+						.setProjection(Projections.projectionList()
+								.add(Projections.distinct(Projections.property("inscripcionBuscada.id")))
+								)
+				
+				.list();
 	}
 
 	

@@ -19,6 +19,7 @@ public interface AgendaDao {
 	/*********************** INSTRUCTOR *********************************/
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
 	List<Agenda> buscarAlumnos(String nombre,String apellido);
+	List<Agenda> traerFechasDisponibles();
 	void updateEstadoDeAgenda(Agenda agenda);	
 	Agenda buscarAgendaPorId(Long idAgenda);
 	

@@ -226,6 +226,11 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return agendaDao.buscarAgendaPorId(idAgenda);	
 	}
 
+	@Override
+	public List<Agenda> traerFechasDisponibles() {
+		return agendaDao.traerFechasDisponibles();	
+	}
+
 
 	
 }

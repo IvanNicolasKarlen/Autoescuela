@@ -1,4 +1,10 @@
 package ar.edu.unlam.tallerweb1.controladores;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import ar.edu.unlam.ViewModel.EstadoDeAgendaViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
+import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
@@ -35,7 +41,6 @@ public class ControladorInstructor {
 	
 	@Inject
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
-	
 	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
@@ -60,10 +65,11 @@ public class ControladorInstructor {
 		Long idInstructor = (Long) request.getSession().getAttribute("ID");
 		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(nombre,apellido);
 		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
-		List <Usuario> traerAlumnos = servicioUsuario.traerAlumnos();
+		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles();
+		
 		
 		model.put("listaAgenda", listaAgenda);
-		model.put("traerAlumnos",traerAlumnos);
+		model.put("traerAlumnos",traerAlumnosDisponibles);
 		model.put("buscarAlumnos", buscarAlumnos);
 		model.put("ocultar", "mensaje");
 				
@@ -78,8 +84,8 @@ public class ControladorInstructor {
 	}
 	
 	@RequestMapping(value="/cancelacionDeClases", method = RequestMethod.GET)
-	public ModelAndView cancelarClase (@RequestParam(name="idAgenda") Long idAgenda,
-									   @RequestParam(name="idAgenda") Long idEstadoAgenda,
+	public ModelAndView cancelarClase (@RequestParam(name="idAgenda",required=false) Long idAgenda,
+									   @RequestParam(name="idAgenda",required=false) Long idEstadoAgenda,
 									   HttpServletRequest request) {
 
 		ModelMap model = new ModelMap();
@@ -94,8 +100,49 @@ public class ControladorInstructor {
 		agenda.setEstadoDeAgenda(estadoDeAgenda);
 		servicioAgenda.updateEstadoDeAgenda(agenda);
 		
-		
 		return new ModelAndView ("cancelarClase",model);
 
 	}
-}
+	
+	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
+	public ModelAndView horasTrabajadas () {
+
+		
+		
+		List <Agenda> traerFechasDisponibles = servicioAgenda.traerFechasDisponibles();
+		
+		ModelMap model = new ModelMap ();
+		model.put("traerFechasDisponibles", traerFechasDisponibles);
+		
+		return new ModelAndView ("grafico",model);
+	}
+	
+//	@RequestMapping(value="/seleccionarAlumnoAPuntuar", method = RequestMethod.GET)
+//	public ModelAndView SeleccionarAlumnoAPuntuar (@RequestParam (name="puntaje",required=false) Integer puntaje) {
+//		
+//		ModelMap model = new ModelMap();
+//		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		String fechaComoCadena = sdf.format(new Date());
+//		
+//		List <Agenda> traerAlumnos = servicioAgenda.traerAlumnos(fechaComoCadena);
+//		
+//		model.put("traerAlumnos",traerAlumnos);
+//		model.put("puntaje", puntaje);
+//		
+//	    return new ModelAndView ("SeleccionarAlumnoAPuntuar",model);
+//		
+//	}
+	
+//	@RequestMapping(value="/puntuarAlumnos")
+//	public ModelAndView puntuarAlumnos (
+//										@RequestParam (name="puntaje",required=false) Integer puntaje){
+//		
+//		ModelMap model = new ModelMap();
+//		model.put("puntaje", puntaje);
+//		servicioNotas.guardarNotas(puntaje);
+//		
+//		
+//		return new ModelAndView ("puntuarAlumno",model);
+//	}
+	}
