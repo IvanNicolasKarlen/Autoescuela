@@ -109,7 +109,7 @@ public class ControladorInstructor {
 
 		
 		
-		List <Agenda> traerFechasDisponibles = servicioAgenda.traerFechasDisponibles();
+		List <Agenda> traerFechasDisponibles = servicioAgenda.traerFechas();
 		
 		ModelMap model = new ModelMap ();
 		model.put("traerFechasDisponibles", traerFechasDisponibles);

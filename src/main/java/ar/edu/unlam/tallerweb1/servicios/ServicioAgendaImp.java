@@ -46,7 +46,21 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			agendaDao.updateEstadoDeAgenda(agenda);
 	}
 	
+	@Override
+	public List<Agenda> traerFechas() {
+		return agendaDao.traerFechas();	
+	}
 	
+	@Override
+	public List<Agenda> traerFechasDisponibles() {
+		return agendaDao.traerFechasDisponibles();	
+	}
+
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgenda) {
+		return agendaDao.buscarAgendaPorId(idAgenda);	
+	}
+
 	/********************************* Alumno ********************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
@@ -221,15 +235,9 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return id;
 	}
 
-	@Override
-	public Agenda buscarAgendaPorId(Long idAgenda) {
-		return agendaDao.buscarAgendaPorId(idAgenda);	
-	}
+	
 
-	@Override
-	public List<Agenda> traerFechasDisponibles() {
-		return agendaDao.traerFechasDisponibles();	
-	}
+
 
 
 	

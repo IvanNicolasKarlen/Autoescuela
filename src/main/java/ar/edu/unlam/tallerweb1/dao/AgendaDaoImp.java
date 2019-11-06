@@ -66,7 +66,34 @@ public class AgendaDaoImp implements AgendaDao {
 		final Session session = sessionFactory.getCurrentSession();
 				session.update(agenda);
 }
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgenda) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Agenda) session.get(Agenda.class, idAgenda);
+	}
+
+	@Override
+	public List<Agenda> traerFechasDisponibles() {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Agenda.class)
+				.createAlias("estadoDeAgenda", "estadoBuscado")
+				.createAlias("inscripcion", "inscripcionBuscada")
+				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
+						.setProjection(Projections.projectionList()
+								.add(Projections.distinct(Projections.property("inscripcionBuscada.id")))
+								)
+				
+				.list();
+	}
 	
+	@Override
+	public List<Agenda> traerFechas() {
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Agenda.class)
+				.createAlias("estadoDeAgenda", "estadoBuscado")
+				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
+				.list();
+	}
 	/***************************************Alumno**************************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso) {
@@ -222,31 +249,7 @@ final Session session = sessionFactory.getCurrentSession();
 			Long id = (Long)sesion.save(agenda);
 		return id;
 
-	}
-
-	@Override
-	public Agenda buscarAgendaPorId(Long idAgenda) {
-		Session session = sessionFactory.getCurrentSession();
-		return (Agenda) session.get(Agenda.class, idAgenda);
-	}
-
-	@Override
-	public List<Agenda> traerFechasDisponibles() {
-		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Agenda.class)
-				.createAlias("estadoDeAgenda", "estadoBuscado")
-				.createAlias("inscripcion", "inscripcionBuscada")
-				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
-						.setProjection(Projections.projectionList()
-								.add(Projections.distinct(Projections.property("inscripcionBuscada.id")))
-								)
-				
-				.list();
-	}
-
-	
-	
+	}	
 	/***************************************************************************************/
-	
 
 }
