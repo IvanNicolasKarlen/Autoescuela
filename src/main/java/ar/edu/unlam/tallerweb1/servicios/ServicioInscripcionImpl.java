@@ -152,7 +152,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		{
 			a.setInscripcion(null);
 			a.setClasePagada(null);
-			a.setAsistencia(asistenciaEnEspera);
+			a.setEstadoDeAgenda(asistenciaEnEspera);
 			
 			inscripcionDao.guardarInscripcionEnLaAgenda(a);
 		}

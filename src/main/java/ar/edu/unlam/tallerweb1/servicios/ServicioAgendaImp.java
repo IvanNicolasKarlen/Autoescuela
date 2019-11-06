@@ -204,7 +204,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 						ag.setFecha(fecha);
 						ag.setHora(i);
 						ag.setInstructorVehiculoEspecialidad(ive);
-						ag.setAsistencia(estadoDeAgenda);
+						ag.setEstadoDeAgenda(estadoDeAgenda);
 						ag.setClasePagada(false);
 						agendas.add(ag);
 					}
@@ -235,6 +235,27 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha) {
 		return agendaDao.traerAgendaPorFechaYAlumno(alumno,fecha);
+	}
+
+
+	@Override
+	public List<Agenda> traerTodasLasClasesDeUnAlumno(Long id) {
+		return agendaDao.traerTodasLasClasesDeUnAlumno(id);
+	}
+
+
+	@Override
+	public void modificarAgenda(Agenda agenda) {
+		if(agenda.getEstadoDeAgenda().getEstado().equals("Finalizada")){
+			agenda.setClasePagada(true);
+		}
+		agendaDao.modificarAgenda(agenda);
+	}
+
+
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgenda) {
+		return agendaDao.buscarAgendaPorId(idAgenda);
 	}
 
 	

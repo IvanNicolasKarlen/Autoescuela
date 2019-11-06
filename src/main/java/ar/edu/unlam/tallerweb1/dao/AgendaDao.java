@@ -46,6 +46,15 @@ public interface AgendaDao {
 
 
 	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);
+
+
+	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
+
+
+	void modificarAgenda(Agenda agenda);
+
+
+	Agenda buscarAgendaPorId(Long idAgenda);
 	
 	/*******************************************************************/
 }

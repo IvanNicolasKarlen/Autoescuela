@@ -245,6 +245,40 @@ final Session session = sessionFactory.getCurrentSession();
 
 
 
+	@Override
+	public List<Agenda> traerTodasLasClasesDeUnAlumno(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (List<Agenda>) session.createCriteria(Agenda.class)
+				.createAlias("inscripcion", "inscripcionBuscada")
+				.createAlias("inscripcionBuscada.alumno", "alumnoBuscado")
+				.add(Restrictions.eq("alumnoBuscado.id", id))
+				.list();
+	}
+
+
+
+
+
+	@Override
+	public void modificarAgenda(Agenda agenda) {
+		final Session sesion = sessionFactory.getCurrentSession();
+		sesion.update(agenda);
+	}
+
+
+
+
+
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgenda) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Agenda) session.get(Agenda.class, idAgenda);
+	}
+
+
+
+
+
 	
 	
 	/***************************************************************************************/

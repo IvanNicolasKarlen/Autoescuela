@@ -83,6 +83,19 @@ public class ControladorOrganizador {
 	@Inject
 	private ServicioEstadoInscripcion servicioEstadoInscripcion;
 
+	
+	
+
+
+	public void setServicioCurso(ServicioCurso servicioCurso) {
+		this.servicioCurso = servicioCurso;
+	}
+
+
+	public void setServicioEspecialidad(ServicioEspecialidad servicioEspecialidad) {
+		this.servicioEspecialidad = servicioEspecialidad;
+	}
+
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
@@ -647,11 +660,14 @@ public class ControladorOrganizador {
 			Usuario user = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
 			model.put("user", user);
 			List<Agenda> listaAg = new ArrayList<Agenda>();
+			List<EstadoDeAgenda> listaEstado = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
 			if(fecha.equals("nada")){
-				listaAg= servicioAgenda.traerTodasLasClasesQueEstaAnotado(user.getId());
+				listaAg= servicioAgenda.traerTodasLasClasesDeUnAlumno(user.getId());
 			}else{
 				listaAg.add(servicioAgenda.traerAgendaPorFechaYAlumno(user.getAlumno(), fecha));
+				System.out.println("n/ /n FECHAAAAAAAAA: " +fecha +" /n n/");
 			}
+			model.put("listaEstadosAgenda", listaEstado);
 			model.put("listaAgenda", listaAg);
 		}else{
 			return new ModelAndView("redirect:/index");
@@ -659,6 +675,36 @@ public class ControladorOrganizador {
 		
 		return new ModelAndView("buscarAgendasOrg",model);
 	}
-	
+	@RequestMapping(path="modificarTurnoOrg", method=RequestMethod.POST)
+	public ModelAndView modificarTurnoOrg(HttpServletRequest request,
+			@RequestParam(name="idAgenda")Long idAgenda,
+			@RequestParam(name="estadoAgenda")Long idEstadoAgenda,
+			@RequestParam(name="nombreUser")String nombreUser){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			model.put("rol", rol);
+			Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
+			EstadoDeAgenda estado = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);
+			if(estado!=null||agenda!=null){
+				agenda.setEstadoDeAgenda(estado);
+				servicioAgenda.modificarAgenda(agenda);
+				Agenda agendaMod = servicioAgenda.buscarAgendaPorId(idAgenda);
+				if(agendaMod.getEstadoDeAgenda().equals(estado)){
+					model.put("mensaje","Agenda modificada exitosamente");
+				}else{
+					model.put("error", "No se pudo modificar la agenda");
+				}
+			}else{
+				model.put("error", "Los datos seleccionados no son válidos");
+			}
+			
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		Usuario user = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
+		model.put("user", user);
+		return new ModelAndView("buscarAgendasOrg",model);
+	}
 
 }

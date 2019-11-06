@@ -73,14 +73,6 @@ public class Agenda implements Comparable{
 		this.inscripcion = inscripcion;
 	}
 	
-	
-	public EstadoDeAgenda getAsistencia() {
-		return estadoDeAgenda;
-	}
-
-	public void setAsistencia(EstadoDeAgenda estadoDeAgenda) {
-		this.estadoDeAgenda = estadoDeAgenda;
-	}
 
 	@Override
 	public int compareTo(Object o) {
@@ -98,5 +90,14 @@ public class Agenda implements Comparable{
 	public void setClasePagada(Boolean clasePagada) {
 		this.clasePagada = clasePagada;
 	}
+
+	public EstadoDeAgenda getEstadoDeAgenda() {
+		return estadoDeAgenda;
+	}
+
+	public void setEstadoDeAgenda(EstadoDeAgenda estadoDeAgenda) {
+		this.estadoDeAgenda = estadoDeAgenda;
+	}
+	
 	
 }
