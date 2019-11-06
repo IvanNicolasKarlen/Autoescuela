@@ -101,9 +101,6 @@
       <c:set var = "string1" value = "${traerAlumnos}"/>
       <p><b><h5>· Usted tiene en total ${fn:length(string1)} alumnos inscriptos</h5></b></p>
 </c:if>
-
-<H2>${traerAlumnosSize}</H2>
-
     
 					</div>	
 				</div>

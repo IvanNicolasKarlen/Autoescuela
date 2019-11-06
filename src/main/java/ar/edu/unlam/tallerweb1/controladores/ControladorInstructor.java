@@ -104,45 +104,18 @@ public class ControladorInstructor {
 
 	}
 	
-	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
-	public ModelAndView horasTrabajadas () {
+//	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
+//	public ModelAndView horasTrabajadas () {
+//
+//		
+//		
+//		LocalDate traerFechasDisponibles = servicioAgenda.traerFechas();
+//		
+//		ModelMap model = new ModelMap ();
+//		model.put("traerFechasDisponibles", traerFechasDisponibles);
+//		
+//		return new ModelAndView ("horasTrabajadas",model);
+//	}
+//	
 
-		
-		
-		List <Agenda> traerFechasDisponibles = servicioAgenda.traerFechas();
-		
-		ModelMap model = new ModelMap ();
-		model.put("traerFechasDisponibles", traerFechasDisponibles);
-		
-		return new ModelAndView ("grafico",model);
-	}
-	
-//	@RequestMapping(value="/seleccionarAlumnoAPuntuar", method = RequestMethod.GET)
-//	public ModelAndView SeleccionarAlumnoAPuntuar (@RequestParam (name="puntaje",required=false) Integer puntaje) {
-//		
-//		ModelMap model = new ModelMap();
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String fechaComoCadena = sdf.format(new Date());
-//		
-//		List <Agenda> traerAlumnos = servicioAgenda.traerAlumnos(fechaComoCadena);
-//		
-//		model.put("traerAlumnos",traerAlumnos);
-//		model.put("puntaje", puntaje);
-//		
-//	    return new ModelAndView ("SeleccionarAlumnoAPuntuar",model);
-//		
-//	}
-	
-//	@RequestMapping(value="/puntuarAlumnos")
-//	public ModelAndView puntuarAlumnos (
-//										@RequestParam (name="puntaje",required=false) Integer puntaje){
-//		
-//		ModelMap model = new ModelMap();
-//		model.put("puntaje", puntaje);
-//		servicioNotas.guardarNotas(puntaje);
-//		
-//		
-//		return new ModelAndView ("puntuarAlumno",model);
-//	}
 	}

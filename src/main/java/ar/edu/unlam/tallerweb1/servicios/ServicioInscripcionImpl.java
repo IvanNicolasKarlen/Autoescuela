@@ -148,14 +148,14 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		
 		EstadoDeAgenda asistenciaEnEspera = estadoDeAgendaDao.traigoElEstadoEnEspera();
 		
-		for(Agenda a: misClases)
-		{
-			a.setInscripcion(null);
-			a.setClasePagada(null);
-			a.setAsistencia(asistenciaEnEspera);
-			
-			inscripcionDao.guardarInscripcionEnLaAgenda(a);
-		}
+//		for(Agenda a: misClases)
+//		{
+//			a.setInscripcion(null);
+//			a.setClasePagada(null);
+//			a.setAsistencia(asistenciaEnEspera);
+//			
+//			inscripcionDao.guardarInscripcionEnLaAgenda(a);
+//		}
 		
 		
 		/*

@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -46,10 +47,20 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			agendaDao.updateEstadoDeAgenda(agenda);
 	}
 	
-	@Override
-	public List<Agenda> traerFechas() {
-		return agendaDao.traerFechas();	
-	}
+//	@Override
+//	public LocalDate traerFechas() {
+//		
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		List <Agenda> fechas =  agendaDao.traerFechas();	
+//		
+//		List<LocalDate> fechaComparar = LocalDate.parse(fechas,formatter);
+//		String fechaHoy = LocalDate.now().format(formatter);
+//		LocalDate hoy = LocalDate.parse(fechaHoy, formatter);
+//		
+//		hoy.getMonth();
+//		return hoy;
+//
+//	}
 	
 	@Override
 	public List<Agenda> traerFechasDisponibles() {

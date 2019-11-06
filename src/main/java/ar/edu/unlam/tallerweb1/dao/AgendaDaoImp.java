@@ -86,14 +86,14 @@ public class AgendaDaoImp implements AgendaDao {
 				.list();
 	}
 	
-	@Override
-	public List<Agenda> traerFechas() {
-		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Agenda.class)
-				.createAlias("estadoDeAgenda", "estadoBuscado")
-				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
-				.list();
-	}
+//	@Override
+//	public List<Agenda> traerFechas() {
+//		final Session session = sessionFactory.getCurrentSession();
+//		return session.createCriteria(Agenda.class)
+//				.createAlias("estadoDeAgenda", "estadoBuscado")
+//				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
+//				.list();
+//	}
 	/***************************************Alumno**************************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso) {
