@@ -16,22 +16,23 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 @Entity
-public class Agenda {
+public class Agenda implements Comparable{
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String fecha;
 	private Integer hora;
-	
+	private Boolean clasePagada;
 	@ManyToOne
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private InstructorVehiculoEspecialidad instructorVehiculoEspecialidad ;
 	@ManyToOne
-	private Curso curso;
-	@ManyToOne
-	private Alumno alumno;
+	private Inscripcion inscripcion;
 
+	@ManyToOne
+	private EstadoDeAgenda estadoDeAgenda;
+	
 	public Long getId() {
 		return id;
 	}
@@ -39,8 +40,6 @@ public class Agenda {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public String getFecha() {
 		return fecha;
@@ -65,22 +64,41 @@ public class Agenda {
 	public void setInstructorVehiculoEspecialidad(InstructorVehiculoEspecialidad instructorVehiculoEspecialidad) {
 		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
-
-	public Curso getCurso() {
-		return curso;
+	
+	public Inscripcion getInscripcion() {
+		return inscripcion;
 	}
 
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public Alumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
+	public void setInscripcion(Inscripcion inscripcion) {
+		this.inscripcion = inscripcion;
 	}
 	
+	
+	
 
+	public EstadoDeAgenda getEstadoDeAgenda() {
+		return estadoDeAgenda;
+	}
+
+	public void setEstadoDeAgenda(EstadoDeAgenda estadoDeAgenda) {
+		this.estadoDeAgenda = estadoDeAgenda;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		Agenda a = (Agenda)o;
+		String nombreObjeto = a.getFecha().toLowerCase();
+		String nombreThis = this.getFecha().toLowerCase();
+		return( nombreThis.compareTo( nombreObjeto ) );
+		
+	}
+
+	public Boolean getClasePagada() {
+		return clasePagada;
+	}
+
+	public void setClasePagada(Boolean clasePagada) {
+		this.clasePagada = clasePagada;
+	}
+	
 }

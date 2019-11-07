@@ -85,6 +85,19 @@
 									id="email" path="email"></form:input>
 							</div>
 						</div>
+						
+						
+												<div class="col-md-4">
+							<!-- Date -->
+							<span class="txt9"> Nombre de Usuario </span>
+
+							<div
+								class="wrap-inputdate pos-relative txt10 size12 bo2 bo-rad-10 m-t-3 m-b-23">
+								<form:input class="bo-rad-10 sizefull txt10 p-l-20" type="text"
+									id="nombreDeUsuario" path="nombreDeUsuario"></form:input>
+							</div>
+						</div>
+						
 						<div class="col-md-4">
 							<!-- Date -->
 							<span class="txt9"> Contraseña* </span>

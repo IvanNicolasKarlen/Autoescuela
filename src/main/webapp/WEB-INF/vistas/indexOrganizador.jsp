@@ -7,6 +7,7 @@
 <head>
 	<title>Home</title>
 	<!-- meta, css, vendor, etc. -->
+	<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
 </head>
@@ -27,14 +28,15 @@
 					<div class="wrap-content-slide1 sizefull flex-col-c-m p-l-15 p-r-15 p-t-150 p-b-170">
 						<h2 class="caption2-slide1 tit1 t-center animated visible-false m-b-37" data-appear="fadeInUp">
 							Bienvenidx Organizadxr
+							
 						</h2>
 							<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-								<a href="cursosOrganizador" class="btn1 flex-c-m size1 txt3 trans-0-4">
+								<a href="${context}/verCursos" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Ver cursos
 								</a>
 							</div>
 							<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
-								<a href="agregarCurso" class="btn1 flex-c-m size1 txt3 trans-0-4">
+								<a href="${context}/agregarCurso" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Agregar nuevo curso
 								</a>
 							</div>
@@ -70,7 +72,7 @@
 
 				<div class="col-md-6 p-b-30">
 					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index2.jpg" alt="IMG-OUR">
+						<img src="${context}/images/index2.jpg" alt="IMG-OUR">
 					</div>
 				</div>
 			</div>

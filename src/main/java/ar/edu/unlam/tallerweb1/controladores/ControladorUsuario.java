@@ -76,23 +76,21 @@ public class ControladorUsuario {
 	// El método recibe un objeto Usuario el que tiene los datos ingresados en el form correspondiente y se corresponde con el modelAttribute definido en el
 	// tag form:form
 	@RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request,@RequestParam(name="rol")String rol) {
+	public ModelAndView validarLogin(@ModelAttribute("usuario") Usuario usuario, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
 		// invoca el metodo consultarUsuario del servicio y hace un redirect a la URL /home, esto es, en lugar de enviar a una vista
 		// hace una llamada a otro action a través de la URL correspondiente a ésta
 		Usuario usuarioBuscado = servicioUsuario.consultarUsuario(usuario);
 		if (usuarioBuscado != null) {	
-			if(usuarioBuscado.getRol().equals(rol)){
+			
 				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
 				return new ModelAndView("redirect:/index");
-			}else{
-				model.put("error", "El rol seleccionado no coincide con su usuario");
-			}		
+				
 		} else {
 			// si el usuario no existe agrega un mensaje de error en el modelo.
-			model.put("error", "Usuario, clave o rol incorrecto");
+			model.put("error", "Nombre de Usuario o clave incorrecta");
 		}
 		return new ModelAndView("login", model);
 	}
@@ -116,7 +114,10 @@ public class ControladorUsuario {
 	public ModelAndView validarRegistro(@ModelAttribute("usuario") Usuario user,@RequestParam(name="pass2")String password2){
 		ModelMap model = new ModelMap();
 		if(user.getNombre().isEmpty()||user.getNombre()==null||user.getApellido().isEmpty()||user.getApellido()==null||
-				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null){
+				user.getDni()==null||user.getDni().toString().length()!=8||user.getPassword().isEmpty()||user.getPassword()==null
+			
+				||user.getNombreDeUsuario().isEmpty()||user.getNombreDeUsuario()==null)
+{
 			model.put("error", "Por favor complete los campos obligatorios");
 		}
 		else{
@@ -143,37 +144,6 @@ public class ControladorUsuario {
 		return new ModelAndView("registro",model);
 	}
 
-	
-	
-	@RequestMapping(path = "/fechas")
-	public ModelAndView registrarFecha(){
-		ModelMap model = new ModelMap();
-		Usuario usuario = new Usuario();
-		model.put("usuario",usuario);
-		return new ModelAndView("fechas",model);
-	}
-	
-	
-
-	@RequestMapping(path = "/validarFechas", method = RequestMethod.POST)
-	public ModelAndView validarFechas(@ModelAttribute("clase") @DateTimeFormat(pattern = "dd/MM/yyyy") Date fecha, String hora)
-	{
-		ModelMap modelo = new ModelMap();
-		
-		//servicioRegistrarClases.consultoHorariosDisponibles( fecha, usuario);
-		
-		return new ModelAndView("registrarClases",modelo);
-
-	}
-	
-	
-	@RequestMapping(path = "/horas")
-	public ModelAndView registrarHora(){
-		ModelMap model = new ModelMap();
-		Usuario usuario = new Usuario();
-		model.put("usuario",usuario);
-		return new ModelAndView("horas",model);
-	}
 	@RequestMapping(path = "/cerrarSesion")
 	public ModelAndView cerrarSesion(HttpServletRequest request){
 		request.getSession().removeAttribute("ROL");

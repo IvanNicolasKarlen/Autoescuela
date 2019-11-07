@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Curso {
@@ -24,65 +28,78 @@ public class Curso {
 
 	@ManyToOne
 	private Especialidad especialidad;
-	@OneToMany
-	private List<Agenda> agendas;
-	@OneToMany
-	private List<TablaCursoAlumno> tablasCursoAlumnos;
+
+	@ManyToOne
+	private EstadoDelCurso estadoDelCurso;
 	
-	public String getTitulo() {
-		return titulo;
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+	@OneToMany
+	private List<Inscripcion> inscripciones;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Integer getPrecio() {
 		return precio;
 	}
+
 	public void setPrecio(Integer precio) {
 		this.precio = precio;
 	}
+
 	public Integer getCantClasesPracticas() {
 		return cantClasesPracticas;
 	}
+
 	public void setCantClasesPracticas(Integer cantClasesPracticas) {
 		this.cantClasesPracticas = cantClasesPracticas;
 	}
-	public String titulo() {
+
+	public String getTitulo() {
 		return titulo;
 	}
-	public void titulo(String titulo) {
+
+	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
 	public Especialidad getEspecialidad() {
 		return especialidad;
 	}
+
 	public void setEspecialidad(Especialidad especialidad) {
 		this.especialidad = especialidad;
 	}
-	public List<Agenda> getAgendas() {
-		return agendas;
+
+	public EstadoDelCurso getEstadoDelCurso() {
+		return estadoDelCurso;
 	}
-	public void setAgendas(List<Agenda> agendas) {
-		this.agendas = agendas;
+
+	public void setEstadoDelCurso(EstadoDelCurso estadoDelCurso) {
+		this.estadoDelCurso = estadoDelCurso;
 	}
-	public List<TablaCursoAlumno> getTablasCursoAlumnos() {
-		return tablasCursoAlumnos;
+
+	public List<Inscripcion> getInscripciones() {
+		return inscripciones;
 	}
-	public void setTablasCursoAlumnos(List<TablaCursoAlumno> tablasCursoAlumnos) {
-		this.tablasCursoAlumnos = tablasCursoAlumnos;
+
+	public void setInscripciones(List<Inscripcion> inscripciones) {
+		this.inscripciones = inscripciones;
 	}
+	
+	
 	
 	
 }

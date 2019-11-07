@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 public class Alumno {
 
@@ -16,10 +19,10 @@ public class Alumno {
 	private Long id;
 	
 	@OneToOne
+	@Cascade(value = CascadeType.ALL)
 	private Usuario usuario; 
 	@OneToMany
-	private List<Agenda> agendas;
-
+	private List<Inscripcion> inscripciones;
 	
 	public Long getId() {
 		return id;
@@ -34,14 +37,12 @@ public class Alumno {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public List<Agenda> getAgendas() {
-		return agendas;
+	public List<Inscripcion> getInscripciones() {
+		return inscripciones;
 	}
-	public void setAgendas(List<Agenda> agendas) {
-		this.agendas = agendas;
+	public void setInscripciones(List<Inscripcion> inscripciones) {
+		this.inscripciones = inscripciones;
 	}
-	
-	
-	
+
 	
 }

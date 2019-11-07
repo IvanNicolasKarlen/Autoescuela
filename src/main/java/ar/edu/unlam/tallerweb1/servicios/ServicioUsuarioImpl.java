@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unlam.tallerweb1.dao.UsuarioDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
-import ar.edu.unlam.tallerweb1.modelo.TablaCursoAlumno;
+import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -29,6 +29,12 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Inject
 	private UsuarioDao servicioUsuarioDao;
 
+	/************************************* ORGANIZADOR *******************************/
+	@Override
+	public List<Usuario> traerAlumnos(Long idInstructor) {
+		return servicioUsuarioDao.traerAlumnos(idInstructor);
+	}
+	
 	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
 		return servicioUsuarioDao.consultarUsuario(usuario);
@@ -38,5 +44,16 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
 	
-	
+
+	@Override
+	public List<Usuario> traerUsuarios(String nombre, String apellido, String nombreUsuario, Integer dni,
+			String traer) {
+		return servicioUsuarioDao.traerUsuarios(nombre,apellido,nombreUsuario,dni,traer);
+	}
+
+	@Override
+	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
+		return servicioUsuarioDao.traerUsuarioPorNombreUsuario(nombreUser);
+	}
+	/*************************************************************************/
 }
