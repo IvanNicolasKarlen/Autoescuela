@@ -25,6 +25,7 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("estado", "Disponible"))
 				.list();
 	}
 
