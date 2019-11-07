@@ -31,6 +31,7 @@ import ar.edu.unlam.ViewModel.CursosViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDelCurso;
@@ -195,8 +196,10 @@ public class ControladorAlumno {
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
+			
+			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
 
 			//Datos del curso Elegido
 			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
@@ -287,11 +290,15 @@ public class ControladorAlumno {
 				//Sesion
 				Long idAlumno = (Long) request.getSession().getAttribute("ID");
 				
+				Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+				//Traigo los datos del alumno logueado
+					Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 
 				//Busco el id del estado que dice "Cursando"
 				 EstadoInscripcion estado = servicioEstadoInscripcion.buscarEstadoCursando();//alumnoEstadoDao
 					
-				List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno, estado);//servicioAlumnoInscripcion
+				List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(alumno.getId(), estado);//servicioAlumnoInscripcion
 				
 				if(cursando.isEmpty())
 				{
@@ -300,7 +307,7 @@ public class ControladorAlumno {
 					
 					//Busco el id del estado que dice "Cursando"
 					 EstadoInscripcion estadoCursando = servicioEstadoInscripcion.buscarEstadoCursando();
-					TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(idAlumno, estadoCursando);
+					TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estadoCursando);
 						
 					modelo.put("num", cursando.size());
 					modelo.put("listadoClases", listadoDeClases);
@@ -329,17 +336,21 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 		
 		//Busco el id del estado que dice "Cursando"
 		 EstadoInscripcion inscripcionEstadoCursando = servicioEstadoInscripcion.buscarEstadoCursando();
 		
 		
 		//Traer las clases del filtro elegido Agenda
-		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,idAlumno,inscripcionEstadoCursando);//servicioAlumnoInscripcion
+		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(),inscripcionEstadoCursando);//servicioAlumnoInscripcion
 		
 		
 		//Traer solo los filtros Inscripcion
-		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(idAlumno, inscripcionEstadoCursando);
+		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(alumno.getId(), inscripcionEstadoCursando);
 		
 		/*Por si cambia el id de la url*/
 		if(clasesDeUnSoloCurso.isEmpty())
@@ -379,6 +390,10 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 	
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 		
 		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
 		try{
@@ -389,7 +404,7 @@ public class ControladorAlumno {
 		
 			/*Si no quiere eliminar una clase*/
 			/*Mostramos el curso a eliminar*/
-			Inscripcion alumnoEnCurso = servicioInscripcion.buscarCursoAEliminar(agendasViewModel.getIdCurso(), idAlumno);
+			Inscripcion alumnoEnCurso = servicioInscripcion.buscarCursoAEliminar(agendasViewModel.getIdCurso(), alumno.getId());
 			
 			modelo.put("nombreEspecialidad", alumnoEnCurso);
 			modelo.put("mensaje", "¿Deseas eliminar este curso?");
@@ -405,7 +420,7 @@ public class ControladorAlumno {
 			}catch(NullPointerException e)
 			{
 			//Traer la clase que selecciono para eliminar
-			Agenda agenda = servicioAgenda.traerClaseQueQuiereEliminar(agendasViewModel.getIdAgendaSeleccionada(),idAlumno);
+			Agenda agenda = servicioAgenda.traerClaseQueQuiereEliminar(agendasViewModel.getIdAgendaSeleccionada(),alumno.getId());
 			
 			modelo.put("listadoClases", agendasViewModel.getIdAgendas());
 			modelo.put("curso", agendasViewModel.getIdCurso());
@@ -429,6 +444,10 @@ public class ControladorAlumno {
 		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+		
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
 
 
 		try{
@@ -439,7 +458,7 @@ public class ControladorAlumno {
 				{
 					
 					
-				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(idAlumno, agendasViewModel.getIdEspecialidad());	
+				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(alumno.getId(), agendasViewModel.getIdEspecialidad());	
 					
 				
 				modelo.put("mensaje", "¿Estas seguro?");
@@ -470,6 +489,10 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 		
 		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
 		try{
@@ -478,7 +501,7 @@ public class ControladorAlumno {
 		
 		}catch(NullPointerException e){
 		
-			servicioInscripcion.eliminarInscripcionDelAlumnoYSusClasesDelCurso(agendasViewModel.getIdCurso(),idAlumno);
+			servicioInscripcion.eliminarInscripcionDelAlumnoYSusClasesDelCurso(agendasViewModel.getIdCurso(),alumno.getId());
 			modelo.put("mensaje", "Se te ha eliminado del curso correctamente");
 		}
 		
@@ -491,7 +514,7 @@ public class ControladorAlumno {
 		}catch(NullPointerException e){
 			
 			//Eliminar esta clase
-			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),idAlumno);
+			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),alumno.getId());
 			 modelo.put("mensaje", "Se ha eliminado la clase seleccionada correctamente");
 		}
 		
@@ -516,7 +539,10 @@ public class ControladorAlumno {
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 			
-			
+			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+			//Traigo los datos del alumno logueado
+				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 			
 			try{
 				
@@ -524,7 +550,7 @@ public class ControladorAlumno {
 			
 			}catch(NullPointerException e){
 			
-			servicioInscripcion.finalizarCursoDelAlumno(agendasViewModel.getIdEspecialidad(),idAlumno);
+			servicioInscripcion.finalizarCursoDelAlumno(agendasViewModel.getIdEspecialidad(),alumno.getId());
 			modelo.put("mensaje", "Has finalizado el curso de manera exitosa");
 				
 			}
@@ -548,9 +574,14 @@ public class ControladorAlumno {
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 			
+			
+			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+			//Traigo los datos del alumno logueado
+				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 			EstadoInscripcion finalizado = servicioEstadoInscripcion.buscarEstadoFinalizado();
 			
-			List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno, finalizado);//servicioAlumnoInscripcion
+			List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(alumno.getId(), finalizado);//servicioAlumnoInscripcion
 			
 			if(cursando.isEmpty())
 			{
@@ -559,7 +590,7 @@ public class ControladorAlumno {
 				
 				//Busco el id del estado que dice "Finalizado"
 				 EstadoInscripcion estado = servicioEstadoInscripcion.buscarEstadoFinalizado();
-				TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(idAlumno, estado);
+				TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estado);
 					
 				modelo.put("num", cursando.size());
 				modelo.put("listadoClases", listadoDeClases);
@@ -591,19 +622,23 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+
 		
 		//Busco el id del estado que dice "Finalizado"
 		 EstadoInscripcion estadoFinalizado = servicioEstadoInscripcion.buscarEstadoFinalizado();
 		
 		
 		//Traer las clases del filtro elegido Agenda
-		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,idAlumno, estadoFinalizado);//servicioAlumnoInscripcion
+		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(), estadoFinalizado);//servicioAlumnoInscripcion
 		
 		
 		
 		
 		//Traer solo los filtros Inscripcion
-		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(idAlumno,estadoFinalizado);
+		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(alumno.getId(),estadoFinalizado);
 		
 		/*Por si cambia el id de la url*/
 		if(clasesDeUnSoloCurso.isEmpty())
@@ -646,13 +681,14 @@ public class ControladorAlumno {
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+			//Traigo los datos del alumno logueado
+				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
 
 			//Datos del curso Elegido
 			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
-			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
+			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), curso);
 							
 	if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 		{
@@ -740,13 +776,14 @@ public class ControladorAlumno {
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+			//Traigo los datos del alumno logueado
+				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
 
 			//Datos del curso Elegido
 			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
-			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
+			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), curso);
 							
 	if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 		{
@@ -840,13 +877,14 @@ public ModelAndView modificarAgenda(
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 	
-	//Traigo los datos del alumno logueado
-		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
+		//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
 
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 		
-		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
+		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), curso);
 						
 if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 	{

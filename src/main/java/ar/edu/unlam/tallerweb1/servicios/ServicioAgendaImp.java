@@ -104,7 +104,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 				 //LocalDate agendas = LocalDate.parse(a.getFecha());
 				 
 				 
-				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
 				 System.out.println("Fecha de Agenda");		 
 				 System.out.println(localDate);
