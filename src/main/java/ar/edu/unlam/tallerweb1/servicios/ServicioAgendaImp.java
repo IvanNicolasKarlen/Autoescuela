@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,57 +40,20 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Inject
 	private EstadoDeAgendaDao estadoDeAgendaDao;
 	
-	/**************************INSTRUCTOR*******************************/
-
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 	}
 	
-	@Override
-	public List<Agenda> buscarAlumnos(String nombre,String apellido) {
-			return agendaDao.buscarAlumnos(nombre,apellido);
-}
 	
-	@Override
-	public void updateEstadoDeAgenda(Agenda agenda) {
-			agendaDao.updateEstadoDeAgenda(agenda);
-	}
-	
-	@Override
-	public List<Agenda> traerFechasDisponibles() {
-		return agendaDao.traerFechasDisponibles();	
-	}
 	/********************************* Alumno ********************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
 
-		
-//		LocalDate hoy = LocalDate.now();
-//		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-//		 String fechaDeHoy = hoy.format(formatter);
-//			//Guardo las agendas mayores o iguales a hoy
-//		for(Agenda a: agendasAsc)
-//		{
-//			//Parseo la fecha
-//			 LocalDate agendas = LocalDate.parse(a.getFecha());
-//			 LocalDate hoy = LocalDate.now();
-//			 TreeSet<LocalDate> listaClases = new TreeSet<LocalDate>();
-//			 
-//			 
-//			 List<String> horasString = new ArrayList<String>();
-//			 
-//			 if(hoy.getDayOfMonth() <= agendas.getDayOfMonth() && hoy.getYear() < agendas.getYear())
-//			 {
-//				 listaClases.add(agendas);
-//			 
-//				 
-//			 }
-	
 		 EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
 		 TreeSet<Agenda> agendasSinDuplicados= agendaDao.traerAgendasConFechasNoRepetidas(Curso, disponible);
 		
-			LocalDate hoy = LocalDate.now();
+		LocalDate hoy = LocalDate.now();
 		 TreeSet<Agenda> listaClases = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
 			 
 		 System.out.println("Fecha de hoy:");
@@ -97,18 +61,19 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			 
 
 		
-			 //Guardo las agendas mayores o iguales a hoy
+			 //Guardo las agendas mayores a hoy
 			for(Agenda a: agendasSinDuplicados)
 			{
-				//Parseo la fecha
-				 //LocalDate agendas = LocalDate.parse(a.getFecha());
+				
+				 //validar que las fechas sean mayores a la fecha de hoy
 				 
 				 
 				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
+				 LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
 				 System.out.println("Fecha de Agenda");		 
 				 System.out.println(localDate);
 				
+				 
 				 if(localDate.isAfter(hoy))
 		        	{
 		        		listaClases.add(a);
@@ -130,8 +95,6 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		
 			
 		return agendasAsc;
-			 
-			//return agendasAsc;
 
 	}
 	
@@ -183,10 +146,12 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	
 	
 	@Override
-	public TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado) {
+	public TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno) {
 		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
 		
-		return agendaDao.traerTodasLasClasesQueEstaAnotado(idAlumno, estado);
+		return agendaDao.traerTodasLasClasesQueEstaAnotado(idAlumno);
 	}
 	
 	
@@ -210,9 +175,9 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return listaAgregarInscripcion;
 	}
 	@Override
-	public TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno , EstadoInscripcion estado) {
+	public TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno) {
 		
-		return agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad( idEspecialidad, idAlumno, estado);
+		return agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad, idAlumno);
 	}
 	@Override
 	public Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno) {
@@ -231,7 +196,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	
 		 EstadoDeAgenda canceladaPorAlumno = estadoDeAgendaDao.traigoElEstadoCanceladaPorAlumno();
 		 
-		//agenda.setInscripcion(null);
+		agenda.setInscripcion(null);
 		agenda.setEstadoDeAgenda(canceladaPorAlumno);
 		
 		//Eliminar esta clase
@@ -273,16 +238,74 @@ public class ServicioAgendaImp implements ServicioAgenda{
 
 
 	@Override
-	public List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas) 
+	public TreeSet<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas) 
 	{
 
-		List<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
-		for(Long idAgenda: idAgendas)
-		{
-			agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
-		}
-	
-		return agen ;
+//		List<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
+//	
+//		System.out.println("AGENNNNNNNNDA"+agen.size());
+//		
+//		for(Long idAgenda: idAgendas)
+//		{
+//			//Elimino las agendas que ya habia seleccionado antes
+//			agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
+//		}
+//	
+//		System.out.println("Tamaño de agenda retornada: "+agen);
+//		return agen ;
+//		
+//		
+		
+		
+		
+		 EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
+		 TreeSet<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);		
+	   	 LocalDate hoy = LocalDate.now();
+		 TreeSet<Agenda> listaClases = new TreeSet<Agenda>();
+			 
+		 System.out.println("Fecha de hoy:");
+		 System.out.println(hoy);
+			 
+
+		 for(Long idAgenda: idAgendas)
+			{
+				//Elimino las agendas que ya habia seleccionado antes
+				agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
+			}
+		 
+		 
+		
+			 //Guardo las agendas mayores a hoy
+			for(Agenda a: agen)
+			{
+				
+				 //validar que las fechas sean mayores a la fecha de hoy
+				 
+				 
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				 LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
+				 System.out.println("Fecha de Agenda");		 
+				 System.out.println(localDate);
+				
+				 if(localDate.isAfter(hoy))
+		        	{
+		        		listaClases.add(a);
+
+						 System.out.println("Fecha Guardada");
+						 System.out.println(a.getFecha());
+		        	}
+		
+				 	 
+			}
+			
+			
+				
+		
+			
+		return listaClases;
+		
+		
+		
 	}
 
 
@@ -292,76 +315,51 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		idAgendas.add(idAgendaSeleccionada);
 		return idAgendas;
 	}
-/*********************************o r g a n i z a d x r *************************/
 	
-	public Boolean crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
+	public Long crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve){
 		List <Agenda> agendas = new ArrayList<Agenda>();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		for(LocalDate date = desde; date.isBefore(hasta); date = date.plusDays(1)){
 			for(InstructorVehiculoEspecialidad ive:listaIve){
 				for(Integer i=horaC;i<=horaF;i=i+100){
-					String fecha = date.format(formatter);
-					if(agendaDao.traerAgendaPorFechaHoraInstructor(fecha, i, ive.getInstructor())==null){
-						Agenda ag = new Agenda();
-						ag.setFecha(fecha);
-						ag.setHora(i);
-						ag.setInstructorVehiculoEspecialidad(ive);
-						ag.setEstadoDeAgenda(estadoDeAgenda);
-						ag.setClasePagada(false);
-						agendas.add(ag);
-					}
+					Agenda ag = new Agenda();
+					ag.setFecha(date.toString());
+					ag.setHora(i);
+					ag.setInstructorVehiculoEspecialidad(ive);
+					ag.setEstadoDeAgenda(estadoDeAgenda);
+					ag.setClasePagada(false);
+					agendas.add(ag);
 				}
 			}
 		}
-		
 		Long id=null;
-		Integer cantidad = 0;
 		for(Agenda varAgendas:agendas){
 			id = agendaDao.crearAgenda(varAgendas);
-			if(id!=null){
-				cantidad++;
-			}
 		}
+		return id;
+	}
+
+
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgendaEditar) {
+		return agendaDao.buscarAgendaPorId(idAgendaEditar);
+	}
+
+
+	@Override
+	public Boolean verificarUnaAgendaSePuedaEliminar(Long idAgendaSeleccionada) {
+		Agenda agenda=agendaDao.buscarAgendaPorId(idAgendaSeleccionada); 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaComparar = LocalDate.parse(agenda.getFecha(),formatter);
+		String fechaHoy = LocalDate.now().format(formatter);
+		LocalDate hoy = LocalDate.parse(fechaHoy, formatter);
 		
-		return (cantidad.equals(agendas.size()));
-		
-	}
-
-
-	@Override
-	public List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora) {
-		return agendaDao.traerAgendaPorFechayHora(fecha,hora);
-	}
-
-
-	@Override
-	public Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha) {
-		return agendaDao.traerAgendaPorFechaYAlumno(alumno,fecha);
-	}
-
-
-	@Override
-	public List<Agenda> traerTodasLasClasesDeUnAlumno(Long id) {
-		return agendaDao.traerTodasLasClasesDeUnAlumno(id);
-	}
-
-
-	@Override
-	public void modificarAgenda(Agenda agenda) {
-		if(agenda.getEstadoDeAgenda().getEstado().equals("Finalizada")){
-			agenda.setClasePagada(true);
+		Long diferenciaDias = ChronoUnit.DAYS.between(hoy, fechaComparar);
+	
+		if(diferenciaDias>2){
+			return true;
+		}else{
+			return false;
 		}
-		agendaDao.modificarAgenda(agenda);
 	}
-
-
-	@Override
-	public Agenda buscarAgendaPorId(Long idAgenda) {
-		return agendaDao.buscarAgendaPorId(idAgenda);
-	}
-
 	
-
-	
-
 }

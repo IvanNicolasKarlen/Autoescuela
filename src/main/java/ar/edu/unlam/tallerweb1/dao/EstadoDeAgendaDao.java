@@ -18,8 +18,5 @@ public interface EstadoDeAgendaDao {
 	EstadoDeAgenda buscarEstadoOcupado();
 	EstadoDeAgenda traigoElEstadoCanceladaPorAlumno();
 	EstadoDeAgenda traigoElEstadoDisponible();
-	EstadoDeAgenda traigoElEstadoFinalizado();
-	EstadoDeAgenda traigoElEstadoAbandonada();
-	EstadoDeAgenda traigoElEstadoOcupada();
 
 }

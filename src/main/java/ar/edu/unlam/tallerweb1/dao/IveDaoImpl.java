@@ -56,16 +56,4 @@ public class IveDaoImpl implements IveDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (InstructorVehiculoEspecialidad) session.get(InstructorVehiculoEspecialidad.class, idIVE);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<InstructorVehiculoEspecialidad> traerIvePorInstructor(Instructor ins) {
-		final Session session = sessionFactory.getCurrentSession();
-		return (List<InstructorVehiculoEspecialidad>) session.createCriteria(InstructorVehiculoEspecialidad.class)
-				.add(Restrictions.eq("instructor", ins)).list();
-	}
-
-
-
-
 }

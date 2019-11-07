@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 @Entity
 public class Alumno {
 
@@ -19,7 +16,6 @@ public class Alumno {
 	private Long id;
 	
 	@OneToOne
-	@Cascade(value = CascadeType.ALL)
 	private Usuario usuario; 
 	@OneToMany
 	private List<Inscripcion> inscripciones;

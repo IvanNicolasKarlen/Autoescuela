@@ -43,17 +43,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Long insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
-	
-
-	@Override
-	public List<Usuario> traerUsuarios(String nombre, String apellido, String nombreUsuario, Integer dni,
-			String traer) {
-		return servicioUsuarioDao.traerUsuarios(nombre,apellido,nombreUsuario,dni,traer);
-	}
-
-	@Override
-	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
-		return servicioUsuarioDao.traerUsuarioPorNombreUsuario(nombreUser);
-	}
 	/*************************************************************************/
+	
 }

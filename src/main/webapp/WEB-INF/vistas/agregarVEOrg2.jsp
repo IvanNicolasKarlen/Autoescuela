@@ -5,8 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
-<title>Agregar Vehiculo - Instructor</title>
+<title>Curso</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -28,7 +27,7 @@
 				<div class="t-center">
 					<hr>
 					<hr>
-					<form action="${context}/agregarIVE" method="post">
+					<form action="agregarIVE" method="post">
 						
 						<select name="idVehiculo">
 						<c:forEach items="${listaVehiculos}" var="lv">

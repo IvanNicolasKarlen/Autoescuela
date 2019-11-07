@@ -22,14 +22,8 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">	
 	
-		<h1>id cursoooo ${curso2}</h1>
-<h1>Cantidad de agendas ${agendas2size}</h1>
-
 
 <c:forEach items="${agendas2}" var="a">
-
-<h1>id agenda ${a}</h1>
-
 
 </c:forEach>
 

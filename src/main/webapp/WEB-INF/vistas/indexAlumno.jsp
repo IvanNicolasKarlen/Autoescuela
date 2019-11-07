@@ -100,38 +100,6 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			<div class="row p-t-170">
-				<div class="col-md-6 p-t-45 p-b-30 ">
-					<div class="wrap-text-welcome t-center">
-						
-						<span class="tit2 t-center">
-							¿Donde veo todo lo que ya cursé?
-						</span>
-						<h3 class="tit3 t-center m-b-35 m-t-5">
-							Historial de Clases
-						</h3>
-
-						<p class="t-center m-b-22 size3 m-l-r-auto">
-							Dirigite a nuestro historial para llevar un control sobre los cursos ya realizados.
-						</p>
-
-						<a href="historial" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					Ver Historial
-				</a>
-					</div>
-				</div>
-
-				<div class="col-md-6 p-b-30">
-					<div class="wrap-pic-welcome size2 bo-rad-10 hov-img-zoom m-l-r-auto">
-						<img src="images/index8.jpg" alt="IMG-OUR">
-					</div>
-				</div>
-			</div>
-			
-			
-			
 		</div>
 	</section>
 	<!-- Footer -->

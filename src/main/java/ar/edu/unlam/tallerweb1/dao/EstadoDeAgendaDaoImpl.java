@@ -79,39 +79,6 @@ final Session session = sessionFactory.getCurrentSession();
 				
 		return a;
 	}
-
-	@Override
-	public EstadoDeAgenda traigoElEstadoFinalizado() {
-final Session session = sessionFactory.getCurrentSession();
-		
-		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("estado","Finalizado"))
-				.uniqueResult();
-				
-		return a;
-	}
-
-	@Override
-	public EstadoDeAgenda traigoElEstadoAbandonada() {
-final Session session = sessionFactory.getCurrentSession();
-		
-		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("estado","Abandonada"))
-				.uniqueResult();
-				
-		return a;
-	}
-
-	@Override
-	public EstadoDeAgenda traigoElEstadoOcupada() {
-final Session session = sessionFactory.getCurrentSession();
-		
-		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("estado","Ocupada"))
-				.uniqueResult();
-				
-		return a;
-	}
 	
 	
 	

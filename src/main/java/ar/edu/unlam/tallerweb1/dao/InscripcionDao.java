@@ -33,7 +33,8 @@ public interface InscripcionDao {
 
 	Inscripcion cursoQueQuieroEliminar(Long idCurso, Long idAlumno);
 
-	Inscripcion buscarInscripcionAEliminar( Long idAlumno, Long idInscripcion, EstadoInscripcion estado);
+	
+
 	
 	
 	/****************************************************************/

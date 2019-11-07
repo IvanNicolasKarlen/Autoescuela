@@ -56,22 +56,6 @@ public class CursoDaoImpl implements CursoDao {
 		session.delete(curso);
 	}
 
-	@Override
-	public void modificarCurso(Curso curso) {
-		final Session session = sessionFactory.getCurrentSession();
-		session.update(curso);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Curso> traerCursosPorEspecialidad(String especialidad) {
-		final Session session = sessionFactory.getCurrentSession();
-		return (List<Curso>) session.createCriteria(Curso.class)
-							.createAlias("especialidad", "especialidadBuscada")
-							.add(Restrictions.like("especialidadBuscada.tipo", especialidad))
-							.list();
-	}
-
 	
 	
 	

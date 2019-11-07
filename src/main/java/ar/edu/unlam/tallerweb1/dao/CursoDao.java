@@ -17,8 +17,5 @@ public interface CursoDao {
 	
 	void eliminarCurso(Curso curso);
 
-	void modificarCurso(Curso curso);
-
-	List<Curso> traerCursosPorEspecialidad(String especialidad);
 
 }
