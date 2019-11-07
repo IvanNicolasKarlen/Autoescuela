@@ -46,14 +46,14 @@ select * from instructorvehiculoespecialidad;
 
 
  Insert into estadodeagenda(estado) 
- values("Disponible"), /*1*/
+ values/*("Disponible"), 1*/
  ("Ocupada"),/*2*/
  ("Cancelado por Alumno"),/*3*/
  ("Cancelado por Instructor"),/*4*/
  ("Cancelado por Organizador"),/*5*/
  ("Finalizado"),/*6*/
- ("Clase perdida");/*7*/
- 
+ ("Clase perdida"),/*7*/
+ ("Abandonada");
  
  /*select * from agenda
  update agenda set estadoDeAgenda_id=6 where id=9 */
@@ -97,14 +97,16 @@ Insert into curso (
 /*Update tablacursoalumno set estado= "Finalizado" where id=1;*/
 
 Insert into agenda (fecha, hora,estadodeagenda_id,instructorvehiculoespecialidad_id) 
-values ("01/09/2019", 1800,1,1),
-("03/11/2019", 1300,1,1),
-("04/11/2019", 1200,1,2),
-("04/11/2019", 1000,1,1),
-("05/10/2019", 1600,1,1),
-("06/11/2019", 0900,1,1),
-("07/11/2019", 0900,1,2),
-("08/11/2019", 0900,1,2);
+values 
+
+("08/11/2019", 0900,1,1),
+("09/11/2019", 0900,1,2),
+("10/11/2019", 0900,1,2),
+("12/11/2019", 0900,1,1),
+("13/11/2019", 0900,1,1),
+("14/11/2019", 0900,1,1),
+("15/11/2019", 0900,1,2),
+("16/11/2019", 0900,1,2);
 
 select * from agenda;
 select * from inscripcion;
@@ -117,3 +119,4 @@ select * from inscripcion;
 ("2019/09/23", 0900,1,1),
 ("2019/09/24", 0900,1,2),
 ("2019/09/25", 0900,1,2);*/
+
