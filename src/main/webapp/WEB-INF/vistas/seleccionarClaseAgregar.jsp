@@ -14,7 +14,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Contact</title>
+	<title>Home</title>
+	<!-- meta, css, vendor, etc. -->
+<%@ include file="../../parts/meta.jsp" %> 
+	<!-- fin del meta, css, vendor, etc -->
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
@@ -72,70 +76,63 @@
 		<h4 class="tit2 t-center m-b-35 m-t-2">
                  <label>${mensaje}</label>
 					</h4>
-							 
+		 
 		
 <c:set var = "i" value = "0" ></c:set>
 
 
-<form:form  method="POST" modelAttribute="agendasViewModel" action="modificarAgenda">
+<form:form  method="POST" modelAttribute="agendasViewModel" action="agregarClase">
+<input  name="idCurso"  value="${cursoSeleccionado.id}"></input>
+<input name="idInscripcion" type="hidden" value="${inscripcion.id}"></input>
+		
 
-<input  name="idCurso"  value="${cursoSeleccionado.id}">curso</input>
-
-<input  name="idAgendaEditar"  value="${agen}">id agenda a editar</input>
 
 <div class="row">
-	<c:forEach items="${agendasAlternativas}" var="al">
+	<c:forEach items="${listaAgendas}" var="la">
+	
+
+	
 		<div class="col-md-4 ">
+		<input name="idAgendas[${la.id}]" value="${la.id}"></input>
 		
+		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${la.inscripcion.curso.especialidad.tipo}</h2>
 		 <c:set var="i" value="${ i+1}"/>
-		 		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Agenda <c:out value="${i}"/> </h2>
-		 
-				<p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${al.fecha}<br>
-				<b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora}<br>
-				<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-				<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
+				<h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
+				<p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
+				<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
+				<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
+				<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 				<br> 
 				<!-- editar -->  
+
+<div class="card-body">
+  <input type="radio" name="idAgendaEditar" value="${la.id}">
+					ELEGIR
+  </input>
+  </div>	
 		
-		<div class="card-body">
-			  <input type="radio" name="idAgendaSeleccionada" value="${al.id}">
-								ELEGIR
-			  </input>
-		 </div>
-		
+			
 </div>
 </c:forEach>
+</div>
 
 
-<c:forEach items="${listaAgendas}" var="id">
-			<div class="col-md-4 ">
-			<input name="idAgendas[${id}]" type="hidden" value="${id}"></input>
-			</div>
-</c:forEach>
-
+<button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+	         AGREGAR 
+	  </button>	
+		
+			
 </div>	
 
 	</br>
 	</br>
-<div class="card-body">
-  <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					MODIFICAR
-  </button>
-  </div>
-	
-	
-  		
-  		<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+
+	<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					CANCELAR
 	</a>
   		
   		</form:form>
-  		
-  		
-  		
-  		  		
-  		
-  		
+	
 	</section>
 	
 	

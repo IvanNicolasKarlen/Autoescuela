@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
-import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 
 @Repository
@@ -18,20 +17,7 @@ public class VehiculoDaoImpl implements VehiculoDao {
 	@Inject
 	private SessionFactory sessionFactory;
 
-	/******************************************INSTRUCTOR**************************************/
-	@Override
-	public List<EstadoDeVehiculo> traerVehiculos(Long idAgenda) {
-		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(EstadoDeVehiculo.class)
-				.add(Restrictions.like("estadoActual", "averiado"))
-				.createAlias("vehiculos", "vehiculoBuscado")
-				.createAlias("vehiculoBuscado.ives", "ivesBuscadas")
-				.createAlias("ivesBuscadas.agendas", "agendasBuscadas")
-				.add(Restrictions.eq("agendasBuscadas.id", idAgenda))
-				
-				.list();
-				
-	}
+	
 	/******************************************ORGANIZADOR**************************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {

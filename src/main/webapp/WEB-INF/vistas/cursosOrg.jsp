@@ -5,8 +5,6 @@
 <html lang="en">
 
 <head>
-<c:set var="context" value="${pageContext.request.contextPath}">
-</c:set>
 <title>Ver Cursos</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
@@ -24,63 +22,40 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 
-	<!-- En este h4 se muestra el error si es que hay alguno --> <section
-		class="section-reservation bg1-pattern p-t-100 p-b-113">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 p-b-30">
-				<h4 class="t-center text-info">${mensaje}</h4>
-				<h4 class="t-center text-danger">${error}</h4>
-				<div class="col-md-4 pull-right">
-					<div class="sidebar2 p-t-80 p-b-80 p-l-20 p-l-0-md p-t-0-md">
-						<div class="search-sidebar2 size12 bo2 pos-relative">
-							<form method="get" action="${context}/verCursos">
-								<select name="espFiltro" class="selection-1">
-									<c:forEach items="${listaesp}" var="les">
-										<option class="input-search-sidebar2 txt10 p-l-20 p-r-55">${les.tipo}</option>
-									</c:forEach>
-									<option class="input-search-sidebar2 txt10 p-l-20 p-r-55"
-										value="">Reiniciar</option>
-								</select>
-								<div class="text-right" style="margin-top: 10px">
-									<button class="btn3 size13 txt11 trans-0-4">Filtrar</button>
-								</div>
-
-							</form>
+	<!-- En este h4 se muestra el error si es que hay alguno -->
+		
+		<section class="section-reservation bg1-pattern p-t-100 p-b-113">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 p-b-30">
+						<div class="t-center">
+						<h4 class="t-center text-danger">${mensaje}</h4>
+						<table class="table table-striped">
+							<th>Nombre</th>
+							<th>Estado</th>
+							<th>Descripcion</th>
+							<th>Precio</th>
+							<th>Modificar</th>
+							<th>Eliminar</th>
+							<c:forEach items="${listaCursos}" var="lc">
+							<tr>
+									<td>${lc.titulo}</td>
+									<td>${lc.estadoDelCurso.estadoDelCurso}</td>
+									<td>${lc.descripcion}</td>
+									<td>$${lc.precio}</td>
+									<td><a href="modificarCurso/${lc.id}"><i class="fa fa-edit"></i></a></td>
+									<td><a href="eliminarCurso/${lc.id}"><i class="fa fa-trash"></i></a></td>
+							</tr>
+							</c:forEach>	
+						</table>
+						
+						<a href="agregarCurso">Agregar nuevo Curso</a>
 						</div>
 					</div>
 				</div>
-
-				<table class="table table-striped">
-					<th>Nombre</th>
-					<th>Estado</th>
-					<th>Descripcion</th>
-					<th>Precio</th>
-					<th>Clases</th>
-					<th>Especialidad</th>
-					<th>Modificar</th>
-					<th>Eliminar</th>
-					<c:forEach items="${listaCursos}" var="lc">
-						<tr>
-							<td>${lc.titulo}</td>
-							<td>${lc.estadoDelCurso.estadoDelCurso}</td>
-							<td>${lc.descripcion}</td>
-							<td>$${lc.precio}</td>
-							<td>${lc.cantClasesPracticas}</td>
-							<td>${lc.especialidad.tipo}</td>
-							<td><a href="${context}/modificarCurso/${lc.id}"><i
-									class="fa fa-edit"></i></a></td>
-							<td><a href="${context}/eliminarCurso/${lc.id}"><i
-									class="fa fa-trash"></i></a></td>
-						</tr>
-					</c:forEach>
-				</table>
-
-				<a href="${context}/agregarCurso">Agregar nuevo Curso</a>
 			</div>
-		</div>
-	</div>
-	</section> </section>
+		</section> 
+	</section>
 
 
 

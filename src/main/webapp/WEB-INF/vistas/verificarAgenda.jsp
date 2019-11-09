@@ -4,8 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<title>Agenda</title>
-<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
+<head>
+<title>Home</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -33,7 +33,7 @@
 					
 	<hr>
 	<div>
-					<a href="${context}/index">Volver a Inicio</a>
+					<a href="index">Volver a Inicio</a>
 				</div>
 			</div>
 		</div>

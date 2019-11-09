@@ -14,6 +14,5 @@ public interface ServicioCurso {
 	List<Curso> traerListaDeCursos();
 	Curso buscarCursoPorId(Long cursoid);
 	void eliminarCurso(Curso curso);
-	void modificarCurso(Curso curso);
-	List<Curso> traerCursosPorEspecialidad(String especialidad);
+
 }

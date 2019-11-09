@@ -26,87 +26,85 @@
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12 p-b-30">
-					<div class="t-center">
+				<div class="col-md-6 p-t-45 p-b-30">
 					<div class="wrap-text-welcome t-center">
 	
 
+
+
+
 	<!-- ******************************BUSCA NOMBRE Y APELLIDO****************************** -->
-
-  <form:form method="GET"  action="buscadorDeAlumnos"> 
-<h3 class="tit3 text-center">Buscador de alumnos</h3><br><br>
-
-
-
-	<div class="container">	
-	<b class="tit2 text-center m-t-90">Nombre:</b><label for="nombre"></label>
-            <input type="text" name="nombre" id="nombre" class="form-control">
- </div><br><br>
-  
-	<div class="container">
-	<b class="tit2 text-center m-t-90">Apellido:</b><label for="apellido"></label>
-            <input type="text" name="apellido" id="apellido" class="form-control">
- </div><br><br>
-
-		<button class="btn btn-primary" type="submit" name="btnBuscar">Buscar <i class="fa fa-search"></i></button>
-			
-</form:form><br><br>
-
-
-<!-- ********************************************************************************************************************* -->
-
 <form class="form-inline" method="GET"  action="buscadorDeAlumnos">
-<table class="table table-hover text-center mt-4" border="3" cellpadding="1" cellspacing="0">
-         <tbody>
-         
-<c:if test="${ocultar == 'mensaje' }">		
-           	<thead>       
-				<tr class="w3-red">
-					<th class="enc"><center>Nombre</center></th>
-					<th class="enc"><center>Apellido</center></th>	
-					<th class="enc"><center>Dni</center></th>	
-					<th class="enc"><center>Fecha</center></th>	
-					<th class="enc"><center>Hora</center></th>	
-					<th class="enc"><center>Cancelación</center></th>	
-				</tr>
-			</thead>
-</c:if>
-               <c:forEach items="${buscarAlumnos}" var="verFechas" >
-					<tr>
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>				
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>
-						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.dni}</h3></td>		
-						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
-						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
-						
-						<td><a href="cancelacionDeClases?idAgenda=${verFechas.id}">Cancelar</a></td>
-					</tr>
-			</c:forEach>	
-			
-        </tbody>
-   </table>  
-  </form>
-<br><br>
+        <div class="container">
+                  <div class="form-group mb-2">
+                        	<label for="nombre" class="col-sm-2 col-md-3 control-label"><b>Nombre:</b></label>
+                        <div class="col-sm-10 col-md-9">
+                            <input type="text" name="nombre" id="nombre" class="form-control">
+                        </div>
+                    </div><br>
+                  
+                   <div class="form-group mb-2">
+                       	    <label for="apellido" class="col-sm-2 col-md-3 control-label"><b>Apellido:</b></label>
+                        <div class="col-sm-10 col-md-9">
+                            <input type="text" name="apellido" id="apellido" class="form-control">
+                        </div>
+                   </div><br>
+                     
+					<button class="btn btn-primary" type="submit" id="btnBuscar">Buscar <i class="fa fa-search"></i></button>
+</div>
+</form><br><br>
 
+
+		
    <!-- ******************************MUESTRA CANTIDAD DE FECHAS QUE TIENE TRABAJO****************************** -->	
-
-<c:if test="${ocultar == 'mensaje'}">		
-      <c:set var = "string1" value = "${listaAgenda}"/>	
-      <p><b><h5>· Usted tiene en total ${fn:length(string1)} fechas para dar clases</h5></b></p><br>
-</c:if>
-
+   	 
+   <body>
+      <c:set var = "string1" value = "${listaAgenda}"/>
+      	<div class="w3-right-align">		
+      <p><b><h5>· Usted tiene esta cantidad de fechas para dar clases: ${fn:length(string1)}</h5></b></p><br>
+       </div>
+   </body>
+  
    
    <!-- ***************************************MUESTRA CANTIDAD DE ALUMNOS SIN REPETIR************************** -->
-<c:if test="${ocultar == 'mensaje'}">		
+   
+   <body>
       <c:set var = "string1" value = "${traerAlumnos}"/>
-      <p><b><h5>· Usted tiene en total ${fn:length(string1)} alumnos inscriptos</h5></b></p>
-</c:if>
-    
+      <p><b><h5>· Usted tiene esta cantidad de alumnos inscriptos: ${fn:length(string1)}</h5></b></p>
+   </body>
+   
+  
+  
+  
+  
+  
+   <!-- **********************************MUESTRA NOMBRE Y FECHA *********************************************** -->
+
+<table class="table table-hover text-center mt-4" border="3" cellpadding="1" cellspacing="0">
+			<thead>
+				<tr class="w3-red">
+					<th><center>Día</center></th>
+					<th><center>Horario</center></th>
+					<th><center>Nombre</center></th>
+					<th><center>Apellido</center></th>
+				</tr>
+			</thead>
+		<tbody>
+			<c:forEach items="${listaAgenda}" var="verFechas" >
+					<tr>
+						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.nombre}</h3></td>
+						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.apellido}</h3></td>				
+					</tr>
+			</c:forEach>	
+		</tbody>
+	</table>	
 					</div>	
 				</div>
 			</div>
-		</div>	</div>
-</section>
+		</div>	
+	</section>
 	
 
 	<!-- Footer -->

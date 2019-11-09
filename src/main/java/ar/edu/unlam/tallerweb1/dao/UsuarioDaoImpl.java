@@ -5,8 +5,6 @@ import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
-
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -62,63 +60,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Long)session.save(usuario);		
 	}
-	
-	
-	
-	/****************************O R G A N I Z A D X R ******************///////////////
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Usuario> traerUsuarios(String nombre, String apellido, String nombreUsuario, Integer dni,
-			String traer) {
-		final Session session = sessionFactory.getCurrentSession();
-		Criteria query = session.createCriteria(Usuario.class);
-		if(nombre!=null){
-			query = query.add(Restrictions.like("nombre", nombre));
-		}
-		if(apellido!=null){
-			query = query.add(Restrictions.like("apellido", apellido));
-		}
-		if(nombreUsuario!=null){
-			query = query.add(Restrictions.like("nombreDeUsuario", nombreUsuario));
-		}
-		if(dni!=null){
-			query = query.add(Restrictions.eq("dni", dni));
-		}
-		switch(traer){
-			case "Alumno": query = query.add(Restrictions.isNotNull("alumno")).add(Restrictions.eq("rol", traer));
-							break;
-			case "Instructor": query = query.add(Restrictions.isNotNull("instructor")).add(Restrictions.eq("rol", traer));
-							break;
-			case "Todo": query = query.add(Restrictions.isNull("organizador"));
-								break;
-		}
-		
-		return (List<Usuario>) query.list();
-		
-	}
-
-
-
-	@Override
-	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
-		final Session session = sessionFactory.getCurrentSession();
-		return (Usuario) session.createCriteria(Usuario.class)
-						.add(Restrictions.like("nombreDeUsuario", nombreUser)).uniqueResult();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/****************************************************************************************/
 	
 	
 	

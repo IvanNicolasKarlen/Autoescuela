@@ -45,10 +45,18 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 	private AlumnoDao alumnoDao;
 	@Inject
 	private EstadoDeAgendaDao estadoDeAgendaDao;
+	@Inject
+	private ServicioAgenda servicioAgenda;
+	@Inject
+	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
+	
 	
 	/********************************** ALUMNO **************************************************/
 	@Override
-	public List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado) {
+	public List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno) {
+		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();//alumnoEstadoDao
 		 
 		 
 		
@@ -112,7 +120,10 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 
 
 	@Override
-	public List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno, EstadoInscripcion estado) {
+	public List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno) {
+		
+		//Busco el id del estado que dice "Cursando"
+		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
 				
 		 
 		return inscripcionDao.traerLosCursosEnQueSeEncuentraAnotado(idAlumno, estado);
@@ -141,15 +152,10 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		System.out.println(inscripcionBuscada.getId());
 		
 		
-		//Busco el id del estado que dice "Cursando"
-		 EstadoInscripcion inscripcionEstadoCursando = estadoinscripcionDao.buscarEstadoCursando();
-			
 		
-		//Estados
-			EstadoDeAgenda ocupada = estadoDeAgendaDao.traigoElEstadoOcupada();
-			
+		
 		//Trae todas las clases a eliminar
-		TreeSet<Agenda> misClases = agendaDao.traerTodasLasClasesParaEliminarYCrearlasEnLimpio(idAlumno, inscripcionBuscada.getCurso().getEspecialidad().getId(), inscripcionEstadoCursando, ocupada);
+		TreeSet<Agenda> misClases = agendaDao.traerTodasLasClasesDeUnaSolaEspecialidad(idAlumno, inscripcionBuscada.getId());
 	
 		
 		System.out.println("Cant clases");
@@ -161,36 +167,17 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		List<Agenda> clasesNuevas = new ArrayList<Agenda>();
 		
 		//Estados
+		EstadoDeAgenda canceladaPorAlumno = estadoDeAgendaDao.traigoElEstadoCanceladaPorAlumno();
 		EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
-
-		//Estados
-		EstadoDeAgenda abandonada = estadoDeAgendaDao.traigoElEstadoAbandonada();		
-		
-		//Valido que no se creen dos veces la misma clase
-	
-		TreeSet<Agenda> clasesACrear = new TreeSet<Agenda>();
-		
-		for(Agenda ag: misClases)
-		{
 			
-			
-			List<Agenda> agendaLimpia = agendaDao.validoQueNoSeCreenDosVecesLaMismaClase(ag, disponible);
-			
-			
-			
-			if(agendaLimpia.isEmpty())
-			{
-			clasesACrear.add(ag);
-			}
-		}
-		
 		
 		
 		//Creo clases nuevas
-		for(Agenda a: clasesACrear)
+		for(Agenda a: misClases)
 		{
 		
 			Agenda clases = new Agenda();
+			
 		
 			clases.setClasePagada(false);
 			clases.setEstadoDeAgenda(disponible);
@@ -219,9 +206,9 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		//Elimino las clases que ya estaban
 				for(Agenda a: misClases)
 				{
-				//a.setInscripcion(null);
+				a.setInscripcion(null);
 				a.setClasePagada(false);
-				a.setEstadoDeAgenda(abandonada);
+				a.setEstadoDeAgenda(canceladaPorAlumno);
 				
 				inscripcionDao.guardarInscripcionEnLaAgenda(a); //Update
 				
@@ -247,190 +234,31 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 
 
 	@Override
-	public Inscripcion buscarInscripcion( Long idAlumno, Long idInscripcion) {
-
-		//Busco el id del estado que dice "Cursando"
-		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
-		 
-		return inscripcionDao.buscarInscripcionAEliminar( idAlumno, idInscripcion,  estado);
+	public Inscripcion buscarInscripcion(Curso curso, Alumno alumno) {
+		return inscripcionDao.buscarInscripcion(alumno, curso);
 	}
 
 
 
 	@Override
-	public void finalizarCursoDelAlumno(Long idEspecialidad, Long idAlumno) {
-
-		//Busco el id del estado que dice "Cursando"
-		 EstadoInscripcion inscripcionEstadoCursando = estadoinscripcionDao.buscarEstadoCursando();
-		
-		
-		Inscripcion inscripcionBuscada = inscripcionDao.buscarInscripcionAEliminar( idAlumno, idEspecialidad,  inscripcionEstadoCursando);
-		
-		/*
-		System.out.println("INSCRIPCION");
-		System.out.println(inscripcionBuscada.getId());
-		*/
-		
-			
-		
-		//Trae todas las clases a eliminar
-		TreeSet<Agenda> misClases = agendaDao.traerTodasLasClasesAEliminarDeUnaSolaEspecialidad(idAlumno, inscripcionBuscada.getId(),inscripcionEstadoCursando);
-	
-		
-		/*System.out.println("Cant clases");
-		for(Agenda d: misClases){
-		System.out.println(d.getFecha());
-		}*/
-		
-		//Creo las mismas clases para que la puedan ocupar otros alumnos con estado disponible
-		List<Agenda> clasesNuevas = new ArrayList<Agenda>();
-		
-		//Estados
-		EstadoDeAgenda finalizado = estadoDeAgendaDao.traigoElEstadoFinalizado();
-		EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
-			
-		
-		
-		//Valido que no se creen dos veces la misma clase
-		
-			TreeSet<Agenda> clasesACrear = new TreeSet<Agenda>();
-			
-			for(Agenda ag: misClases)
-			{
-				
-				
-				List<Agenda> agendaLimpia = agendaDao.validoQueNoSeCreenDosVecesLaMismaClase(ag, disponible);
-				
-				
-				
-				if(agendaLimpia.isEmpty())
-				{
-				clasesACrear.add(ag);
-				}
-			}
-		
-		
-		
-		
-		
-		
-		//Creo clases nuevas
-		for(Agenda a: clasesACrear)
-		{
-		
-			Agenda clases = new Agenda();
-			
-		
-			clases.setClasePagada(false);
-			clases.setEstadoDeAgenda(disponible);
-			clases.setFecha(a.getFecha());
-			clases.setHora(a.getHora());
-			clases.setInscripcion(null);
-			clases.setInstructorVehiculoEspecialidad(a.getInstructorVehiculoEspecialidad());
-				
-			
-			clasesNuevas.add(clases);
-			
-		
-		}
-		
-		
-		//Guardas la misma clase pero disponible para otro alumno
-		for(Agenda NuevasClases: clasesNuevas)
-		{
-			
-			 agendaDao.guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(NuevasClases); //Es un save(agenda)
-		}
-		
-		
-		//Estados
-		EstadoDeAgenda abandonada = estadoDeAgendaDao.traigoElEstadoAbandonada();
-		//Estados
-		EstadoDeAgenda ocupada = estadoDeAgendaDao.traigoElEstadoOcupada();
-				
-				
-				
-				
-		//Valido para mantener los estados de las clases y finalizar las que estaban ocupadas		
-	
-		TreeSet<Agenda> clasesQueMantienenElEstado = new TreeSet<Agenda>();
-		
-		
-		for(Agenda a: misClases)
-			{
-			//Traigo todas las clases con estado ocupada
-			TreeSet<Agenda> claseEstadoOcupada = agendaDao.traigoSoloLasClasesConEstadoOcupada(a,ocupada);
-			
-				for(Agenda b: claseEstadoOcupada)
-				{
-					clasesQueMantienenElEstado.add(b);
-				}
-			}
-		
-		
-		//Recorro TreSeet para saber cuales son Ocupada y cuales no para no alterar su estado
-		for(Agenda c: misClases)
-		{
-			
-			if(c.getEstadoDeAgenda().getId().equals(ocupada.getId()))
-			{
-				
-				c.setEstadoDeAgenda(abandonada);
-		
-				inscripcionDao.guardarInscripcionEnLaAgenda(c);
-			
-			}else{
-					
-				inscripcionDao.guardarInscripcionEnLaAgenda(c);
-				 }
-			
-		}
-			
-			
-			
-		
-			
-			
-			
-				
-				
-				
-		//Elimino las clases que ya estaban
-//				for(Agenda a: misClases)
-//				{
-//				//a.setInscripcion(null);
-//				a.setClasePagada(false);
-//				a.setEstadoDeAgenda(abandonada);
-//				
-//				inscripcionDao.guardarInscripcionEnLaAgenda(a); //Update
-//				
-//				}
-		
-	
-								/*Eliminar la inscripcion del alumno tal con el curso tal*/
-		 
-		Alumno alumno = alumnoDao.buscarAlumno( idAlumno);
-		
-		
-
-		EstadoInscripcion inscripcionFinalizada = estadoinscripcionDao.buscarEstadoFinalizado();
-		
-		inscripcionBuscada.setAlumno(alumno);
-		inscripcionBuscada.setCurso(inscripcionBuscada.getCurso());
-		inscripcionBuscada.setEstadoInscripcion(inscripcionFinalizada);
-		
-		
-		inscripcionDao.eliminarInscripcionDelAlumno(inscripcionBuscada);
-		
+	public void agregarInscripcion(Alumno alumno, Curso curso, Long idAgendaEditar) {
+		Agenda agenda =servicioAgenda.buscarAgendaPorId(idAgendaEditar);
+		Inscripcion inscripcion = inscripcionDao.buscarInscripcion(alumno,curso);
+		EstadoDeAgenda estado =servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("Ocupada");
+		agenda.setInscripcion(inscripcion);
+		agenda.setEstadoDeAgenda(estado);
+		inscripcionDao.guardarInscripcionEnLaAgenda(agenda);
 		
 	}
 
 
 
+	@Override
+	public void guardarInscripcionEnLaAgenda(Agenda agenda) {
+		inscripcionDao.guardarInscripcionEnLaAgenda(agenda);
+		
+	}
 
-
-
-	
 
 	
 }

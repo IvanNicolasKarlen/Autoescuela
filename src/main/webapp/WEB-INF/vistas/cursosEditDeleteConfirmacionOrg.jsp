@@ -5,7 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Confirmacion</title>
 	<!-- meta, css, vendor, etc. -->
@@ -32,8 +31,8 @@
 					<div class="col-lg-12 p-b-30">
 						<div class="t-center">
 						
-							<h4>${confirmacion}</h4>
-							<form method="get" action="${context}/eliminarCurso/${idC}">
+							<h4>${confirmacion}</h4>>
+							<form method="get" action="../eliminarCurso/${idC}">
 								<button name="confir" class="btn3 flex-c-m size13 txt11 trans-0-4" value="si">Si, eliminar</button>
 								<button name="confir" class="btn3 flex-c-m size13 txt11 trans-0-4" value="no">No eliminar</button>  
 							</form>

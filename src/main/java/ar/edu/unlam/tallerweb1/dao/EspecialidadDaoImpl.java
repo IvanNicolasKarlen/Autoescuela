@@ -17,7 +17,7 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 	@Inject
 	private SessionFactory sessionFactory;
 	
-/************************************** Organizador ***********************/
+	/************************************** Organizador ***********************/
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -52,7 +52,6 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 									.list();
 	}
 
-	
 	
 	
 	

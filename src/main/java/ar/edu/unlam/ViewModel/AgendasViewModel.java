@@ -13,11 +13,12 @@ public class AgendasViewModel {
 	private Long idCurso;
 	private Long idAgendaSeleccionada;
 	private Long idAgendaEditar;
-	
-	private Long idEspecialidad;
+	private Integer cantClasesPracticas;
+	private Integer cantDeClasesCursando;
 	private Long idInscripcion;
 	
 
+	
 	public List<Long> getIdAgendasDepurado() {
 		List<Long> ret = new ArrayList<>();
 
@@ -64,6 +65,22 @@ public class AgendasViewModel {
 		this.idAgendaEditar = idAgendaEditar;
 	}
 
+	public Integer getCantClasesPracticas() {
+		return cantClasesPracticas;
+	}
+
+	public void setCantClasesPracticas(Integer cantClasesPracticas) {
+		this.cantClasesPracticas = cantClasesPracticas;
+	}
+
+	public Integer getCantDeClasesCursando() {
+		return cantDeClasesCursando;
+	}
+
+	public void setCantDeClasesCursando(Integer cantDeClasesCursando) {
+		this.cantDeClasesCursando = cantDeClasesCursando;
+	}
+
 	public Long getIdInscripcion() {
 		return idInscripcion;
 	}
@@ -72,15 +89,6 @@ public class AgendasViewModel {
 		this.idInscripcion = idInscripcion;
 	}
 
-	public Long getIdEspecialidad() {
-		return idEspecialidad;
-	}
-
-	public void setIdEspecialidad(Long idEspecialidad) {
-		this.idEspecialidad = idEspecialidad;
-	}
-
-	
 	
 
 	

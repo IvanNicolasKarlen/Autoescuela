@@ -104,7 +104,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
   		
 <form:form action="clasesDelCurso" method="get">	
 	
-	<p class="text-center">Solo ver mis clases de:: </p>
+	<p class="text-center">Solo ver mis clases de: </p>
 	<c:forEach items="${listaCursos}" var="la">
 
 		
@@ -137,6 +137,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 		
 		
+<<<<<<< HEAD
 		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
 		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
 		</c:if>
@@ -152,6 +153,9 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 		
 <c:if test="${(la.estadoDeAgenda.id == 2) }">		<br>
+=======
+		<br>
+>>>>>>> Diana
 <button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
           <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
         </button>
@@ -160,7 +164,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
         			
         			
         				     <!-- BOTON ELIMINAR -->
-     <br>   
+     <br><br>   
 <form:form  method="POST" modelAttribute="agenda" action="mostrarAlerta">
 
 			<input name="idAgendaSeleccionada" type="hidden" value="${la.id}"></input>
@@ -174,7 +178,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 								<!--FIN  BOTON ELIMINAR -->
         
         
-       </c:if> 
+        
         
         
         
