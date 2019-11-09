@@ -142,14 +142,14 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 		
-		<c:if test="${la.estadoDeAgenda.id == 2 }">
+		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
 		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
 		</c:if>
 		
-		<c:if test="${la.estadoDeAgenda.id == 6 }">
+		<c:if test="${la.estadoDeAgenda.estado == 'Finalizado' }">
 		<b class="color0-hov trans-0-4 text-center text-success">Estado de la clase:</b> Clase realizada</p>
 		</c:if>
-		<c:if test="${(la.estadoDeAgenda.id != 6) && (la.estadoDeAgenda.id != 2) }">
+		<c:if test="${(la.estadoDeAgenda.estado != 'Finalizado') && (la.estadoDeAgenda.estado != 'Ocupada') }">
 		<b class="color0-hov trans-0-4 text-center text-danger">Estado de la clase:</b> ${la.estadoDeAgenda.estado}</p>
 		</c:if>
 		

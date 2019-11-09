@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +43,7 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		final Session session = sessionfactory.getCurrentSession();
 		
 		
-		
+		System.out.println(estado.getId());
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 					.createAlias("curso", "cur")
 					.createAlias("cur.especialidad", "ce")
@@ -94,6 +95,7 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id", idAlumno))
 				.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+				.createAlias("curso.especialidad", "especialidad")
 				.list();
 	return l;
 	}

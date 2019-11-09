@@ -75,7 +75,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 
 
 	@Override
-	public void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, AgendasViewModel agendasViewModel) {
+	public void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, List<Long> idAgendasDepurado) {
 
 		// Datos de las agendas elegidas buscamos objetos agenda con los id de agendas
 		List<Agenda> listaAgendas  = new ArrayList();
@@ -88,7 +88,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		 inscripcionDao.guardarInscripcion(alumno, curso, Tablainscripcion, estado);//alumnoInscripcionDao
 		
 		
-		for(Long id: agendasViewModel.getIdAgendasDepurado()){
+		for(Long id: idAgendasDepurado){
 			Agenda agendaBuscada = agendaDao.buscarAgendasElegidas(id, curso);//alumnoAgendaDao
 			listaAgendas.add(agendaBuscada);
 		}

@@ -104,7 +104,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 				 //LocalDate agendas = LocalDate.parse(a.getFecha());
 				 
 				 
-				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
 				 System.out.println("Fecha de Agenda");		 
 				 System.out.println(localDate);
@@ -138,12 +138,12 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	
 	
 	@Override
-	public Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(AgendasViewModel agendasViewModel, Curso curso) {
+	public Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(List<Long> idAgendasDepurado, Curso curso) {
 		//Declaramos una lista para guardar las agendas buscadas
 		List<Agenda> Agendas= new ArrayList();
 		
 		//Reorremos los ID de las agendas seleccionadas que pasamos por parametro
-		for(Long a: agendasViewModel.getIdAgendasDepurado())
+		for(Long a: idAgendasDepurado)
 		{	
 			//tratamos la excepcion nullPointer en caso que el
 			// *metodo devuelva null
@@ -172,7 +172,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		// si la cantidad de la lista con las agendas buscadas
 		// es igual a la cant de las agendas pasadas por parametro,
 		// las agendas estan disponibles y retorna true
-		if(Agendas.size() == agendasViewModel.getIdAgendasDepurado().size())
+		if(Agendas.size() == idAgendasDepurado.size())
 			{
 			 return true;
 				

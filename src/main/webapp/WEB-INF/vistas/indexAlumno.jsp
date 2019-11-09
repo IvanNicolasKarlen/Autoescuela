@@ -1,6 +1,13 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+	<title>Home</title>
+	<!-- meta, css, vendor, etc. -->
+
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
 </head>
@@ -12,14 +19,12 @@
 	<!-- Sidebar -->
 <%@ include file="../../parts/sidebar.jsp" %> 
 	<!-- fin sidebar -->
-
-
 	
 
 	<!-- Title Page -->
 	<section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15" style="background-image: url(images/index14.jpg);">
 		<h1 class="tit4 t-center">
-			Bienvenido Alumno
+			Bienvenido ${usuario.nombre}
 		</h1>
 	</section>
 

@@ -41,13 +41,16 @@
 							<!-- Estos se van a mostrar si sos alumno -->
 								<c:if test="${rol=='Alumno'}">
 									<li>
-									<a href="${context}/index">Inicio</a>
+									<a class="text-center" href="${context}/indexAlumno">Inicio</a>
 								</li>
 								<li>
-									<a href="${context}/listadoCursos">Anotarme</a>
+									<a class="text-center" href="${context}/listadoCursos">Anotarme</a>
 								</li>
 								<li>
-									<a href="${context}/listadoFechas">Mis clases</a>
+									<a class="text-center" href="${context}/listadoFechas">Mis clases</a>
+								</li>
+								<li>
+									<a class="text-center" href="${context}/historial">Historial</a>
 								</li>
 								</c:if>
 							<!-- fin alumno -->
@@ -82,7 +85,7 @@
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
 						<c:if test="${not empty rol}">
-							<a href="${context}/cuenta"><b class="text-danger">Mi cuenta</b></a>
+							<a><b class="text-danger">${usuario.nombre} ${usuario.apellido}</b></a>
 						</c:if>
 						<c:if test="${empty rol}">
 							<a href="${context}/login"><b class="text-danger">Ingresar</b></a>

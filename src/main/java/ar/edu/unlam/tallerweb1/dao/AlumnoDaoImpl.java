@@ -11,6 +11,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("AlumnoDao")
 public class AlumnoDaoImpl implements AlumnoDao {
@@ -57,6 +59,14 @@ final Session session = sessionFactory.getCurrentSession();
 				.add(Restrictions.eq("id", idAlumno))
 				.uniqueResult();
 	}
+
+
+	@Override
+	public Usuario buscarUsuario(Long idSesion) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.get(Usuario.class, idSesion);
+	}
+
 	
 	
 }

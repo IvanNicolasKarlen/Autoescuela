@@ -30,14 +30,14 @@
 
 <form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="agendasViewModel" action="inscripcion">
 
-<input name="idCurso" path=idCurso type="text"  value="${cursoSeleccionado.id}"/>
+<input name="idCurso" path=idCurso type="text" style="display:none" value="${cursoSeleccionado.id}"/>
 
 	
 <div class="row">
 <c:forEach items="${listaAgendas}" var="la">
 <div class="col-md-4 ">
 
-<input name="idAgendas[${la.id}]" type="text"  value="${la.id}"/>
+<input name="idAgendas[${la.id}]" type="text"  value="${la.id}" style="display:none"/>
 
 <h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
  <c:set var="i" value="${ i+1}"/>

@@ -27,7 +27,7 @@ public interface ServicioAgenda {
 	/******************************Alumno******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
 
-	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(AgendasViewModel agendasViewModel, Curso curso);
+	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(List<Long> idAgendasDepurado, Curso curso);
 
 	TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
 	

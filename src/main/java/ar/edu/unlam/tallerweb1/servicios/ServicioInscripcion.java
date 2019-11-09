@@ -18,7 +18,7 @@ public interface ServicioInscripcion {
 
 	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, Curso cursoElegido);
 
-	void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, AgendasViewModel agendasViewModel);
+	void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, List<Long> idAgendasDepurado);
 
 	List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno, EstadoInscripcion estado);
 
