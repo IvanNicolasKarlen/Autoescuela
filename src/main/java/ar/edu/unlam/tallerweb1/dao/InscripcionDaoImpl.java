@@ -154,15 +154,16 @@ final Session session = sessionfactory.getCurrentSession();
 	}
 
 	@Override
-	public Inscripcion buscarInscripcionAEliminar( Long idAlumno, Long idEspecialidad, EstadoInscripcion estado) {
+	public Inscripcion buscarInscripcion( Long idAlumno, Long idCurso) {
+		 
 		 final Session session = sessionfactory.getCurrentSession();
-		 return (Inscripcion) session.createCriteria(Inscripcion.class)
-					.createAlias("alumno", "alumno")
-					.add(Restrictions.eq("alumno.id",idAlumno))
-					.createAlias("curso.especialidad", "especialidad")
-					.add(Restrictions.eq("especialidad.id",idEspecialidad))
-					.createAlias("estadoInscripcion", "estadoInscripcion")
-					.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+			return (Inscripcion) session.createCriteria(Inscripcion.class)
+					.createAlias("curso", "cur")
+					.createAlias("alumno", "alu")
+					.add(Restrictions.eq("alu.id",idAlumno))
+					.add(Restrictions.eq("cur.id",idCurso))
+					.createAlias("estadoInscripcion", "estadoInscrip")
+					.add(Restrictions.eq("estadoInscrip.estado", "Cursando"))
 					.uniqueResult();
 	}
 

@@ -158,11 +158,6 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 		
 <c:if test="${(la.estadoDeAgenda.id == 2) }">	
-<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
-          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
-        </button>
-		
-		
 								  <!-- BOTON ELIMINAR -->
      <br> 
 <form:form  method="POST" modelAttribute="agenda" action="mostrarAlerta">
@@ -180,6 +175,37 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 </div>
 
+
+
+
+
+<c:set var="cantClasesPracticas" value="${la.inscripcion.curso.cantClasesPracticas}"/>
+<c:set var="cantDeClasesCursa" value="${cantDeClasesCursando}"/>
+
+
+<c:if test="${cantClasesPracticas > cantDeClasesCursa}">
+	<form method="POST" modelAttribute="agendasViewModel" action="seleccionarClaseAgregar">
+	
+	<c:forEach items="${listadoDeClases}" var="la">
+	
+			<input name="cantClasesPracticas" type="hidden" value="${la.inscripcion.curso.cantClasesPracticas}"></input>
+			<input name="cantDeClasesCursando" type="hidden" value="${cantDeClasesCursando}"></input>
+			<input name="idAgendas[${la.id}]" type="hidden"  value="${la.id}"/>
+			<input name="idCurso" type="hidden"  value="${la.inscripcion.curso.id}"/>
+			
+		  	
+		
+		</c:forEach>
+		<div >
+		 <button type="submit" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
+	         AGREGAR CLASE+ 
+	       </button>
+	       </div>	
+	</form>	
+</c:if>
+
+
+
 </c:forEach>
 </div>	
 
@@ -188,6 +214,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 
 <c:forEach items="${listadoDeClases}" var="la">
 
+<input name="idCurso" type="hidden" value="${la.inscripcion.curso.id}"></input>
 <input name="idEspecialidad" type="hidden" value="${la.inscripcion.curso.especialidad.id}"></input>
 
 </c:forEach>

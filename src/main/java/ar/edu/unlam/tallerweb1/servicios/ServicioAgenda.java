@@ -45,6 +45,9 @@ public interface ServicioAgenda {
 
 	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
 
+	void modificarAgenda(Agenda agenda);
+	Boolean verificarUnaAgendaSePuedaEliminar(Long idAgendaSeleccionada);
+	
 	
 	/***********************************ORGANIZADOR*********************************/
 	/********************************************************************/
@@ -55,7 +58,6 @@ public interface ServicioAgenda {
 
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
 	
-	void modificarAgenda(Agenda agenda);
 	
 	
 }

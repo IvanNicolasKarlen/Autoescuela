@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,27 +65,6 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
 
-		
-//		LocalDate hoy = LocalDate.now();
-//		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-//		 String fechaDeHoy = hoy.format(formatter);
-//			//Guardo las agendas mayores o iguales a hoy
-//		for(Agenda a: agendasAsc)
-//		{
-//			//Parseo la fecha
-//			 LocalDate agendas = LocalDate.parse(a.getFecha());
-//			 LocalDate hoy = LocalDate.now();
-//			 TreeSet<LocalDate> listaClases = new TreeSet<LocalDate>();
-//			 
-//			 
-//			 List<String> horasString = new ArrayList<String>();
-//			 
-//			 if(hoy.getDayOfMonth() <= agendas.getDayOfMonth() && hoy.getYear() < agendas.getYear())
-//			 {
-//				 listaClases.add(agendas);
-//			 
-//				 
-//			 }
 	
 		 EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
 		 TreeSet<Agenda> agendasSinDuplicados= agendaDao.traerAgendasConFechasNoRepetidas(Curso, disponible);
@@ -104,7 +84,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 				 //LocalDate agendas = LocalDate.parse(a.getFecha());
 				 
 				 
-				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 				LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
 				 System.out.println("Fecha de Agenda");		 
 				 System.out.println(localDate);
@@ -276,13 +256,55 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	public List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas) 
 	{
 
-		List<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);
-		for(Long idAgenda: idAgendas)
-		{
-			agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
-		}
-	
-		return agen ;
+		
+		
+		 EstadoDeAgenda disponible = estadoDeAgendaDao.traigoElEstadoDisponible();
+		 List<Agenda> agen = agendaDao.traerAgendasParaReemplazarOtra(curso, idAgendas);		
+	   	 LocalDate hoy = LocalDate.now();
+		 List<Agenda> listaClases = new ArrayList();
+			 
+		 System.out.println("Fecha de hoy:");
+		 System.out.println(hoy);
+			 
+
+		 for(Long idAgenda: idAgendas)
+			{
+				//Elimino las agendas que ya habia seleccionado antes
+				agen.removeIf((Agenda a) -> a.getId().equals(idAgenda));
+			}
+		 
+		 
+		
+			 //Guardo las agendas mayores a hoy
+			for(Agenda a: agen)
+			{
+				
+				 //validar que las fechas sean mayores a la fecha de hoy
+				 
+				 
+				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				 LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
+				 System.out.println("Fecha de Agenda");		 
+				 System.out.println(localDate);
+				
+				 if(localDate.isAfter(hoy))
+		        	{
+		        		listaClases.add(a);
+
+						 System.out.println("Fecha Guardada");
+						 System.out.println(a.getFecha());
+		        	}
+		
+				 	 
+			}
+			
+			
+				
+		
+			
+		return listaClases;
+		
+		
 	}
 
 
@@ -358,6 +380,23 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public Agenda buscarAgendaPorId(Long idAgenda) {
 		return agendaDao.buscarAgendaPorId(idAgenda);
+	}
+
+	@Override
+	public Boolean verificarUnaAgendaSePuedaEliminar(Long idAgendaSeleccionada) {
+		Agenda agenda=agendaDao.buscarAgendaPorId(idAgendaSeleccionada); 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaComparar = LocalDate.parse(agenda.getFecha(),formatter);
+		String fechaHoy = LocalDate.now().format(formatter);
+		LocalDate hoy = LocalDate.parse(fechaHoy, formatter);
+		
+		Long diferenciaDias = ChronoUnit.DAYS.between(hoy, fechaComparar);
+	
+		if(diferenciaDias>2){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	

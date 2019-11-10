@@ -291,7 +291,8 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
 				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
 				.list();
-
+		
+		 
 		return result;
 	}
 

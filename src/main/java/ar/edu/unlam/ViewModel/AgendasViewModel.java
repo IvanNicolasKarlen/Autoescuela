@@ -16,6 +16,8 @@ public class AgendasViewModel {
 	
 	private Long idEspecialidad;
 	private Long idInscripcion;
+	private Integer cantClasesPracticas;
+	private Integer cantDeClasesCursando;
 	
 
 	public List<Long> getIdAgendasDepurado() {
@@ -78,6 +80,22 @@ public class AgendasViewModel {
 
 	public void setIdEspecialidad(Long idEspecialidad) {
 		this.idEspecialidad = idEspecialidad;
+	}
+
+	public Integer getCantClasesPracticas() {
+		return cantClasesPracticas;
+	}
+
+	public void setCantClasesPracticas(Integer cantClasesPracticas) {
+		this.cantClasesPracticas = cantClasesPracticas;
+	}
+
+	public Integer getCantDeClasesCursando() {
+		return cantDeClasesCursando;
+	}
+
+	public void setCantDeClasesCursando(Integer cantDeClasesCursando) {
+		this.cantDeClasesCursando = cantDeClasesCursando;
 	}
 
 	

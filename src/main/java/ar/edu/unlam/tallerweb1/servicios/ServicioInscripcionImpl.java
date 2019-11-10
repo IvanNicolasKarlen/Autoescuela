@@ -45,6 +45,12 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 	private AlumnoDao alumnoDao;
 	@Inject
 	private EstadoDeAgendaDao estadoDeAgendaDao;
+	@Inject
+	private ServicioAgenda servicioAgenda;
+	@Inject
+	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
+	
+	
 	
 	/********************************** ALUMNO **************************************************/
 	@Override
@@ -247,29 +253,33 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 
 
 	@Override
-	public Inscripcion buscarInscripcion( Long idAlumno, Long idInscripcion) {
-
-		//Busco el id del estado que dice "Cursando"
-		 EstadoInscripcion estado = estadoinscripcionDao.buscarEstadoCursando();
-		 
-		return inscripcionDao.buscarInscripcionAEliminar( idAlumno, idInscripcion,  estado);
+	public Inscripcion buscarInscripcion( Long idAlumno, Long idCurso) {
+	 
+		return inscripcionDao.buscarInscripcion( idAlumno, idCurso);
 	}
 
 
 
 	@Override
-	public void finalizarCursoDelAlumno(Long idEspecialidad, Long idAlumno) {
+	public void finalizarCursoDelAlumno(Long idAlumno,Long idCurso ) {
+		
+		 System.out.println("PARAMETRO IDALUMNO"+idAlumno);
+		 System.out.println("PARAMETRO idCURSOO"+idCurso);
+			
+		
+		
+		
 
 		//Busco el id del estado que dice "Cursando"
 		 EstadoInscripcion inscripcionEstadoCursando = estadoinscripcionDao.buscarEstadoCursando();
+		 System.out.println("IIIIIIInscripcionEstadoCursando "+inscripcionEstadoCursando.getId());
+			
 		
 		
-		Inscripcion inscripcionBuscada = inscripcionDao.buscarInscripcionAEliminar( idAlumno, idEspecialidad,  inscripcionEstadoCursando);
+		Inscripcion inscripcionBuscada = inscripcionDao.buscarInscripcion( idAlumno, idCurso);
 		
-		/*
-		System.out.println("INSCRIPCION");
-		System.out.println(inscripcionBuscada.getId());
-		*/
+		System.out.println("INSCRIPCIOooooN "+  inscripcionBuscada.getId());
+		
 		
 			
 		
@@ -423,6 +433,18 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		inscripcionDao.eliminarInscripcionDelAlumno(inscripcionBuscada);
 		
 		
+	}
+
+
+
+	@Override
+	public void agregarInscripcion(Alumno alumno, Curso curso, Long idAgendaEditar) {
+		Agenda agenda =servicioAgenda.buscarAgendaPorId(idAgendaEditar);
+		Inscripcion inscripcion = inscripcionDao.buscarInscripcion(alumno,curso);
+		EstadoDeAgenda estado =servicioEstadoDeAgenda.traerEstadoDeAgendaPorNombre("Ocupada");
+		agenda.setInscripcion(inscripcion);
+		agenda.setEstadoDeAgenda(estado);
+		inscripcionDao.guardarInscripcionEnLaAgenda(agenda);
 	}
 
 

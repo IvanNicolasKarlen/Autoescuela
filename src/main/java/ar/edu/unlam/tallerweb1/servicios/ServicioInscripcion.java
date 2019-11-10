@@ -30,6 +30,8 @@ public interface ServicioInscripcion {
 
 	void finalizarCursoDelAlumno(Long idInscripcion, Long idAlumno);
 
+	void agregarInscripcion(Alumno alumno, Curso curso, Long idAgendaEditar);
+
 
 	
 

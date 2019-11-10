@@ -215,8 +215,6 @@ public class ControladorAlumno {
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
-		
-			
 			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
 			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
@@ -231,13 +229,9 @@ public class ControladorAlumno {
 							
 	if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 		{
-					
-		
-		
-		List<Long> idAgendasDepurado = agendasViewModel.getIdAgendasDepurado();
 		
 		//Consultar que no le hayan ocupado esas fechas
-		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(idAgendasDepurado,curso); //servicioAlumnoAgenda
+		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso); //servicioAlumnoAgenda
 		
 		//Si las fechas que me asignaron no fueron ocupadas
 			if(resultado == true)
@@ -245,7 +239,7 @@ public class ControladorAlumno {
 				//Anotarme
 					
 				
-		servicioInscripcion.guardarInscripcionEnLaAgendaYEnInscripcion(alumno, curso, idAgendasDepurado);//servicioAlumnoInscripcion
+		servicioInscripcion.guardarInscripcionEnLaAgendaYEnInscripcion(alumno, curso,agendasViewModel.getIdAgendasDepurado());//servicioAlumnoInscripcion
 		modelo.put("mensaje", "Tu inscripcion se realizo con exito");
 			
 			}
@@ -502,24 +496,16 @@ public class ControladorAlumno {
 		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
 			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
-
-		try{
 		
-			agendasViewModel.getIdCurso().equals(null);
-			
-		}catch(NullPointerException e)
-				{
-					
-					
-				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(alumno.getId(), agendasViewModel.getIdEspecialidad());	
+				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(alumno.getId(), agendasViewModel.getIdCurso());	
 					
 				
 				modelo.put("mensaje", "¿Estas seguro?");
 				modelo.put("inscripcion", inscripcionBuscada);
+				
 					
 				modelo.put("bandera", 3);
-				}
+				
 	
 			
 	
@@ -576,9 +562,19 @@ public class ControladorAlumno {
 
 		}catch(NullPointerException e){
 			
+			
+			/*verifico que no se pueda eliminar la agenda con menos de
+			 * 2 dias de anticipacion*/
+			Boolean result= servicioAgenda.verificarUnaAgendaSePuedaEliminar(agendasViewModel.getIdAgendaSeleccionada());
+			
+			if(result.equals(true)){
+			
 			//Eliminar esta clase
 			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),alumno.getId());
 			 modelo.put("mensaje", "Se ha eliminado la clase seleccionada correctamente");
+			}else{
+				modelo.put("mensaje", "No se puede eliminar la clase con menos de dos dias de anticipacion");
+			}
 		}
 		
 		
@@ -609,6 +605,9 @@ public class ControladorAlumno {
 			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 			//Traigo los datos del alumno logueado
 				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
+				System.out.println("ESPECIALIDAAAAD "+agendasViewModel.getIdEspecialidad());
+				System.out.println("ALUMNOOOOO"+alumno.getId());
+				
 
 			
 			try{
@@ -789,8 +788,7 @@ public class ControladorAlumno {
 				
 				
 				List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( agendasViewModel.getIdAgendasDepurado(),  curso);
-			
-			Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
+					
 			modelo.put("mensaje", "Seleccione la agenda que desee modificar");
 			modelo.put("listaAgendas", datosAgendas);
 			modelo.put("cursoSeleccionado", curso);
@@ -893,8 +891,6 @@ public class ControladorAlumno {
 				//traer agendas disponibles diferentes a las fechas seleccionadas 
 				List<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendas());
 
-				//Datos del curso Elegido
-				Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
 				modelo.put("mensaje", "Elige la nueva agenda");
 				modelo.put("listaAgendas", agendasViewModel.getIdAgendasDepurado());
 				modelo.put("agendasAlternativas", agendasAlternativas);
@@ -1055,7 +1051,118 @@ if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 	return new ModelAndView("redirect:/index");
 }
 	
+
+
+@RequestMapping(path="/seleccionarClaseAgregar")
+public ModelAndView seleccionarClaseAgregar(
+		@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
+		HttpServletRequest request )
+{
+	ModelMap modelo = new ModelMap();
+	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	{
+		//Datos del curso Elegido
+		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 	
+		List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas(agendasViewModel.getIdAgendasDepurado(),  curso);
+		
+		
+		//Sesion
+		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+			
+		//traer agendas disponibles diferentes a las fechas seleccionadas 
+		List<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendasDepurado());
+	
+		//Traigo los datos del alumno logueado
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+
+		Inscripcion inscripcion = servicioInscripcion.buscarInscripcion(curso.getId(), alumno.getId() );
+		
+		modelo.put("listaAgendas", agendasAlternativas);
+		modelo.put("mensaje", "Selecciona la agenda que desees agregar");
+		modelo.put("cursoSeleccionado", curso);
+		modelo.put("agendasCursando", datosAgendas);
+		modelo.put("inscripcion", inscripcion);
+		
+		return new ModelAndView("seleccionarClaseAgregar",modelo);
+	
+	
+}
+return new ModelAndView("redirect:/index");
+	
+			
+}
+
+
+@RequestMapping(path="/agregarClase")
+public ModelAndView agregarClase(
+		@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
+		HttpServletRequest request )
+{
+	ModelMap modelo = new ModelMap();
+	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	{
+		
+		//Sesion
+		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+	
+	//Traigo los datos del alumno logueado
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+
+		//Datos del curso Elegido
+		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
+									
+	//Consultar que no le hayan ocupado esas fechas
+	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso); //servicioAlumnoAgenda
+	
+	//Si las fechas que me asignaron no fueron ocupadas
+		if(resultado == true)
+		{
+			//Anotarme
+		servicioInscripcion.agregarInscripcion(alumno,curso,agendasViewModel.getIdAgendaEditar());//servicioAlumnoInscripcion
+		modelo.put("mensaje", "La clase se agregó con éxito");
+			
+		}
+	
+		else{ //fin if resultado == true
+					
+			//Buscarle otras fechas
+					
+			//Traer todas las fechas con disponibilidad    
+			TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);//servicioAlumnoAgenda
+
+				if(agendas.isEmpty())
+				{
+					modelo.put("error", "No hay mas fechas disponibles para agregar");
+							
+				}else{
+					modelo.put("listaAgendas", agendas);
+					modelo.put("listaAgendassize", agendas.size());	
+					 }
+					
+			modelo.put("mensaje", "Una de las clases ha sido ocupada. Te buscamos clases nuevas");
+			modelo.put("cursoSeleccionado", curso);
+
+			return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
+					
+		   	 }	
+										
+
+				
+		
+	modelo.put("curso2", agendasViewModel.getIdCurso());
+	modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
+	modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
+	
+	return new ModelAndView("inscripcionExitosa",modelo); 
+	
+	
+	} 
+	return new ModelAndView("redirect:/index");
+}
+
+
+
 	
 
 
