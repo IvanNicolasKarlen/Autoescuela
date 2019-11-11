@@ -58,7 +58,7 @@
 <form class="form-inline" method="GET"  action="buscadorDeAlumnos">
 <table class="table table-hover text-center mt-4" border="3" cellpadding="1" cellspacing="0">
          <tbody>
-         
+         ${mensaje}
 <c:if test="${ocultar == 'mensaje' }">		
            	<thead>       
 				<tr class="w3-red">
@@ -79,7 +79,7 @@
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
 						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
 						
-						<td><a href="cancelacionDeClases?idAgenda=${verFechas.id}">Cancelar</a></td>
+<td><a href="seleccionarMotivo/${verFechas.id}">Cancelar</a></td>						
 					</tr>
 			</c:forEach>	
 			

@@ -64,7 +64,8 @@ public class AgendaDaoImp implements AgendaDao {
 	@Override
 	public void updateEstadoDeAgenda(Agenda agenda) {
 		final Session session = sessionFactory.getCurrentSession();
-				session.update(agenda);
+		
+		session.update(agenda);
 }
 	@Override
 	public Agenda buscarAgendaPorId(Long idAgenda) {
@@ -84,6 +85,13 @@ public class AgendaDaoImp implements AgendaDao {
 								)
 				
 				.list();
+	}
+	
+	@Override
+	public Agenda buscarAgenda(Agenda agenda) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Agenda)session.createCriteria(Agenda.class)
+				.add(Restrictions.eq("id", agenda.getId())).uniqueResult();
 	}
 	
 //	@Override
@@ -251,5 +259,7 @@ final Session session = sessionFactory.getCurrentSession();
 
 	}	
 	/***************************************************************************************/
+
+
 
 }

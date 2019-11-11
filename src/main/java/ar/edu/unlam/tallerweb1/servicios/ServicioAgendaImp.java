@@ -72,6 +72,11 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		return agendaDao.buscarAgendaPorId(idAgenda);	
 	}
 
+	
+	@Override
+	public Agenda buscarAgenda(Agenda agenda) {
+		return agendaDao.buscarAgenda(agenda);
+	}
 	/********************************* Alumno ********************************/
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso) {
@@ -245,6 +250,8 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		}
 		return id;
 	}
+
+
 
 	
 

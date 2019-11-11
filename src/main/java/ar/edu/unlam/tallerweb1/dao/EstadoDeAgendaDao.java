@@ -6,7 +6,7 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 
 public interface EstadoDeAgendaDao {
 
-	
+
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();

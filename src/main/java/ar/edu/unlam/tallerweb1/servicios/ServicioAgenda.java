@@ -21,6 +21,7 @@ public interface ServicioAgenda {
 //	LocalDate traerFechas();
 	void updateEstadoDeAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
+	Agenda buscarAgenda(Agenda agenda);
 
 	/******************************Alumno******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);

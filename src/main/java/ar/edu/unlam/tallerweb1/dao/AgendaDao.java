@@ -23,7 +23,7 @@ public interface AgendaDao {
 //	List<Agenda> traerFechas();
 	void updateEstadoDeAgenda(Agenda agenda);	
 	Agenda buscarAgendaPorId(Long idAgenda);
-	
+	Agenda buscarAgenda(Agenda agenda);
 	/******************************************************************/
 	/***************************** Alumno *******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);

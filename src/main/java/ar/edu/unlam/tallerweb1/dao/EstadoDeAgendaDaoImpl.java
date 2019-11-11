@@ -39,7 +39,8 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 	@Override
 	public EstadoDeAgenda traerEstadoDeAgendaPorId(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (EstadoDeAgenda) session.get(EstadoDeAgenda.class, id);
+		return (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
 	}
 	
 	
@@ -56,4 +57,6 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 				
 		return a;
 	}
+
+	
 }

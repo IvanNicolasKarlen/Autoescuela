@@ -1,33 +1,20 @@
 package ar.edu.unlam.tallerweb1.controladores;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ar.edu.unlam.ViewModel.EstadoDeAgendaViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
-import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
-import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
-import ar.edu.unlam.tallerweb1.modelo.Usuario;
-import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
-import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
-import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
+
 
 @Controller
 @Validated
@@ -35,9 +22,6 @@ public class ControladorInstructor {
 	
 	@Inject 
 	private ServicioAgenda servicioAgenda;
-	
-	@Inject 
-	private ServicioUsuario servicioUsuario;
 	
 	@Inject
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
@@ -55,9 +39,10 @@ public class ControladorInstructor {
 	}
 	
 	
-	@RequestMapping(value="/buscadorDeAlumnos", method = RequestMethod.GET)
+	@RequestMapping(path="/buscadorDeAlumnos", method = RequestMethod.GET)
 	public ModelAndView buscarAlumnos ( @RequestParam (name="nombre",required=false)  String nombre,
 										@RequestParam (name="apellido",required=false)String apellido,
+										
 										HttpServletRequest request){
 
 		ModelMap model = new ModelMap();
@@ -74,36 +59,74 @@ public class ControladorInstructor {
 		model.put("ocultar", "mensaje");
 				
 		return new ModelAndView ("alumnosInstructor",model);
-}		
-	
-	@RequestMapping(value="/claseCancelada", method = RequestMethod.GET)
-	public ModelAndView cancelarClase () {
+	}		
 
-		return new ModelAndView("ClaseCanceladaConExito");
+	
+	@RequestMapping(value="/claseCanceladaConExito", method = RequestMethod.GET)
+	public ModelAndView confirmarCancelacion () {
+
+		return new ModelAndView("ClaseCanceladaConExitoInstructor");
 		
 	}
 	
-	@RequestMapping(value="/cancelacionDeClases", method = RequestMethod.GET)
-	public ModelAndView cancelarClase (@RequestParam(name="idAgenda",required=false) Long idAgenda,
-									   @RequestParam(name="idAgenda",required=false) Long idEstadoAgenda,
+	@RequestMapping(path="/cancelacionDeAgenda", method = RequestMethod.GET)
+	public ModelAndView probar (@RequestParam(name="idAgenda",required=false) Long idAgenda,
+								@RequestParam(name="idEstadoAgenda",required=false) Long idEstadoAgenda,
+							    @RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion,
+						      	HttpServletRequest request) {		
+		
+		
+		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
+		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		String vista = "confirmarCancelacionDeClasesInstructor";
+		if(rol.equals("Instructor")){
+			model.put("rol", rol);
+			model.put("estadosDeAgenda",estadosDeAgenda);
+			
+		
+		if(confirmacion.equals("noConfirmado")){
+			model.put("confirmacion", "¿Esta seguro de querer cancelar la clase seleccionada?");
+			model.put("idAgenda",idAgenda);
+			model.put("idEstadoAgenda", idEstadoAgenda);
+		}else {
+		switch(confirmacion){
+		case "si": 
+			Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
+			agenda.setEstadoDeAgenda(estadoDeAgenda);
+			servicioAgenda.updateEstadoDeAgenda(agenda);
+			model.put("estadoDeAgenda", estadoDeAgenda);
+		
+			if(servicioAgenda.buscarAgenda(agenda)!=null){
+				return new ModelAndView("redirect:/claseCanceladaConExito");
+			}
+		case "no":
+			return new ModelAndView("redirect:/buscadorDeAlumnos");
+		
+		}}
+		
+		}	return new ModelAndView(vista,model);
+	}
+	
+	
+	
+	@RequestMapping(path="/seleccionarMotivo/{idAgenda}", method = RequestMethod.GET)
+	public ModelAndView cancelarClase (@PathVariable(value="idAgenda") Long idAgenda,
 									   HttpServletRequest request) {
 
 		ModelMap model = new ModelMap();
 		
 		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
+		
 		model.put("estadosDeAgenda",estadosDeAgenda);
 		model.put("idAgenda",idAgenda);
-		
-		
-		Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
-		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);
-		agenda.setEstadoDeAgenda(estadoDeAgenda);
-		servicioAgenda.updateEstadoDeAgenda(agenda);
-		
-		return new ModelAndView ("cancelarClase",model);
+
+		return new ModelAndView ("cancelarClaseInstructor",model);
 
 	}
 	
+
 //	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
 //	public ModelAndView horasTrabajadas () {
 //
@@ -114,7 +137,7 @@ public class ControladorInstructor {
 //		ModelMap model = new ModelMap ();
 //		model.put("traerFechasDisponibles", traerFechasDisponibles);
 //		
-//		return new ModelAndView ("horasTrabajadas",model);
+//		return new ModelAndView ("horasTrabajadasInstructor",model);
 //	}
 //	
 
