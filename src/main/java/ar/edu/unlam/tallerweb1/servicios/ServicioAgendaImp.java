@@ -1,8 +1,13 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -47,20 +52,87 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			agendaDao.updateEstadoDeAgenda(agenda);
 	}
 	
-//	@Override
-//	public LocalDate traerFechas() {
-//		
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//		List <Agenda> fechas =  agendaDao.traerFechas();	
-//		
-//		List<LocalDate> fechaComparar = LocalDate.parse(fechas,formatter);
-//		String fechaHoy = LocalDate.now().format(formatter);
-//		LocalDate hoy = LocalDate.parse(fechaHoy, formatter);
-//		
-//		hoy.getMonth();
-//		return hoy;
-//
-//	}
+	
+	@Override
+	public List <Integer> horasTrabajadas(Long idInstructor) {
+		List<Integer> meses = new ArrayList<>();
+		Integer Enero = 15, Febrero = 0, Marzo = 0, Abril = 0, Mayo = 0, Junio = 0,
+				Julio = 0, Agosto = 0, Septiembre = 0, Octubre = 0, Noviembre = 0 ,
+				Diciembre = 0;
+		
+		List <Agenda> listaAgenda = agendaDao.traerAgendaInstructor(idInstructor);
+		List<LocalDate> listaLocalDate = new ArrayList<>();
+		
+		
+		for(Agenda lag: listaAgenda){  /*Con un for recorro la listaAgenda, esas fechas las conviertos a localdate y las guardo */
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate localdate = LocalDate.parse(lag.getFecha(), formatter); 
+			listaLocalDate.add(localdate);
+		
+			
+		       
+	for(LocalDate lisld:listaLocalDate) {
+		
+		switch (lisld.getMonth().toString()) {
+		
+		case "JANUARY":  
+				 Enero ++;
+			break;
+		case "FEBRUARY":
+				Febrero ++;
+			break;
+		case "MARCH":
+				Marzo ++;
+			break;
+		case "APRIL":
+				Abril ++;
+			break;
+		case "MAY":
+				Mayo ++;
+			break;
+		case "JUNE":
+				Junio ++;
+			break;
+		case "JULY":
+				Julio ++;
+			break;
+		case "AUGUST":
+				Agosto ++;
+			break;
+		case "SEPTEMBER":
+				Septiembre ++;
+			break;
+		case "OCTOBER":
+				Octubre ++;
+			break;
+		case "NOVEMBER":
+				Noviembre ++;
+			break;
+		case "DECEMBER":
+				Diciembre ++;
+			break;
+				}System.out.println(meses);
+			}
+	meses.add(Enero);
+	meses.add(Febrero);
+	meses.add(Marzo);
+	meses.add(Abril);
+	meses.add(Mayo);
+	meses.add(Junio);
+	meses.add(Julio);
+	meses.add(Agosto);
+	meses.add(Septiembre);
+	meses.add(Octubre);
+	meses.add(Noviembre);
+	meses.add(Diciembre);
+		}
+
+	return meses;
+	
+		}
+	
+	
 	
 	@Override
 	public List<Agenda> traerFechasDisponibles() {
@@ -76,6 +148,11 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public Agenda buscarAgenda(Agenda agenda) {
 		return agendaDao.buscarAgenda(agenda);
+	}
+	
+	@Override
+	public List<Agenda> traerAgendaInstructor(Long idInstructor) {
+		return agendaDao.traerAgendaInstructor(idInstructor);
 	}
 	/********************************* Alumno ********************************/
 	@Override
@@ -250,6 +327,8 @@ public class ServicioAgendaImp implements ServicioAgenda{
 		}
 		return id;
 	}
+
+
 
 
 

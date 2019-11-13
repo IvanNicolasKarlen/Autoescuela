@@ -1,4 +1,5 @@
 package ar.edu.unlam.tallerweb1.controladores;
+import java.time.LocalDate;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -127,18 +128,19 @@ public class ControladorInstructor {
 	}
 	
 
-//	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
-//	public ModelAndView horasTrabajadas () {
-//
-//		
-//		
-//		LocalDate traerFechasDisponibles = servicioAgenda.traerFechas();
-//		
-//		ModelMap model = new ModelMap ();
-//		model.put("traerFechasDisponibles", traerFechasDisponibles);
-//		
-//		return new ModelAndView ("horasTrabajadasInstructor",model);
-//	}
-//	
+	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
+	public ModelAndView horasTrabajadas (@RequestParam(name="ids",required=false)Long idInstructor) {
+
+		ModelMap model = new ModelMap ();
+
+		List <Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);
+		
+		model.put("listaMeses", listaMeses);
+		
+		System.out.println(listaMeses);
+		
+		return new ModelAndView ("horasTrabajadasInstructor",model);
+	}
+	
 
 	}

@@ -30,12 +30,19 @@
 					<div class="t-center">
 						<div class="wrap-text-welcome t-center">
 					
+					<thead>       
+						<tr class="w3-red">
+							<th class="enc"><center>Nombre</center></th>
+						</tr>
+					</thead>
+					<c:forEach items="${listaMeses}" var="verFechas" >
+					${listaMeses}
 					
+					${verFechas.fecha}
 					
+					</c:forEach>	
 					
-					
-					
-
+<h3>${listaMeses}</h3>
 						</div>	
 					</div>
 				</div>
