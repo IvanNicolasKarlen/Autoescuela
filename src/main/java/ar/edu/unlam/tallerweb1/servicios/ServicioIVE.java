@@ -13,4 +13,5 @@ public interface ServicioIVE {
 	List <InstructorVehiculoEspecialidad> traerListaIvePorEspecialidad(Especialidad especialidad);
 	InstructorVehiculoEspecialidad traerIveProInstructorEspecialidad(Especialidad esp, Instructor ins);
 	InstructorVehiculoEspecialidad buscarIvePorId(Long idIVE);
+	List <InstructorVehiculoEspecialidad> traerListaIvePorInstructor(Instructor instructor);
 }

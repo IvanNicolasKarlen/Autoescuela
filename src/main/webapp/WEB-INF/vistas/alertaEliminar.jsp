@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,6 +110,31 @@
 						
 						
 						
+
+<c:if test="${bandera == 3 }">								
+<h4 class="tit2 t-center m-b-35 m-t-5">
+							Quiero finalizar mi curso de ${inscripcion.curso.especialidad.tipo} 
+						
+						<p class="text-center">Esta acción generará que se te eliminen todas las clases de este curso.</p>
+<div class="btn-group m-t-40">
+
+<a href="listadoFechas" class="btn3 flex-c-m size13 txt11  trans-0-4 m-l-r-auto ">
+					Cancelar
+</a>
+
+<form:form  method="POST" modelAttribute="agenda" action="finalizado">
+
+	<input name="idEspecialidad" type="hidden" value="${inscripcion.curso.especialidad.id}"></input>
+	 
+  <button type="submit" class="btn3 flex-c-m size13 txt11  trans-0-4 bg-danger text-white m-l-r-auto">
+					Aceptar
+	</button>
+	
+	
+</form:form> 
+</div>
+</c:if>
+
 						
 						
 

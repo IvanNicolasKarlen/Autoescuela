@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 
 public interface ServicioVehiculo {
+	
 	/********************************Instructor**************************/
 	List<EstadoDeVehiculo> traerVehiculos(Long idAgenda);
 	

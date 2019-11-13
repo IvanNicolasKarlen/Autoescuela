@@ -45,4 +45,5 @@ public class EstadoDelCursoDaoImpl implements EstadoDelCursoDao {
 		return (EstadoDelCurso) session.get(EstadoDelCurso.class,id);
 	}
 
+
 }

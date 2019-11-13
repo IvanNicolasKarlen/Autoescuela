@@ -33,91 +33,56 @@ public class Agenda implements Comparable{
 	@ManyToOne
 	private EstadoDeAgenda estadoDeAgenda;
 	
-
-
 	public Long getId() {
 		return id;
 	}
-
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-
 	public String getFecha() {
 		return fecha;
 	}
 
-
-
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFecha(String string) {
+		this.fecha = string;
 	}
-
-
 
 	public Integer getHora() {
 		return hora;
 	}
 
-
-
 	public void setHora(Integer hora) {
 		this.hora = hora;
 	}
-
-
-
-	public Boolean getClasePagada() {
-		return clasePagada;
-	}
-
-
-
-	public void setClasePagada(Boolean clasePagada) {
-		this.clasePagada = clasePagada;
-	}
-
-
 
 	public InstructorVehiculoEspecialidad getInstructorVehiculoEspecialidad() {
 		return instructorVehiculoEspecialidad;
 	}
 
-
-
 	public void setInstructorVehiculoEspecialidad(InstructorVehiculoEspecialidad instructorVehiculoEspecialidad) {
 		this.instructorVehiculoEspecialidad = instructorVehiculoEspecialidad;
 	}
-
-
-
+	
 	public Inscripcion getInscripcion() {
 		return inscripcion;
 	}
 
-
-
 	public void setInscripcion(Inscripcion inscripcion) {
 		this.inscripcion = inscripcion;
 	}
-
-
+	
+	
+	
 
 	public EstadoDeAgenda getEstadoDeAgenda() {
 		return estadoDeAgenda;
 	}
 
-
-
 	public void setEstadoDeAgenda(EstadoDeAgenda estadoDeAgenda) {
 		this.estadoDeAgenda = estadoDeAgenda;
 	}
-
-
 
 	@Override
 	public int compareTo(Object o) {
@@ -128,6 +93,12 @@ public class Agenda implements Comparable{
 		
 	}
 
+	public Boolean getClasePagada() {
+		return clasePagada;
+	}
 
+	public void setClasePagada(Boolean clasePagada) {
+		this.clasePagada = clasePagada;
+	}
 	
 }

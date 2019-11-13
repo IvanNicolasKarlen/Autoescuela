@@ -5,8 +5,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<title>Curso</title>
+<title>Instructor Agregado</title>
 <!-- meta, css, vendor, etc. -->
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
 </head>
@@ -26,10 +27,9 @@
 					
 					<h3>${mensaje}</h3>
 					<h3>${error}</h3>
-					<h1>Tu  vieja :D</h1>
 					<hr>
 					<p>
-						<a href="index">Volver al inicio</a>
+						<a href="${context}/index">Volver al inicio</a>
 					</p>
 				</div>
 			</div>

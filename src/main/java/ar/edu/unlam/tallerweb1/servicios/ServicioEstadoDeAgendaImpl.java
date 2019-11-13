@@ -13,8 +13,19 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 @Service
 @Transactional
 public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
+	
 	@Inject
 	private EstadoDeAgendaDao estadoDeAgendaDao;
+	
+/**************************************INSTRUCTOR*****************************************/
+	
+	@Override
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
+		return estadoDeAgendaDao.traerListaDeEstadoDeAgendaMenosEstadoDisponible();
+	}
+
+	
+	/*************************************************************************************/
 	
 	@Override
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
@@ -30,6 +41,5 @@ public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
 	public EstadoDeAgenda traerEstadoDeAgendaPorId(Long id) {
 		return estadoDeAgendaDao.traerEstadoDeAgendaPorId(id);
 	}
-
 
 }

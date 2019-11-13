@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface ServicioAlumno {
 
@@ -14,5 +15,8 @@ public interface ServicioAlumno {
 	
 	/****************************************************************************/
 	Alumno buscarAlumno(Long idAlumno);
+
+
+	Usuario buscarUsuario(Long idAlumno);
 
 }

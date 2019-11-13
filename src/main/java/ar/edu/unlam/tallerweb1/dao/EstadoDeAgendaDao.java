@@ -6,7 +6,9 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 
 public interface EstadoDeAgendaDao {
 
-
+	/********************************INSTRUCTOR**********************************/
+	
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();
@@ -15,6 +17,11 @@ public interface EstadoDeAgendaDao {
 	
 	
 	/*******************************ALUMNO*****************************************/
-	EstadoDeAgenda traigoElEstadoEnEspera();
+	EstadoDeAgenda buscarEstadoOcupado();
+	EstadoDeAgenda traigoElEstadoCanceladaPorAlumno();
+	EstadoDeAgenda traigoElEstadoDisponible();
+	EstadoDeAgenda traigoElEstadoFinalizado();
+	EstadoDeAgenda traigoElEstadoAbandonada();
+	EstadoDeAgenda traigoElEstadoOcupada();
 
 }

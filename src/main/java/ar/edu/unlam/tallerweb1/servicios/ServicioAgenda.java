@@ -10,10 +10,13 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 
 public interface ServicioAgenda {
+
+	
 	/******************************INSTRUCTOR******************************/
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
 	List<Agenda> buscarAlumnos(String nombre,String apellido);
@@ -23,17 +26,16 @@ public interface ServicioAgenda {
 	Agenda buscarAgenda(Agenda agenda);
 	List <Agenda> traerAgendaInstructor(Long idInstructor);
 	List <Integer> horasTrabajadas(Long idInstructor);
-	
 	/******************************Alumno******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
 
-	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(AgendasViewModel agendasViewModel, Curso curso);
+	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(List<Long> idAgendasDepurado, Curso curso);
 
-	List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
 	
-	List<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(CursosViewModel cursosViewModel,Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(CursosViewModel cursosViewModel,Long idAlumno);
 
-	List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno, EstadoInscripcion estado);
 
 	Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno);
 
@@ -45,9 +47,19 @@ public interface ServicioAgenda {
 
 	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
 
+	void modificarAgenda(Agenda agenda);
+	Boolean verificarUnaAgendaSePuedaEliminar(Long idAgendaSeleccionada);
 	
+	
+	/***********************************ORGANIZADOR*********************************/
 	/********************************************************************/
-	Long crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve);
+	Boolean crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve);
+	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
+	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);
 
+
+	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
+	
+	
 	
 }

@@ -17,7 +17,7 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 public class VehiculoDaoImpl implements VehiculoDao {
 	@Inject
 	private SessionFactory sessionFactory;
-	
+
 	/******************************************INSTRUCTOR**************************************/
 	@Override
 	public List<EstadoDeVehiculo> traerVehiculos(Long idAgenda) {

@@ -18,16 +18,30 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 	@Inject
 	private SessionFactory sessionFactory;
 
-/************************************************ORGANIZADOR***************************/
+	
+	
+/************************************************INSTRUCTOR***************************/
+
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
+		Session session = sessionFactory.getCurrentSession();
+		return (List<EstadoDeAgenda>) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("estado", "Disponible"))
+				.list();
+	
+	}
+/************************************************ORGANIZADOR***************************/
+	
+	@SuppressWarnings("unchecked")
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(EstadoDeAgenda.class)
 				.add(Restrictions.ne("estado", "Disponible"))
 				.list();
 	}
+
 
 	@Override
 	public EstadoDeAgenda traerEstadoDeAgendaPorNombre(String estado) {
@@ -39,24 +53,81 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 	@Override
 	public EstadoDeAgenda traerEstadoDeAgendaPorId(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		return (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("id", id)).uniqueResult();
+		return (EstadoDeAgenda) session.get(EstadoDeAgenda.class, id);
 	}
 	
 	
 	
 	
 	/***************************************ALUMNO********************************/
+	
+
 	@Override
-	public EstadoDeAgenda traigoElEstadoEnEspera() {
-		final Session session = sessionFactory.getCurrentSession();
+	public EstadoDeAgenda buscarEstadoOcupado() {
+final Session session = sessionFactory.getCurrentSession();
 		
 		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("estado","En espera"))
+				.add(Restrictions.eq("estado","Ocupada"))
 				.uniqueResult();
 				
 		return a;
 	}
 
+	@Override
+	public EstadoDeAgenda traigoElEstadoCanceladaPorAlumno() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Cancelado por Alumno"))
+				.uniqueResult();
+				
+		return a;
+	}
+	
+	@Override
+	public EstadoDeAgenda traigoElEstadoDisponible() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Disponible"))
+				.uniqueResult();
+				
+		return a;
+	}
+
+	@Override
+	public EstadoDeAgenda traigoElEstadoFinalizado() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Finalizado"))
+				.uniqueResult();
+				
+		return a;
+	}
+
+	@Override
+	public EstadoDeAgenda traigoElEstadoAbandonada() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Abandonada"))
+				.uniqueResult();
+				
+		return a;
+	}
+
+	@Override
+	public EstadoDeAgenda traigoElEstadoOcupada() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Ocupada"))
+				.uniqueResult();
+				
+		return a;
+	}
+	
+	
 	
 }

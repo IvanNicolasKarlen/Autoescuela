@@ -109,7 +109,7 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 			
 	<form:form action="clasesDelCurso" moddelAtribute="curso" method="post">
 	<p class="text-center">Solo ver mis clases de: </p>	
-	<c:forEach items="${listadoDeFiltros}" var="la">
+	<c:forEach items="${listaCursos}" var="la">
 
 		
 <label class="checkbox-inline">
@@ -133,8 +133,6 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 
 
 
- <c:set var="i" value="${ i+1}"/>
-		 <h5 class="card-subtitle p-t-10 mb-2 text-center mb-2 bg-dark text-white">Clase <c:out value="${i}"/></h5>
 		          <h2 class="text-center color0-hov trans-0-4 bg-primary text-white">Curso de ${la.inscripcion.curso.especialidad.tipo}</h2>
 		
 		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
@@ -144,15 +142,24 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 		
+		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
+		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
+		</c:if>
 		
-		<br>
-<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
-          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
-        </button>
+		<c:if test="${la.estadoDeAgenda.estado == 'Finalizado' }">
+		<b class="color0-hov trans-0-4 text-center text-success">Estado de la clase:</b> Clase realizada</p>
+		</c:if>
+		<c:if test="${(la.estadoDeAgenda.estado != 'Finalizado') && (la.estadoDeAgenda.estado != 'Ocupada') }">
+		<b class="color0-hov trans-0-4 text-center text-danger">Estado de la clase:</b> ${la.estadoDeAgenda.estado}</p>
+		</c:if>
 		
 		
+		
+		
+		
+<c:if test="${(la.estadoDeAgenda.id == 2) }">	
 								  <!-- BOTON ELIMINAR -->
-     <br><br>   
+     <br> 
 <form:form  method="POST" modelAttribute="agenda" action="mostrarAlerta">
 
 			<input name="idAgendaSeleccionada" type="hidden" value="${la.id}"></input>
@@ -164,16 +171,63 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 	
 </form:form> 
 								<!--FIN  BOTON ELIMINAR -->
-		
+		</c:if>
 		
 </div>
 
+
+
+
+
+<c:set var="cantClasesPracticas" value="${la.inscripcion.curso.cantClasesPracticas}"/>
+<c:set var="cantDeClasesCursa" value="${cantDeClasesCursando}"/>
+
+
+<c:if test="${cantClasesPracticas > cantDeClasesCursa}">
+	<form method="POST" modelAttribute="agendasViewModel" action="seleccionarClaseAgregar">
+	
+	<c:forEach items="${listadoDeClases}" var="la">
+	
+			<input name="cantClasesPracticas" type="hidden" value="${la.inscripcion.curso.cantClasesPracticas}"></input>
+			<input name="cantDeClasesCursando" type="hidden" value="${cantDeClasesCursando}"></input>
+			<input name="idAgendas[${la.id}]" type="hidden"  value="${la.id}"/>
+			<input name="idCurso" type="hidden"  value="${la.inscripcion.curso.id}"/>
+			
+		  	
+		
+		</c:forEach>
+		<div >
+		 <button type="submit" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
+	         AGREGAR CLASE+ 
+	       </button>
+	       </div>	
+	</form>	
+</c:if>
+
+
+
 </c:forEach>
 </div>	
+
+
+<form:form  method="POST" modelAttribute="agenda" action="finalizarCursoAlerta">				
+
+<c:forEach items="${listadoDeClases}" var="la">
+
+<input name="idCurso" type="hidden" value="${la.inscripcion.curso.id}"></input>
+<input name="idEspecialidad" type="hidden" value="${la.inscripcion.curso.especialidad.id}"></input>
+
+</c:forEach>
+
+
+
+
+		
+						<button type="submit" href="mostrarAlerta" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto m-t-35">
+					Finalizar Curso
+						</button>
 						
-						
-						
-						
+</form:form>						
 					</div>
 				</div>
 

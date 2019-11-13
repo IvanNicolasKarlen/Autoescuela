@@ -14,7 +14,6 @@ import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
-import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 // Implelemtacion del Servicio de usuarios, la anotacion @Service indica a Spring que esta clase es un componente que debe
@@ -30,7 +29,12 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	@Inject
 	private UsuarioDao servicioUsuarioDao;
 
-	/************************************* ORGANIZADOR *******************************/	
+	/************************************* ORGANIZADOR *******************************/
+	@Override
+	public List<Usuario> traerAlumnos(Long idInstructor) {
+		return servicioUsuarioDao.traerAlumnos(idInstructor);
+	}
+	
 	@Override
 	public Usuario consultarUsuario(Usuario usuario) {
 		return servicioUsuarioDao.consultarUsuario(usuario);
@@ -39,6 +43,17 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Long insertarUsuario(Usuario usuario){
 		return servicioUsuarioDao.insertarUsuario(usuario);
 	}
-	/*************************************************************************/
 	
+
+	@Override
+	public List<Usuario> traerUsuarios(String nombre, String apellido, String nombreUsuario, Integer dni,
+			String traer) {
+		return servicioUsuarioDao.traerUsuarios(nombre,apellido,nombreUsuario,dni,traer);
+	}
+
+	@Override
+	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
+		return servicioUsuarioDao.traerUsuarioPorNombreUsuario(nombreUser);
+	}
+	/*************************************************************************/
 }

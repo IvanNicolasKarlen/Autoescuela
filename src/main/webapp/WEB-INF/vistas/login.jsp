@@ -25,7 +25,7 @@
 <section class="bg-title-page flex-c-m p-t-160 p-b-80 p-l-15 p-r-15"
          style="background-image: url(images/registrobanner.jpg);">
     <h2 class="tit6 t-center">
-        BIENVENIDX DE NUEVO
+        BIENVENIDO DE NUEVO
     </h2>
 </section>
 
@@ -70,16 +70,21 @@
                                        type="password" id="password" path="password"></form:input>
                             </div>
                         </div>
-                         <div class="col-md-4">
-
-                    <div class="wrap-btn-booking flex-c-m m-t-6">
+                         <div class="col-md-4 m-t-20">
+                         
+                         <div class="wrap-btn-booking flex-c-m m-t-6">
                         <!-- Button3 -->
                         <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4">
                             Ingresar
                         </button>   
                     </div> 
                 </form:form> 
-                <a href="registro" class="text-center">No tengo usuario</a>
+                <a href="registro" class="text-center m-l-45">No tengo usuario</a>
+               	
+                         </div>
+
+                    
+               	</div> 
             </div>
    
         </div>

@@ -6,6 +6,8 @@
 <head>
 <head>
 <title>Home</title>
+<title>Agenda</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -34,6 +36,7 @@
 	<hr>
 	<div>
 					<a href="index">Volver a Inicio</a>
+					<a href="${context}/index">Volver a Inicio</a>
 				</div>
 			</div>
 		</div>

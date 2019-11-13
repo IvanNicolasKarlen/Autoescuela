@@ -9,12 +9,22 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
 
 public interface AgendaDao {
 	
+	
+	
+	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
+	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
+	void modificarAgenda(Agenda agenda);
+	
 	/************************ORGANIZADOR**************************************/
 	Long crearAgenda(Agenda agenda);
-	
+	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);
+	Agenda traerAgendaPorFechaHoraInstructor(String fecha, Integer hora, Instructor instructor);
+
+
 	
 	/*********************** INSTRUCTOR *********************************/
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
@@ -24,23 +34,46 @@ public interface AgendaDao {
 	Agenda buscarAgendaPorId(Long idAgenda);
 	Agenda buscarAgenda(Agenda agenda);
 	List <Agenda> traerAgendaInstructor(Long idInstructor);
-
-	/***************************** Alumno *******************************/
-	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
+	
+	
+	/******************************************************************/
+	/***************************** Alumno 
+	 * @param disponible *******************************/
+	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso, EstadoDeAgenda disponible);
 
 	Agenda buscarAgendasElegidas(Long a, Curso curso);
 
-	List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
 	
-	List<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno);
 
-	List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno);
+	TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idAlumno, Long idEspecialidad, EstadoInscripcion estado);
 
 	Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno);
 
 	void eliminarClaseDeLaAgenda(Agenda agenda);
 
 	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
+
+
+	void guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(Agenda agenda);
+
+
+	Agenda traerClaseQueQuiereEliminarParaAgregarlaEnLimpio(Long idAgendaSeleccionado, Long idAlumno);
+
+
+	TreeSet<Agenda> traerTodasLasClasesAEliminarDeUnaSolaEspecialidad(Long idAlumno, Long id,
+			EstadoInscripcion inscripcionEstadoCursando);
+
+
+	List<Agenda> validoQueNoSeCreenDosVecesLaMismaClase(Agenda a, EstadoDeAgenda disponible);
+
+
+	TreeSet<Agenda> traerTodasLasClasesParaEliminarYCrearlasEnLimpio(Long idAlumno, Long id,
+			EstadoInscripcion inscripcionEstadoCursando, EstadoDeAgenda ocupada);
+
+
+	TreeSet<Agenda> traigoSoloLasClasesConEstadoOcupada(Agenda a, EstadoDeAgenda ocupada);
 
 
 	

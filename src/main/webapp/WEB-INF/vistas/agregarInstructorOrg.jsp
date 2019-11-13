@@ -4,8 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<head>
-<title>Home</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
+<title>Agregar Instructor</title>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -37,7 +37,7 @@
 				</div>
 
 				<form:form class="wrap-form-reservation size22 m-l-r-auto"
-					method="POST" modelAttribute="usuario" action="agregarInstructor2">
+					method="POST" modelAttribute="usuario" action="${context}/agregarInstructor2">
 					<div class="row">
 						<div class="col-md-4">
 							<!-- Date -->
@@ -126,4 +126,3 @@
 	<!-- fin footer  -->
 </body>
 </html>
-

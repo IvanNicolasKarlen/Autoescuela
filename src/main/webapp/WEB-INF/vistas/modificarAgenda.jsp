@@ -56,6 +56,18 @@
 <!--===============================================================================================-->
 
 
+=======
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<title>Home</title>
+	<!-- meta, css, vendor, etc. -->
+
+<%@ include file="../../parts/meta.jsp" %> 
+	<!-- fin del meta, css, vendor, etc -->
+>>>>>>> 4e2e2ea9aaf7edb95e4af06ff0d27acd68f32654
 </head>
 <body class="animsition">
 

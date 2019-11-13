@@ -4,8 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<head>
-	<title>Home</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
+	<title>Agregar Instructor</title>
 	<!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
@@ -31,12 +31,14 @@
                 <div class="t-center">
 					<h4 class="t-center text-danger">${mensaje}</h4>
 					<h4 class="t-center text-danger">${error}</h4>
-					<form method="post" action="agregarVehiculoEspecialidad">
+					<c:if test="${empty instructorListo}">
+					<form method="post" action="${context}/agregarVehiculoEspecialidad">
 						<input name="idIns" value="${idInstructor}" style="display:none"/>
 						<button type="submit"
 								class=" m-t-50 btn3 flex-c-m size13 txt11 trans-0-4">
 								Agregar Especialidades y Vehiculos</button>
 					</form>
+					</c:if>
 					<c:if test="${iveGuardada==true}">
 						<a href="index">Volver a Inicio</a>
 					</c:if>
@@ -54,4 +56,3 @@
 	<!-- fin footer  -->
 </body>
 </html>
-
