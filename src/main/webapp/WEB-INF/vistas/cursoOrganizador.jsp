@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
 <title>Curso</title>
+<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp"%>
 <!-- fin del meta, css, vendor, etc -->
@@ -28,13 +29,13 @@
 					<h3>${error}</h3>
 					<hr>
 					<p>
-						<a href="verCursos">Ver cursos</a>
+						<a href="${context}/verCursos">Ver cursos</a>
 					</p>
 					<p>
-						<a href="index">Volver al inicio</a>
+						<a href="${context}/index">Volver al inicio</a>
 					</p>
 					<p>
-						<a href="agregarCurso">Agregar nuevo curso</a>
+						<a href="${context}/agregarCurso">Agregar nuevo curso</a>
 					</p>
 				</div>
 			</div>

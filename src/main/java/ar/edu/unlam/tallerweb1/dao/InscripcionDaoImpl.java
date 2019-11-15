@@ -33,7 +33,7 @@ public class InscripcionDaoImpl implements InscripcionDao {
 				.add(Restrictions.eq("alumno.id",idAlumno))
 				.createAlias("curso", "cur")
 				.createAlias("estadoInscripcion", "estadoInscripcionBuscado")
-				.add(Restrictions.eq("estadoInscripcionBuscado.estado", "Cursando"))
+				.add(Restrictions.eq("estadoInscripcionBuscado.id", estado.getId()))
 				.list();
 		return lista;
 	}
@@ -69,21 +69,17 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		
 	}
 
-	@Override
-	public Inscripcion buscarInscripcion(Alumno alumno, Curso curso) {
-		final Session session = sessionfactory.getCurrentSession();
-		return (Inscripcion) session.createCriteria(Inscripcion.class)
-				.add(Restrictions.eq("alumno.id",alumno.getId()))
-				.add(Restrictions.eq("curso.id",curso.getId()))
-				.createAlias("estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
-				.uniqueResult();
-		
-	}
-	
-	
-
-	
+//	@Override
+//	public Inscripcion buscarInscripcion(Alumno alumno, Curso curso) {
+//		final Session session = sessionfactory.getCurrentSession();
+//		return (Inscripcion) session.createCriteria(Inscripcion.class)
+//				.add(Restrictions.eq("alumno.id",alumno.getId()))
+//				.add(Restrictions.eq("curso.id",curso.getId()))
+//				.createAlias("estadoInscripcion", "estadoInscripcion")
+//				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+//				.uniqueResult();
+//		
+//	}
 
 	@Override
 	public void guardarInscripcionEnLaAgenda(Agenda a) {
@@ -98,13 +94,8 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id", idAlumno))
-<<<<<<< HEAD
 				.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
 				.createAlias("curso.especialidad", "especialidad")
-=======
-				.createAlias("estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
->>>>>>> Diana
 				.list();
 	return l;
 	}
@@ -162,8 +153,19 @@ final Session session = sessionfactory.getCurrentSession();
 				.uniqueResult();
 	}
 
-	
-	
+	@Override
+	public Inscripcion buscarInscripcion( Long idAlumno, Long idCurso) {
+		 
+		 final Session session = sessionfactory.getCurrentSession();
+			return (Inscripcion) session.createCriteria(Inscripcion.class)
+					.createAlias("alumno", "alumno")
+					.add(Restrictions.eq("alumno.id",idAlumno))
+					.createAlias("curso", "curso")
+					.add(Restrictions.eq("curso.id",idCurso))
+					.createAlias("estadoInscripcion", "estadoInscrip")
+					.add(Restrictions.eq("estadoInscrip.estado", "Cursando"))
+					.uniqueResult();
+	}
 
 	
 	

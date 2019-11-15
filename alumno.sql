@@ -46,8 +46,7 @@ select * from instructorvehiculoespecialidad;
 
 
  Insert into estadodeagenda(estado) 
-<<<<<<< HEAD
- values("Disponible"), /*1*/
+ values("Disponible"),/*1*/
  ("Ocupada"),/*2*/
  ("Cancelado por Alumno"),/*3*/
  ("Cancelado por Instructor"),/*4*/
@@ -55,17 +54,9 @@ select * from instructorvehiculoespecialidad;
  ("Finalizado"),/*6*/
  ("Clase perdida"),/*7*/
  ("Abandonada");
-=======
- values("Disponible"),
- ("Ocupada"),
- ("Cancelado por Alumno"),
- ("Cancelado por Instructor"),
- ("Cancelado por Organizador"),
- ("Finalizado"),
- ("Clase perdida");
  
->>>>>>> Diana
- 
+ /*select * from agenda
+ update agenda set estadoDeAgenda_id=6 where id=9 */
  
  
  
@@ -75,7 +66,7 @@ insert into instructorvehiculoespecialidad(especialidad_id, instructor_id, vehic
 values(1,1,1),(2,1,2);     
  
 /*Insert into estadodelcurso(estadodelcurso) values ("Cursando");*/
-Insert into estadoInscripcion(estado) values ("Cursando");
+Insert into estadoInscripcion(estado) values ("Cursando"), ("Finalizado"), ("Eliminado por Alumno");
 
 Insert into curso (
 	 cantClasesPracticas,
@@ -107,29 +98,23 @@ Insert into curso (
 
 Insert into agenda (fecha, hora,estadodeagenda_id,instructorvehiculoespecialidad_id) 
 values 
-<<<<<<< HEAD
 
-("08/11/2019", 0900,1,1),
-("09/11/2019", 0900,1,2),
-("10/11/2019", 0900,1,2),
-("12/11/2019", 0900,1,1),
-("13/11/2019", 0900,1,1),
-("14/11/2019", 0900,1,1),
-("15/11/2019", 0900,1,2),
-("16/11/2019", 0900,1,2);
-=======
-("10/12/2019", 1800,1,2),
-("01/09/2019", 1800,1,1),
-("03/11/2019", 1300,1,1),
-("04/11/2019", 1200,1,2),
-("04/11/2019", 1000,1,1),
-("05/10/2019", 1600,1,1),
-("06/11/2019", 0900,1,1),
-("07/11/2019", 0900,1,2),
-("08/11/2019", 0900,1,2);
->>>>>>> Diana
+("08-11-2019", 0900,1,1),
+("12-11-2019", 0900,1,2),
+("13-11-2019", 0900,1,2),
+("12-11-2019", 0900,1,1),
+("13-11-2019", 0900,1,1),
+("14-11-2019", 0900,1,1),
+("15-11-2019", 0900,1,2),
+("16-11-2019", 0900,1,2),
+("17-11-2019", 0900,1,1);
 
-select * from agenda
+
+
+
+
+select * from agenda;
+select * from inscripcion;
 /*
 ("2019/09/18", 1800,1,1),
 ("2019/09/19", 1300,1,1),
@@ -139,4 +124,3 @@ select * from agenda
 ("2019/09/23", 0900,1,1),
 ("2019/09/24", 0900,1,2),
 ("2019/09/25", 0900,1,2);*/
-

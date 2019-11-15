@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<header>
 		<!-- Header desktop -->
+		<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 		<div class="wrap-menu-header gradient1 trans-0-4">
 			<div class="container h-full">
 				<div class="wrap_header trans-0-3">
 					<!-- Logo -->
 					<div class="logo">
-						<a href="index.html">
-							<img src="images/logo.png" alt="IMG-LOGO" data-logofixed="images/logo.png">
+						<a href="${context}/index">
+							<img src="${context}/images/logo.png" alt="IMG-LOGO" data-logofixed="${context}/images/logo.png">
 						</a>
 					</div>
 
@@ -17,30 +18,29 @@
 						<nav class="menu">
 							<ul class="main_menu">
 							<!-- Estos son los links q se muestran sin usuario-->
-							<c:if test="${rol==null}">
+							<c:if test="${ empty rol}">
 								<li>
-									<a href="index">Inicio</a>
+									<a href="${context}/index">Inicio</a>
 								</li>
 								<li>
-									<a href="cursos">Cursos</a>
+									<a href="${context}/cursos">Cursos</a>
 								</li>
 								<li>
 								<!-- Aca no se q poner -->
-									<a href="gallery.html">Gallery</a>
+									<a href="${context}/gallery.html">Gallery</a>
 									<!-- xD -->
 								</li>
 								<li>
-									<a href="nosotros">Nosotros</a>
+									<a href="${context}/nosotros">Nosotros</a>
 								</li>
 								<li>
-									<a href="contacto">Contacto</a>
+									<a href="${context}/contacto">Contacto</a>
 								</li>
 							</c:if>
 							<!-- Fin del los links sin user-->
 							<!-- Estos se van a mostrar si sos alumno -->
 								<c:if test="${rol=='Alumno'}">
 									<li>
-<<<<<<< HEAD
 									<a class="text-center" href="${context}/indexAlumno">Inicio</a>
 								</li>
 								<li>
@@ -51,28 +51,17 @@
 								</li>
 								<li>
 									<a class="text-center" href="${context}/historial">Historial</a>
-=======
-									<a href="index">Inicio</a>
-								</li>
-								<li>
-									<a href="listadoCursos">Anotarme</a>
-								</li>
-								<li>
-									<a href="listadoFechas">Mis clases</a>
->>>>>>> Diana
 								</li>
 								</c:if>
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
 									<li>
-										<a href="index">Inicio</a>
+										<a href="${context}/index">Inicio</a>
 									</li>
+									
 									<li>
-										<a href="AlumnosDelInstructor">Mis Alumnos</a>
-									</li>
-									<li>
-										<a href="buscadorDeAlumnos">Buscador de Alumnos</a>
+										<a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a>
 									</li>
 									
 								</c:if>
@@ -81,11 +70,11 @@
 							<!-- Organizador -->
 							<!-- Organizador -->
 							<c:if test="${rol=='Organizador'}">
-								<li><a href="index">Inicio</a></li>
-								<li><a href="agregarVehiculo">Agregar Vehiculo</a></li>
-								<li><a href="agregarCurso">Agregar Curso</a></li>
-								<li><a href="crearAgenda">Crear Agenda</a></li>
-								<li><a href="agregarInstructor">Agregar Instructor</a></li>
+								<li><a href="${context}/index">Inicio</a></li>
+								<li><a href="${context}/agregarCurso">Agregar Curso</a></li>
+								<li><a href="${context}/crearAgenda">Crear Agenda</a></li>
+								<li><a href="${context}/agregarInstructor">Agregar Instructor</a></li>
+								<li><a href="${context}/busquedaUsuarios">Buscar Usuarios</a></li>	
 							</c:if>
 							<!-- Fin organizador- -->
 							</ul>
@@ -95,16 +84,11 @@
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
-<<<<<<< HEAD
 						<c:if test="${not empty rol}">
 							<a><b class="text-danger">${usuario.nombre} ${usuario.apellido}</b></a>
-=======
-						<c:if test="${rol!=null}">
-							<a href="cuenta"><b class="text-danger">Mi cuenta</b></a>
->>>>>>> Diana
 						</c:if>
-						<c:if test="${rol==null}">
-							<a href="login"><b class="text-danger">Ingresar</b></a>
+						<c:if test="${empty rol}">
+							<a href="${context}/login"><b class="text-danger">Ingresar</b></a>
 						</c:if>	
 					<!-- fin del IF -->	
 

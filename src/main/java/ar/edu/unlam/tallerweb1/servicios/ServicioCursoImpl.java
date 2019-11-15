@@ -56,5 +56,23 @@ public class ServicioCursoImpl implements ServicioCurso{
 		cursoDao.eliminarCurso(curso);
 	}
 
+	@Override
+	public void modificarCurso(Curso curso) {
+		cursoDao.modificarCurso(curso);
+	}
+
+	@Override
+	public List<Curso> traerCursosPorEspecialidad(String especialidad) {
+		return cursoDao.traerCursosPorEspecialidad(especialidad);
+	}
+
+	
+	
+
+/*****************MOCK*****************/
+
+public void setCursoDao(CursoDao cursoDao) {
+	this.cursoDao = cursoDao;
+}
 	
 }

@@ -23,6 +23,10 @@
 	
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
+	
+	<h4 class="tit2 t-center m-b-35 m-t-2">
+                 <label>Selecciona un curso</label>
+					</h4>
 	<h4 class="t-center text-danger">${error}</h4>
 <div class="row">
  

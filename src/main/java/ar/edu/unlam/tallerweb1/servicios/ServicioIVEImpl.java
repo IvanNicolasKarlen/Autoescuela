@@ -39,6 +39,12 @@ public class ServicioIVEImpl implements ServicioIVE {
 	public InstructorVehiculoEspecialidad buscarIvePorId(Long idIVE) {
 		return iveDao.buscarIvePorId(idIVE);
 	}
+	@Override
+	public List<InstructorVehiculoEspecialidad> traerListaIvePorInstructor(Instructor instructor) {
+		return iveDao.traerIvePorInstructor(instructor);
+	}
+
+
 
 	
 }

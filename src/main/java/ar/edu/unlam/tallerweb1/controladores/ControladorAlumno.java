@@ -61,33 +61,6 @@ public class ControladorAlumno {
 	@Inject
 	private ServicioCurso servicioCurso;
 	
-	/*NO VA
-	@RequestMapping("/vistaX")
-	public ModelAndView prueba(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel) {
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
-		{
-			ModelMap modelo = new ModelMap();
-			
-		try{	
-			if(agendasViewModel.getIdAgendaSeleccionada().SIZE == 0)
-			{
-			modelo.put("mensaje", "Ingreso al try");	
-			
-			}
-		}catch(NullPointerException e)
-		{
-			modelo.put("mensaje", "Ingreso al catch");
-		}
-			
-			
-			modelo.put("curso", agendasViewModel.getIdCurso());
-			modelo.put("idAgenda", agendasViewModel.getIdAgendaSeleccionada());
-			
-		return new ModelAndView("vistaX",modelo);
-		}
-		return new ModelAndView("redirect:/index");
-	}*/
-	
 	
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno(HttpServletRequest request) {
@@ -116,50 +89,50 @@ public class ControladorAlumno {
 	@RequestMapping(path="/listadoCursos")
 	public ModelAndView mostrarCursos(HttpServletRequest request){
 		
-	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 	{
-		
-		ModelMap modelo = new ModelMap();
+		return new ModelAndView("redirect:/index");
+	}	
+	
+	ModelMap modelo = new ModelMap();
 		
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Trae todo el listado de todos los cursos
-		List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();//servicioAlumnoInscripcion
+		List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
 		
 	
 		modelo.put("lista", listaCursos);
 		
 		return new ModelAndView("cursos",modelo);
 	}
-		
-	return new ModelAndView("redirect:/index");
-	}
-	
-	
-	
-	
+
 	
 	
 	@RequestMapping(path="/cursoElegido")
 	public ModelAndView guardarCursoSeleccionado( @ModelAttribute("curso") Curso cursoElegido, HttpServletRequest request )
 	{
-		ModelMap modelo = new ModelMap();
 		
-
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
+			return new ModelAndView("redirect:/index");
+		}
 			
+	ModelMap modelo = new ModelMap();
 	String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 	modelo.put("rol", rol);
 	
-			//Sesion
-		Long idAlumno = (Long) request.getSession().getAttribute("ID");
+	//Sesion
+	Long idAlumno = (Long) request.getSession().getAttribute("ID");
 	
+	//Traigo los datos del alumno logueado
+	Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(cursoElegido.getId());//servicioAlumnoInscripcion
 
-		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, cursoElegido); //servicioAlumnoInscripcion
+		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), cursoElegido); //servicioAlumnoInscripcion
 			
 		if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 			{
@@ -168,7 +141,7 @@ public class ControladorAlumno {
 			modelo.put("cursoSeleccionado", curso);
 			
 			//Traer todas las fechas con disponibilidad
-			TreeSet<Agenda> agendas=servicioAgenda.traerAgendasConFechasNoRepetidas(curso);//servicioAlumnoAgenda
+			TreeSet<Agenda> agendas=servicioAgenda.traerAgendasConFechasNoRepetidas(curso, alumno.getId());//servicioAlumnoAgenda
 
 			if(agendas.isEmpty())
 			{
@@ -190,11 +163,7 @@ public class ControladorAlumno {
 				modelo.put("lista", listaCursos);
 				return new ModelAndView("cursos", modelo); //Todavia no curso nada		
 			}
-		}// fin if rol
-				return new ModelAndView("redirect:/index");
 	}
-	
-	
 	
 	
 	
@@ -206,38 +175,31 @@ public class ControladorAlumno {
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		ModelMap modelo = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
-		{
+		
+			if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+			{
+				return new ModelAndView("redirect:/index");
+			}
+			ModelMap modelo = new ModelMap();
 			
 			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 			modelo.put("rol", rol);
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
-		
-			
-			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
-		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
-			
-			Long idCurso = agendasViewModel.getIdCurso();
+			//Traigo los datos del alumno logueado
+			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 			
 			//Datos del curso Elegido
-			Curso curso = servicioCurso.buscarCursoPorId(idCurso);//servicioAlumnoInscripcion
+			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
 			
-			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);//servicioAlumnoInscripcion
+			List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), curso);//servicioAlumnoInscripcion
 							
 	if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 		{
-					
-		
-		
-		List<Long> idAgendasDepurado = agendasViewModel.getIdAgendasDepurado();
 		
 		//Consultar que no le hayan ocupado esas fechas
-		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(idAgendasDepurado,curso); //servicioAlumnoAgenda
+		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso); //servicioAlumnoAgenda
 		
 		//Si las fechas que me asignaron no fueron ocupadas
 			if(resultado == true)
@@ -245,7 +207,7 @@ public class ControladorAlumno {
 				//Anotarme
 					
 				
-		servicioInscripcion.guardarInscripcionEnLaAgendaYEnInscripcion(alumno, curso, idAgendasDepurado);//servicioAlumnoInscripcion
+		servicioInscripcion.guardarInscripcionEnLaAgendaYEnInscripcion(alumno, curso,agendasViewModel.getIdAgendasDepurado());//servicioAlumnoInscripcion
 		modelo.put("mensaje", "Tu inscripcion se realizo con exito");
 			
 			}
@@ -255,7 +217,7 @@ public class ControladorAlumno {
 				//Buscarle otras fechas
 						
 				//Traer todas las fechas con disponibilidad    
-				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);//servicioAlumnoAgenda
+				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso,idAlumno);//servicioAlumnoAgenda
 
 					if(agendas.isEmpty())
 					{
@@ -295,13 +257,7 @@ public class ControladorAlumno {
 		return new ModelAndView("inscripcionExitosa",modelo); 
 		
 		
-		} //// fin If Session
-		return new ModelAndView("redirect:/index");
 	}
-	
-	
-	
-	
 	
 	
 
@@ -309,8 +265,10 @@ public class ControladorAlumno {
 	@RequestMapping(path="/listadoFechas")
 	public ModelAndView DiasDeCursada(HttpServletRequest request){
 		
-	if(request.getSession().getAttribute("ROL").equals("Alumno"))
-	{
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		{
+			return new ModelAndView("redirect:/index");
+		}
 		ModelMap modelo = new ModelMap();
 			
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
@@ -318,34 +276,23 @@ public class ControladorAlumno {
 		
 				//Sesion
 				Long idAlumno = (Long) request.getSession().getAttribute("ID");
-												
-				List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno);//servicioAlumnoInscripcion
 				
-<<<<<<< HEAD
-				Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 				//Traigo los datos del alumno logueado
-					Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+				Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 
 				//Busco el id del estado que dice "Cursando"
 				 EstadoInscripcion estado = servicioEstadoInscripcion.buscarEstadoCursando();//alumnoEstadoDao
 					
 				List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(alumno.getId(), estado);//servicioAlumnoInscripcion
-=======
->>>>>>> Diana
 				
 				if(cursando.isEmpty())
 				{
 					modelo.put("num", cursando.size());
 				}else{
 					
-<<<<<<< HEAD
 					//Busco el id del estado que dice "Cursando"
 					 EstadoInscripcion estadoCursando = servicioEstadoInscripcion.buscarEstadoCursando();
-					TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estadoCursando);
-=======
-					TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(idAlumno);
->>>>>>> Diana
+					List<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estadoCursando);
 						
 					modelo.put("num", cursando.size());
 					modelo.put("listadoClases", listadoDeClases);
@@ -353,20 +300,19 @@ public class ControladorAlumno {
 					 }
 				
 				return new ModelAndView("fechaYHorasDeCadaCurso", modelo);
-	}
-		
-	return new ModelAndView("redirect:/index");
+	
 	}
 	
 	
 	
 	/*Trae solo las clases de la especialidad que selecciono en los filtros*/
 	@RequestMapping(path="/clasesDelCurso")
-	public ModelAndView VistaDePruebas(HttpServletRequest request, @RequestParam(name="id") Long idEspecialidad ){
+	public ModelAndView VistaDePruebas(HttpServletRequest request, @RequestParam(name="id", required=false) Long idEspecialidad ){
 		
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
-		{	
-		
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		{
+			return new ModelAndView("redirect:/index");
+		}
 		ModelMap modelo = new ModelMap();
 		
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
@@ -375,63 +321,46 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-<<<<<<< HEAD
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 		
 		//Busco el id del estado que dice "Cursando"
 		 EstadoInscripcion inscripcionEstadoCursando = servicioEstadoInscripcion.buscarEstadoCursando();
 		
 		
 		//Traer las clases del filtro elegido Agenda
-		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(),inscripcionEstadoCursando);//servicioAlumnoInscripcion
+		List<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(),inscripcionEstadoCursando);//servicioAlumnoInscripcion
 		
 		
 		//Traer solo los filtros Inscripcion
 		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(alumno.getId(), inscripcionEstadoCursando);
-=======
-		//Traer las clases del filtro elegido Agenda
-		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,idAlumno);//servicioAlumnoInscripcion
 		
+		List<Agenda> clasesCursando= servicioAgenda.traerClasesQueEsteCursando(clasesDeUnSoloCurso);
 		
-		//Traer solo los filtros Inscripcion
-		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(idAlumno);
->>>>>>> Diana
 		
 		/*Por si cambia el id de la url*/
-		if(clasesDeUnSoloCurso.isEmpty())
+		if(clasesDeUnSoloCurso.isEmpty() || idEspecialidad.equals(null)){
 			modelo.put("error", "No estas realizando ese curso");
-		
-		/*Para mostrar los cursos que esta realizando y que los pueda eliminar*/
-		List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(idAlumno);//servicioAlumnoInscripcion
-		
+			modelo.put("botonFinalizarAnulado", "Anulado");
+		}
 		
 		/*Si no tiene curso, se le pedira que se registre a alguno*/
-		if(cursando.isEmpty())
+		if(listadoDeFiltros.isEmpty())
 		{
-			modelo.put("num", cursando.size());
+			modelo.put("num", listadoDeFiltros.size());
 		}else{
-			
 			/*Sino, se le mostrara las clases que eligio del filtro*/
-			modelo.put("num", cursando.size());
+			modelo.put("num", listadoDeFiltros.size());
 			/*Los cursos que esta realizando, para poder eliminarlos*/
-			modelo.put("listaCursos", cursando);
+			modelo.put("listaCursos", listadoDeFiltros);
+			
+			modelo.put("listadoDeClases", clasesDeUnSoloCurso);
+			modelo.put("cantDeClasesCursando", clasesCursando.size());
+		
 			 }
 		
-		modelo.put("listadoDeClases", clasesDeUnSoloCurso);
-		modelo.put("listadoDeFiltros",listadoDeFiltros );
-		
-		modelo.put("cantDeClasesCursando", clasesDeUnSoloCurso.size());
-	
 		
 		return new ModelAndView("clasesElegidasEnElFiltroDeAlumno", modelo);
-	}
-		
-	
-	
-	return new ModelAndView("redirect:/index");
 	}
 
 	
@@ -440,8 +369,10 @@ public class ControladorAlumno {
 	public ModelAndView mostrarSiQuiereEliminarUnaClaseOno(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
 		
 		
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
+			return new ModelAndView("redirect:/index");
+		}
 		ModelMap modelo = new ModelMap();
 		
 		
@@ -451,10 +382,8 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 	
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 		
 		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
 		try{
@@ -491,11 +420,8 @@ public class ControladorAlumno {
 			
 			modelo.put("bandera", 2);
 			}
-<<<<<<< HEAD
 	
 			return new ModelAndView("alertaEliminar", modelo);
-	}
-		return new ModelAndView("redirect:/index");
 	}
 
 	
@@ -503,53 +429,42 @@ public class ControladorAlumno {
 	
 	@RequestMapping(path="/finalizarCursoAlerta")
 	public ModelAndView consultarSiQuiereFinalizarONo(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
-=======
->>>>>>> Diana
+			return new ModelAndView("redirect:/index");
+		}
+		ModelMap modelo = new ModelMap();
 		
-		
-<<<<<<< HEAD
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
-
-		try{
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 		
-			agendasViewModel.getIdCurso().equals(null);
-			
-		}catch(NullPointerException e)
-				{
+				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(alumno.getId(), agendasViewModel.getIdCurso());	
 					
+				modelo.put("mensaje", "¿Estas seguro?");
+				modelo.put("inscripcion", inscripcionBuscada);
 					
-				Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(alumno.getId(), agendasViewModel.getIdEspecialidad());	
-					
-=======
-		
->>>>>>> Diana
+				modelo.put("bandera", 3);
 				
-		
-		
-		return new ModelAndView("alertaEliminar", modelo);
+	return new ModelAndView("alertaEliminar", modelo);
 	}
-		return new ModelAndView("redirect:/index");
-	}
+	
+	
 	
 	
 	/*Confirmado el metodo de Eliminar la clase seleccionada*/
 	@RequestMapping(path="/eliminarClase")
 	public ModelAndView eliminarUnaClase(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
 		
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
-		
+			return new ModelAndView("redirect:/index");
+		}
 		ModelMap modelo = new ModelMap();
 	
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
@@ -558,14 +473,8 @@ public class ControladorAlumno {
 		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
-<<<<<<< HEAD
-		
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-=======
->>>>>>> Diana
-
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 		
 		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
 		try{
@@ -586,17 +495,23 @@ public class ControladorAlumno {
 
 		}catch(NullPointerException e){
 			
-<<<<<<< HEAD
+			
+			/*verifico que no se pueda eliminar la agenda con menos de
+			 * 2 dias de anticipacion*/
+			Boolean result= servicioAgenda.verificarUnaAgendaSePuedaEliminar(agendasViewModel.getIdAgendaSeleccionada());
+			
+			if(result.equals(true)){
+			
 			//Eliminar esta clase
 			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),alumno.getId());
 			 modelo.put("mensaje", "Se ha eliminado la clase seleccionada correctamente");
+			}else{
+				modelo.put("mensaje", "No se puede eliminar la clase con menos de dos dias de anticipacion");
+			}
 		}
 		
 		
 		return new ModelAndView("Eliminada", modelo);
-	}
-	
-		return new ModelAndView("redirect:/index");
 	}
 	
 	
@@ -607,20 +522,21 @@ public class ControladorAlumno {
 			@ModelAttribute("agenda") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		ModelMap modelo = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
-		{
 	
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		{
+			return new ModelAndView("redirect:/index");
+		}
+		
+			ModelMap modelo = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 			modelo.put("rol", rol);
 
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
-			
-			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 			//Traigo los datos del alumno logueado
-				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+			
 			
 			try{
 				
@@ -628,16 +544,13 @@ public class ControladorAlumno {
 			
 			}catch(NullPointerException e){
 			
-			servicioInscripcion.finalizarCursoDelAlumno(agendasViewModel.getIdEspecialidad(),alumno.getId());
+			servicioInscripcion.finalizarCursoDelAlumno(alumno.getId(), agendasViewModel.getIdCurso());
 			modelo.put("mensaje", "Has finalizado el curso de manera exitosa");
 				
 			}
 
 			return new ModelAndView("Eliminada", modelo);
-			
-		}
 		
-		return new ModelAndView("redirect:/index");
 	}	
 	
 	
@@ -655,12 +568,9 @@ public class ControladorAlumno {
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
-			
-			
-			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 			//Traigo los datos del alumno logueado
-				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+		
 			EstadoInscripcion finalizado = servicioEstadoInscripcion.buscarEstadoFinalizado();
 			
 			List<Inscripcion> cursando = servicioInscripcion.saberSiEstaRealizandoAlgunCurso(alumno.getId(), finalizado);//servicioAlumnoInscripcion
@@ -672,7 +582,7 @@ public class ControladorAlumno {
 				
 				//Busco el id del estado que dice "Finalizado"
 				 EstadoInscripcion estado = servicioEstadoInscripcion.buscarEstadoFinalizado();
-				TreeSet<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estado);
+				List<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estado);
 					
 				modelo.put("num", cursando.size());
 				modelo.put("listadoClases", listadoDeClases);
@@ -689,18 +599,14 @@ public class ControladorAlumno {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	/*Trae solo las clases de la especialidad que selecciono en los filtros*/
 	@RequestMapping(path="/mostrarclasesCurso")
 	public ModelAndView ClasesDeUnSoloCurso(HttpServletRequest request, @RequestParam(name="id") Long idEspecialidad ){
 		
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
+			return new ModelAndView("redirect:/index");
+		}
 		ModelMap modelo = new ModelMap();
 		
 		
@@ -711,27 +617,24 @@ public class ControladorAlumno {
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 		
 		//Busco el id del estado que dice "Finalizado"
 		 EstadoInscripcion estadoFinalizado = servicioEstadoInscripcion.buscarEstadoFinalizado();
 		
-		
 		//Traer las clases del filtro elegido Agenda
-		TreeSet<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(), estadoFinalizado);//servicioAlumnoInscripcion
-		
-		
-		
+		List<Agenda> clasesDeUnSoloCurso = servicioAgenda.traerTodasLasClasesDeUnaSolaEspecialidad(idEspecialidad,alumno.getId(), estadoFinalizado);//servicioAlumnoInscripcion
 		
 		//Traer solo los filtros Inscripcion
 		List<Inscripcion> listadoDeFiltros = servicioInscripcion.traerLosCursosEnQueSeEncuentraAnotado(alumno.getId(),estadoFinalizado);
 		
+		
 		/*Por si cambia el id de la url*/
-		if(clasesDeUnSoloCurso.isEmpty())
+		if(clasesDeUnSoloCurso.isEmpty() || idEspecialidad.equals(null)){
 			modelo.put("error", "No estas realizando ese curso");
+			modelo.put("botonFinalizarAnulado", "Anulado");
+		}
 		
 		/*Si no tiene curso, se le pedira que se registre a alguno*/
 		if(listadoDeFiltros.isEmpty())
@@ -745,31 +648,12 @@ public class ControladorAlumno {
 			 }
 		
 		modelo.put("listadoDeClases", clasesDeUnSoloCurso);
-		//modelo.put("listadoDeFiltros",listadoDeFiltros );
-		
-=======
-			
-			
-			/*verifico que no se pueda eliminar la agenda con menos de
-			 * 2 dias de anticipacion*/
-			Boolean result= servicioAgenda.verificarUnaAgendaSePuedaEliminar(agendasViewModel.getIdAgendaSeleccionada());
-			
-			if(result.equals(true)){
-		
-			//Eliminar esta clase
-			 servicioAgenda.eliminarClaseDeLaAgenda(agendasViewModel.getIdAgendaSeleccionada(),idAlumno);
-			 modelo.put("mensaje", "Se ha eliminado la clase seleccionada correctamente");
-			}else{
-				modelo.put("mensaje", "No se puede eliminar la clase con menos de dos dias de anticipacion");
-			}
-		}
-		
->>>>>>> Diana
+
+		return new ModelAndView("HistorialclasesElegidasEnElFiltroDeAlumno", modelo);
 	
-		return new ModelAndView("Eliminada", modelo);
-	}
-		return new ModelAndView("redirect:/index");
 	}	
+	
+	
 	
 
 	// editar agenda
@@ -779,21 +663,19 @@ public class ControladorAlumno {
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		ModelMap modelo = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
-			
+			return new ModelAndView("redirect:/index");
+		}
+			ModelMap modelo = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 			modelo.put("rol", rol);
 			
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
-		
-			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 			//Traigo los datos del alumno logueado
-				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
+			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
 			//Datos del curso Elegido
 			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
@@ -812,16 +694,12 @@ public class ControladorAlumno {
 			if(resultado == true)
 			{
 			//Datos del curso Elegido
-				
-				
-				List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( agendasViewModel.getIdAgendasDepurado(),  curso);
-			
-			Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
+			List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( agendasViewModel.getIdAgendasDepurado(),  curso);
+					
 			modelo.put("mensaje", "Seleccione la agenda que desee modificar");
 			modelo.put("listaAgendas", datosAgendas);
 			modelo.put("cursoSeleccionado", curso);
 
-			
 			}
 		
 			else{ //fin if resultado == true
@@ -829,7 +707,7 @@ public class ControladorAlumno {
 				//Buscarle otras fechas
 						
 				//Traer todas las fechas con disponibilidad    
-				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);
+				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso, idAlumno);
 
 					if(agendas.isEmpty())
 					{
@@ -861,16 +739,12 @@ public class ControladorAlumno {
 					
 			}
 					
-			
+//			
 		modelo.put("curso2", agendasViewModel.getIdCurso());
-		//modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
 		modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
 		
 		return new ModelAndView("seleccionarAgenda",modelo); 
 		
-		
-		} //// fin If Session
-		return new ModelAndView("redirect:/index");
 	}
 
 	
@@ -881,25 +755,20 @@ public class ControladorAlumno {
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		ModelMap modelo = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 		{
-			
+			return new ModelAndView("redirect:/index");
+		}
+			ModelMap modelo = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 			modelo.put("rol", rol);
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
-<<<<<<< HEAD
-			Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
-			//Traigo los datos del alumno logueado
-				Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-=======
 			//Traigo los datos del alumno logueado
 			Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
->>>>>>> Diana
-
+		
 			//Datos del curso Elegido
 			Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 			
@@ -908,26 +777,21 @@ public class ControladorAlumno {
 	if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 		{
 						
-		List<Long> idAgendasDepurado = agendasViewModel.getIdAgendasDepurado();
 		//Consultar que no le hayan ocupado esas fechas
-		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(idAgendasDepurado,curso);
+		Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso);
 		
 		//Si las fechas que me asignaron no fueron ocupadas
 			if(resultado == true)
 			{
-		
 				//traer agendas disponibles diferentes a las fechas seleccionadas 
-				TreeSet<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendasDepurado());
+				List<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendasDepurado(), alumno.getId());
 
-				//Datos del curso Elegido
-			
 				modelo.put("mensaje", "Elige la nueva agenda");
 				modelo.put("listaAgendas", agendasViewModel.getIdAgendasDepurado());
 				modelo.put("agendasAlternativas", agendasAlternativas);
 				modelo.put("cursoSeleccionado", curso);
 				modelo.put("agen",agendasViewModel.getIdAgendaEditar());	
 
-		
 			}
 		
 			else{ //fin if resultado == true
@@ -935,7 +799,7 @@ public class ControladorAlumno {
 				//Buscarle otras fechas
 						
 				//Traer todas las fechas con disponibilidad    
-				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);
+				TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso, idAlumno);
 
 					if(agendas.isEmpty())
 					{
@@ -973,10 +837,7 @@ public class ControladorAlumno {
 		modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
 		
 		return new ModelAndView("agendasAlternativas",modelo); 
-		
-		
-		} //// fin If Session
-		return new ModelAndView("redirect:/index");
+	
 	}
 
 	
@@ -986,61 +847,48 @@ public ModelAndView modificarAgenda(
 		@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 		HttpServletRequest request )
 {
-	ModelMap modelo = new ModelMap();
-	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	
+	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 	{
+		return new ModelAndView("redirect:/index");
+	}
+		ModelMap modelo = new ModelMap();
 		
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
-		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
-	
-<<<<<<< HEAD
-		Usuario usuario = servicioAlumno.buscarUsuario(idAlumno);
 		//Traigo los datos del alumno logueado
-			Alumno alumno = servicioAlumno.buscarAlumno(usuario.getAlumno().getId());
-
-=======
->>>>>>> Diana
+		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+		
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
 		
 		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(alumno.getId(), curso);
 						
-if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
+if(!inscripcionCurso.isEmpty() ) //ese curso que eligio  esta anotado
 	{
-					
-	List<Long> idAgendasDepurado = agendasViewModel.getIdAgendasDepurado();
-	//Consultar que no le hayan ocupado esas fechas
-	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(idAgendasDepurado,curso);
-	
-	//Si las fechas que me asignaron no fueron ocupadas
-		if(resultado == true)
-		{
+		modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
+		
+		//Trae todo el listado de todos los cursos
+		List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
 			
-			List <Long> idAgendas= servicioAgenda.reemplazarAgenda(agendasViewModel.getIdAgendaSeleccionada(),
-					agendasViewModel.getIdAgendasDepurado(),agendasViewModel.getIdAgendaEditar());
-			List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( idAgendas,  curso);
-
-
-			//Datos del curso Elegido
-			Curso curso1 = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());		
-			modelo.put("mensaje", "Agenda modificada con exito");
-			modelo.put("listaAgendas", datosAgendas);
-			modelo.put("cursoSeleccionado", curso);
-			modelo.put("agen",agendasViewModel.getIdAgendaSeleccionada());	
-
+		modelo.put("lista", listaCursos);
+		return new ModelAndView("cursos", modelo); //Todavia no curso nada
 	
-		}
-	
-		else{ //fin if resultado == true
+	}
 					
+	//Consultar que no le hayan ocupado esas fechas
+	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso);
+	
+	//Si las fechas que me asignaron fueron ocupadas
+		if(resultado.equals(false))
+		{
 			//Buscarle otras fechas
 					
 			//Traer todas las fechas con disponibilidad    
-			TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);
+			TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso, idAlumno);
 
 				if(agendas.isEmpty())
 				{
@@ -1048,42 +896,28 @@ if(inscripcionCurso.isEmpty() ) //Todavia ese curso que eligio no esta anotado
 							
 				}else{
 					modelo.put("listaAgendas", agendas);
-					modelo.put("listaAgendassize", agendas.size());	
 					 }
 					
 			modelo.put("mensaje", "Una de las clases ha sido ocupada. Te buscamos clases nuevas");
 			modelo.put("cursoSeleccionado", curso);
 
 			return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
-					
-		   	 }	
-										
-						
-	}	/////////////////////////if inscripcionCurso.isEmpty()	linea 173
-	else{
 
-			modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
-			
-			//Trae todo el listado de todos los cursos
-			List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
-				
-			modelo.put("lista", listaCursos);
-			return new ModelAndView("cursos", modelo); //Todavia no curso nada
-				
 		}
-				
-		
-	modelo.put("curso2", agendasViewModel.getIdCurso());
-	modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
-	modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
-	
+
+			List <Long> idAgendas= servicioAgenda.reemplazarAgenda(agendasViewModel.getIdAgendaSeleccionada(),
+					agendasViewModel.getIdAgendasDepurado(),agendasViewModel.getIdAgendaEditar());
+			List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( idAgendas,  curso);
+
+			modelo.put("mensaje", "Agenda modificada con exito");
+			modelo.put("listaAgendas", datosAgendas);
+			modelo.put("cursoSeleccionado", curso);
+			modelo.put("agen",agendasViewModel.getIdAgendaSeleccionada());	
+
 	return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
 	
-	
-	} //// fin If Session
-	return new ModelAndView("redirect:/index");
 }
-
+	
 
 
 @RequestMapping(path="/seleccionarClaseAgregar")
@@ -1091,38 +925,34 @@ public ModelAndView seleccionarClaseAgregar(
 		@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 		HttpServletRequest request )
 {
-	ModelMap modelo = new ModelMap();
-	if(request.getSession().getAttribute("ROL").equals("Alumno"))
+	
+	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
 	{
+		return new ModelAndView("redirect:/index");
+	}
+	ModelMap modelo = new ModelMap();
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
-	
-		List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas(agendasViewModel.getIdAgendasDepurado(),  curso);
-		
 		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
-			
-		//traer agendas disponibles diferentes a las fechas seleccionadas 
-		TreeSet<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendasDepurado());
-	
+		
 		//Traigo los datos del alumno logueado
 		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+		
+		//traer agendas disponibles diferentes a las fechas seleccionadas 
+		List<Agenda> agendasAlternativas=servicioAgenda.traerAgendasParaReemplazarOtra(curso, agendasViewModel.getIdAgendasDepurado(), alumno.getId());
+	
+	
 
-		Inscripcion inscripcion = servicioInscripcion.buscarInscripcion(curso, alumno );
+		Inscripcion inscripcion = servicioInscripcion.buscarInscripcion(alumno.getId(),curso.getId());
 		
 		modelo.put("listaAgendas", agendasAlternativas);
 		modelo.put("mensaje", "Selecciona la agenda que desees agregar");
 		modelo.put("cursoSeleccionado", curso);
-		modelo.put("agendasCursando", datosAgendas);
 		modelo.put("inscripcion", inscripcion);
 		
 		return new ModelAndView("seleccionarClaseAgregar",modelo);
-	
-	
-}
-return new ModelAndView("redirect:/index");
-	
 			
 }
 
@@ -1132,21 +962,21 @@ public ModelAndView agregarClase(
 		@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 		HttpServletRequest request )
 {
-	ModelMap modelo = new ModelMap();
-	if(request.getSession().getAttribute("ROL").equals("Alumno"))
-	{
+
+		ModelMap modelo = new ModelMap();
 		
 		//Sesion
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
-	
-	//Traigo los datos del alumno logueado
+		
+		//Traigo los datos del alumno logueado
 		Alumno alumno = servicioAlumno.buscarAlumno(idAlumno);
+		
 
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());//servicioAlumnoInscripcion
 									
 	//Consultar que no le hayan ocupado esas fechas
-	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel,curso); //servicioAlumnoAgenda
+	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso); //servicioAlumnoAgenda
 	
 	//Si las fechas que me asignaron no fueron ocupadas
 		if(resultado == true)
@@ -1162,7 +992,7 @@ public ModelAndView agregarClase(
 			//Buscarle otras fechas
 					
 			//Traer todas las fechas con disponibilidad    
-			TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso);//servicioAlumnoAgenda
+			TreeSet<Agenda> agendas= servicioAgenda.traerAgendasConFechasNoRepetidas(curso, idAlumno);//servicioAlumnoAgenda
 
 				if(agendas.isEmpty())
 				{
@@ -1189,18 +1019,21 @@ public ModelAndView agregarClase(
 	
 	return new ModelAndView("inscripcionExitosa",modelo); 
 	
-	
-	} //// fin If Session
-	return new ModelAndView("redirect:/index");
 }
 
 
 
+	
 
 
+/*****************MOCK*****************/
 
-}//fin Controller
+public void setServicioCurso(ServicioCurso servicioCurso) {
+	this.servicioCurso = servicioCurso;
+}
 
-
+			
+}	
+		
 		
 	

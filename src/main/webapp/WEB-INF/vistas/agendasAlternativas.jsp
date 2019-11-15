@@ -3,9 +3,6 @@
     <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
-
-
 <%@ page session="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -79,22 +76,36 @@
 
 <form:form  method="POST" modelAttribute="agendasViewModel" action="modificarAgenda">
 
-<input  name="idCurso"  value="${cursoSeleccionado.id}">curso</input>
+<input  name="idCurso"  type="hidden" value="${cursoSeleccionado.id}"></input>
+<input  name="idAgendaEditar" type="hidden"  value="${agen}"></input>
 
-<input  name="idAgendaEditar"  value="${agen}">id agenda a editar</input>
+
 
 <div class="row">
 	<c:forEach items="${agendasAlternativas}" var="al">
 		<div class="col-md-4 ">
 		
 		 <c:set var="i" value="${ i+1}"/>
-		 		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Agenda <c:out value="${i}"/> </h2>
+		 		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Clase nro <c:out value="${i}"/> </h2>
 		 
 				<p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${al.fecha}<br>
-				<b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora}<br>
-				<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-				<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
-				<br> 
+			<c:if test="${al.hora < 1000 }">
+	
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora.toString().substring(0,1)}:${al.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+   <c:if test="${al.hora >= 1000 }">
+  		
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora.toString().substring(0,2)}:${al.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+		
+		<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${al.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${al.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
+		
+		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${al.instructorVehiculoEspecialidad.vehiculo.modelo} ${al.instructorVehiculoEspecialidad.vehiculo.patente}</p>
+		<br> 
 				<!-- editar -->  
 		
 		<div class="card-body">
@@ -112,6 +123,8 @@
 			<input name="idAgendas[${id}]" type="hidden" value="${id}"></input>
 			</div>
 </c:forEach>
+
+
 
 </div>	
 
