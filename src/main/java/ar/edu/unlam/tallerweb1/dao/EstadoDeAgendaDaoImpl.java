@@ -112,6 +112,17 @@ final Session session = sessionFactory.getCurrentSession();
 				
 		return a;
 	}
+
+	@Override
+	public EstadoDeAgenda buscarEstadoPerdida() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Clase perdida"))
+				.uniqueResult();
+				
+		return a;
+	}
 	
 	
 	

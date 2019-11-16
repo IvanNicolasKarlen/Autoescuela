@@ -16,9 +16,9 @@ public interface ServicioInscripcion {
 	/************************** Alumno *****************************************/
 	List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado);
 
-	List<Inscripcion> consultarSiYaSeInscribioAUnCurso(Long idAlumno, Curso cursoElegido);
+	List<Inscripcion> consultarSiYaSeInscribioAUnCurso( Long idAlumno, Curso cursoElegido);
 
-	void guardarInscripcionEnLaAgendaYEnInscripcion(Alumno alumno, Curso curso, List<Long> idAgendasDepurado);
+	void guardarInscripcionEnLaAgendaYEnInscripcion(Long idAlumno, Curso curso, List<Long> idAgendasDepurado);
 
 	List<Inscripcion> traerLosCursosEnQueSeEncuentraAnotado(Long idAlumno, EstadoInscripcion estado);
 
@@ -28,9 +28,11 @@ public interface ServicioInscripcion {
 
 	Inscripcion buscarInscripcion( Long idAlumno,Long idEspecialidad);
 
-	void finalizarCursoDelAlumno(Long idInscripcion, Long idAlumno);
+	void finalizarCursoDelAlumno( Long idAlumno, Long idInscripcion);
 
-	void agregarInscripcion(Alumno alumno, Curso curso, Long idAgendaEditar);
+	void agregarInscripcion(Long idAlumno, Curso curso, Long idAgendaEditar);
+
+	//void verificarEstadoDeLasClases(Long idAlumno);
 
 
 	

@@ -21,5 +21,6 @@ public interface EstadoDeAgendaDao {
 	EstadoDeAgenda traigoElEstadoFinalizado();
 	EstadoDeAgenda traigoElEstadoAbandonada();
 	EstadoDeAgenda traigoElEstadoOcupada();
+	EstadoDeAgenda buscarEstadoPerdida();
 
 }

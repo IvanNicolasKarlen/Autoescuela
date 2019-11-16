@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ public class AgendaDaoImp implements AgendaDao {
 		return session.createCriteria(Agenda.class)
 				.createAlias("instructorVehiculoEspecialidad", "iveBuscado")
 				.createAlias("iveBuscado.instructor", "instructorId")
-				.add(Restrictions.isNotNull("inscripcion"))
+				.add(Restrictions.isNotNull("inscripcion.id"))
 				.add(Restrictions.eq("instructorId.id", idInstructor))
 				.list();
 	}
@@ -140,17 +141,16 @@ public class AgendaDaoImp implements AgendaDao {
 	
 	/***************************************Alumno**************************************/
 	@Override
-	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso, EstadoDeAgenda estadoDeAgenda) {
+	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso, Long idAlumno, EstadoDeAgenda estadoDeAgenda) {
 	final Session session = sessionFactory.getCurrentSession();
 		
-		List <Agenda> result = session.createCriteria(Agenda.class)
+		List<Agenda> result =  session.createCriteria(Agenda.class)
 				.add(Restrictions.isNull("inscripcion.id"))
 				.createAlias("instructorVehiculoEspecialidad", "ive")
 				.add(Restrictions.eq("ive.especialidad.id", curso.getEspecialidad().getId()))
 				.add(Restrictions.eq("estadoDeAgenda.id", estadoDeAgenda.getId()))
-				
 				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
-				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Funcionando"))
 				.list();
 		
 	
@@ -176,14 +176,14 @@ public class AgendaDaoImp implements AgendaDao {
 				.add(Restrictions.eq("esp.id", curso.getEspecialidad().getId()))
 				.createAlias("instructorVehiculoEspecialidad.vehiculo", "ve")
 				.createAlias("ve.estadoDeVehiculo", "estadoVehiculo")
-				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Funcionando"))
 				.uniqueResult();
 				
 		return a;
 	}
 
 	@Override
-	public TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado) {
+	public List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado) {
 final Session session = sessionFactory.getCurrentSession();
 		
 	List <Agenda> lista =  session.createCriteria(Agenda.class)
@@ -192,42 +192,19 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("estadoDeAgenda", "estadoDeAgenda")
 				.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
 				.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+				.addOrder(Order.asc("fecha"))
 				.list();
-	
-	TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>();
-	agendasDesc.addAll(lista);
 			
-	return agendasDesc;
+	return lista;
 	
 	}
 	
 	
 	
-	@Override
-	public TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno) {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		List<Agenda> lista = session.createCriteria(Agenda.class)
-				.createAlias("inscripcion.alumno", "alumno")
-				.add(Restrictions.eq("alumno.id", idAlumno))
-				.createAlias("estadoDeAgenda", "estadoDeAgenda")
-				.add(Restrictions.eq("estadoDeAgenda.estado", "Ocupada"))
-				.createAlias("inscripcion.curso", "curso")
-				.add(Restrictions.eq("curso.id",c))
-				.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
-				.list();
-		
-		
-		TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>();
-		agendasDesc.addAll(lista);
-				
-		return agendasDesc;
-		
-	}
+	
 					//Alumno 1				Inscripcion 2 Especialidad 2
 	@Override
-	public TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(  Long idEspecialidad,Long idAlumno  , EstadoInscripcion estado) {
+	public List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(  Long idEspecialidad,Long idAlumno  , EstadoInscripcion estado) {
 		 final Session session = sessionFactory.getCurrentSession();
 		 
 		 List<Agenda> lista =  session.createCriteria(Agenda.class)
@@ -235,15 +212,14 @@ final Session session = sessionFactory.getCurrentSession();
 				 .add(Restrictions.eq("especialidad.id", idEspecialidad))
 				 .createAlias("inscripcion.alumno", "alumno")
 				 .add(Restrictions.eq("alumno.id", idAlumno))
-				 
 					.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
 					.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+					.addOrder(Order.asc("fecha"))
 					.list();
 		 
-		 TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>();
-			agendasDesc.addAll(lista);
+		 
 					
-			return agendasDesc;
+			return lista;
 		 
 		 
 	}
@@ -289,7 +265,7 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("instructorVehiculoEspecialidad", "ive")
 				.add(Restrictions.eq("ive.especialidad.id", curso.getEspecialidad().getId()))
 				.createAlias("instructorVehiculoEspecialidad.vehiculo.estadoDeVehiculo", "estadoVehiculo")
-				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Disponible"))
+				.add(Restrictions.eq("estadoVehiculo.estadoActual", "Funcionando"))
 				.list();
 		
 		 
@@ -298,7 +274,28 @@ final Session session = sessionFactory.getCurrentSession();
 
 	
 	
-
+	@Override
+	public TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		List<Agenda> lista = session.createCriteria(Agenda.class)
+				.createAlias("inscripcion.alumno", "alumno")
+				.add(Restrictions.eq("alumno.id", idAlumno))
+				.createAlias("estadoDeAgenda", "estadoDeAgenda")
+				.add(Restrictions.eq("estadoDeAgenda.estado", "Ocupada"))
+				.createAlias("inscripcion.curso", "curso")
+				.add(Restrictions.eq("curso.id",c))
+				.createAlias("inscripcion.estadoInscripcion", "estadoInscripcion")
+				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
+				.list();
+		
+		
+		TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>();
+		agendasDesc.addAll(lista);
+				
+		return agendasDesc;
+		
+	}
 
 
 
@@ -351,11 +348,7 @@ final Session session = sessionFactory.getCurrentSession();
 					agendasDesc.addAll(lista);
 							
 					return agendasDesc;
-				 
-				 
-			
 	}
-
 
 
 
@@ -369,9 +362,12 @@ final Session session = sessionFactory.getCurrentSession();
 				.add(Restrictions.eq("fecha",agenda.getFecha()))
 				//.createAlias("inscripcion", "inscripcion")
 				.add(Restrictions.eq("hora",agenda.getHora()))
-				.add(Restrictions.isNull("inscripcion"))
+				.add(Restrictions.isNull("inscripcion.id"))
 				.createAlias("estadoDeAgenda", "estadoDeAgenda")
 				.add(Restrictions.eq("estadoDeAgenda.id", disponible.getId() ))
+				.createAlias("instructorVehiculoEspecialidad.especialidad", "especialidad")
+				.add(Restrictions.eq("especialidad.id",agenda.getInstructorVehiculoEspecialidad().getEspecialidad().getId()))
+
 				.list();
 				
 		return a;
@@ -427,6 +423,21 @@ final Session session = sessionFactory.getCurrentSession();
 		 
 	}
 
+	
+	
+	
+	@Override
+	public List<Agenda> buscarAgendasDeUnSoloCurso(Inscripcion ins){
+		final Session session = sessionFactory.getCurrentSession();
+		
+		List<Agenda> lista =  session.createCriteria(Agenda.class)
+				 .createAlias("inscripcion", "inscripcion")
+				 .add(Restrictions.eq("inscripcion.id", ins.getId()))
+				 .list();
+		 
+		return lista;
+	}
+	
 
 	
 	
@@ -476,9 +487,6 @@ final Session session = sessionFactory.getCurrentSession();
 
 
 
-
-	
-	
 	
 	/***************************************************************************************/
 	

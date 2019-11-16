@@ -29,11 +29,14 @@ public class InscripcionDaoImpl implements InscripcionDao {
 	public List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado) {
 		final Session session = sessionfactory.getCurrentSession();
 		
+		@SuppressWarnings("unchecked")
 		List<Inscripcion> lista = session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id",idAlumno))
-				.createAlias("curso", "cur")
+				.createAlias("curso.especialidad", "esp")
+				//.setProjection(Projections.countDistinct(("esp.id")))
 				.createAlias("estadoInscripcion", "estadoInscripcionBuscado")
 				.add(Restrictions.eq("estadoInscripcionBuscado.id", estado.getId()))
+				
 				.list();
 		return lista;
 	}
@@ -69,17 +72,6 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		
 	}
 
-	@Override
-	public Inscripcion buscarInscripcion(Alumno alumno, Curso curso) {
-		final Session session = sessionfactory.getCurrentSession();
-		return (Inscripcion) session.createCriteria(Inscripcion.class)
-				.add(Restrictions.eq("alumno.id",alumno.getId()))
-				.add(Restrictions.eq("curso.id",curso.getId()))
-				.createAlias("estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
-				.uniqueResult();
-		
-	}
 
 	@Override
 	public void guardarInscripcionEnLaAgenda(Agenda a) {
@@ -158,10 +150,10 @@ final Session session = sessionfactory.getCurrentSession();
 		 
 		 final Session session = sessionfactory.getCurrentSession();
 			return (Inscripcion) session.createCriteria(Inscripcion.class)
-					.createAlias("curso", "cur")
-					.createAlias("alumno", "alu")
-					.add(Restrictions.eq("alu.id",idAlumno))
-					.add(Restrictions.eq("cur.id",idCurso))
+					.createAlias("alumno", "alumno")
+					.add(Restrictions.eq("alumno.id",idAlumno))
+					.createAlias("curso", "curso")
+					.add(Restrictions.eq("curso.id",idCurso))
 					.createAlias("estadoInscripcion", "estadoInscrip")
 					.add(Restrictions.eq("estadoInscrip.estado", "Cursando"))
 					.uniqueResult();

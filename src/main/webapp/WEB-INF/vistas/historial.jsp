@@ -92,8 +92,17 @@
   <h2 class="text-center color0-hov trans-0-4 bg-dark text-white">Curso de ${la.inscripcion.curso.especialidad.tipo}</h2>
 		
 		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
-		
+	<c:if test="${la.hora < 1000 }">
+	
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,1)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+   <c:if test="${la.hora >= 1000 }">
+  		
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if>	
 		<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>

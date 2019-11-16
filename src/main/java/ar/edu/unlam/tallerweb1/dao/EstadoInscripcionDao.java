@@ -9,4 +9,6 @@ public interface EstadoInscripcionDao {
 	EstadoInscripcion buscarEstadoCursando();
 
 	EstadoInscripcion buscarEstadoFinalizado();
+
+	EstadoInscripcion buscarEstadoEliminadoPorAlumno();
 }

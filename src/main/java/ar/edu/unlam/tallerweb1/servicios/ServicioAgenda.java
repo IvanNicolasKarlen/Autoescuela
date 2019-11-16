@@ -24,16 +24,18 @@ public interface ServicioAgenda {
 //	LocalDate traerFechas();
 	void updateEstadoDeAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
-	/******************************Alumno******************************/
-	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
+	/******************************Alumno
+	 * @param long1 ******************************/
+
+	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso, Long idAlumno);
 
 	Boolean constatarQueNadieSeAnotaraEnLasFechasAsignadas(List<Long> idAgendasDepurado, Curso curso);
 
-	TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
+	List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
 	
 	TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(CursosViewModel cursosViewModel,Long idAlumno);
 
-	TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno, EstadoInscripcion estado);
+	List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idEspecialidad, Long idAlumno, EstadoInscripcion estado);
 
 	Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno);
 
@@ -41,12 +43,17 @@ public interface ServicioAgenda {
 
 	List<Agenda> buscarAgendasElegidas(List<Long> idAgendasDepurado, Curso curso);
 
-	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
+	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas, Long idAlumno);
 
 	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
 
 	void modificarAgenda(Agenda agenda);
+	
 	Boolean verificarUnaAgendaSePuedaEliminar(Long idAgendaSeleccionada);
+	
+	List<Agenda> traerClasesQueEsteCursando(List<Agenda> clasesDeUnSoloCurso);
+	
+	Boolean verificarQueSePuedanEliminarTodasLasClases( Long idAlumno, Long idCurso);
 	
 	
 	/***********************************ORGANIZADOR*********************************/
@@ -57,6 +64,10 @@ public interface ServicioAgenda {
 
 
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
+
+	
+	
+
 	
 	
 	

@@ -37,16 +37,20 @@ public interface AgendaDao {
 	
 	/******************************************************************/
 	/***************************** Alumno 
-	 * @param disponible *******************************/
-	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso, EstadoDeAgenda disponible);
+	 * @param disponible 
+	 * @param disponible 
+	 * @param string *******************************/
+
+	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso, Long idAlumno, EstadoDeAgenda disponible);
+
 
 	Agenda buscarAgendasElegidas(Long a, Curso curso);
 
-	TreeSet<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
+	List<Agenda> traerTodasLasClasesQueEstaAnotado(Long idAlumno, EstadoInscripcion estado);
 	
 	TreeSet<Agenda> traerTodasLasClasesQueSeEncuentraAnotado(Long c, EstadoInscripcion estado, Long idAlumno);
 
-	TreeSet<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idAlumno, Long idEspecialidad, EstadoInscripcion estado);
+	List<Agenda> traerTodasLasClasesDeUnaSolaEspecialidad(Long idAlumno, Long idEspecialidad, EstadoInscripcion estado);
 
 	Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno);
 
@@ -73,6 +77,9 @@ public interface AgendaDao {
 
 
 	TreeSet<Agenda> traigoSoloLasClasesConEstadoOcupada(Agenda a, EstadoDeAgenda ocupada);
+
+	List<Agenda> buscarAgendasDeUnSoloCurso(Inscripcion ins);
+	
 
 
 	

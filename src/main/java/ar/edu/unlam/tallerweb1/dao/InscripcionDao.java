@@ -19,7 +19,7 @@ public interface InscripcionDao {
 	
 	void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion tablainscripcion, EstadoInscripcion estado);
 	
-	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
+	//Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
 	void guardarInscripcionEnLaAgenda(Agenda a);
 
