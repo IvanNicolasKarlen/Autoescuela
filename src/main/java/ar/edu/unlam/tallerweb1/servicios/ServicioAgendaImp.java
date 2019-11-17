@@ -63,7 +63,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	
 	@Override
 	public void updateEstadoDeAgenda(Agenda agenda) {
-			agendaDao.updateEstadoDeAgenda(agenda);
+			agendaDao.updateAgenda(agenda);
 	}
 	
 	@Override
@@ -301,7 +301,7 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 		agenda.setEstadoDeAgenda(canceladaPorAlumno);
 		
 		//Eliminar esta clase
-		 agendaDao.eliminarClaseDeLaAgenda(agenda);
+		 agendaDao.updateAgenda(agenda);
 		 
 		
 		//Creo la misma clase para que la pueda ocupar otro alumno con estado disponible
@@ -317,7 +317,7 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 		 
 		 
 		 //Guardas la misma clase pero disponible para otro alumno
-		 agendaDao.guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(claseAGuardar); //Es un save(agenda)
+		 agendaDao.crearAgenda(claseAGuardar); //Es un save(agenda)
 		 
 		 
 		 
@@ -578,7 +578,7 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 		if(agenda.getEstadoDeAgenda().getEstado().equals("Finalizada")){
 			agenda.setClasePagada(true);
 		}
-		agendaDao.modificarAgenda(agenda);
+		agendaDao.updateAgenda(agenda);
 	}
 
 

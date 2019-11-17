@@ -17,7 +17,6 @@ public interface AgendaDao {
 	
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
-	void modificarAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
 	
 	/************************ORGANIZADOR**************************************/
@@ -32,7 +31,7 @@ public interface AgendaDao {
 	List<Agenda> buscarAlumnos(String nombre,String apellido);
 	List<Agenda> traerFechasDisponibles();
 //	List<Agenda> traerFechas();
-	void updateEstadoDeAgenda(Agenda agenda);	
+	void updateAgenda(Agenda agenda);	
 	
 	
 	/******************************************************************/
@@ -54,12 +53,10 @@ public interface AgendaDao {
 
 	Agenda traerClaseQueQuiereEliminar(Long idAgendaSeleccionado, Long idAlumno);
 
-	void eliminarClaseDeLaAgenda(Agenda agenda);
 
 	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas);
 
 
-	void guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(Agenda agenda);
 
 
 	Agenda traerClaseQueQuiereEliminarParaAgregarlaEnLimpio(Long idAgendaSeleccionado, Long idAlumno);

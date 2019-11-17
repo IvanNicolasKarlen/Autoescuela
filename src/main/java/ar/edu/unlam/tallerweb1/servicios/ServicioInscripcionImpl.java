@@ -228,7 +228,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		for(Agenda NuevasClases: clasesNuevas)
 		{
 			
-			 agendaDao.guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(NuevasClases); //Es un save(agenda)
+			 agendaDao.crearAgenda(NuevasClases); //Es un save(agenda)
 		}
 		
 		
@@ -402,7 +402,7 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 		for(Agenda NuevasClases: clasesNuevas)
 		{
 			
-			 agendaDao.guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(NuevasClases); //Es un save(agenda)
+			 agendaDao.crearAgenda(NuevasClases); //Es un save(agenda)
 		}
 		
 		

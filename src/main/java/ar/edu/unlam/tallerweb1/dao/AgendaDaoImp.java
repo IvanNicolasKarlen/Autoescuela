@@ -27,9 +27,6 @@ public class AgendaDaoImp implements AgendaDao {
 	@Inject
     private SessionFactory sessionFactory;
 	
-	List <Agenda> miLista;
-	List <Alumno> miListaAlumno;
-	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -109,14 +106,6 @@ public class AgendaDaoImp implements AgendaDao {
 	}
 
 
-
-
-
-	@Override
-	public void modificarAgenda(Agenda agenda) {
-		final Session sesion = sessionFactory.getCurrentSession();
-		sesion.update(agenda);
-	}
 
 
 
@@ -243,13 +232,6 @@ final Session session = sessionFactory.getCurrentSession();
 	
 	
 
-	@Override
-	public void eliminarClaseDeLaAgenda(Agenda agenda) {
-		final Session session = sessionFactory.getCurrentSession();
-	
-		session.update(agenda);
-		
-	}
 
 
 
@@ -300,13 +282,6 @@ final Session session = sessionFactory.getCurrentSession();
 
 
 
-	@Override
-	public void guardarClaseQueEliminoElAlumnoParaQueSePuedaInscribirOtroAlumno(Agenda agenda) {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		session.save(agenda);
-		
-	}
 
 
 
@@ -480,7 +455,7 @@ final Session session = sessionFactory.getCurrentSession();
 
 
 	@Override
-	public void updateEstadoDeAgenda(Agenda agenda) {
+	public void updateAgenda(Agenda agenda) {
 		final Session session = sessionFactory.getCurrentSession();
 				session.update(agenda);
 }
