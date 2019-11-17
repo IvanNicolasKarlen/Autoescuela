@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.servicios;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
@@ -24,8 +25,9 @@ public interface ServicioAgenda {
 	void updateEstadoDeAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
 	Agenda buscarAgenda(Agenda agenda);
-	List <Agenda> traerAgendaInstructor(Long idInstructor);
-	List <Integer> horasTrabajadas(Long idInstructor);
+	Map <String,Integer> horasTrabajadas(Long idInstructor);
+	List<Agenda> traerFechas();
+	
 	/******************************Alumno******************************/
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso curso);
 
@@ -59,7 +61,4 @@ public interface ServicioAgenda {
 
 
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
-	
-	
-	
 }

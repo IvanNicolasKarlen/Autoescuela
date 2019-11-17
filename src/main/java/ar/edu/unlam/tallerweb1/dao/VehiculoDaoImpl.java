@@ -32,6 +32,14 @@ public class VehiculoDaoImpl implements VehiculoDao {
 				.list();
 				
 	}
+	
+	@Override
+	public void updateVehiculo(Vehiculo idEstadoDeVehiculo) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(idEstadoDeVehiculo);
+		
+	}
 	/******************************************ORGANIZADOR**************************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
@@ -76,5 +84,6 @@ public class VehiculoDaoImpl implements VehiculoDao {
 								.add(Restrictions.isNull("iveBuscada.instructor"))
 								.list();
 	}
+
 	
 }

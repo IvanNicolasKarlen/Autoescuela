@@ -23,7 +23,6 @@
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
 
 	<!-- En este h4 se muestra el error si es que hay alguno -->
-		<h4 class="t-center text-danger">${mensaje}</h4>
 		<section class="section-reservation bg1-pattern p-t-100 p-b-113">
 			<div class="container">
 				<div class="row">
@@ -36,6 +35,9 @@
 
 	<input name="idAgenda" value="${idAgenda}" style="display:none">
 	<input name="idEstadoAgenda" value="${idEstadoAgenda}" style="display:none">	
+	<input name="idEstadoDeVehiculo" value="${estadoId}" style="display:none">	
+	<input name="mensaje" value="${mensaje}" style="display:none">	
+	
 	<input value="si" style="display:none">	
 			
 		

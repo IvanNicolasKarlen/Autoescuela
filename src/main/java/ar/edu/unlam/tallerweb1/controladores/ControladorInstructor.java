@@ -1,8 +1,12 @@
 package ar.edu.unlam.tallerweb1.controladores;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
@@ -11,10 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 
 
 @Controller
@@ -24,8 +36,14 @@ public class ControladorInstructor {
 	@Inject 
 	private ServicioAgenda servicioAgenda;
 	
+	@Inject 
+	private ServicioVehiculo servicioVehiculo;
+	
 	@Inject
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
+	
+	@Inject
+	private ServicioEstadoDeVehiculo servicioEstadoDeVehiculo;
 	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
@@ -73,32 +91,48 @@ public class ControladorInstructor {
 	@RequestMapping(path="/cancelacionDeAgenda", method = RequestMethod.GET)
 	public ModelAndView probar (@RequestParam(name="idAgenda",required=false) Long idAgenda,
 								@RequestParam(name="idEstadoAgenda",required=false) Long idEstadoAgenda,
+							    @RequestParam(name="mensaje",required=false) String mensaje,
+							    @RequestParam(name="idEstadoDeVehiculo",required=false) Long estadoId,
 							    @RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion,
 						      	HttpServletRequest request) {		
 		
 		
 		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
+		
+		List<EstadoDeVehiculo> estadosDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
+		
 		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);
+		
+		
 		String rol = (String)request.getSession().getAttribute("ROL");
 		ModelMap model = new ModelMap();
 		String vista = "confirmarCancelacionDeClasesInstructor";
 		if(rol.equals("Instructor")){
 			model.put("rol", rol);
 			model.put("estadosDeAgenda",estadosDeAgenda);
+			model.put("estadosDeVehiculo",estadosDeVehiculo);
+			model.put("estadoDeAgenda",estadoDeAgenda);
 			
 		
 		if(confirmacion.equals("noConfirmado")){
 			model.put("confirmacion", "¿Esta seguro de querer cancelar la clase seleccionada?");
 			model.put("idAgenda",idAgenda);
 			model.put("idEstadoAgenda", idEstadoAgenda);
+			model.put("mensaje", mensaje);
+			model.put("idEstadoDeVehiculo", estadoId);
 		}else {
 		switch(confirmacion){
 		case "si": 
 			Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
 			agenda.setEstadoDeAgenda(estadoDeAgenda);
 			servicioAgenda.updateEstadoDeAgenda(agenda);
-			model.put("estadoDeAgenda", estadoDeAgenda);
+			
+			estadoDeAgenda.setDetalle(mensaje);
+			servicioEstadoDeAgenda.updateEstadoDeAgenda(estadoDeAgenda);
 		
+			model.put("estadoDeAgenda", estadoDeAgenda);
+			model.put("mensaje", mensaje);
+
 			if(servicioAgenda.buscarAgenda(agenda)!=null){
 				return new ModelAndView("redirect:/claseCanceladaConExito");
 			}
@@ -111,35 +145,67 @@ public class ControladorInstructor {
 	}
 	
 	
-	
 	@RequestMapping(path="/seleccionarMotivo/{idAgenda}", method = RequestMethod.GET)
 	public ModelAndView cancelarClase (@PathVariable(value="idAgenda") Long idAgenda,
 									   HttpServletRequest request) {
 
 		ModelMap model = new ModelMap();
 		
-		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
-		
+		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgendaMenosEstadoDisponible();
+		List<EstadoDeVehiculo> estadoDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
 		model.put("estadosDeAgenda",estadosDeAgenda);
+		model.put("estadoDeVehiculo",estadoDeVehiculo);
 		model.put("idAgenda",idAgenda);
+	
 
 		return new ModelAndView ("cancelarClaseInstructor",model);
 
 	}
 	
 
-	@RequestMapping(value="/horasTrabajadas", method = RequestMethod.GET)
+	@RequestMapping(path="/horasTrabajadas", method = RequestMethod.GET)
 	public ModelAndView horasTrabajadas (@RequestParam(name="ids",required=false)Long idInstructor) {
 
 		ModelMap model = new ModelMap ();
-
-		List <Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);
 		
+		Map<String,Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);
+
+		model.put("listaMeses", listaMeses);
+
+		return new ModelAndView ("horasTrabajadasInstructor",model);
+	}
+
+	@RequestMapping(path="/grafico", method = RequestMethod.GET)
+	public ModelAndView grafico (@RequestParam(name="ids",required=false)Long idInstructor) {
+		
+		ModelMap model = new ModelMap ();
+		
+		Map<String,Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);	
 		model.put("listaMeses", listaMeses);
 		
-		System.out.println(listaMeses);
 		
-		return new ModelAndView ("horasTrabajadasInstructor",model);
+		return new ModelAndView ("grafico",model);
+	}
+	
+	
+	//getters y setters
+	public ServicioAgenda getServicioAgenda() {
+		return servicioAgenda;
+	}
+
+
+	public void setServicioAgenda(ServicioAgenda servicioAgenda) {
+		this.servicioAgenda = servicioAgenda;
+	}
+
+
+	public ServicioEstadoDeAgenda getServicioEstadoDeAgenda() {
+		return servicioEstadoDeAgenda;
+	}
+
+
+	public void setServicioEstadoDeAgenda(ServicioEstadoDeAgenda servicioEstadoDeAgenda) {
+		this.servicioEstadoDeAgenda = servicioEstadoDeAgenda;
 	}
 	
 

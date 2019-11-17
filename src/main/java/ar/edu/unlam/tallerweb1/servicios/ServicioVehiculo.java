@@ -10,6 +10,8 @@ public interface ServicioVehiculo {
 	
 	/********************************Instructor**************************/
 	List<EstadoDeVehiculo> traerVehiculos(Long idAgenda);
+	void updateVehiculo(Vehiculo idEstadoDeVehiculo);
+
 	
 	/********************************ORGANIZADOR**************************/
 	List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad);

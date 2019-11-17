@@ -23,7 +23,11 @@ public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
 		return estadoDeAgendaDao.traerListaDeEstadoDeAgendaMenosEstadoDisponible();
 	}
-
+	
+	@Override
+	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+		estadoDeAgendaDao.updateEstadoDeAgenda(mensaje);		
+	}
 	
 	/*************************************************************************************/
 	
@@ -41,5 +45,8 @@ public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
 	public EstadoDeAgenda traerEstadoDeAgendaPorId(Long id) {
 		return estadoDeAgendaDao.traerEstadoDeAgendaPorId(id);
 	}
+
+
+
 
 }

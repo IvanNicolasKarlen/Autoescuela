@@ -24,21 +24,25 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
 		Session session = sessionFactory.getCurrentSession();
-		return (List<EstadoDeAgenda>) session.createCriteria(EstadoDeAgenda.class)
+		return session.createCriteria(EstadoDeAgenda.class)
 				.add(Restrictions.ne("estado", "Disponible"))
 				.list();
-	
 	}
+	
+	@Override
+	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(mensaje);		
+	}
+	
 /************************************************ORGANIZADOR***************************/
 	
 	@SuppressWarnings("unchecked")
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.ne("estado", "Disponible"))
 				.list();
 	}
 
@@ -127,7 +131,7 @@ final Session session = sessionFactory.getCurrentSession();
 				
 		return a;
 	}
-	
+
 	
 	
 }

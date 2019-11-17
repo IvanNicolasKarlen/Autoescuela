@@ -18,7 +18,7 @@ public interface AgendaDao {
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
 	void modificarAgenda(Agenda agenda);
-	
+	Agenda buscarAgendaPorId(Long idAgenda);
 	/************************ORGANIZADOR**************************************/
 	Long crearAgenda(Agenda agenda);
 	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);
@@ -31,10 +31,8 @@ public interface AgendaDao {
 	List<Agenda> buscarAlumnos(String nombre,String apellido);
 	List<Agenda> traerFechasDisponibles();
 	void updateEstadoDeAgenda(Agenda agenda);	
-	Agenda buscarAgendaPorId(Long idAgenda);
 	Agenda buscarAgenda(Agenda agenda);
-	List <Agenda> traerAgendaInstructor(Long idInstructor);
-	
+	List<Agenda> traerFechas();
 	
 	/******************************************************************/
 	/***************************** Alumno 
@@ -74,7 +72,6 @@ public interface AgendaDao {
 
 
 	TreeSet<Agenda> traigoSoloLasClasesConEstadoOcupada(Agenda a, EstadoDeAgenda ocupada);
-
 
 	
 	/*******************************************************************/

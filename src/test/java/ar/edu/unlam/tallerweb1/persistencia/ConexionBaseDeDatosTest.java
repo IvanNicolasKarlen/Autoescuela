@@ -12,34 +12,4 @@ import static org.assertj.core.api.Assertions.*;
 // de spring
 public class ConexionBaseDeDatosTest extends SpringTest{
 
-	
-	/************************************* INSTRUCTOR **************************************/
-	@Test
-    @Transactional @Rollback(true)
-    public void pruebaConexion(){
-        assertThat(getSession().isConnected()).isTrue();
-    }
-    
-    @Test
-    @Transactional @Rollback(true)
-    public void pruebaGuardarInstructor(){
-    	Instructor i = new Instructor();
-    	getSession().save(i);
-    	Instructor i2 = getSession().get(Instructor.class, i.getId());
-    	assertThat(i.getId()).isEqualTo(i2.getId());
-    }
-    
-    @Test
-    @Transactional @Rollback(true)
-    public void pruebaEliminarInstructor(){
-    	Instructor i = new Instructor();
-    	i.setId((long) 1);
-    	getSession().save(i);
-    	getSession().delete(i);
-    	Instructor i2 = getSession().get(Instructor.class, i.getId());
-    	assertThat(i2).isNull();
-    }
-    
-    
-    /*************************************************************************************/
-}
+	}

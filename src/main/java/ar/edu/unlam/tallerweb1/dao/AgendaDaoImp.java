@@ -12,6 +12,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
@@ -34,6 +35,9 @@ public class AgendaDaoImp implements AgendaDao {
 		return id;
 
 	}
+
+
+
 
 
 	@SuppressWarnings("unchecked")
@@ -97,7 +101,18 @@ public class AgendaDaoImp implements AgendaDao {
 	public void modificarAgenda(Agenda agenda) {
 		final Session sesion = sessionFactory.getCurrentSession();
 		sesion.update(agenda);
-	}	
+	}
+
+
+
+
+
+	@Override
+	public Agenda buscarAgendaPorId(Long idAgenda) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Agenda) session.get(Agenda.class, idAgenda);
+	}
+
 	
 	/***************************************************************************************/
 	
@@ -394,11 +409,22 @@ final Session session = sessionFactory.getCurrentSession();
 	}
 
 
+
 	
 	
 	/**************************************INSTRUCTOR***************************/
 	/***************************************Instructor**************************************/
 
+
+	@Override
+	public List<Agenda> traerFechas(){
+		final Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(Agenda.class)
+					.list();				
+				
+	}
+	
+	
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -439,11 +465,6 @@ final Session session = sessionFactory.getCurrentSession();
 		
 		session.update(agenda);
 }
-	@Override
-	public Agenda buscarAgendaPorId(Long idAgenda) {
-		Session session = sessionFactory.getCurrentSession();
-		return (Agenda) session.get(Agenda.class, idAgenda);
-	}
 
 	@Override
 	public List<Agenda> traerFechasDisponibles() {
@@ -464,21 +485,7 @@ final Session session = sessionFactory.getCurrentSession();
 		final Session session = sessionFactory.getCurrentSession();
 		return (Agenda)session.createCriteria(Agenda.class)
 				.add(Restrictions.eq("id", agenda.getId())).uniqueResult();
-	}
-	
-
-	@Override
-	public List<Agenda> traerAgendaInstructor(Long idInstructor) {
-		final Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(Agenda.class)
-				.createAlias("instructorVehiculoEspecialidad", "ive")
-				.createAlias("ive.instructor", "instructorBuscado")
-				.add(Restrictions.eq("instructorBuscado.id", idInstructor))
-				.list();
-	}
-
-	
-	
+	}	
 	
 	/***************************************************************************************/
 	

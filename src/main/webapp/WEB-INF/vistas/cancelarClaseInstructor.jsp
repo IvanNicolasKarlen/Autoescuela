@@ -36,14 +36,24 @@
 <form  method="GET" action="${context}/cancelacionDeAgenda">
 
 	<input name="idAgenda" value="${idAgenda}" style="display:none">
+		<h4>Estado de la clase</h4><br>
 		<select name="idEstadoAgenda">
-		
 			<c:forEach items="${estadosDeAgenda}" var="la">
 				<option value="${la.id}"> ${la.estado} </option>
 			</c:forEach>
-			
+		</select><br><br><br>
+		
+<h4>Explique el motivo por el cual decide cancelar la clase:</h4><br>
+<p><textarea rows="4" cols="50" name="mensaje" required></textarea></p><br><br>
+		
+		
+		<h4>Estado del vehiculo</h4><br>
+		<select name="idEstadoDeVehiculo" >			
+			<c:forEach items="${estadoDeVehiculo}" var="ev">
+				<option value="${ev.id}"> ${ev.estadoActual} </option>
+			</c:forEach>
 		</select><br><br>
-			
+		
 	<input name="confir" value="${confirmacion}" style="display:none">	
 	
 		<button class="btn btn-primary" type="submit">Aceptar</button>
