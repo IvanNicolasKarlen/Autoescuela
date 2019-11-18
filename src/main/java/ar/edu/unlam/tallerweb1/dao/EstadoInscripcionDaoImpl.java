@@ -38,5 +38,16 @@ public class EstadoInscripcionDaoImpl implements EstadoInscripcionDao {
 				.add(Restrictions.eq("estado", "Finalizado"))
 				.uniqueResult();
 	}
+
+
+	@Override
+	public EstadoInscripcion buscarEstadoEliminadoPorAlumno() {
+final Session session = sessionfactory.getCurrentSession();
+
+		
+		return(EstadoInscripcion) session.createCriteria(EstadoInscripcion.class)
+				.add(Restrictions.eq("estado", "Eliminado por Alumno"))
+				.uniqueResult();
+	}
 	
 }

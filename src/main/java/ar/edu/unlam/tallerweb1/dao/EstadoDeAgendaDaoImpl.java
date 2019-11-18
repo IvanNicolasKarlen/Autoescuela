@@ -18,34 +18,15 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 	@Inject
 	private SessionFactory sessionFactory;
 
-	
-	
-/************************************************INSTRUCTOR***************************/
-
-	
-	@SuppressWarnings("unchecked")
-	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
-		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.ne("estado", "Disponible"))
-				.list();
-	}
-	
-	@Override
-	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
-		final Session session = sessionFactory.getCurrentSession();
-		session.update(mensaje);		
-	}
-	
 /************************************************ORGANIZADOR***************************/
 	
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgenda() {
 		Session session = sessionFactory.getCurrentSession();
-		return session.createCriteria(EstadoDeAgenda.class)
-				.list();
+		return (List<EstadoDeAgenda>) session.createCriteria(EstadoDeAgenda.class)
+									.list();
 	}
-
 
 	@Override
 	public EstadoDeAgenda traerEstadoDeAgendaPorNombre(String estado) {
@@ -132,6 +113,31 @@ final Session session = sessionFactory.getCurrentSession();
 		return a;
 	}
 
+	@Override
+	public EstadoDeAgenda buscarEstadoPerdida() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Clase perdida"))
+				.uniqueResult();
+				
+		return a;
+	}
+	/***************************************INSTRUCTOR********************************/
+	@SuppressWarnings("unchecked")
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("estado", "Disponible"))
+				.list();
+	}
+	
+	@Override
+	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.update(mensaje);		
+	}
+	
 	
 	
 }

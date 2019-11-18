@@ -61,7 +61,9 @@
 			</c:forEach>
 		</tbody>
 	</table><br><br>
-<button class="btn btn-primary" type="submit" name="btnBuscar"><a href="grafico">Ver grafico</a></button>
+	
+				<a href="${context}/grafico">Ver gráfico</a>
+
 	
 </form:form>
     					</div>	

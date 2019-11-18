@@ -22,10 +22,12 @@ import com.google.gson.GsonBuilder;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 
 
@@ -45,6 +47,31 @@ public class ControladorInstructor {
 	@Inject
 	private ServicioEstadoDeVehiculo servicioEstadoDeVehiculo;
 	
+	@Inject
+	private ServicioInstructor servicioInstructor;
+	
+	@RequestMapping("/indexInstructor")
+	public ModelAndView indexAlumno(HttpServletRequest request) {
+		
+		if(!request.getSession().getAttribute("ROL").equals("Instructor"))
+		{
+			return new ModelAndView("redirect:/index");
+		}
+		
+		ModelMap modelo = new ModelMap();
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		modelo.put("rol", rol);
+			
+		//Sesion
+		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+		Usuario usuario = servicioInstructor.buscarUsuario(idInstructor);
+			
+		modelo.put("usuario", usuario);
+		return new ModelAndView("indexInstructor", modelo);
+	}
+		
+	
+	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
 	
@@ -61,21 +88,27 @@ public class ControladorInstructor {
 	@RequestMapping(path="/buscadorDeAlumnos", method = RequestMethod.GET)
 	public ModelAndView buscarAlumnos ( @RequestParam (name="nombre",required=false)  String nombre,
 										@RequestParam (name="apellido",required=false)String apellido,
-										
 										HttpServletRequest request){
 
 		ModelMap model = new ModelMap();
 		
 		Long idInstructor = (Long) request.getSession().getAttribute("ID");
-		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(nombre,apellido);
+		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(idInstructor,nombre,apellido);
 		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
-		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles();
-		
+		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles(idInstructor);
+		System.out.println(buscarAlumnos);
+		System.out.println(listaAgenda);
+		System.out.println(traerAlumnosDisponibles);
+	
 		
 		model.put("listaAgenda", listaAgenda);
 		model.put("traerAlumnos",traerAlumnosDisponibles);
 		model.put("buscarAlumnos", buscarAlumnos);
 		model.put("ocultar", "mensaje");
+		
+		System.out.println(buscarAlumnos);
+		System.out.println(listaAgenda);
+		System.out.println(traerAlumnosDisponibles);
 				
 		return new ModelAndView ("alumnosInstructor",model);
 	}		
@@ -96,6 +129,8 @@ public class ControladorInstructor {
 							    @RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion,
 						      	HttpServletRequest request) {		
 		
+		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+
 		
 		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
 		

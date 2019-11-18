@@ -78,31 +78,40 @@
 
 
 <form:form  method="POST" modelAttribute="agendasViewModel" action="agendasAlternativas">
-<input  name="idCurso"  value="${cursoSeleccionado.id}"></input>
+<input  name="idCurso" type="hidden"  value="${cursoSeleccionado.id}"></input>
 
 <div class="row">
 	<c:forEach items="${listaAgendas}" var="la">
 		<div class="col-md-4 ">
-		<input name="idAgendas[${la.id}]" value="${la.id}"></input>
-		
-		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
+		<input name="idAgendas[${la.id}]" type="hidden" value="${la.id}"></input>
 		 <c:set var="i" value="${ i+1}"/>
-				<h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
+		<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Clase <c:out value="${i}"/></h2>
+		
 				<p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
-				<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
-				<b class="color0-hov trans-0-4 text-center">Instructor:</b> Miguel Robledo<br>
-				<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> Suran 2016 roja</p>
+				<c:if test="${la.hora < 1000 }">
+	
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,1)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+   <c:if test="${la.hora >= 1000 }">
+  		
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if><b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
+				<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 				<br> 
 				<!-- editar -->  
 
 <div class="card-body">
-  <input type="radio" name="idAgendaEditar" value="${la.id}">
+  <input class="m-l-r-auto" type="radio" name="idAgendaEditar" value="${la.id}">
 					ELEGIR
   </input>
   </div>	
 		
 			
 </div>
+
 </c:forEach>
 </div>	
 

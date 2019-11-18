@@ -2,16 +2,15 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
-import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 
 public interface EstadoDeAgendaDao {
 
-	/********************************INSTRUCTOR**********************************/
+/********************************INSTRUCTOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
 	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);	
-
+	
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();
@@ -26,5 +25,5 @@ public interface EstadoDeAgendaDao {
 	EstadoDeAgenda traigoElEstadoFinalizado();
 	EstadoDeAgenda traigoElEstadoAbandonada();
 	EstadoDeAgenda traigoElEstadoOcupada();
-
+	EstadoDeAgenda buscarEstadoPerdida();
 }

@@ -1,5 +1,4 @@
 package ar.edu.unlam.tallerweb1.dao;
-
 import java.util.List;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
@@ -19,7 +18,7 @@ public interface InscripcionDao {
 	
 	void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion tablainscripcion, EstadoInscripcion estado);
 	
-	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
+	//Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
 	void guardarInscripcionEnLaAgenda(Agenda a);
 

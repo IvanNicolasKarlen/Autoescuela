@@ -25,12 +25,12 @@
 
 		 
 		<h4 class="tit2 t-center m-b-35 m-t-2">
-                 <label>Has sido anotado exitosamente</label>
+                 <label>${mensaje}</label>
 					</h4>
 		
 
 <div class="card-body">
-  <a href="indexAlumno" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+  <a href="listadoFechas" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					CONTINUAR
   </a>
   </div>
