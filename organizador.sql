@@ -33,15 +33,16 @@ VALUES	("XYZ-123","Honda 2003",2,1),
         ("GRF-987","Scooter x32",2,1);
 
 
- Insert into estadodeagenda(estado) 
- values("Disponible"), /*1*/
- ("Ocupada"),/*2*/
- ("Cancelado por Alumno"),/*3*/
- ("Cancelado por Instructor"),/*4*/
- ("Cancelado por Organizador"),/*5*/
- ("Finalizado"),/*6*/
- ("Clase perdida"),/*7*/
- ("Abandonada");
+ Insert into estadodeagenda(estado,detalle) 
+ values("Disponible","El alumno puede inscribirse"), /*1*/
+ ("Ocupada","Ya hay un alumno inscripto"),/*2*/
+ ("Cancelado por Alumno","El alumno cancelo la clase"),/*3*/
+ ("Cancelado por Instructor","El instructor decidio cancelar la clase"),/*4*/
+ ("Cancelado por Organizador","El organizador decidio cancelar la clase"),/*5*/
+ ("Finalizado","El alumno ya curso esta clase"),/*6*/
+ ("Clase perdida","El alumno no se presento a la clase"),/*7*/
+("Cancelado por Rotura de Vehiculo","El instructor aviso que el vehiculo se rompio"),
+ ("Abandonada","El alumno abandono el curso");
  
 Insert into estadoInscripcion(estado) values ("Cursando"), ("Finalizado"), ("Eliminado por Alumno");
 insert into instructor(id)
