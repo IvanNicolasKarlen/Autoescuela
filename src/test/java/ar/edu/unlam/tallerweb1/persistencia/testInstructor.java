@@ -101,7 +101,7 @@ public class testInstructor<Agenda> extends SpringTest {
 
 		}
 		
-		@Test
+	/*	@Test
 		public void testBuscadorDeAlumnos() {
 			//mokeo el controlador
 	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
@@ -130,7 +130,7 @@ public class testInstructor<Agenda> extends SpringTest {
 	        assertThat(modelo.get("buscarAlumnos")).isEqualTo(buscarAlumnos);
 	        assertThat(modelo.get("listaAgenda")).isEqualTo(buscarDiaYHorarioDeTurnoDeUnInstructor);
 	        assertThat(modelo.get("traerAlumnos")).isEqualTo(traerFechasDisponibles);
-		}
+		}*/
 		
 
 		@Test
