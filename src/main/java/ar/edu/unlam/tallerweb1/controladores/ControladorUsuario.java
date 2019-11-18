@@ -86,6 +86,13 @@ public class ControladorUsuario {
 			
 				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
+				switch(usuarioBuscado.getRol()){
+				case "Organizador": request.getSession().setAttribute("IDROL", usuarioBuscado.getOrganizador().getId());
+									break;
+				case "Instructor": request.getSession().setAttribute("IDROL", usuarioBuscado.getInstructor().getId());
+									break;
+				case "Alumno": request.getSession().setAttribute("IDROL", usuarioBuscado.getAlumno().getId());
+				}
 				return new ModelAndView("redirect:/index");
 				
 		} else {
@@ -94,6 +101,7 @@ public class ControladorUsuario {
 		}
 		return new ModelAndView("login", model);
 	}
+
 
 
 	// Escucha la url /, y redirige a la URL /index, es lo mismo que si se invoca la url /index directamente.
