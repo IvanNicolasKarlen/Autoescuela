@@ -147,10 +147,10 @@ public class AgendaDaoImp implements AgendaDao {
 				// repitan las fechas
 																	// reverseOrder ordena los elementos
 																	// en forma descendente
-				TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
-				agendasDesc.addAll(result);
+				TreeSet<Agenda> agendas = new TreeSet<Agenda>();
+				agendas.addAll(result);
 						
-				return agendasDesc;
+				return agendas;
 	
 	}
 
