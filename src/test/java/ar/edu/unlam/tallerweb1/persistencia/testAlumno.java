@@ -94,7 +94,7 @@ public class testAlumno extends SpringTest {
 	
 	 
     
-    @Test
+ /*   @Test
     public void testQueConsultaSiYaSeInscribioElAlumnoAUnCurso()
     {
     	
@@ -139,7 +139,7 @@ public class testAlumno extends SpringTest {
     
     
     
-    
+    */
 }  
     //TraerListaCursos ln 114
     

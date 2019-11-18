@@ -14,6 +14,7 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface ServicioAgenda {
 
@@ -22,7 +23,7 @@ public interface ServicioAgenda {
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
 	List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido);
 	List<Agenda> traerFechasDisponibles(Long idInstructor);
-	void updateEstadoDeAgenda(Agenda agenda);
+	void updateAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);
 	Agenda buscarAgenda(Agenda agenda);
 	Map <String,Integer> horasTrabajadas(Long idInstructor);

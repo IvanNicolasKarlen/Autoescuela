@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface AgendaDao {
 	
@@ -29,12 +30,10 @@ public interface AgendaDao {
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
 	List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido);
 	List<Agenda> traerFechasDisponibles(Long idInstructor);
-	void updateEstadoDeAgenda(Agenda agenda);	
 	Agenda buscarAgenda(Agenda agenda);
 	List<Agenda> traerFechas();
 	void updateAgenda(Agenda agenda);	
 	
-
 	
 	/******************************************************************/
 	/***************************** Alumno 

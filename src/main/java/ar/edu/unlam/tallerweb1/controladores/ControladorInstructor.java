@@ -10,6 +10,7 @@ import javax.xml.ws.Response;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
@@ -85,7 +87,7 @@ public class ControladorInstructor {
 	}
 	
 	
-	@RequestMapping(path="/buscadorDeAlumnos", method = RequestMethod.GET)
+	@RequestMapping(path="/buscadorDeAlumnos")
 	public ModelAndView buscarAlumnos ( @RequestParam (name="nombre",required=false)  String nombre,
 										@RequestParam (name="apellido",required=false)String apellido,
 										HttpServletRequest request){
@@ -93,12 +95,14 @@ public class ControladorInstructor {
 		ModelMap model = new ModelMap();
 		
 		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+		
+		
 		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(idInstructor,nombre,apellido);
 		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles(idInstructor);
-		System.out.println(buscarAlumnos);
-		System.out.println(listaAgenda);
-		System.out.println(traerAlumnosDisponibles);
+		System.out.println(buscarAlumnos + "buscarAlumnos");
+		System.out.println(listaAgenda + "listaAgenda");
+		System.out.println(traerAlumnosDisponibles + "traerAlumnos disponibles");
 	
 		
 		model.put("listaAgenda", listaAgenda);
@@ -160,7 +164,7 @@ public class ControladorInstructor {
 		case "si": 
 			Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
 			agenda.setEstadoDeAgenda(estadoDeAgenda);
-			servicioAgenda.updateEstadoDeAgenda(agenda);
+			servicioAgenda.updateAgenda(agenda);
 			
 			estadoDeAgenda.setDetalle(mensaje);
 			servicioEstadoDeAgenda.updateEstadoDeAgenda(estadoDeAgenda);

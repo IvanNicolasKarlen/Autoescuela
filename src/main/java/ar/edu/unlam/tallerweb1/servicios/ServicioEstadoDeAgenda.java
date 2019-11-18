@@ -10,6 +10,7 @@ public interface ServicioEstadoDeAgenda {
 	/************************************************INSTRUCTOR***************************/
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
 	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);
+	EstadoDeAgenda traerListaDeOcupados();
 
 	
 	

@@ -137,6 +137,16 @@ final Session session = sessionFactory.getCurrentSession();
 		final Session session = sessionFactory.getCurrentSession();
 		session.update(mensaje);		
 	}
+
+	@Override
+	public EstadoDeAgenda traerListaDeOcupados() {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado", "Ocupado"))
+				.uniqueResult();
+		return a;
+	}
 	
 	
 	

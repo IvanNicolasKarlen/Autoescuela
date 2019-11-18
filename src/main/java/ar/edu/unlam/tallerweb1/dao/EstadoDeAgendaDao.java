@@ -10,7 +10,7 @@ public interface EstadoDeAgendaDao {
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
 	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);	
-	
+	EstadoDeAgenda traerListaDeOcupados();
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();

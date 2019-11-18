@@ -21,6 +21,7 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 @Repository("servicioAgendaDao")
 public class AgendaDaoImp implements AgendaDao {
@@ -138,10 +139,10 @@ public class AgendaDaoImp implements AgendaDao {
 				// repitan las fechas
 																	// reverseOrder ordena los elementos
 																	// en forma descendente
-				TreeSet<Agenda> agendasDesc = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
-				agendasDesc.addAll(result);
+				TreeSet<Agenda> agendas = new TreeSet<Agenda>();
+				agendas.addAll(result);
 						
-				return agendasDesc;
+				return agendas;
 	
 	}
 
@@ -422,13 +423,17 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("instructorVehiculoEspecialidad", "iveBuscado")
 				.createAlias("iveBuscado.instructor", "instructorId")
 				.createAlias("estadoDeAgenda", "estadoBuscado")
+				 .createAlias("inscripcion", "inscripcion")
 				.add(Restrictions.eq("instructorId.id", idInstructor))
-				.add(Restrictions.eq("estadoBuscado.estado", "Disponible"))
+				.add(Restrictions.eq("estadoBuscado.estado", "Ocupada"))
 				.add(Restrictions.isNotNull("inscripcion"))
 				
 				.list();
-	}
+		
+}
 	
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido) {
 		final Session session = sessionFactory.getCurrentSession();
@@ -438,9 +443,11 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("alumnoBuscado.usuario", "usuarioBuscado")
 				.createAlias("usuarioBuscado.instructor", "instructorBuscado")
 				.createAlias("estadoDeAgenda","estadoBuscado")
-				.add(Restrictions.eq("instructorBuscado.id", idInstructor))
-				.add(Restrictions.like("estadoBuscado.estado", "Disponible"));
-				
+					
+				.add(Restrictions.eq("estadoBuscado.estado", "Ocupada"))
+				.add(Restrictions.eq("instructorBuscado.id", idInstructor));
+
+			
 				
 				if(apellido != null) {
 				criteria.add(Restrictions.like("usuarioBuscado.apellido","%" + apellido + "%"));
@@ -449,15 +456,10 @@ final Session session = sessionFactory.getCurrentSession();
 				if(nombre != null) {
 					criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
 				}			
-				return criteria.list();
+				return  (List<Agenda>) criteria.list();
 	}
-
-	@Override
-	public void updateEstadoDeAgenda(Agenda agenda) {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		session.update(agenda);
-}
+	
+	
 
 	@Override
 	public List<Agenda> traerFechasDisponibles(Long idInstructor) {
@@ -468,7 +470,7 @@ final Session session = sessionFactory.getCurrentSession();
 				.createAlias("instructorVehiculoEspecialidad", "ive")
 				.createAlias("ive.instructor", "instructorBuscado")
 				.add(Restrictions.eq("instructorBuscado.id", idInstructor))
-				.add((Restrictions.eq("estadoBuscado.estado", "Disponible")))
+				.add((Restrictions.eq("estadoBuscado.estado", "Ocupada")))
 						.setProjection(Projections.projectionList()
 								.add(Projections.distinct(Projections.property("inscripcionBuscada.id")))
 								)
