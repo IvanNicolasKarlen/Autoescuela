@@ -67,7 +67,7 @@ public class testInstructor<Agenda> extends SpringTest {
 	    	assertThat(i2).isNull();
 	    }
 	    
-		@Test
+	/*	@Test
 		public void testInicioVistaInstructor(){
 			//mokeo el controlador
 			ControladorUsuario controladorUsuariorMock = new ControladorUsuario();
@@ -133,7 +133,7 @@ public class testInstructor<Agenda> extends SpringTest {
 		}*/
 		
 
-		@Test
+	/*	@Test
 		public void testQueVerificaQueVayaALaVistaClaseCanceladaConExitoInstructor(){
 			//mokeo el controlador
 	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
@@ -194,7 +194,7 @@ public class testInstructor<Agenda> extends SpringTest {
 	    	//pruebo el metodo del controllador
 	        assertThat(modelo.get("listaMeses")).isEqualTo(listaMeses);
 			
-		}
+		
 		
 
 	    /*************************************************************************************/
