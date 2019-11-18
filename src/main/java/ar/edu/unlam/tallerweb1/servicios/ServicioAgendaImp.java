@@ -74,7 +74,6 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso,Long idAlumno) {
 		
-		
 		Usuario usuario = alumnoDao.buscarUsuario(idAlumno);	
 		//Traigo los datos del alumno logueado
 		Alumno alumno = alumnoDao.buscarAlumno(usuario.getAlumno().getId());
@@ -99,35 +98,17 @@ public class ServicioAgendaImp implements ServicioAgenda{
 			 }
 		 }
 		 
-		 
-		 System.out.println("OCUPADASS "+ listadoDeClasesOcupadas.size());
-		 
-		 
-		 
-		 
-		 TreeSet<Agenda> agendasSinDuplicados= agendaDao.traerAgendasConFechasNoRepetidas(Curso, alumno.getId(), disponible);
-System.out.println("AAAAAAAAAGENDAS SN DUPLICADOS: "+ agendasSinDuplicados.size());
+	 
+TreeSet<Agenda> agendasSinDuplicados= agendaDao.traerAgendasConFechasNoRepetidas(Curso, alumno.getId(), disponible);
 
-System.out.println("AAAAAAAAAGENDAS CLASES MIAS: "+ listadoDeClases.size());
-
-//
 TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 		 
 		 if(!listadoDeClasesOcupadas.isEmpty())
 			 {
-		 
-			 System.out.println("ENTRA BIEN AL IF");
-			 
 				 for(Agenda ag:listadoDeClasesOcupadas)
 				 {
-				 
-					 System.out.println("CLASE MIA: "+ag.getFecha());
 					 for(Agenda aSinDuplicado: agendasSinDuplicados)
 					 {
-						 System.out.println("CLASE NUEVA: "+aSinDuplicado.getFecha()+" HORA: "+aSinDuplicado.getHora());
-						  
-
-						 
 						 
 						 if(   !aSinDuplicado.getFecha().equals(ag.getFecha())) 
 						 {
@@ -135,42 +116,39 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 							 if(!fechasOcupadas.contains(aSinDuplicado.getFecha()))
 							 {
 								 	returnClases.add(aSinDuplicado);
-								 	System.out.println("AGREGA "+aSinDuplicado.getFecha()+" HORA: "+aSinDuplicado.getHora());
 							 } 
 						 }
-						 
-						 
+						 		 
 					 }
 					 		
 				 }
 			 }else
 				 {	 
-				 System.out.println("ENTRA AL ELSE");
 				 returnClases= agendaDao.traerAgendasConFechasNoRepetidas(Curso, alumno.getId(), disponible);
-				 }
+				  
+				}
 		 
 	
 	 
 		 LocalDate hoy = LocalDate.now();
+			// reverseOrder ordena los elementos
+			// en forma descendente
 		 TreeSet<Agenda> listaClases = new TreeSet<Agenda>(java.util.Collections.reverseOrder());
 
+		
+		 
 			 //Guardo las agendas mayores o iguales a hoy
 			for(Agenda a: returnClases)
 			{
 				//Parseo la fecha
-				 //LocalDate agendas = LocalDate.parse(a.getFecha());
-				 
 				 
 				 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				 LocalDate localDate = LocalDate.parse(a.getFecha(), formatter);
 				 
 				 if(localDate.isAfter(hoy))
 		        	{
-		        		listaClases.add(a);
-
-		        	}
-		
-				 	 
+		        		listaClases.add(a);		        			 
+		        	}	 	 
 			}
 			
 			
@@ -180,8 +158,6 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 			// Ordeno las agendas con las fechas en forma ascendente
 			TreeSet<Agenda> agendasAsc = new TreeSet<Agenda>();
 			agendasAsc.addAll(listaClases);	
-		
-			
 		return agendasAsc;
 	
 
