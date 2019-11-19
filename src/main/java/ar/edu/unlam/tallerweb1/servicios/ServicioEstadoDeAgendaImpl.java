@@ -20,20 +20,26 @@ public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
 /**************************************INSTRUCTOR*****************************************/
 	
 	@Override
-	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
-		return estadoDeAgendaDao.traerListaDeEstadoDeAgendaMenosEstadoDisponible();
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor() {
+		return estadoDeAgendaDao.traerListaDeEstadoDeAgendaParaInstructor();
 	}
 	
 	@Override
-	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
-		estadoDeAgendaDao.updateEstadoDeAgenda(mensaje);		
+	public List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor() {
+		return estadoDeAgendaDao.traerDetalleDeEstadoDeAgendaParaInstructor();
 	}
-	
-	@Override
-	public EstadoDeAgenda traerListaDeOcupados() {
-		return estadoDeAgendaDao.traerListaDeOcupados();	
-		
-	}
+
+//	
+//	@Override
+//	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+//		estadoDeAgendaDao.updateEstadoDeAgenda(mensaje);		
+//	}
+//	
+//	@Override
+//	public EstadoDeAgenda traerListaDeOcupados() {
+//		return estadoDeAgendaDao.traerListaDeOcupados();	
+//		
+//	}
 	/*************************************************************************************/
 	
 	@Override

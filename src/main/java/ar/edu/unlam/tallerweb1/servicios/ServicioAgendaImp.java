@@ -65,19 +65,17 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor) {
 		
-		Usuario usuario = instructorDao.buscarUsuario(idInstructor);	
-		//Traigo los datos del alumno logueado
-		Instructor instructor = instructorDao.buscarInstructor(usuario.getInstructor().getId());
+
+		Instructor instructor = instructorDao.buscarInstructor(idInstructor);
 		
 		return agendaDao.buscarDiaYHorarioDeTurnoDeUnInstructor(instructor.getId());
 	}
 	
 	@Override
 	public List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido) {
-		
-		Usuario usuario = instructorDao.buscarUsuario(idInstructor);	
+			
 		//Traigo los datos del alumno logueado
-		Instructor instructor = instructorDao.buscarInstructor(usuario.getInstructor().getId());
+		Instructor instructor = instructorDao.buscarInstructor(idInstructor);
 		
 			return agendaDao.buscarAlumnos(instructor.getId(),nombre,apellido);
 }
@@ -185,9 +183,7 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	@Override
 	public List<Agenda> traerFechasDisponibles(Long idInstructor) {
 		
-		Usuario usuario = instructorDao.buscarUsuario(idInstructor);	
-		//Traigo los datos del alumno logueado
-		Instructor instructor = instructorDao.buscarInstructor(usuario.getInstructor().getId());
+		Instructor instructor = instructorDao.buscarInstructor(idInstructor);
 
 		
 		

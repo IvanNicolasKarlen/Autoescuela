@@ -56,17 +56,19 @@
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
+							
 									<li>
 										<a href="${context}/index">Inicio</a>
 									</li>
 									
 									<li>
-										<a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a>
+										<a href="${context}/AlumnosDelInstructor">Buscador de Alumnos</a>
 									</li>
 									
 									<li>
 										<a href="${context}/horasTrabajadas">Horas trabajadas</a>
 									</li>
+							
 								</c:if>
 							
 							<!-- Fin instructor -->

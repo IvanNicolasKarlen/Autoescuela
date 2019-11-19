@@ -41,6 +41,11 @@ public class ServicioEstadoDeVehiculoImpl implements ServicioEstadoDeVehiculo {
 		estadoDeVehiculoDao.updateEstadoDeVehiculo(idEstadoDeVehiculo);
 		
 	}
+	@Override
+	public EstadoDeVehiculo traerEstadoVehiculoPorNombre(String noFuncionando) {
+		return estadoDeVehiculoDao.traerEstadoVehiculoPorNombre(noFuncionando);
+
+	}
 
 	
 }

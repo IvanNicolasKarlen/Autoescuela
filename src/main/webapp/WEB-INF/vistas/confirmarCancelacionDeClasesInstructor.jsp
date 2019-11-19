@@ -36,8 +36,7 @@
 	<input name="idAgenda" value="${idAgenda}" style="display:none">
 	<input name="idEstadoAgenda" value="${idEstadoAgenda}" style="display:none">	
 	<input name="idEstadoDeVehiculo" value="${estadoId}" style="display:none">	
-	<input name="mensaje" value="${mensaje}" style="display:none">	
-	
+<input name="idV" value="${idV}" style="display:none">		
 	<input value="si" style="display:none">	
 			
 		

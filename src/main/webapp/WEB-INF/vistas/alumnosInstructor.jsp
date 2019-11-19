@@ -60,6 +60,7 @@
          <tbody>
          ${mensaje}
 <c:if test="${ocultar == 'mensaje' }">		
+
            	<thead>       
 				<tr class="w3-red">
 					<th class="enc"><center>Nombre</center></th>
@@ -78,8 +79,7 @@
 						<td class="alt-celda"><h3>${verFechas.inscripcion.alumno.usuario.dni}</h3></td>		
 						<td class="alt-celda"><h3>${verFechas.fecha}</h3></td>
 						<td class="alt-celda"><h3>${verFechas.hora}</h3></td>	
-						
-<td><a href="seleccionarMotivo/${verFechas.id}">Cancelar</a></td>						
+						<td><a href="seleccionarMotivo/${verFechas.id}">Cancelar</a></td>						
 					</tr>
 			</c:forEach>	
 			

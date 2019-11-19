@@ -52,38 +52,23 @@ public class ControladorInstructor {
 	@Inject
 	private ServicioInstructor servicioInstructor;
 	
-	@RequestMapping("/indexInstructor")
-	public ModelAndView indexAlumno(HttpServletRequest request) {
-		
-		if(!request.getSession().getAttribute("ROL").equals("Instructor"))
-		{
-			return new ModelAndView("redirect:/index");
-		}
-		
-		ModelMap modelo = new ModelMap();
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
-		modelo.put("rol", rol);
-			
-		//Sesion
-		Long idInstructor = (Long) request.getSession().getAttribute("ID");
-		Usuario usuario = servicioInstructor.buscarUsuario(idInstructor);
-			
-		modelo.put("usuario", usuario);
-		return new ModelAndView("indexInstructor", modelo);
-	}
 		
 	
 	
 	@RequestMapping(path="/AlumnosDelInstructor", method = RequestMethod.GET)
 	public ModelAndView BuscarTodosLosAlumnosDeUnInstructor (HttpServletRequest request) {
+		
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 	
-		ModelMap model = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Instructor"))
-		{		
-				return new ModelAndView ("alumnosInstructor",model);
+		if(rol.equals("Instructor")){
+			
+			ModelMap model = new ModelMap();
+			model.put("rol", rol);
+			return new ModelAndView ("alumnosInstructor",model);
+			
 		}else {
-				return new ModelAndView("login", model);
-			     }
+			return new ModelAndView("redirect:/index");
+		}
 	}
 	
 	
@@ -93,57 +78,74 @@ public class ControladorInstructor {
 										HttpServletRequest request){
 
 		ModelMap model = new ModelMap();
-		
-		Long idInstructor = (Long) request.getSession().getAttribute("ID");
-		
+
+		Long idInstructor = (Long) request.getSession().getAttribute("IDROL");
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Instructor")){
+
 		
 		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(idInstructor,nombre,apellido);
 		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles(idInstructor);
-		System.out.println(buscarAlumnos + "buscarAlumnos");
-		System.out.println(listaAgenda + "listaAgenda");
-		System.out.println(traerAlumnosDisponibles + "traerAlumnos disponibles");
-	
 		
 		model.put("listaAgenda", listaAgenda);
 		model.put("traerAlumnos",traerAlumnosDisponibles);
 		model.put("buscarAlumnos", buscarAlumnos);
+		model.put("rol", rol);
 		model.put("ocultar", "mensaje");
 		
-		System.out.println(buscarAlumnos);
-		System.out.println(listaAgenda);
-		System.out.println(traerAlumnosDisponibles);
-				
 		return new ModelAndView ("alumnosInstructor",model);
+		}else {
+			return new ModelAndView("redirect:/index");
+		}
+		
 	}		
 
 	
 	@RequestMapping(value="/claseCanceladaConExito", method = RequestMethod.GET)
-	public ModelAndView confirmarCancelacion () {
-
-		return new ModelAndView("ClaseCanceladaConExitoInstructor");
+	public ModelAndView confirmarCancelacion (HttpServletRequest request) {
 		
+		
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Instructor")){
+			
+			ModelMap model = new ModelMap();
+			model.put("rol",rol);
+			return new ModelAndView("ClaseCanceladaConExitoInstructor");
+		
+	}else {
+		return new ModelAndView("redirect:/index");
 	}
+	}
+
+
 	
 	@RequestMapping(path="/cancelacionDeAgenda", method = RequestMethod.GET)
 	public ModelAndView probar (@RequestParam(name="idAgenda",required=false) Long idAgenda,
 								@RequestParam(name="idEstadoAgenda",required=false) Long idEstadoAgenda,
-							    @RequestParam(name="mensaje",required=false) String mensaje,
 							    @RequestParam(name="idEstadoDeVehiculo",required=false) Long estadoId,
+							    @RequestParam(name="idV",required=false) Long idV,
 							    @RequestParam(name="confir",required=false,defaultValue="noConfirmado")String confirmacion,
 						      	HttpServletRequest request) {		
 		
-		Long idInstructor = (Long) request.getSession().getAttribute("ID");
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 
-		
+
+		if(rol.equals("Instructor")){
+
 		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
 		
 		List<EstadoDeVehiculo> estadosDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
 		
-		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);
+
+		
+		EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.traerEstadoVehiculoPorNombre("No funcionando");
+		
+
+		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);		
 		
 		
-		String rol = (String)request.getSession().getAttribute("ROL");
+
 		ModelMap model = new ModelMap();
 		String vista = "confirmarCancelacionDeClasesInstructor";
 		if(rol.equals("Instructor")){
@@ -151,26 +153,31 @@ public class ControladorInstructor {
 			model.put("estadosDeAgenda",estadosDeAgenda);
 			model.put("estadosDeVehiculo",estadosDeVehiculo);
 			model.put("estadoDeAgenda",estadoDeAgenda);
+			model.put("estadoVehiculo",estadoVehiculo);
 			
 		
 		if(confirmacion.equals("noConfirmado")){
 			model.put("confirmacion", "¿Esta seguro de querer cancelar la clase seleccionada?");
 			model.put("idAgenda",idAgenda);
 			model.put("idEstadoAgenda", idEstadoAgenda);
-			model.put("mensaje", mensaje);
 			model.put("idEstadoDeVehiculo", estadoId);
+			model.put("idV", idV);
 		}else {
 		switch(confirmacion){
 		case "si": 
 			Agenda agenda = servicioAgenda.buscarAgendaPorId(idAgenda);
+//			agenda.setEstadoDeAgenda(estadoDeAgenda);
+//			servicioAgenda.updateAgenda(agenda);
+		
+			Vehiculo ve = agenda.getInstructorVehiculoEspecialidad().getVehiculo();
+			ve.setEstadoDeVehiculo(estadoVehiculo);
+			servicioVehiculo.updateVehiculo(ve);
 			agenda.setEstadoDeAgenda(estadoDeAgenda);
 			servicioAgenda.updateAgenda(agenda);
 			
-			estadoDeAgenda.setDetalle(mensaje);
-			servicioEstadoDeAgenda.updateEstadoDeAgenda(estadoDeAgenda);
-		
+			
 			model.put("estadoDeAgenda", estadoDeAgenda);
-			model.put("mensaje", mensaje);
+			model.put("estadoVehiculo", estadoVehiculo);
 
 			if(servicioAgenda.buscarAgenda(agenda)!=null){
 				return new ModelAndView("redirect:/claseCanceladaConExito");
@@ -181,51 +188,76 @@ public class ControladorInstructor {
 		}}
 		
 		}	return new ModelAndView(vista,model);
+		}else {
+			return new ModelAndView("redirect:/index");
+
+		}
 	}
 	
 	
 	@RequestMapping(path="/seleccionarMotivo/{idAgenda}", method = RequestMethod.GET)
 	public ModelAndView cancelarClase (@PathVariable(value="idAgenda") Long idAgenda,
 									   HttpServletRequest request) {
+		
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 
+		if(rol.equals("Instructor")){
+		
 		ModelMap model = new ModelMap();
 		
-		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgendaMenosEstadoDisponible();
+		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgendaParaInstructor();
 		List<EstadoDeVehiculo> estadoDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
 		model.put("estadosDeAgenda",estadosDeAgenda);
 		model.put("estadoDeVehiculo",estadoDeVehiculo);
 		model.put("idAgenda",idAgenda);
+		model.put("rol", rol);
 	
 
 		return new ModelAndView ("cancelarClaseInstructor",model);
-
+		}else {
+			return new ModelAndView("redirect:/index");
+		}
 	}
 	
 
 	@RequestMapping(path="/horasTrabajadas", method = RequestMethod.GET)
-	public ModelAndView horasTrabajadas (@RequestParam(name="ids",required=false)Long idInstructor) {
+	public ModelAndView horasTrabajadas (HttpServletRequest request) {
 
 		ModelMap model = new ModelMap ();
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+
+		if(rol.equals("Instructor")){
 		
+		Long idInstructor = (Long)request.getSession().getAttribute("IDROL");
 		Map<String,Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);
 
 		model.put("listaMeses", listaMeses);
+		model.put("rol", rol);
 
 		return new ModelAndView ("horasTrabajadasInstructor",model);
+	}else {
+		return new ModelAndView("redirect:/index");
 	}
-
+}
+	
+	
 	@RequestMapping(path="/grafico", method = RequestMethod.GET)
-	public ModelAndView grafico (@RequestParam(name="ids",required=false)Long idInstructor) {
-		
+	public ModelAndView grafico (HttpServletRequest request) {
+		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		if(rol.equals("Instructor")){
+			
 		ModelMap model = new ModelMap ();
-		
+		Long idInstructor = (Long)request.getSession().getAttribute("IDROL");
 		Map<String,Integer> listaMeses = servicioAgenda.horasTrabajadas(idInstructor);	
 		model.put("listaMeses", listaMeses);
+		model.put("rol",rol);
 		
 		
 		return new ModelAndView ("grafico",model);
+	}else {
+		return new ModelAndView("redirect:/index");
 	}
-	
+	}
 	
 	//getters y setters
 	public ServicioAgenda getServicioAgenda() {

@@ -8,9 +8,10 @@ public interface EstadoDeAgendaDao {
 
 /********************************INSTRUCTOR**********************************/
 	
-	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
-	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);	
-	EstadoDeAgenda traerListaDeOcupados();
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor();
+	List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor();
+//	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);	
+//	EstadoDeAgenda traerListaDeOcupados();
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();

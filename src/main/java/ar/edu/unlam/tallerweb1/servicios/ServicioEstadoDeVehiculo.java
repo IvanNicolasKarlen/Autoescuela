@@ -13,5 +13,6 @@ public interface ServicioEstadoDeVehiculo {
 			/************************************************INSTRUCTOR***************************/
 			List<EstadoDeVehiculo> traerListaDeEstadoDeVehiculo();
 			void updateEstadoDeVehiculo(EstadoDeVehiculo idEstadoDeVehiculo);
+			EstadoDeVehiculo traerEstadoVehiculoPorNombre(String noFuncionando);
 
 }

@@ -438,10 +438,11 @@ final Session session = sessionFactory.getCurrentSession();
 	public List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido) {
 		final Session session = sessionFactory.getCurrentSession();
 		Criteria criteria =  session.createCriteria(Agenda.class)
+				.createAlias("instructorVehiculoEspecialidad", "iveBuscada")
+				.createAlias("iveBuscada.instructor", "instructorBuscado")
 				.createAlias("inscripcion", "inscripcionBuscada")
 				.createAlias("inscripcionBuscada.alumno", "alumnoBuscado")
 				.createAlias("alumnoBuscado.usuario", "usuarioBuscado")
-				.createAlias("usuarioBuscado.instructor", "instructorBuscado")
 				.createAlias("estadoDeAgenda","estadoBuscado")
 					
 				.add(Restrictions.eq("estadoBuscado.estado", "Ocupada"))
@@ -450,11 +451,11 @@ final Session session = sessionFactory.getCurrentSession();
 			
 				
 				if(apellido != null) {
-				criteria.add(Restrictions.like("usuarioBuscado.apellido","%" + apellido + "%"));
+				criteria = criteria.add(Restrictions.like("usuarioBuscado.apellido","%" + apellido + "%"));
 				}
 				
 				if(nombre != null) {
-					criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
+					criteria = criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
 				}			
 				return  (List<Agenda>) criteria.list();
 	}

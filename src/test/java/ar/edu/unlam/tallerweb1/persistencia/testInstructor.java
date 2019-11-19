@@ -11,7 +11,6 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.test.annotation.Rollback;
@@ -67,7 +66,7 @@ public class testInstructor<Agenda> extends SpringTest {
 	    	assertThat(i2).isNull();
 	    }
 	    
-	/*	@Test
+		@Test
 		public void testInicioVistaInstructor(){
 			//mokeo el controlador
 			ControladorUsuario controladorUsuariorMock = new ControladorUsuario();
@@ -101,7 +100,7 @@ public class testInstructor<Agenda> extends SpringTest {
 
 		}
 		
-	/*	@Test
+		@Test
 		public void testBuscadorDeAlumnos() {
 			//mokeo el controlador
 	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
@@ -111,11 +110,11 @@ public class testInstructor<Agenda> extends SpringTest {
 	    	controladorInstructor.setServicioAgenda(servicioAgendaMock);
 	    	//los when
 	    	List<ar.edu.unlam.tallerweb1.modelo.Agenda> buscarAlumnos= new ArrayList<>();
-	    	when(servicioAgendaMock.buscarAlumnos("", "")).thenReturn(buscarAlumnos);
+	    	when(servicioAgendaMock.buscarAlumnos(1l, "", "")).thenReturn(buscarAlumnos);
 	    	List<ar.edu.unlam.tallerweb1.modelo.Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor = new ArrayList<>();
 	    	when(servicioAgendaMock.buscarDiaYHorarioDeTurnoDeUnInstructor(1L)).thenReturn(buscarDiaYHorarioDeTurnoDeUnInstructor);
 	    	List<ar.edu.unlam.tallerweb1.modelo.Agenda> traerFechasDisponibles= new ArrayList<>();
-	    	when(servicioAgendaMock.traerFechasDisponibles()).thenReturn(traerFechasDisponibles);
+	    	when(servicioAgendaMock.traerFechasDisponibles(1L)).thenReturn(traerFechasDisponibles);
 	    	//trucheo el request
 	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
 	        HttpSession sessionMock=mock(HttpSession.class);
@@ -130,44 +129,49 @@ public class testInstructor<Agenda> extends SpringTest {
 	        assertThat(modelo.get("buscarAlumnos")).isEqualTo(buscarAlumnos);
 	        assertThat(modelo.get("listaAgenda")).isEqualTo(buscarDiaYHorarioDeTurnoDeUnInstructor);
 	        assertThat(modelo.get("traerAlumnos")).isEqualTo(traerFechasDisponibles);
-		}*/
+		}
 		
 
-	/*	@Test
+		@Test
 		public void testQueVerificaQueVayaALaVistaClaseCanceladaConExitoInstructor(){
 			//mokeo el controlador
 	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
-	    	//ModelAndView
-	    	ModelAndView vista = controladorInstructor.confirmarCancelacion();
-	    	//pruebo el metodo del controllador	
-	    	assertThat(vista.getViewName()).isEqualTo("ClaseCanceladaConExitoInstructor");
-		}
-		
-		@Test
-		public void seleccionDeMotivoEstadoDeAgenda () {
-			//mokeo el controlador
-	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
-	    	//mockeo servicio
-	    	ServicioEstadoDeAgenda servicioEstadoDeAgendaMock = mock(ServicioEstadoDeAgenda.class);
-	    	//lo seteo al controlador
-	    	controladorInstructor.setServicioEstadoDeAgenda(servicioEstadoDeAgendaMock);
-	    	//los when
-	    	List<EstadoDeAgenda> estadosDeAgenda = new ArrayList<>();
-	    	when(servicioEstadoDeAgendaMock.traerListaDeEstadoDeAgenda()).thenReturn(estadosDeAgenda);
 	    	//trucheo el request
 	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
 	        HttpSession sessionMock=mock(HttpSession.class);
 	        when(requestMock.getSession()).thenReturn(sessionMock);
 	        when(requestMock.getSession().getAttribute("ROL")).thenReturn("Instructor");
-	        //llamo al metodo del controlador
-	        controladorInstructor.cancelarClase(1L, requestMock);
 	    	//ModelAndView
-	        ModelAndView modelAndView = controladorInstructor.cancelarClase(1L, requestMock);
-	        ModelMap modelo=(ModelMap) controladorInstructor.cancelarClase(1l, requestMock).getModel();
-	    	//pruebo el metodo del controllador
-	        assertThat(modelo.get("estadosDeAgenda")).isEqualTo(estadosDeAgenda);
-			
+	    	ModelAndView vista = controladorInstructor.confirmarCancelacion(requestMock);
+	    	//pruebo el metodo del controllador	
+	    	assertThat(vista.getViewName()).isEqualTo("ClaseCanceladaConExitoInstructor");
 		}
+		
+//		@Test
+//		public void seleccionDeMotivoEstadoDeAgenda () {
+//			//mokeo el controlador
+//	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
+//	    	//mockeo servicio
+//	    	ServicioEstadoDeAgenda servicioEstadoDeAgendaMock = mock(ServicioEstadoDeAgenda.class);
+//	    	//lo seteo al controlador
+//	    	controladorInstructor.setServicioEstadoDeAgenda(servicioEstadoDeAgendaMock);
+//	    	//los when
+//	    	List<EstadoDeAgenda> estadosDeAgenda = new ArrayList<>();
+//	    	when(servicioEstadoDeAgendaMock.traerListaDeEstadoDeAgenda()).thenReturn(estadosDeAgenda);
+//	    	//trucheo el request
+//	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
+//	        HttpSession sessionMock=mock(HttpSession.class);
+//	        when(requestMock.getSession()).thenReturn(sessionMock);
+//	        when(requestMock.getSession().getAttribute("ROL")).thenReturn("Instructor");
+//	        //llamo al metodo del controlador
+//	        controladorInstructor.cancelarClase(1L, requestMock);
+//	    	//ModelAndView
+//	        ModelAndView modelAndView = controladorInstructor.cancelarClase(1L, requestMock);
+//	        ModelMap modelo=(ModelMap) controladorInstructor.cancelarClase(1l, requestMock).getModel();
+//	    	//pruebo el metodo del controllador
+//	        assertThat(modelo.get("estadosDeAgenda")).isEqualTo(estadosDeAgenda);
+//			
+//		}
 		
 		
 		@Test
@@ -187,10 +191,10 @@ public class testInstructor<Agenda> extends SpringTest {
 	        when(requestMock.getSession()).thenReturn(sessionMock);
 	        when(requestMock.getSession().getAttribute("ROL")).thenReturn("Instructor");
 	        //llamo al metodo del controlador
-	        controladorInstructor.horasTrabajadas(1L);
+	        controladorInstructor.horasTrabajadas(requestMock);
 	    	//ModelAndView
-	        ModelAndView modelAndView = controladorInstructor.horasTrabajadas(1L);
-	        ModelMap modelo=(ModelMap) controladorInstructor.horasTrabajadas(1L).getModel();
+	        ModelAndView modelAndView = controladorInstructor.horasTrabajadas(requestMock);
+	        ModelMap modelo=(ModelMap) controladorInstructor.horasTrabajadas(requestMock).getModel();
 	    	//pruebo el metodo del controllador
 	        assertThat(modelo.get("listaMeses")).isEqualTo(listaMeses);
 			
@@ -199,5 +203,7 @@ public class testInstructor<Agenda> extends SpringTest {
 
 	    /*************************************************************************************/
 	}
+		
+}
 
 

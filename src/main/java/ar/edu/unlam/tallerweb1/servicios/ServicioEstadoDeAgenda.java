@@ -8,9 +8,10 @@ import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 public interface ServicioEstadoDeAgenda {
 	
 	/************************************************INSTRUCTOR***************************/
-	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible();
-	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);
-	EstadoDeAgenda traerListaDeOcupados();
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor();
+	List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor();
+//	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);
+//	EstadoDeAgenda traerListaDeOcupados();
 
 	
 	

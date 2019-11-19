@@ -15,5 +15,5 @@ public interface EstadoDeVehiculoDao {
 	
 	List<EstadoDeVehiculo> traerListaDeEstadoDeVehiculo();
 	void updateEstadoDeVehiculo(EstadoDeVehiculo idEstadoDeVehiculo);	
-
+	EstadoDeVehiculo traerEstadoVehiculoPorNombre(String noFuncionando);
 }

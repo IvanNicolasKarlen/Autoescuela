@@ -48,6 +48,11 @@ public class EstadoDeVehiculoDaoImpl implements EstadoDeVehiculoDao {
 		session.update(idEstadoDeVehiculo);
 		
 	}
+	@Override
+	public EstadoDeVehiculo traerEstadoVehiculoPorNombre(String noFuncionando) {
+		return (EstadoDeVehiculo) sessionFactory.getCurrentSession().createCriteria(EstadoDeVehiculo.class)
+				.add(Restrictions.eq("estadoActual", noFuncionando)).uniqueResult();
+	}
 	
 
 }

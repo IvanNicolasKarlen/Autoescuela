@@ -125,29 +125,50 @@ final Session session = sessionFactory.getCurrentSession();
 	}
 	/***************************************INSTRUCTOR********************************/
 	@SuppressWarnings("unchecked")
-	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaMenosEstadoDisponible() {
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(EstadoDeAgenda.class)
 				.add(Restrictions.ne("estado", "Disponible"))
+				.add(Restrictions.ne("estado", "Ocupada"))
+				.add(Restrictions.ne("estado", "Cancelado por Alumno"))
+				.add(Restrictions.ne("estado", "Cancelado por Organizador"))
+				.add(Restrictions.ne("estado", "Finalizado"))
+				.add(Restrictions.ne("estado", "Clase perdida"))
+				.add(Restrictions.ne("estado", "Abandonada"))
+				
 				.list();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
-		final Session session = sessionFactory.getCurrentSession();
-		session.update(mensaje);		
+	public List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("detalle", "El alumno puede inscribirse"))
+				.add(Restrictions.ne("detalle", "Ya hay un alumno inscripto"))
+				.add(Restrictions.ne("detalle", "El alumno cancelo la clase"))
+				.add(Restrictions.ne("detalle", "El organizador decidio cancelar la clase"))
+				.list();
 	}
+	
+//	
+//	@Override
+//	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+//		final Session session = sessionFactory.getCurrentSession();
+//		session.update(mensaje);		
+//	}
+//
+//	@Override
+//	public EstadoDeAgenda traerListaDeOcupados() {
+//		final Session session = sessionFactory.getCurrentSession();
+//		
+//		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+//				.add(Restrictions.eq("estado", "Ocupado"))
+//				.uniqueResult();
+//		return a;
+//	}
+//	
 
-	@Override
-	public EstadoDeAgenda traerListaDeOcupados() {
-		final Session session = sessionFactory.getCurrentSession();
-		
-		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
-				.add(Restrictions.eq("estado", "Ocupado"))
-				.uniqueResult();
-		return a;
-	}
-	
-	
+
 	
 }

@@ -43,16 +43,21 @@
 			</c:forEach>
 		</select><br><br><br>
 		
-<h4>Explique el motivo por el cual decide cancelar la clase:</h4><br>
-<p><textarea rows="4" cols="50" name="mensaje" required></textarea></p><br><br>
+		
+	<!-- 		<h4>Detalle de cancelación</h4><br>
+		<select name="idDetalle">
+			<c:forEach items="${detalleDeAgenda}" var="la">
+				<option value="${la.id}"> ${la.detalle} </option>
+			</c:forEach>
+		</select><br><br><br> -->
 		
 		
-		<h4>Estado del vehiculo</h4><br>
+		<!-- <h4>Estado del vehiculo</h4><br>
 		<select name="idEstadoDeVehiculo" >			
 			<c:forEach items="${estadoDeVehiculo}" var="ev">
 				<option value="${ev.id}"> ${ev.estadoActual} </option>
 			</c:forEach>
-		</select><br><br>
+		</select><br><br> -->
 		
 	<input name="confir" value="${confirmacion}" style="display:none">	
 	
