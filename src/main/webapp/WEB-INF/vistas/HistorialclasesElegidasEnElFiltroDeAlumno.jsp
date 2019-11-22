@@ -40,7 +40,7 @@
 -->
 		
 					<p class="t-center m-b-22 size3 m-l-r-auto m-b-70 m-t-15">
-					¿Que estás esperando? Anotate y aprendé a manejar junto a nuestros instructores.
+					Â¿Que estÃ¡s esperando? Anotate y aprendÃ© a manejar junto a nuestros instructores.
 						</p>
 		
 		
@@ -64,15 +64,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 						<h3 class="tit3 text-center m-b-35 m-t-5">
 							Historial de Clases 
 						</h3>
@@ -86,7 +77,7 @@
 		
 <label class="checkbox-inline">
 
-  <input type="radio"  class="m-l-15" name="id" value="${la.curso.especialidad.id}"/> ${la.curso.especialidad.tipo}
+  <input type="radio"  class="m-l-15" name="id" value="${la.id}"/> ${la.tipo}
   </label>
 </c:forEach>	
 	
@@ -124,7 +115,7 @@
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 		
 		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
-		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
+		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> AÃºn no cursÃ³</p>
 		</c:if>
 		
 		<c:if test="${la.estadoDeAgenda.estado == 'Finalizado' }">
