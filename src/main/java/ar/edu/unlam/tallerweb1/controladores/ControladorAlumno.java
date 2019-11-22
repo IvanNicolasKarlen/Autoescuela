@@ -65,13 +65,13 @@ public class ControladorAlumno {
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno(HttpServletRequest request) {
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
 		}
 		
 		ModelMap modelo = new ModelMap();
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 			
 		//Sesion
@@ -91,14 +91,15 @@ public class ControladorAlumno {
 	@RequestMapping(path="/listadoCursos")
 	public ModelAndView mostrarCursos(HttpServletRequest request){
 		
-	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		
+		String rol = (String)request.getSession().getAttribute("ROL");
+	if(!rol.equals("Alumno"))
 	{
 		return new ModelAndView("redirect:/index");
 	}	
 	
 		ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Trae todo el listado de todos los cursos
@@ -117,13 +118,12 @@ public class ControladorAlumno {
 	public ModelAndView guardarCursoSeleccionado( @ModelAttribute("curso") Curso cursoElegido, HttpServletRequest request )
 	{
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-			
+		}	
 		ModelMap modelo = new ModelMap();
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -175,14 +175,13 @@ public class ControladorAlumno {
 			HttpServletRequest request )
 	{
 		
-	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
-	{
-		return new ModelAndView("redirect:/index");
-	}
-			
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
+		{
+			return new ModelAndView("redirect:/index");
+		}		
 	ModelMap modelo = new ModelMap();
 		
-	String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 	modelo.put("rol", rol);
 			
 	//Sesion
@@ -250,14 +249,13 @@ public class ControladorAlumno {
 	@RequestMapping(path="/listadoFechas")
 	public ModelAndView DiasDeCursada(HttpServletRequest request){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
 		}
-		
 		ModelMap modelo = new ModelMap();
 			
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -293,14 +291,13 @@ public class ControladorAlumno {
 	@RequestMapping(path="/clasesDelCurso")
 	public ModelAndView VistaDePruebas(HttpServletRequest request, @RequestParam(name="id", required=false) Long idEspecialidad ){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-		
+		}	
 		ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -353,14 +350,13 @@ public class ControladorAlumno {
 	@RequestMapping(path="/mostrarAlerta")
 	public ModelAndView mostrarSiQuiereEliminarUnaClaseOno(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-		
+		}	
 		ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -380,7 +376,7 @@ public class ControladorAlumno {
 				
 				
 				modelo.put("nombreEspecialidad", alumnoEnCurso);
-				modelo.put("mensaje", "¿Deseas eliminarlas?");
+				modelo.put("mensaje", "Â¿Deseas eliminarlas?");
 				modelo.put("bandera", 1);
 			}
 			
@@ -397,7 +393,7 @@ public class ControladorAlumno {
 				modelo.put("listadoClases", agendasViewModel.getIdAgendas());
 				modelo.put("curso", agendasViewModel.getIdCurso());
 				modelo.put("agenda", agenda);
-				modelo.put("mensaje", "¿Deseas eliminar esta clase?");
+				modelo.put("mensaje", "Â¿Deseas eliminar esta clase?");
 					
 				modelo.put("bandera", 2);
 			}
@@ -411,14 +407,13 @@ public class ControladorAlumno {
 	@RequestMapping(path="/finalizarCursoAlerta")
 	public ModelAndView consultarSiQuiereFinalizarONo(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
 		}
-		
 		ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -426,7 +421,7 @@ public class ControladorAlumno {
 		
 		Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(idAlumno, agendasViewModel.getIdCurso());	
 					
-		modelo.put("mensaje", "¿Estas seguro?");
+		modelo.put("mensaje", "Â¿Estas seguro?");
 		modelo.put("inscripcion", inscripcionBuscada);
 					
 		modelo.put("bandera", 3);
@@ -441,15 +436,14 @@ public class ControladorAlumno {
 	@RequestMapping(path="/eliminarClase")
 	public ModelAndView eliminarUnaClase(HttpServletRequest request, @ModelAttribute("agenda") AgendasViewModel agendasViewModel ){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
 		}
 		
-		
 		ModelMap modelo = new ModelMap();
 	
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		
@@ -517,13 +511,12 @@ public class ControladorAlumno {
 			HttpServletRequest request )
 	{
 	
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-		
+		}	
 			ModelMap modelo = new ModelMap();
-			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 			modelo.put("rol", rol);
 
 			//Sesion
@@ -550,10 +543,11 @@ public class ControladorAlumno {
 	public ModelAndView historialDeClases(HttpServletRequest request )
 	{
 		ModelMap modelo = new ModelMap();
-		if(request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
-			
-			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+			return new ModelAndView("redirect:/index");
+		}		
 			modelo.put("rol", rol);
 			
 			//Sesion
@@ -573,31 +567,29 @@ public class ControladorAlumno {
 				//Busco el id del estado que dice "Finalizado"
 				 EstadoInscripcion estado = servicioEstadoInscripcion.buscarEstadoFinalizado();
 				List<Agenda> listadoDeClases = servicioAgenda.traerTodasLasClasesQueEstaAnotado(idAlumno, estado);
-					
+				List<Especialidad> especialidades = servicioEspecialidad.traerListaDeEspecialidades();
+				
 				modelo.put("num", cursando.size());
 				modelo.put("listadoClases", listadoDeClases);
-				modelo.put("listaCursos", cursando);
+				modelo.put("listaCursos", especialidades);
 				 
 			return new ModelAndView("historial", modelo);
 		}
 		
-		return new ModelAndView("redirect:/index");
-	}	
-	
+		
 	
 	
 	/*Trae solo las clases de la especialidad que selecciono en los filtros*/
 	@RequestMapping(path="/mostrarclasesCurso")
 	public ModelAndView ClasesDeUnSoloCurso(HttpServletRequest request, @RequestParam(name="id", required=false) Long idEspecialidad ){
 		
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
 		}
-		
 		ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -616,7 +608,7 @@ public class ControladorAlumno {
 		/*Por si cambia el id de la url*/
 		if(clasesDeUnSoloCurso.isEmpty() || idEspecialidad.equals(null))
 		{
-			modelo.put("error", "No estas realizando ese curso");
+			modelo.put("error", "No has realizado o finalizado ese curso");
 			modelo.put("botonFinalizarAnulado", "Anulado");
 		}
 		
@@ -629,11 +621,12 @@ public class ControladorAlumno {
 			return new ModelAndView("HistorialclasesElegidasEnElFiltroDeAlumno", modelo);
 		}
 			
+		List<Especialidad> especialidades = servicioEspecialidad.traerListaDeEspecialidades();
 		
 		/*Sino, se le mostrara las clases que eligio del filtro*/
 		modelo.put("num", listadoDeFiltros.size());
 		/*Los cursos que esta realizando, para poder eliminarlos*/
-		modelo.put("listaCursos", listadoDeFiltros);
+		modelo.put("listaCursos", especialidades);
 		modelo.put("listadoDeClases", clasesDeUnSoloCurso);
 
 		return new ModelAndView("HistorialclasesElegidasEnElFiltroDeAlumno", modelo);
@@ -650,12 +643,11 @@ public class ControladorAlumno {
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-			ModelMap modelo = new ModelMap();
-			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
+		}	ModelMap modelo = new ModelMap();
 			modelo.put("rol", rol);
 			
 			
@@ -736,13 +728,14 @@ public class ControladorAlumno {
 			@ModelAttribute("agendasViewModel") AgendasViewModel agendasViewModel,
 			HttpServletRequest request )
 	{
-		if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+		String rol = (String)request.getSession().getAttribute("ROL");
+		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
-		}
-			ModelMap modelo = new ModelMap();
-			String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
-			modelo.put("rol", rol);
+		}	
+		
+		ModelMap modelo = new ModelMap();
+		modelo.put("rol", rol);
 			
 			//Sesion
 			Long idAlumno = (Long) request.getSession().getAttribute("ID");
@@ -828,13 +821,14 @@ public ModelAndView modificarAgenda(
 		HttpServletRequest request )
 {
 	
-	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+	String rol = (String)request.getSession().getAttribute("ROL");
+	if(!rol.equals("Alumno"))
 	{
 		return new ModelAndView("redirect:/index");
 	}
-		ModelMap modelo = new ModelMap();
+	
+	ModelMap modelo = new ModelMap();
 		
-		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 		modelo.put("rol", rol);
 		
 		//Sesion
@@ -842,20 +836,7 @@ public ModelAndView modificarAgenda(
 		
 		//Datos del curso Elegido
 		Curso curso = servicioCurso.buscarCursoPorId(agendasViewModel.getIdCurso());
-		
-		List <Inscripcion> inscripcionCurso = servicioInscripcion.consultarSiYaSeInscribioAUnCurso(idAlumno, curso);
-						
-if(!inscripcionCurso.isEmpty() ) //ese curso que eligio  esta anotado
-	{
-		modelo.put("error","No podes agregar otro curso con la misma especialidad"); //Le avisa que no finalizo
-		
-		//Trae todo el listado de todos los cursos
-		List<Curso> listaCursos =  servicioCurso.traerListaDeCursos();
-			
-		modelo.put("lista", listaCursos);
-		return new ModelAndView("cursos", modelo); //Todavia no curso nada
-	
-	}
+
 					
 	//Consultar que no le hayan ocupado esas fechas
 	Boolean resultado = servicioAgenda.constatarQueNadieSeAnotaraEnLasFechasAsignadas(agendasViewModel.getIdAgendasDepurado(),curso);
@@ -883,10 +864,10 @@ if(!inscripcionCurso.isEmpty() ) //ese curso que eligio  esta anotado
 
 		}
 
-			List <Long> idAgendas= servicioAgenda.reemplazarAgenda(agendasViewModel.getIdAgendaSeleccionada(),
-					agendasViewModel.getIdAgendasDepurado(),agendasViewModel.getIdAgendaEditar());
-			List <Agenda> datosAgendas= servicioAgenda.buscarAgendasElegidas( idAgendas,  curso);
-
+		
+		List<Agenda> datosAgendas= servicioAgenda.reemplazarAgenda(agendasViewModel.getIdAgendaSeleccionada(),
+				agendasViewModel.getIdAgendasDepurado(),agendasViewModel.getIdAgendaEditar(), curso);
+			
 			modelo.put("mensaje", "Agenda modificada con exito");
 			modelo.put("listaAgendas", datosAgendas);
 			modelo.put("cursoSeleccionado", curso);
@@ -904,12 +885,12 @@ public ModelAndView seleccionarClaseAgregar(
 		HttpServletRequest request )
 {
 	
-	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+	String rol = (String)request.getSession().getAttribute("ROL");
+	if(!rol.equals("Alumno"))
 	{
 		return new ModelAndView("redirect:/index");
 	}
 	ModelMap modelo = new ModelMap();
-	String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 	modelo.put("rol", rol);
 	
 		//Datos del curso Elegido
@@ -941,14 +922,13 @@ public ModelAndView agregarClase(
 		HttpServletRequest request )
 {
 
-	if(!request.getSession().getAttribute("ROL").equals("Alumno"))
+	String rol = (String)request.getSession().getAttribute("ROL");
+	if(!rol.equals("Alumno"))
 	{
 		return new ModelAndView("redirect:/index");
 	}
 	
-	
 	ModelMap modelo = new ModelMap();
-	String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
 	modelo.put("rol", rol);
 
 		
@@ -987,7 +967,7 @@ public ModelAndView agregarClase(
 		}	
 			//Anotarme
 		servicioInscripcion.agregarInscripcion(idAlumno, curso,agendasViewModel.getIdAgendaEditar());//servicioAlumnoInscripcion
-		modelo.put("mensaje", "La clase se agregó con éxito");
+		modelo.put("mensaje", "La clase se agregÃ³ con Ã©xito");
 		modelo.put("curso2", agendasViewModel.getIdCurso());
 		modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
 		modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());
