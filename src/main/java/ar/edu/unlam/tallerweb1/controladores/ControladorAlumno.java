@@ -376,7 +376,7 @@ public class ControladorAlumno {
 				
 				
 				modelo.put("nombreEspecialidad", alumnoEnCurso);
-				modelo.put("mensaje", "Â¿Deseas eliminarlas?");
+				modelo.put("mensaje", "¿Deseas eliminarlas?");
 				modelo.put("bandera", 1);
 			}
 			
@@ -393,7 +393,7 @@ public class ControladorAlumno {
 				modelo.put("listadoClases", agendasViewModel.getIdAgendas());
 				modelo.put("curso", agendasViewModel.getIdCurso());
 				modelo.put("agenda", agenda);
-				modelo.put("mensaje", "Â¿Deseas eliminar esta clase?");
+				modelo.put("mensaje", "¿Deseas eliminar esta clase?");
 					
 				modelo.put("bandera", 2);
 			}
@@ -421,7 +421,7 @@ public class ControladorAlumno {
 		
 		Inscripcion inscripcionBuscada = servicioInscripcion.buscarInscripcion(idAlumno, agendasViewModel.getIdCurso());	
 					
-		modelo.put("mensaje", "Â¿Estas seguro?");
+		modelo.put("mensaje", "¿Estas seguro?");
 		modelo.put("inscripcion", inscripcionBuscada);
 					
 		modelo.put("bandera", 3);
@@ -967,7 +967,7 @@ public ModelAndView agregarClase(
 		}	
 			//Anotarme
 		servicioInscripcion.agregarInscripcion(idAlumno, curso,agendasViewModel.getIdAgendaEditar());//servicioAlumnoInscripcion
-		modelo.put("mensaje", "La clase se agregÃ³ con Ã©xito");
+		modelo.put("mensaje", "La clase se agregó con éxito");
 		modelo.put("curso2", agendasViewModel.getIdCurso());
 		modelo.put("agendas2", agendasViewModel.getIdAgendasDepurado());
 		modelo.put("agendas2size", agendasViewModel.getIdAgendasDepurado().size());

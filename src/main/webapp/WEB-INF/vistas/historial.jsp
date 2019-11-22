@@ -42,7 +42,7 @@
 -->
 		
 					<p class="t-center m-b-22 size3 m-l-r-auto m-b-70 m-t-15">
-					Â¿Que estÃ¡s esperando? Anotate y aprendÃ© a manejar junto a nuestros instructores.
+					¿Que estás esperando? Anotate y aprendé a manejar junto a nuestros instructores.
 						</p>
 		
 		
@@ -111,7 +111,7 @@
 		
 		
 		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
-		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> AÃºn no cursÃ³</p>
+		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
 		</c:if>
 		
 		<c:if test="${la.estadoDeAgenda.estado == 'Finalizado' }">
@@ -132,12 +132,17 @@
 </div>	
 </c:if>
 						
+						
+						
+						
 					</div>
 				</div>
 
 				
 			</div>
 
+
+			
 		</div>
 	</section>
 	

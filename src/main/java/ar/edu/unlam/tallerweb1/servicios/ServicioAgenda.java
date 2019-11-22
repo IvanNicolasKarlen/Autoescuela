@@ -45,7 +45,7 @@ public interface ServicioAgenda {
 
 	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas, Long idAlumno);
 
-	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
+	List<Agenda> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar, Curso curso);
 
 	void modificarAgenda(Agenda agenda);
 	
