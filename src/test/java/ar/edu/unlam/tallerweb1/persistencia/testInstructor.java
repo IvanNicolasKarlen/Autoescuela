@@ -147,32 +147,6 @@ public class testInstructor<Agenda> extends SpringTest {
 	    	assertThat(vista.getViewName()).isEqualTo("ClaseCanceladaConExitoInstructor");
 		}
 		
-//		@Test
-//		public void seleccionDeMotivoEstadoDeAgenda () {
-//			//mokeo el controlador
-//	    	ControladorInstructor controladorInstructor = new ControladorInstructor();
-//	    	//mockeo servicio
-//	    	ServicioEstadoDeAgenda servicioEstadoDeAgendaMock = mock(ServicioEstadoDeAgenda.class);
-//	    	//lo seteo al controlador
-//	    	controladorInstructor.setServicioEstadoDeAgenda(servicioEstadoDeAgendaMock);
-//	    	//los when
-//	    	List<EstadoDeAgenda> estadosDeAgenda = new ArrayList<>();
-//	    	when(servicioEstadoDeAgendaMock.traerListaDeEstadoDeAgenda()).thenReturn(estadosDeAgenda);
-//	    	//trucheo el request
-//	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
-//	        HttpSession sessionMock=mock(HttpSession.class);
-//	        when(requestMock.getSession()).thenReturn(sessionMock);
-//	        when(requestMock.getSession().getAttribute("ROL")).thenReturn("Instructor");
-//	        //llamo al metodo del controlador
-//	        controladorInstructor.cancelarClase(1L, requestMock);
-//	    	//ModelAndView
-//	        ModelAndView modelAndView = controladorInstructor.cancelarClase(1L, requestMock);
-//	        ModelMap modelo=(ModelMap) controladorInstructor.cancelarClase(1l, requestMock).getModel();
-//	    	//pruebo el metodo del controllador
-//	        assertThat(modelo.get("estadosDeAgenda")).isEqualTo(estadosDeAgenda);
-//			
-//		}
-		
 		
 		@Test
 		public void horasTrabajadas () {

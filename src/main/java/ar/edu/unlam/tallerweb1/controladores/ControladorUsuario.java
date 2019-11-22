@@ -103,6 +103,7 @@ public class ControladorUsuario {
 	}
 
 
+
 	// Escucha la url /, y redirige a la URL /index, es lo mismo que si se invoca la url /index directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {

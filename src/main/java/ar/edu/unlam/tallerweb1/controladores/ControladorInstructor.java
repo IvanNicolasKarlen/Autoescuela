@@ -24,12 +24,15 @@ import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeVehiculo;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoDeVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 
 
@@ -51,6 +54,12 @@ public class ControladorInstructor {
 	
 	@Inject
 	private ServicioInstructor servicioInstructor;
+	
+	@Inject
+	private ServicioUsuario servicioUsuario;
+	
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
 		
 	
@@ -129,7 +138,7 @@ public class ControladorInstructor {
 						      	HttpServletRequest request) {		
 		
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
-
+		Long id = (Long) request.getSession().getAttribute("ID");
 
 		if(rol.equals("Instructor")){
 
@@ -137,14 +146,9 @@ public class ControladorInstructor {
 		
 		List<EstadoDeVehiculo> estadosDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
 		
-
-		
 		EstadoDeVehiculo estadoVehiculo = servicioEstadoDeVehiculo.traerEstadoVehiculoPorNombre("No funcionando");
 		
-
 		EstadoDeAgenda estadoDeAgenda = servicioEstadoDeAgenda.traerEstadoDeAgendaPorId(idEstadoAgenda);		
-		
-		
 
 		ModelMap model = new ModelMap();
 		String vista = "confirmarCancelacionDeClasesInstructor";
@@ -173,11 +177,12 @@ public class ControladorInstructor {
 			ve.setEstadoDeVehiculo(estadoVehiculo);
 			servicioVehiculo.updateVehiculo(ve);
 			agenda.setEstadoDeAgenda(estadoDeAgenda);
-			servicioAgenda.updateAgenda(agenda);
-			
+			servicioAgenda.updateAgenda(agenda);			
 			
 			model.put("estadoDeAgenda", estadoDeAgenda);
 			model.put("estadoVehiculo", estadoVehiculo);
+			model.put("agenda", agenda);
+			
 
 			if(servicioAgenda.buscarAgenda(agenda)!=null){
 				return new ModelAndView("redirect:/claseCanceladaConExito");

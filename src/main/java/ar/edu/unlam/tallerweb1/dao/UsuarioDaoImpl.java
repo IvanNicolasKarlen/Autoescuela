@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.dao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -63,7 +64,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (Long)session.save(usuario);		
 	}
 	
-	
+
+	@Override
+	public Usuario traerUsuarioPorId(Long user) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.get(Usuario.class, user);
+	}
 	
 	/****************************O R G A N I Z A D X R ******************///////////////
 
@@ -106,6 +112,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (Usuario) session.createCriteria(Usuario.class)
 						.add(Restrictions.like("nombreDeUsuario", nombreUser)).uniqueResult();
 	}
+
+
+
 	
 	
 	

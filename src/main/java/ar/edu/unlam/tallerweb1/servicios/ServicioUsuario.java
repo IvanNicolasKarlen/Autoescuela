@@ -22,6 +22,7 @@ public interface ServicioUsuario {
 	/***********************************************************************/
 	List <Usuario> traerAlumnos(Long idInstructor);
 	
-	/***********************************************************************/
 	
+	/********************************INSTRUCTOR***************************************/
+	Usuario traerUsuarioPorId(Long user);
 }

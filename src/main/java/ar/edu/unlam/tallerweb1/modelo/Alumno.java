@@ -23,7 +23,16 @@ public class Alumno {
 	private Usuario usuario; 
 	@OneToMany
 	private List<Inscripcion> inscripciones;
+	@OneToMany
+	private List<Notificacion> notificaciones;
 	
+	
+	public List<Notificacion> getNotificaciones() {
+		return notificaciones;
+	}
+	public void setNotificaciones(List<Notificacion> notificaciones) {
+		this.notificaciones = notificaciones;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -16,7 +16,7 @@ public interface UsuarioDao {
 	Usuario consultarUsuario (Usuario usuario);
 	Long insertarUsuario (Usuario usuario);
 	List<Usuario> traerAlumnos(Long idInstructor);
-	
+	Usuario traerUsuarioPorId(Long user);
 	
 	/****************************************ORGANIZADOR***********************************************/
 	List<Usuario> traerUsuarios(String nombre, String apellido, String nombreUsuario, Integer dni, String traer);

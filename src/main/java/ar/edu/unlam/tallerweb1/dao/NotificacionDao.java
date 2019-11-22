@@ -11,3 +11,4 @@ public interface NotificacionDao {
 	Long crearNotificacion (Notificacion notificacion);
 	void modificarNotificacion (Notificacion notificacion);
 }
+
