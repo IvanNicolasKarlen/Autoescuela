@@ -422,11 +422,23 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 	}
 
 
-	@Override
-	public List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendas, Long idAgendaEditar) {
+		@Override
+	public List<Agenda> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendas, Long idAgendaEditar, Curso curso) {
+	
+		
 		idAgendas.removeIf((Long id )-> id == idAgendaEditar);
 		idAgendas.add(idAgendaSeleccionada);
-		return idAgendas;
+	
+		
+		List<Agenda> listaAgendas  = new ArrayList<Agenda>();
+		
+		for(Long id: idAgendas){
+			Agenda agendaBuscada = agendaDao.buscarAgendasElegidas(id, curso);
+			listaAgendas.add(agendaBuscada);
+		}
+		
+		return listaAgendas;
+		
 	}
 	
 	
