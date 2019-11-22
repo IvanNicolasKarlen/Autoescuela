@@ -29,7 +29,8 @@ public interface ServicioAgenda {
 	Map <String,Integer> horasTrabajadas(Long idInstructor);
 	List<Agenda> traerFechas();
 	
-	/******************************Alumno******************************/
+	/******************************Alumno
+	 * @param long1 ******************************/
 
 	TreeSet<Agenda> traerAgendasConFechasNoRepetidas(Curso Curso, Long idAlumno);
 
@@ -49,7 +50,7 @@ public interface ServicioAgenda {
 
 	List<Agenda> traerAgendasParaReemplazarOtra(Curso curso, List<Long> idAgendas, Long idAlumno);
 
-	List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar);
+	List<Agenda> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendasDepurado, Long idAgendaEditar, Curso curso);
 
 	void modificarAgenda(Agenda agenda);
 	
@@ -61,6 +62,7 @@ public interface ServicioAgenda {
 	
 	
 	/***********************************ORGANIZADOR*********************************/
+	/********************************************************************/
 	Boolean crearAgenda(EstadoDeAgenda estadoDeAgenda, LocalDate desde, LocalDate hasta, Integer horaC, Integer horaF, List<InstructorVehiculoEspecialidad> listaIve);
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);
 	Agenda traerAgendaPorFechaYAlumno(Alumno alumno, String fecha);

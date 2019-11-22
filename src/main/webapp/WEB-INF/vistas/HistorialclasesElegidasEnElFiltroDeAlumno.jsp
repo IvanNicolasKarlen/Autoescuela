@@ -86,7 +86,7 @@
 		
 <label class="checkbox-inline">
 
-  <input type="radio"  class="m-l-15" name="id" value="${la.curso.especialidad.id}"/> ${la.curso.especialidad.tipo}
+  <input type="radio"  class="m-l-15" name="id" value="${la.id}"/> ${la.tipo}
   </label>
 </c:forEach>	
 	

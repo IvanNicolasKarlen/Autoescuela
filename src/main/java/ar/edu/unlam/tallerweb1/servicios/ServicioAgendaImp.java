@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.servicios;
 
 import java.sql.Time;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -548,10 +549,22 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 
 
 	@Override
-	public List<Long> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendas, Long idAgendaEditar) {
+	public List<Agenda> reemplazarAgenda(Long idAgendaSeleccionada, List<Long> idAgendas, Long idAgendaEditar, Curso curso) {
+	
+		
 		idAgendas.removeIf((Long id )-> id == idAgendaEditar);
 		idAgendas.add(idAgendaSeleccionada);
-		return idAgendas;
+	
+		
+		List<Agenda> listaAgendas  = new ArrayList<Agenda>();
+		
+		for(Long id: idAgendas){
+			Agenda agendaBuscada = agendaDao.buscarAgendasElegidas(id, curso);
+			listaAgendas.add(agendaBuscada);
+		}
+		
+		return listaAgendas;
+		
 	}
 	
 	
