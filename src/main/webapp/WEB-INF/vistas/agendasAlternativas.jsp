@@ -97,8 +97,7 @@
    
    <c:if test="${al.hora >= 1000 }">
   		
-  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora.toString().substring(0,2)}:${al.hora.toString().substring(1,3)}<br>
-	
+  		  	 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${al.hora.toString().substring(0,2)}:${al.hora.toString().substring(2,3)}${al.hora.toString().substring(2,3)}<br>
 	</c:if>
    
 		

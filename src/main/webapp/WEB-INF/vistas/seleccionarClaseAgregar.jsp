@@ -104,7 +104,7 @@
    
    <c:if test="${la.hora >= 1000 }">
   		
-  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(1,3)}<br>
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(2,3)}${la.hora.toString().substring(2,3)}<br>
 	
 	</c:if>
   <b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>

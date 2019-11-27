@@ -79,8 +79,7 @@
    
    <c:if test="${agenda.hora >= 1000 }">
   		
-  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${agenda.hora.toString().substring(0,2)}:${agenda.hora.toString().substring(1,3)}<br>
-	
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${agenda.hora.toString().substring(0,2)}:${agenda.hora.toString().substring(2,3)}${agenda.hora.toString().substring(2,3)}<br>
 	</c:if>
 	<b class="color0-hov trans-0-4 text-center m-t-8">Instructor:</b> ${agenda.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${agenda.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
 		

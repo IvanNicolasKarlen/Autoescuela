@@ -39,7 +39,7 @@
 
 <input name="idAgendas[${la.id}]" type="text"  value="${la.id}" style="display:none"/>
 
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
+<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${la.instructorVehiculoEspecialidad.especialidad.tipo}</h2>
  <c:set var="i" value="${ i+1}"/>
 		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
 		          
@@ -53,8 +53,7 @@
    
    <c:if test="${la.hora >= 1000 }">
   		
-  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(1,3)}<br>
-	
+  		 	 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(2,3)}${la.hora.toString().substring(2,3)}<br>
 	</c:if>
 	
 		 

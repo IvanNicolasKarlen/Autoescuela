@@ -67,7 +67,6 @@
 
 <%@ include file="../../parts/meta.jsp" %> 
 	<!-- fin del meta, css, vendor, etc -->
->>>>>>> 4e2e2ea9aaf7edb95e4af06ff0d27acd68f32654
 </head>
 <body class="animsition">
 

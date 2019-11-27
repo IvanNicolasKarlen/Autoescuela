@@ -151,7 +151,6 @@ public class ControladorAlumno {
 					 }
 			
 				modelo.put("mensaje", "Te ofrecemos este cronograma de clases");
-				modelo.put("especialidad", curso.getEspecialidad().getTipo());
 				return new ModelAndView("fechasAlumnoEnAgenda",modelo); 
 	
 				
@@ -983,8 +982,21 @@ public ModelAndView agregarClase(
 
 /*****************MOCK*****************/
 
+
 public void setServicioCurso(ServicioCurso servicioCurso) {
 	this.servicioCurso = servicioCurso;
+}
+public void setServicioAlumno(ServicioAlumno servicioAlumno) {
+	this.servicioAlumno = servicioAlumno;
+}
+public void setServicioEstadoInscripcion(ServicioEstadoInscripcion servicioEstadoInscripcion) {
+	this.servicioEstadoInscripcion = servicioEstadoInscripcion;
+}
+public void setServicioAgenda(ServicioAgenda servicioAgenda) {
+	this.servicioAgenda = servicioAgenda;
+}
+public void setServicioInscripcion(ServicioInscripcion servicioInscripcion) {
+	this.servicioInscripcion = servicioInscripcion;
 }
 
 			

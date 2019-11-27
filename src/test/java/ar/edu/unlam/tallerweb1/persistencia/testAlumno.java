@@ -5,28 +5,44 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.controladores.ControladorAlumno;
+import ar.edu.unlam.tallerweb1.controladores.ControladorInstructor;
 import ar.edu.unlam.tallerweb1.controladores.ControladorUsuario;
+import ar.edu.unlam.tallerweb1.dao.AgendaDao;
 import ar.edu.unlam.tallerweb1.dao.CursoDao;
 import ar.edu.unlam.tallerweb1.dao.CursoDaoImpl;
+import ar.edu.unlam.tallerweb1.dao.EspecialidadDao;
+import ar.edu.unlam.tallerweb1.dao.EstadoDeAgendaDao;
+import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.dao.InscripcionDao;
+import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
+import ar.edu.unlam.tallerweb1.modelo.Especialidad;
+import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
+import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
+import ar.edu.unlam.tallerweb1.servicios.ServicioAgendaImp;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAlumno;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCursoImpl;
+import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInscripcionImpl;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
@@ -36,12 +52,17 @@ import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 
 //Se indica que los test que hereden de esta clase corran con el runner de junit para spring.
@@ -51,9 +72,25 @@ import java.util.List;
 //Clase base para los test que se pretende que se corran dentro del contexto de spring
 
 
+
+
+//@RequestMapping(path="/listadoFechas") 249 Hecho
+// 	@RequestMapping(path="/clasesDelCurso")291 Hecho
+// 	@RequestMapping(path="/finalizarCursoAlerta")407
+// 	@RequestMapping(path="/historial")542
+//	@RequestMapping(path="/mostrarclasesCurso")583
+// @RequestMapping(path="/seleccionarClaseAgregar") 882
+
+
+
 public class testAlumno extends SpringTest {
+	
+	
+	
+	
+	
 	@Test
-    public void testQueVerificaManejoDeVistaEnBaseALaSesion()
+    public void testQueVerificaSiSoyUnAlumno()
     {
     	//Quiero probar el login
     	ControladorAlumno controlador = new ControladorAlumno();
@@ -61,141 +98,317 @@ public class testAlumno extends SpringTest {
     	HttpSession sessionHttp= mock(HttpSession.class);
 		
     	when(requestMock.getSession()).thenReturn(sessionHttp);
-    	when(requestMock.getSession().getAttribute("ROL")).thenReturn("Organizador");
+    	when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+    	
+    	ServicioAlumno serviAlumnoMock = mock(ServicioAlumno.class);
+    	
+    	controlador.setServicioAlumno(serviAlumnoMock);
+    	
     	//Seteo al controlador el mock falso para saber que vista me devuelve
     	ModelAndView vista = controlador.indexAlumno(requestMock);
-    	assertThat(vista.getViewName()).isEqualTo("redirect:/index");
+    	assertThat(vista.getViewName()).isEqualTo("indexAlumno");
     }
 	
-
-	@Test
-	public void testQueGuardaCursosParaTraerListadoDeTodosLosCursos()
-	{
-		CursoDao cursoDaoMock = mock(CursoDao.class);
-		
-		//Mock curso y seteo un dato
-		Curso cursoMock = mock(Curso.class);		
+	
+	
+		@Test
+	    public void testQueVerificaQueNoSoyUnAlumno()
+	    {
+	    	//Quiero probar el login
+	    	ControladorAlumno controlador = new ControladorAlumno();
+	    	HttpServletRequest requestMock = mock(HttpServletRequest.class);
+	    	HttpSession sessionHttp= mock(HttpSession.class);
+			
+	    	when(requestMock.getSession()).thenReturn(sessionHttp);
+	    	when(requestMock.getSession().getAttribute("ROL")).thenReturn("Organizador");
+	    	//Seteo al controlador el mock falso para saber que vista me devuelve
+	    	ModelAndView vista = controlador.indexAlumno(requestMock);
+	    	assertThat(vista.getViewName()).isEqualTo("redirect:/index");
+	    }
+	
+	
+	
+		@Test
+		@Transactional
+	    public void testQueMuestraMisClases()
+	    {
+			
+			//trucheo el request
+	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
+	        HttpSession sessionMock=mock(HttpSession.class);
+	        
+	        
+	        when(requestMock.getSession()).thenReturn(sessionMock);
+	        when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+	        
+	        
+			ControladorAlumno controladorAlumno = new ControladorAlumno();
+			
+			ServicioEstadoInscripcion servicioEstadoInscripcionMock = mock(ServicioEstadoInscripcion.class);
+			
+			ServicioAgenda servicioAgendaMock = mock(ServicioAgenda.class); 
+			
+			ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
+			
+			controladorAlumno.setServicioEstadoInscripcion(servicioEstadoInscripcionMock);
+			controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
+			controladorAlumno.setServicioAgenda(servicioAgendaMock);
+			
+			
+			//Alumno por parametros
+			Alumno alumno = new Alumno();
+			
+			
+			EstadoInscripcion estadoCursando = new EstadoInscripcion();
+			
+			when(servicioEstadoInscripcionMock.buscarEstadoCursando()).thenReturn(estadoCursando);
+			
+			
+			List<Inscripcion> cursando = mock(List.class);
+					
+			when(servicioInscripcionMock.saberSiEstaRealizandoAlgunCurso(alumno.getId(), estadoCursando)).thenReturn(cursando);
+			
+			
+			List<Agenda> listadoDeClases = mock(List.class);
+					
+			when(servicioAgendaMock.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estadoCursando)).thenReturn(listadoDeClases);
 				
-		//Guardo en la lista mock
-		List<Curso> listaMock = new ArrayList<Curso>();
-		listaMock.add(cursoMock);
+			//pruebo el metodo del controlador
+			 ModelAndView vista = controladorAlumno.DiasDeCursada(requestMock);
+		     ModelMap modelo=(ModelMap) controladorAlumno.DiasDeCursada(requestMock).getModel();
 		    	
-		when(cursoDaoMock.traerListaDeCursos()).thenReturn(listaMock);		
-    	
-							//Servicio
-    	ServicioCursoImpl cursoImplMock = mock(ServicioCursoImpl.class);
-    	cursoImplMock.setCursoDao(cursoDaoMock);
-    	
-    	List<Curso> listaCursos = cursoImplMock.traerListaDeCursos();
-    	
-    	assertThat(listaCursos).isNotNull();
-		
-	}
-	
-	 
-    
- /*   @Test
-    public void testQueConsultaSiYaSeInscribioElAlumnoAUnCurso()
-    {
-    	
-    	ServicioInscripcionImpl servicioMock = mock(ServicioInscripcionImpl.class);
-    	HttpServletRequest request = mock(HttpServletRequest.class);
-    	Inscripcion inscripcionMock = mock(Inscripcion.class);
-    	Curso cursoMock = mock(Curso.class);
-    	Usuario usuarioMock = mock(Usuario.class);
-    	
-    	when(request.getSession().getAttribute("ID")).thenReturn(1);
-    	when(cursoMock.getId()).thenReturn((long) 1);
-    	
-    	
-    	//Lista para usar de retorno en mi metodo
-    	List<Inscripcion> listMock = mock(List.class);
-    	listMock.add(inscripcionMock); //agrego un obj mock
-    	
-    	//Traigo los datos del alumno logueado
-    	 Long idAlumno = (Long) request.getSession().getAttribute("ID");
-      	
-    	 when(usuarioMock.getAlumno().getId()).thenReturn((long) 1);
-     	
-    	when(servicioMock.consultarSiYaSeInscribioAUnCurso(usuarioMock.getAlumno().getId(), cursoMock)).thenReturn(listMock);
-   
-    	//Agrego el dao en el servicio Inscripcion
-    	InscripcionDao inscripcionDaoMock = mock(InscripcionDao.class);
-    	servicioMock.setInscripcionDao(inscripcionDaoMock);
-    	
-    	
-    	List<Inscripcion> inscripcion = servicioMock.consultarSiYaSeInscribioAUnCurso(idAlumno, inscripcionMock.getCurso());
+		        //pruebo el metodo del controllador
+		        assertThat(modelo.get("listadoClases")).isEqualTo(listadoDeClases);
+		        assertThat(modelo.get("num")).isEqualTo(cursando.size());
+		        assertThat(modelo.get("listaCursos")).isEqualTo(cursando);
+		        assertThat(vista.getViewName()).isEqualTo("fechaYHorasDeCadaCurso");
 
-    	
-    	assertThat(inscripcion).isNotNull();
+	    }
+		
+		
+		
+		
+	@Test
+	@Transactional
+	public void testQueValidaSiEstoyInscriptoAUnCurso()
+	{
+			
+		//trucheo el request
+	       HttpServletRequest requestMock=mock(HttpServletRequest.class);
+	       HttpSession sessionMock=mock(HttpSession.class);
+	        
+	        
+	       when(requestMock.getSession()).thenReturn(sessionMock);
+	       when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+	        
+	        
+		ControladorAlumno controladorAlumno = new ControladorAlumno();
+			
+		ServicioEstadoInscripcion servicioEstadoInscripcionMock = mock(ServicioEstadoInscripcion.class);
+			
+		ServicioAgenda servicioAgendaMock = mock(ServicioAgenda.class); 
+		
+		ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
+		
+		
+		controladorAlumno.setServicioEstadoInscripcion(servicioEstadoInscripcionMock);
+		controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
+		controladorAlumno.setServicioAgenda(servicioAgendaMock);
+			
+			
+		//Alumno por parametros
+		Alumno alumno = new Alumno();
+			
+		EstadoInscripcion estadoCursando = new EstadoInscripcion();
+			
+		when(servicioEstadoInscripcionMock.buscarEstadoCursando()).thenReturn(estadoCursando);
+			
+			
+		//Traer las clases del filtro elegido Agenda
+		List<Agenda> clasesDeUnSoloCurso = mock(List.class);
+					
+		Especialidad especialidad = new Especialidad();
+					
+		when(servicioAgendaMock.traerTodasLasClasesDeUnaSolaEspecialidad(especialidad.getId(),alumno.getId(),estadoCursando))
+		.thenReturn(clasesDeUnSoloCurso);
+			
+		List<Inscripcion> listadoDeFiltros = mock(List.class);
+		
+		Long idEspecialidad = (long) 1;
+		
+		//pruebo el metodo del controlador
+		 ModelAndView vista = controladorAlumno.VistaDePruebas(requestMock,idEspecialidad);
+	     ModelMap modelo=(ModelMap) controladorAlumno.VistaDePruebas(requestMock, idEspecialidad).getModel();
+	    
+		
+		 //pruebo el metodo del controllador
+        assertThat(modelo.get("num")).isEqualTo(listadoDeFiltros.size());       
+        assertThat(vista.getViewName()).isEqualTo("clasesElegidasEnElFiltroDeAlumno");
+
+			
+		}
+		
+		
+	
+	@Test
+    public void testQueConsultaSiQueresFinalizarElCurso()
+    {
+		//trucheo el request
+	     HttpServletRequest requestMock=mock(HttpServletRequest.class);
+	     HttpSession sessionMock=mock(HttpSession.class);
+	     
+	    AgendasViewModel agendaViewModelMock = mock(AgendasViewModel.class);
+	        
+	    when(requestMock.getSession()).thenReturn(sessionMock);
+	    when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+	    
+	    ControladorAlumno controladorAlumno = new ControladorAlumno();
+			
+		ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
+			
+		controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
+			
+	       
+		
+		//Alumno por parametros
+		Alumno alumno = new Alumno();
+		
+		Curso curso = new Curso();
+		
+		
+		Inscripcion inscripcionBuscada = mock(Inscripcion.class);
+		
+		when(servicioInscripcionMock.buscarInscripcion(alumno.getId(), curso.getId())).thenReturn(inscripcionBuscada);
+		
+		
+		//pruebo el metodo del controlador
+		 ModelAndView vista = controladorAlumno.consultarSiQuiereFinalizarONo(requestMock,agendaViewModelMock);
+	     ModelMap modelo=(ModelMap) controladorAlumno.consultarSiQuiereFinalizarONo(requestMock, agendaViewModelMock).getModel();
+	    
+		
+			
+		 //pruebo el metodo del controllador
+       assertThat(modelo.get("mensaje")).isEqualTo("¿Estas seguro?");       
+       assertThat(vista.getViewName()).isEqualTo("alertaEliminar");
+
     }
+	
+	
+	
+	@Test
+    public void testQueNoEliminaUnaClase()
+    {
+		//Contemplamos que si faltan dos dias para realizar la clase, esta ya no pueda ser eliminada
+		
+		//trucheo el request
+	     HttpServletRequest requestMock=mock(HttpServletRequest.class);
+	     HttpSession sessionMock=mock(HttpSession.class);
+	         
+	     AgendasViewModel agendaViewModelMock = mock(AgendasViewModel.class);
+		    
+	     
+	    when(requestMock.getSession()).thenReturn(sessionMock);
+	    when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+	    
+	    
+	    ControladorAlumno controladorAlumno = new ControladorAlumno();
+		
+	    
+	    ServicioAgenda servicioAgendaMock = mock(ServicioAgenda.class); 
+		
+	    controladorAlumno.setServicioAgenda(servicioAgendaMock);
+	    
+		
+	  //Alumno por parametros
+	  		Alumno alumno = new Alumno();
+	  		
+	  		when(agendaViewModelMock.getIdAgendaSeleccionada()).thenReturn(null);
+			
+	  		Boolean resultado = false;
+	  				
+	  				
+	 when(servicioAgendaMock.verificarQueSePuedanEliminarTodasLasClases(alumno.getId(), agendaViewModelMock.getIdCurso())).thenReturn(resultado);
+			
+	//pruebo el metodo del controlador
+	 ModelAndView vista = controladorAlumno.eliminarUnaClase(requestMock,agendaViewModelMock);
+     ModelMap modelo=(ModelMap) controladorAlumno.eliminarUnaClase(requestMock, agendaViewModelMock).getModel();
     
+	
+		
+	 //pruebo el metodo del controllador
+   assertThat(modelo.get("mensaje")).isEqualTo("No se pueden eliminar las clases con menos de dos dias de anticipacion");       
+   assertThat(vista.getViewName()).isEqualTo("Eliminada");
+
+	 	
+		
+    }
+	
+	
+	
+	
+	
+
+	
+	@Test
+    public void testQueOfreceCronogramaDeClases()
+    {
     
+		ControladorAlumno controladorAlumno = new ControladorAlumno();
+    	HttpServletRequest requestMock = mock(HttpServletRequest.class);
+    	HttpSession sessionHttp= mock(HttpSession.class);
+		
+    	when(requestMock.getSession()).thenReturn(sessionHttp);
+    	when(requestMock.getSession().getAttribute("ROL")).thenReturn("Alumno");
+    	
+    	ServicioCurso servicioCursoMock = mock(ServicioCurso.class);
+    	ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
+    	ServicioAgenda servicioAgendaMock = mock(ServicioAgenda.class); 
+		
+    	controladorAlumno.setServicioAgenda(servicioAgendaMock);
+    	controladorAlumno.setServicioCurso(servicioCursoMock);
+    	controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
+  	   
+    	
+    	 //Alumno por parametros
+  		Alumno alumno = new Alumno();
+ 
+  		Curso curso = new Curso();
+  		
+  		//Datos del curso Elegido
+  			Curso cursoMock = mock(Curso.class);
+  			
+  			when(cursoMock.getId()).thenReturn((long) 1);
+  	  		
+  			when(servicioCursoMock.buscarCursoPorId(cursoMock.getId())).thenReturn(curso);
+  		
+  			List <Inscripcion> inscripcionCurso = new ArrayList<>();
+  			
+  			when(servicioInscripcionMock.consultarSiYaSeInscribioAUnCurso(alumno.getId(),curso)).thenReturn(inscripcionCurso);
+  			
+  			
+  			
+  		//Traer todas las fechas con disponibilidad
+			TreeSet<Agenda> agendas= new TreeSet<>();
+					
+					
+			when(servicioAgendaMock.traerAgendasConFechasNoRepetidas(curso, alumno.getId())).thenReturn(agendas);
+
+			 //pruebo el metodo del controllador
+			 ModelAndView vista = controladorAlumno.guardarCursoSeleccionado(curso,requestMock);
+		     ModelMap modelo=(ModelMap) controladorAlumno.guardarCursoSeleccionado(curso,requestMock).getModel();
+			    
+			assertThat(modelo.get("mensaje")).isEqualTo("Te ofrecemos este cronograma de clases");     
+			
+			   assertThat(vista.getViewName()).isEqualTo("fechasAlumnoEnAgenda");
+
+		
+    }
+	
+	
     
+	
+	
+	
+		
     
-    
-    
-    
-    
-    
-    
-    */
 }  
-    //TraerListaCursos ln 114
-    
-    //Probar desde el dao - Sin mockear el dao
-    //Luego el servicio 
-    //Por ultimo, el controlador
-//    @Test
-//    public void testeoElMetodoTraerListaCursos()
-//    {
-//    	
-//    	ServicioCurso servicioMock = mock(ServicioCurso.class);
-//    	HttpServletRequest requestMock = mock(HttpServletRequest.class);    	
-//    	ControladorAlumno controladorCurso = new ControladorAlumno();
-//    	Curso curso = new Curso();
-//    	CursoDaoImpl cursoDao = new CursoDaoImpl();
-//    	ServicioCursoImpl cursoImpl = new ServicioCursoImpl();
-//    	
-//    	
-//    	//Guardo un curso en la bd
-//    	curso.setPrecio(100);
-//    	getSession().save(curso);
-//    	
-//    	
-//    	//Pruebo que el servicio me devuelva los cursos
-//    	
-//    	
-//    	List<Curso> cursos = cursoDao.traerListaDeCursos();
-//    	
-//    	
-//    	assertThat(cursos.size()).isEqualTo(1);
-//    	
-//    	
-//    	
-//    	
-//    	List<Curso> listRet = new ArrayList<>();
-//    	
-//    	
-//    	//Que el servicioMock sea igual a la lista que instancie
-//    	when(servicioMock.traerListaDeCursos()).thenReturn(listRet);
-//    	
-//    	
-//    	//Defino debajo de todo en el controladorAlumno un servicioCurso para que no me devuelva un NULLPOINTER
-//    	//Seteo al controladorCurso el servicioMock
-//    	controladorCurso.setServicioCurso(servicioMock);
-//    	
-//    	
-//    	//Pruebo a que vista me va a llevar el ModelAndView
-//    	ModelAndView vista = controladorCurso.mostrarCursos(requestMock);
-//    	
-//    	List<Curso> listaModelo = (List<Curso>) vista.getModel().get("lista");
-//    	
-//    	
-//    //	assertThat(listaModelo.size().isEqualTo(listRet.size()));
-//    	
-//    	
-//    	
-//    }
-//
-//}
