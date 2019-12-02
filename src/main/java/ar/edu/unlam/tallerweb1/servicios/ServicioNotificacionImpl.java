@@ -45,7 +45,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	}
 
 	@Override
-	public void crearNotificacion(Usuario usuario, Agenda agenda) {
+	public Long crearNotificacion(Usuario usuario, Agenda agenda) {
 		
 		/*Borro los 00 de la hora militar para poder mostrarla +:00hs*/
 		Integer horaAgenda = agenda.getHora()/100; 
@@ -110,13 +110,13 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		/*añado la notificacion a la lista*/
 		notificacionesGuardar.add(notificacionNueva);
 		
-		//Long id = null;
+		Long id = null;
 		/*recorro la lista de notificaciones y las guardo en la bd*/
 		for(Notificacion noti:notificacionesGuardar){
-			notificacionDao.crearNotificacion(noti);
+			id = notificacionDao.crearNotificacion(noti);
 		}
 		/*retorno el ultimo id guardado, como una verificacion de q se guardo correctamente*/
-		//return id;
+		return id;
 	}
 
 	@Override

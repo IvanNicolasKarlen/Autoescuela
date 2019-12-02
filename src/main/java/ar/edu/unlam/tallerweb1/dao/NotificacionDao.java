@@ -9,7 +9,7 @@ public interface NotificacionDao {
 	List<Notificacion> traerTodasLasNotificaciones(Usuario usuario);
 	List<Notificacion> traerNotificacionesNoLeidas(Usuario usuario);
 	List<Notificacion> traerNotificacionesLeidas(Usuario usuario);
-	void crearNotificacion (Notificacion notificacion);
+	Long crearNotificacion (Notificacion notificacion);
 	void modificarNotificacion (Notificacion notificacion);
 	Notificacion traerNotificacionPorId(Long id);
 }

@@ -12,7 +12,7 @@ public interface ServicioNotificacion {
 	List<Notificacion> traerTodasLasNotificaciones(Usuario usuario);
 	List<Notificacion> traerNotificacionesNoLeidas(Usuario usuario);
 	List<Notificacion> traerNotificacionesLeidas(Usuario usuario);
-	void crearNotificacion (Usuario usuario, Agenda agenda);
+	Long crearNotificacion (Usuario usuario, Agenda agenda);
 	void modificarNotificacion (Notificacion notificacion);
 	void setNotificacionDao(NotificacionDao notificacionDao);
 	void setOrganizadorDao(OrganizadorDao organizadorDao);

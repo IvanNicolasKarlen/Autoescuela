@@ -60,9 +60,9 @@ public class NotificacionDaoImpl implements NotificacionDao {
 	}
 
 	@Override
-	public void crearNotificacion(Notificacion notificacion) {
+	public Long crearNotificacion(Notificacion notificacion) {
 		final Session session = sessionFactory.getCurrentSession();
-		session.save(notificacion);
+		return (Long)session.save(notificacion);
 
 	}
 
