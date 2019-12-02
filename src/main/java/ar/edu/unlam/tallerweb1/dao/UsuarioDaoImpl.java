@@ -30,6 +30,13 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Inject
     private SessionFactory sessionFactory;
 
+		
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+
+
 	/****************************************** INSTRUCTOR **************************************/
 	
 	@Override

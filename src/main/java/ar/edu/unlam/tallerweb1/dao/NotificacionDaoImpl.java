@@ -17,6 +17,11 @@ import ar.edu.unlam.tallerweb1.modelo.Usuario;
 public class NotificacionDaoImpl implements NotificacionDao {
 	@Inject
 	private SessionFactory sessionFactory;
+	
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
