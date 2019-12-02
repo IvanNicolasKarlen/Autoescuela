@@ -6,11 +6,13 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
@@ -20,9 +22,13 @@ import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.EstadoInscripcion;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEspecialidad;
 import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoInscripcion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
+import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 public class TestControladorOrganizador extends SpringTest {
 	@Test
@@ -32,6 +38,16 @@ public class TestControladorOrganizador extends SpringTest {
 		HttpSession sessionHttp= mock(HttpSession.class);
 		when(request.getSession()).thenReturn(sessionHttp);
 		when(request.getSession().getAttribute("ROL")).thenReturn("Organizador");
+		Long id = new Long(0);
+		when(request.getSession().getAttribute("ID")).thenReturn(id);
+		ServicioUsuario su = mock(ServicioUsuario.class);
+		Usuario user = mock(Usuario.class);
+		when(su.traerUsuarioPorId(id)).thenReturn(user);
+		controladorUser.setServicioUsuario(su);
+		ServicioNotificacion sn = mock(ServicioNotificacion.class);
+		List<Notificacion> listaN= new ArrayList<Notificacion>();
+		when(sn.traerNotificacionesNoLeidas(Matchers.any(Usuario.class))).thenReturn(listaN);
+		controladorUser.setServicioNotificacion(sn);
 		ModelAndView mav  = controladorUser.index(request);
 		assertThat(mav.getViewName()).isEqualTo("indexOrganizador");
 	}

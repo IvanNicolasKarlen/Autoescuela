@@ -35,6 +35,18 @@ public class ControladorUsuario {
 	@Inject
 	private ServicioNotificacion servicioNotificacion;
 	
+		public void setServicioUsuario(ServicioUsuario servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
+	}
+
+
+
+	public void setServicioNotificacion(ServicioNotificacion servicioNotificacion) {
+		this.servicioNotificacion = servicioNotificacion;
+	}
+
+
+
 		@RequestMapping("/index")
 		public ModelAndView index(HttpServletRequest request) {
 			ModelMap model = new ModelMap();
@@ -42,7 +54,7 @@ public class ControladorUsuario {
 			
 			model.put("rol", rol);
 			String vistaindex = "index";
-			if(!(rol==null||rol.isEmpty())){
+			if(!(rol.equals(""))){
 				Usuario user = servicioUsuario.traerUsuarioPorId((long)request.getSession().getAttribute("ID"));
 				List<Notificacion> notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
 				model.put("notiSize", notificaciones.size());
