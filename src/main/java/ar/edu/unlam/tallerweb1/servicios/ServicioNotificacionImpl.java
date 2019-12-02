@@ -24,7 +24,16 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	private NotificacionDao notificacionDao;
 	@Inject
 	private OrganizadorDao organizadorDao;
-	
+	@Override
+	public void setNotificacionDao(NotificacionDao notificacionDao) {
+		this.notificacionDao = notificacionDao;
+	}
+
+	@Override
+	public void setOrganizadorDao(OrganizadorDao organizadorDao) {
+		this.organizadorDao = organizadorDao;
+	}
+
 	@Override
 	public List<Notificacion> traerTodasLasNotificaciones(Usuario usuario) {
 		return notificacionDao.traerTodasLasNotificaciones(usuario);
@@ -36,7 +45,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 	}
 
 	@Override
-	public Long crearNotificacion(Usuario usuario, Agenda agenda) {
+	public void crearNotificacion(Usuario usuario, Agenda agenda) {
 		
 		/*Borro los 00 de la hora militar para poder mostrarla +:00hs*/
 		Integer horaAgenda = agenda.getHora()/100; 
@@ -101,19 +110,29 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 		/*añado la notificacion a la lista*/
 		notificacionesGuardar.add(notificacionNueva);
 		
-		Long id = null;
+		//Long id = null;
 		/*recorro la lista de notificaciones y las guardo en la bd*/
 		for(Notificacion noti:notificacionesGuardar){
-			id = notificacionDao.crearNotificacion(noti);
+			notificacionDao.crearNotificacion(noti);
 		}
 		/*retorno el ultimo id guardado, como una verificacion de q se guardo correctamente*/
-		return id;
+		//return id;
 	}
 
 	@Override
 	public void modificarNotificacion(Notificacion notificacion) {
 		notificacionDao.modificarNotificacion(notificacion);
 		
+	}
+
+	@Override
+	public List<Notificacion> traerNotificacionesLeidas(Usuario usuario) {
+		return notificacionDao.traerNotificacionesLeidas(usuario);
+	}
+
+	@Override
+	public Notificacion traerNotificacionPorId(Long id) {
+		return notificacionDao.traerNotificacionPorId(id);
 	}
 
 }

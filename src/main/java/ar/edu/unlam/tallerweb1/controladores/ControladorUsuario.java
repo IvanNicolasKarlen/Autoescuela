@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
@@ -30,15 +32,21 @@ public class ControladorUsuario {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioUsuario servicioUsuario;
-	
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
 		@RequestMapping("/index")
 		public ModelAndView index(HttpServletRequest request) {
 			ModelMap model = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL") != null?(String) request.getSession().getAttribute("ROL"):"";
-			model.put("usuarioId", request.getSession().getAttribute("ID"));
+			
 			model.put("rol", rol);
 			String vistaindex = "index";
+			if(!(rol==null||rol.isEmpty())){
+				Usuario user = servicioUsuario.traerUsuarioPorId((long)request.getSession().getAttribute("ID"));
+				List<Notificacion> notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+				model.put("notiSize", notificaciones.size());
+			}
 			switch(rol){
 			case "Alumno": 	vistaindex="indexAlumno";
 							break;
@@ -158,6 +166,35 @@ public class ControladorUsuario {
 		request.getSession().removeAttribute("ROL");
 		request.getSession().removeAttribute("ID");
 		return new ModelAndView("redirect:/login");
+	}
+	@RequestMapping(path="notificaciones", method=RequestMethod.GET)
+	public ModelAndView notificaciones(HttpServletRequest request,
+			@RequestParam(name="filter", required=false, defaultValue="noleidas")String filter,
+			@RequestParam(name="leidas", required=false, defaultValue="false")String leidas,
+			@RequestParam(name="id", required=false)Long idNotificacion){
+		ModelMap model = new ModelMap();
+		Long idUser = (long)request.getSession().getAttribute("ID");
+		Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
+		model.put("rol", (String)request.getSession().getAttribute("ROL"));
+		List<Notificacion> notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+		switch(filter){						
+			case "leidas": notificaciones = servicioNotificacion.traerNotificacionesLeidas(user);
+							break;
+			case "todas": notificaciones = servicioNotificacion.traerTodasLasNotificaciones(user);
+							break;
+		}
+		if(leidas=="true"){
+			for(Notificacion noti:notificaciones){
+				noti.setLeida(true);
+				servicioNotificacion.modificarNotificacion(noti);
+			}
+		}
+		if(idNotificacion!=null){
+			Notificacion notificacionSeleccionada = servicioNotificacion.traerNotificacionPorId(idNotificacion);
+			model.put("notificacion", notificacionSeleccionada);
+		}
+		model.put("notificaciones", notificaciones);
+		return new ModelAndView("notificaciones",model);
 	}
 
 }

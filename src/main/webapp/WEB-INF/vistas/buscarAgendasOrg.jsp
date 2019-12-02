@@ -26,10 +26,10 @@
 
 	<!-- En este h4 se muestra el error si es que hay alguno --> <section
 		class="section-reservation bg1-pattern p-t-100 p-b-113">
-		
+
 	<div class="container">
-	<h4 class="t-center text-info">${mensaje}</h4>
-				<h4 class="t-center text-danger">${error}</h4>
+		<h4 class="t-center text-info">${mensaje}</h4>
+		<h4 class="t-center text-danger">${error}</h4>
 		<div class="row">
 			<div class="col-md-12">
 				<form class="row justify-content-center" method="GET"
@@ -55,6 +55,7 @@
 		<hr>
 		<hr>
 		<div class="container">
+		
 			<table class="table table-striped">
 				<th>Fecha</th>
 				<th>Hora</th>
@@ -66,39 +67,40 @@
 				<th>Estado del turno</th>
 				<th>Modificar</th>
 
-				
-					<c:forEach items="${listaAgenda}" var="la">
-						<tr>
-								<td>${la.fecha}</td>
-								<td>${la.hora}</td>
-								<td>${la.instructorVehiculoEspecialidad.instructor.usuario.nombre}
-									${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}</td>
-								<td>${la.instructorVehiculoEspecialidad.vehiculo.modelo}-
-									${la.instructorVehiculoEspecialidad.vehiculo.patente}</td>
-								<td>${la.instructorVehiculoEspecialidad.especialidad.tipo}</td>
-								<td>${la.inscripcion.curso.titulo}</td>
-	
-								<td><c:if test="${la.clasePagada == true}">
-										<i class="fa fa-check"></i>
-									</c:if> <c:if test="${la.clasePagada == false}">
-										<i class="fa fa-times"></i>
-									</c:if></td>
-							<form method="post" action="${context}/modificarTurnoOrg">
-								<td>
-									<select name="estadoAgenda" class="selection-1">
-										<c:forEach items="${listaEstadosAgenda}" var="ea">
-											<option value="${ea.id}">${ea.estado}</option>
-										</c:forEach>
-									</select>
-								</td>
-								<input name="idAgenda" value="${la.id}" style="display: none"></input>
-								<input name="nombreUser" value="${user.nombreDeUsuario}" style="display: none"></input>
-								<td>
-									<button type="submit"><i class="fa fa-edit"></i></button>
-								</td>
-							</form>
-						</tr>
-					</c:forEach>
+
+				<c:forEach items="${listaAgenda}" var="la">
+					<tr>
+						<td>${la.fecha}</td>
+						<td>${la.hora}</td>
+						<td>${la.instructorVehiculoEspecialidad.instructor.usuario.nombre}
+							${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}</td>
+						<td>${la.instructorVehiculoEspecialidad.vehiculo.modelo}-
+							${la.instructorVehiculoEspecialidad.vehiculo.patente}</td>
+						<td>${la.instructorVehiculoEspecialidad.especialidad.tipo}</td>
+						<td>${la.inscripcion.curso.titulo}</td>
+
+						<td><c:if test="${la.clasePagada == true}">
+								<i class="fa fa-check"></i>
+							</c:if> <c:if test="${la.clasePagada == false}">
+								<i class="fa fa-times t-center"></i>
+							</c:if></td>
+						<form method="post" action="${context}/modificarTurnoOrg">
+						<td><select name="estadoAgenda" class="selection-1">
+								<c:forEach items="${listaEstadosAgenda}" var="ea">
+									<option value="${ea.id}">${ea.estado}</option>
+								</c:forEach>
+						</select></td>
+						<input name="idAgenda" value="${la.id}" style="display: none"></input>
+						<input name="nombreUser" value="${user.nombreDeUsuario}"
+							style="display: none"></input>
+						<td>
+							<button type="submit">
+								<i class="fa fa-edit"></i>
+							</button>
+						</td>
+						</form>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 

@@ -23,6 +23,8 @@ public class CursoDaoImpl implements CursoDao {
 	
 	@Inject 
 	private SessionFactory sessionFactory;
+	
+
 
 	@Override
 	public Long agregarCurso(Curso curso) {

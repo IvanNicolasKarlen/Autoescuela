@@ -29,7 +29,8 @@ public class AgendaDaoImp implements AgendaDao {
 	@Inject
     private SessionFactory sessionFactory;
 
-	
+
+
 	/*******************************O R G A N I Z A D X R *//////////////////////////
 
 	@Override

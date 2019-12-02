@@ -43,6 +43,7 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioConvertirFecha;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
@@ -82,10 +83,8 @@ public class ControladorOrganizador {
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
 	@Inject
 	private ServicioEstadoInscripcion servicioEstadoInscripcion;
-
-	
-	
-
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 
 	public void setServicioCurso(ServicioCurso servicioCurso) {
 		this.servicioCurso = servicioCurso;
@@ -95,6 +94,17 @@ public class ControladorOrganizador {
 	public void setServicioEspecialidad(ServicioEspecialidad servicioEspecialidad) {
 		this.servicioEspecialidad = servicioEspecialidad;
 	}
+	
+
+	public void setServicioEstadoDelCurso(ServicioEstadoDelCurso servicioEstadoDelCurso) {
+		this.servicioEstadoDelCurso = servicioEstadoDelCurso;
+	}
+
+
+	public void setServicioEstadoInscripcion(ServicioEstadoInscripcion servicioEstadoInscripcion) {
+		this.servicioEstadoInscripcion = servicioEstadoInscripcion;
+	}
+
 
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
@@ -609,7 +619,7 @@ public class ControladorOrganizador {
 								+ "<p>Recomendamos cambiar el estado de curso para que nadie pueda inscribirse, y volver a intentar luego "
 								+ "que las inscripciones hayan finalizado.</p>");
 							}
-								
+					break;			
 					case "no": return new ModelAndView("redirect:/verCursos");
 					
 					default: return new ModelAndView("redirect:/verCursos");
@@ -662,8 +672,9 @@ public class ControladorOrganizador {
 			List<Agenda> listaAg = new ArrayList<Agenda>();
 			List<EstadoDeAgenda> listaEstado = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
 			if(fecha.equals("nada")){
-				listaAg= servicioAgenda.traerTodasLasClasesDeUnAlumno(user.getId());
+				listaAg= servicioAgenda.traerTodasLasClasesDeUnAlumno(user.getAlumno().getId());
 			}else{
+				System.out.println(fecha);
 				listaAg.add(servicioAgenda.traerAgendaPorFechaYAlumno(user.getAlumno(), fecha));
 				System.out.println("n/ /n FECHAAAAAAAAA: " +fecha +" /n n/");
 			}
@@ -690,7 +701,9 @@ public class ControladorOrganizador {
 				agenda.setEstadoDeAgenda(estado);
 				servicioAgenda.modificarAgenda(agenda);
 				Agenda agendaMod = servicioAgenda.buscarAgendaPorId(idAgenda);
-				if(agendaMod.getEstadoDeAgenda().equals(estado)){
+				if(agendaMod.getEstadoDeAgenda().getEstado().equals(estado.getEstado())){
+					Usuario org = servicioUsuario.traerUsuarioPorId((long)request.getSession().getAttribute("ID"));
+					servicioNotificacion.crearNotificacion(org, agendaMod);
 					model.put("mensaje","Agenda modificada exitosamente");
 				}else{
 					model.put("error", "No se pudo modificar la agenda");
@@ -706,5 +719,6 @@ public class ControladorOrganizador {
 		model.put("user", user);
 		return new ModelAndView("buscarAgendasOrg",model);
 	}
+
 
 }

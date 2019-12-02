@@ -24,5 +24,5 @@ public interface ServicioUsuario {
 	
 	
 	/********************************INSTRUCTOR***************************************/
-	Usuario traerUsuarioPorId(Long user);
+	Usuario traerUsuarioPorId(Long id);
 }

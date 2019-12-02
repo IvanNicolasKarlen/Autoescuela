@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.dao;
 import java.util.List;
 import java.util.TreeSet;
 
+import org.hibernate.SessionFactory;
+
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
@@ -13,7 +15,6 @@ import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 public interface AgendaDao {
-	
 	
 	
 	List<Agenda> traerAgendaPorFechayHora(String fecha, Integer hora);

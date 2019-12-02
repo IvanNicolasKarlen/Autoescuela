@@ -58,8 +58,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	/********************************INSTRUCTOR*****************************************/
 
 	@Override
-	public Usuario traerUsuarioPorId(Long user) {
-		Usuario usuario =	servicioUsuarioDao.traerUsuarioPorId(user);
-		return servicioUsuarioDao.traerUsuarioPorId( usuario.getInstructor().getId());
+	public Usuario traerUsuarioPorId(Long id) {
+		return servicioUsuarioDao.traerUsuarioPorId(id);
 	}
 }
