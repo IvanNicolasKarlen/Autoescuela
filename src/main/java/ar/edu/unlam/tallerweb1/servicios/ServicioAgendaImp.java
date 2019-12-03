@@ -58,7 +58,8 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	private InscripcionDao inscripcionDao;
 	@Inject
 	private InstructorDao instructorDao;
-	
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
 	
 	/**************************INSTRUCTOR*******************************/
@@ -399,11 +400,13 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 	
 		 EstadoDeAgenda canceladaPorAlumno = estadoDeAgendaDao.traigoElEstadoCanceladaPorAlumno();
 		 
-		//agenda.setInscripcion(null);
 		agenda.setEstadoDeAgenda(canceladaPorAlumno);
 		
 		//Eliminar esta clase
 		 agendaDao.updateAgenda(agenda);
+		 
+		 //Creo la notificacion
+		 servicioNotificacion.crearNotificacion(usuario, agenda);
 		 
 		
 		//Creo la misma clase para que la pueda ocupar otro alumno con estado disponible

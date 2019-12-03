@@ -288,7 +288,7 @@ public class ControladorAlumno {
 	
 	/*Trae solo las clases de la especialidad que selecciono en los filtros*/
 	@RequestMapping(path="/clasesDelCurso")
-	public ModelAndView VistaDePruebas(HttpServletRequest request, @RequestParam(name="id", required=false) Long idEspecialidad ){
+	public ModelAndView ClasesElegidasEnElFiltro(HttpServletRequest request, @RequestParam(name="id", required=false) Long idEspecialidad ){
 		
 		String rol = (String)request.getSession().getAttribute("ROL");
 		if(!rol.equals("Alumno"))
@@ -450,7 +450,7 @@ public class ControladorAlumno {
 		Long idAlumno = (Long) request.getSession().getAttribute("ID");
 		
 		
-		/*Si no envio una clase para eliminar, entonces quiere eliminar un curso*/
+		/*Si no envio una clase para eliminar, entonces quiere eliminar todas las clases juntas*/
 		try{
 		
 			agendasViewModel.getIdAgendaSeleccionada().equals(null);

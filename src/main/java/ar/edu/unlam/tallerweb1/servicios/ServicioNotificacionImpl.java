@@ -69,7 +69,7 @@ public class ServicioNotificacionImpl implements ServicioNotificacion {
 				+"<p>Detalles de cancelación: " +agenda.getEstadoDeAgenda().getDetalle() +".</p>"
 				+"<p>Cancelada por: " +usuario.getNombreDeUsuario() +" - "+usuario.getNombre() +" "+usuario.getApellido() +".</p>"
 				+"<p>Dictada por: " +agenda.getInstructorVehiculoEspecialidad().getInstructor().getUsuario().getNombreDeUsuario()+".</p>"
-				+"<p>Tomada por alumnx: " +agenda.getInscripcion().getAlumno().getUsuario().getNombreDeUsuario() +" - " 
+				+"<p>Tomada por alumno(a): " +agenda.getInscripcion().getAlumno().getUsuario().getNombreDeUsuario() +" - " 
 				+agenda.getInscripcion().getAlumno().getUsuario().getNombre() +" " 
 				+agenda.getInscripcion().getAlumno().getUsuario().getApellido() +".</p>"
 				+"<p><i>Notificacion emitida: " +notificacionNueva.getFecha() +"</i></p>"

@@ -50,6 +50,8 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 	private ServicioAgenda servicioAgenda;
 	@Inject
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
 	
 	
@@ -243,8 +245,12 @@ public class ServicioInscripcionImpl implements ServicioInscripcion {
 				
 				inscripcionDao.guardarInscripcionEnLaAgenda(a); //Update
 				
+				servicioNotificacion.crearNotificacion(usuario, a);
 				}
 		
+				
+				
+				
 	
 
 		

@@ -90,7 +90,7 @@ public class testAlumno extends SpringTest {
 	
 	
 	@Test
-    public void testQueVerificaSiSoyUnAlumno()
+    public void testQueVerificaQueSiSoyUnAlumno()
     {
     	//Quiero probar el login
     	ControladorAlumno controlador = new ControladorAlumno();
@@ -119,8 +119,10 @@ public class testAlumno extends SpringTest {
 	    	HttpServletRequest requestMock = mock(HttpServletRequest.class);
 	    	HttpSession sessionHttp= mock(HttpSession.class);
 			
+	    	//Devuelvo una sesion con el rol Organizador
 	    	when(requestMock.getSession()).thenReturn(sessionHttp);
 	    	when(requestMock.getSession().getAttribute("ROL")).thenReturn("Organizador");
+	    
 	    	//Seteo al controlador el mock falso para saber que vista me devuelve
 	    	ModelAndView vista = controlador.indexAlumno(requestMock);
 	    	assertThat(vista.getViewName()).isEqualTo("redirect:/index");
@@ -132,6 +134,7 @@ public class testAlumno extends SpringTest {
 		@Transactional
 	    public void testQueMuestraMisClases()
 	    {
+			//Test que verifica si devuelve las clases que se anotó el alumno
 			
 			//trucheo el request
 	        HttpServletRequest requestMock=mock(HttpServletRequest.class);
@@ -177,7 +180,7 @@ public class testAlumno extends SpringTest {
 			 ModelAndView vista = controladorAlumno.DiasDeCursada(requestMock);
 		     ModelMap modelo=(ModelMap) controladorAlumno.DiasDeCursada(requestMock).getModel();
 		    	
-		        //pruebo el metodo del controllador
+		        //pruebo el metodo del controlador
 		        assertThat(modelo.get("listadoClases")).isEqualTo(listadoDeClases);
 		        assertThat(modelo.get("num")).isEqualTo(cursando.size());
 		        assertThat(modelo.get("listaCursos")).isEqualTo(cursando);
@@ -192,6 +195,7 @@ public class testAlumno extends SpringTest {
 	@Transactional
 	public void testQueValidaSiEstoyInscriptoAUnCurso()
 	{
+		//Verificamos que el alumno este inscripto a un curso. Si no tiene curso, se le pedira que se registre a alguno
 			
 		//trucheo el request
 	       HttpServletRequest requestMock=mock(HttpServletRequest.class);
@@ -237,8 +241,8 @@ public class testAlumno extends SpringTest {
 		Long idEspecialidad = (long) 1;
 		
 		//pruebo el metodo del controlador
-		 ModelAndView vista = controladorAlumno.VistaDePruebas(requestMock,idEspecialidad);
-	     ModelMap modelo=(ModelMap) controladorAlumno.VistaDePruebas(requestMock, idEspecialidad).getModel();
+		 ModelAndView vista = controladorAlumno.ClasesElegidasEnElFiltro(requestMock,idEspecialidad);
+	     ModelMap modelo=(ModelMap) controladorAlumno.ClasesElegidasEnElFiltro(requestMock, idEspecialidad).getModel();
 	    
 		
 		 //pruebo el metodo del controllador
@@ -253,6 +257,8 @@ public class testAlumno extends SpringTest {
 	@Test
     public void testQueConsultaSiQueresFinalizarElCurso()
     {
+		//Verificamos que este anotado al curso que quiere finalizar para poder realizar dicha operacion.
+		
 		//trucheo el request
 	     HttpServletRequest requestMock=mock(HttpServletRequest.class);
 	     HttpSession sessionMock=mock(HttpSession.class);
@@ -267,14 +273,11 @@ public class testAlumno extends SpringTest {
 		ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
 			
 		controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
-			
-	       
-		
+				
 		//Alumno por parametros
 		Alumno alumno = new Alumno();
 		
 		Curso curso = new Curso();
-		
 		
 		Inscripcion inscripcionBuscada = mock(Inscripcion.class);
 		
@@ -296,7 +299,7 @@ public class testAlumno extends SpringTest {
 	
 	
 	@Test
-    public void testQueNoEliminaUnaClase()
+    public void testQueNoPermiteEliminarUnaClase()
     {
 		//Contemplamos que si faltan dos dias para realizar la clase, esta ya no pueda ser eliminada
 		
@@ -353,6 +356,8 @@ public class testAlumno extends SpringTest {
     public void testQueOfreceCronogramaDeClases()
     {
     
+		//Test que verifica que se muestre el cronograma de clases
+		
 		ControladorAlumno controladorAlumno = new ControladorAlumno();
     	HttpServletRequest requestMock = mock(HttpServletRequest.class);
     	HttpSession sessionHttp= mock(HttpSession.class);
@@ -399,16 +404,13 @@ public class testAlumno extends SpringTest {
 			    
 			assertThat(modelo.get("mensaje")).isEqualTo("Te ofrecemos este cronograma de clases");     
 			
-			   assertThat(vista.getViewName()).isEqualTo("fechasAlumnoEnAgenda");
+			assertThat(vista.getViewName()).isEqualTo("fechasAlumnoEnAgenda");
 
 		
     }
 	
 	
     
-	
-	
-	
 		
     
 }  

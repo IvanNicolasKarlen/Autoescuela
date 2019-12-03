@@ -189,8 +189,11 @@ public class ControladorUsuario {
 		ModelMap model = new ModelMap();
 		Long idUser = (long)request.getSession().getAttribute("ID");
 		Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
+		
 		model.put("rol", (String)request.getSession().getAttribute("ROL"));
+		
 		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		
 		switch(filter){						
 			case "leidas": notificaciones = servicioNotificacion.traerNotificacionesLeidas(user);
 							break;

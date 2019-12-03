@@ -27,6 +27,7 @@ public class NotificacionDaoImpl implements NotificacionDao {
 	@Override
 	public List<Notificacion> traerTodasLasNotificaciones(Usuario usuario) {
 		final Session session = sessionFactory.getCurrentSession();
+	
 		Criteria query = session.createCriteria(Notificacion.class);
 		switch(usuario.getRol()){
 		case "Alumno":	query = query.createAlias("alumno", "alumnoBuscado")
