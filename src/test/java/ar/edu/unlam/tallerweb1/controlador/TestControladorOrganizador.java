@@ -42,6 +42,7 @@ public class TestControladorOrganizador extends SpringTest {
 		when(request.getSession().getAttribute("ID")).thenReturn(id);
 		ServicioUsuario su = mock(ServicioUsuario.class);
 		Usuario user = mock(Usuario.class);
+		when(user.getRol()).thenReturn("Organizador");
 		when(su.traerUsuarioPorId(id)).thenReturn(user);
 		controladorUser.setServicioUsuario(su);
 		ServicioNotificacion sn = mock(ServicioNotificacion.class);
