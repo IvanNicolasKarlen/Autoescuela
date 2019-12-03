@@ -22,18 +22,17 @@
 	<!-- fin sidebar -->
 
 	<!-- Welcome -->
-	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">
-
-	<!-- En este h4 se muestra el error si es que hay alguno --> <section
-		class="section-reservation bg1-pattern p-t-100 p-b-113">
+	<section class="bg-title-page flex-c-m p-t-60 p-b-10 p-l-15 p-r-15"
+		style="background-image: url(${context}/images/index.jpg);">
+	</section>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 p-b-30">
-				<h4 class="t-center text-info">${mensaje}</h4>
-				<h4 class="t-center text-danger">${error}</h4>
+
 				<div class="col-md-4 pull-right">
 					<div class="sidebar2 p-t-80 p-b-80 p-l-20 p-l-0-md p-t-0-md">
 						<div class="search-sidebar2 size12 bo2 pos-relative">
+
 							<form method="get" action="${context}/verCursos">
 								<select name="espFiltro" class="selection-1">
 									<c:forEach items="${listaesp}" var="les">
@@ -50,7 +49,8 @@
 						</div>
 					</div>
 				</div>
-
+				<h4 class="t-center text-info">${mensaje}</h4>
+				<h4 class="t-center text-danger">${error}</h4>
 				<table class="table table-striped">
 					<th>Nombre</th>
 					<th>Estado</th>
@@ -80,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	</section> </section>
+
 
 
 

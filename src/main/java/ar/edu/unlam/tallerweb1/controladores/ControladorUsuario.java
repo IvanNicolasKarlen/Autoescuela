@@ -51,23 +51,25 @@ public class ControladorUsuario {
 		public ModelAndView index(HttpServletRequest request) {
 			ModelMap model = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL") != null?(String) request.getSession().getAttribute("ROL"):"";
-			
-			model.put("rol", rol);
+			Long idUser = request.getSession().getAttribute("ID")!= null?(Long) request.getSession().getAttribute("ID"):null;
+			List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+			Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
 			String vistaindex = "index";
-			if(!(rol.equals(""))){
-				Usuario user = servicioUsuario.traerUsuarioPorId((long)request.getSession().getAttribute("ID"));
-				List<Notificacion> notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+			if(user!=null){
+				notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
 				model.put("notiSize", notificaciones.size());
+				switch(user.getRol()){
+				case "Alumno": 	vistaindex="indexAlumno";
+								break;
+				case "Instructor": vistaindex="indexInstructor";
+								break;
+				case "Organizador": vistaindex="indexOrganizador";
+								break;
+				default: 
+				}
+				model.put("rol", user.getRol());
 			}
-			switch(rol){
-			case "Alumno": 	vistaindex="indexAlumno";
-							break;
-			case "Instructor": vistaindex="indexInstructor";
-							break;
-			case "Organizador": vistaindex="indexOrganizador";
-							break;
-			default: 
-			}
+			
 			return new ModelAndView(vistaindex,model);
 	
 		}
@@ -188,14 +190,15 @@ public class ControladorUsuario {
 		Long idUser = (long)request.getSession().getAttribute("ID");
 		Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
 		model.put("rol", (String)request.getSession().getAttribute("ROL"));
-		List<Notificacion> notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
 		switch(filter){						
 			case "leidas": notificaciones = servicioNotificacion.traerNotificacionesLeidas(user);
 							break;
 			case "todas": notificaciones = servicioNotificacion.traerTodasLasNotificaciones(user);
 							break;
+			default: notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
 		}
-		if(leidas=="true"){
+		if(leidas.equals("true")||leidas=="true"){
 			for(Notificacion noti:notificaciones){
 				noti.setLeida(true);
 				servicioNotificacion.modificarNotificacion(noti);
@@ -204,6 +207,8 @@ public class ControladorUsuario {
 		if(idNotificacion!=null){
 			Notificacion notificacionSeleccionada = servicioNotificacion.traerNotificacionPorId(idNotificacion);
 			model.put("notificacion", notificacionSeleccionada);
+			notificacionSeleccionada.setLeida(true);
+			servicioNotificacion.modificarNotificacion(notificacionSeleccionada);
 		}
 		model.put("notificaciones", notificaciones);
 		return new ModelAndView("notificaciones",model);

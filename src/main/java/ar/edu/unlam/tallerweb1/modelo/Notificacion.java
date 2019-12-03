@@ -1,10 +1,14 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Columns;
+import org.springframework.web.bind.annotation.MatrixVariable;
 
 @Entity
 public class Notificacion {
@@ -13,6 +17,7 @@ public class Notificacion {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String mensaje;
+	@Column( name="detalles", length=8000)
 	private String detalles;
 	private String fecha;
 	private Boolean leida;

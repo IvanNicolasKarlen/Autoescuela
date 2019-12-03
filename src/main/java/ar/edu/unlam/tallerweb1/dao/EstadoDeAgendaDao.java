@@ -27,4 +27,5 @@ public interface EstadoDeAgendaDao {
 	EstadoDeAgenda traigoElEstadoAbandonada();
 	EstadoDeAgenda traigoElEstadoOcupada();
 	EstadoDeAgenda buscarEstadoPerdida();
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador();
 }

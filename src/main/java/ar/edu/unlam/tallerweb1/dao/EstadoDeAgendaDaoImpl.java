@@ -150,6 +150,15 @@ final Session session = sessionFactory.getCurrentSession();
 				.add(Restrictions.ne("detalle", "El organizador decidio cancelar la clase"))
 				.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+						.add(Restrictions.not(Restrictions.like("detalle", "%alumno%")))
+						.list();
+	}
 	
 //	
 //	@Override

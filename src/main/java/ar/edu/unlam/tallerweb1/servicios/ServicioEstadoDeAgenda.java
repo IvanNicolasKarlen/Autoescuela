@@ -20,4 +20,5 @@ public interface ServicioEstadoDeAgenda {
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();
 	EstadoDeAgenda traerEstadoDeAgendaPorNombre(String estado);
 	EstadoDeAgenda traerEstadoDeAgendaPorId(Long id);
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador();
 }

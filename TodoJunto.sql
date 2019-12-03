@@ -4,10 +4,6 @@ values (125);
 insert into usuario(apellido,dni,nombre,password,rol,organizador_id,nombreDeUsuario)
 values  ("Delgado",40123456,"Candelaria",123456,"Organizador",125,"candekn");
 
-
-
-	
-
 insert into estadodevehiculo(estadoActual)
 VALUES	("Funcionando");
 
@@ -17,19 +13,15 @@ VALUES	("Moto"),("Auto");
 insert into estadoDelCurso(estadoDelCurso)
 VALUES	("Disponible"),("En Pausa");
 
-
-
 insert into tipoDeVehiculo(tipo,especialidad_id)
 VALUES	("Camioneta",2),
 		("Motocicleta",1);
         
-
 insert into vehiculo(patente,modelo,tipoDeVehiculo_id,estadoDeVehiculo_id)
 VALUES	("XYZ-123","Honda 2003",2,1),
 		("FGH-978","Mercedes Benz 4x4",1,1),
         ("NKJ-978","Mercedes Benz 500x",1,1),
         ("GRF-987","Scooter x32",2,1);
-
 
  Insert into estadodeagenda(estado,detalle) 
  values("Disponible","El alumno puede inscribirse"), /*1*/
@@ -53,9 +45,6 @@ update instructor set usuario_id=3 where id=70;
 insert into instructorvehiculoespecialidad(especialidad_id,instructor_id,vehiculo_id)
 VALUES	(1,60,1),
 		(2,70,2);
-
-
-
 
 insert into alumno(id) values(1);
 

@@ -57,6 +57,11 @@ public class ServicioEstadoDeAgendaImpl implements ServicioEstadoDeAgenda {
 		return estadoDeAgendaDao.traerEstadoDeAgendaPorId(id);
 	}
 
+	@Override
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador() {
+		return estadoDeAgendaDao.traerListaDeEstadoDeAgendaParaOrganizador();
+	}
+
 
 
 

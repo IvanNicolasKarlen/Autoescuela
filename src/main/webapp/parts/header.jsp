@@ -90,11 +90,11 @@
 					<div class="social flex-w flex-l-m p-r-20">
 					<!-- IF: Si el ROL esta vacio muestra INGRESAR, sino muestra NOMBRE Y APELLIDO -->
 						<c:if test="${not empty rol}">
-							<a><b class="text-danger">Mi Cuenta</b></a>
+							<a><b class="text-danger">Mi Cuenta </b></a>
 							<a href="${context}/notificaciones"><b class="text-danger"><span class="fa fa-bell" aria-hidden="true">
-								<c:if test="${notisize == 0}">
-									${notiSize}
-								</c:if>
+								<c:if test="${notiSize > 0}">
+									<b style="color:yellow;font-size:20px"> ${notiSize}</b>
+								</c:if> 
 							</span></b></a>
 						</c:if>
 						<c:if test="${empty rol}">

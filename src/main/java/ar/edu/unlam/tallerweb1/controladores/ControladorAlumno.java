@@ -65,7 +65,7 @@ public class ControladorAlumno {
 	@RequestMapping("/indexAlumno")
 	public ModelAndView indexAlumno(HttpServletRequest request) {
 		
-		String rol = (String)request.getSession().getAttribute("ROL");
+		String rol = request.getSession().getAttribute("ROL")!= null?(String) request.getSession().getAttribute("ROL"):"";
 		if(!rol.equals("Alumno"))
 		{
 			return new ModelAndView("redirect:/index");
