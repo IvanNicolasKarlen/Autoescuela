@@ -74,12 +74,12 @@ public class ServicioAgendaImp implements ServicioAgenda{
 	}
 	
 	@Override
-	public List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido) {
+	public List<Agenda> buscarAlumnos(Long idInstructor,String nombreDeUsuario) {
 			
 		//Traigo los datos del alumno logueado
 		Instructor instructor = instructorDao.buscarInstructor(idInstructor);
 		
-			return agendaDao.buscarAlumnos(instructor.getId(),nombre,apellido);
+			return agendaDao.buscarAlumnos(instructor.getId(),nombreDeUsuario);
 }
 	
 

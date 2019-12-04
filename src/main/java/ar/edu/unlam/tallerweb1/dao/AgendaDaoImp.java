@@ -436,7 +436,7 @@ final Session session = sessionFactory.getCurrentSession();
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido) {
+	public List<Agenda> buscarAlumnos(Long idInstructor,String nombreDeUsuario) {
 		final Session session = sessionFactory.getCurrentSession();
 		Criteria criteria =  session.createCriteria(Agenda.class)
 				.createAlias("instructorVehiculoEspecialidad", "iveBuscada")
@@ -449,15 +449,10 @@ final Session session = sessionFactory.getCurrentSession();
 				.add(Restrictions.eq("estadoBuscado.estado", "Ocupada"))
 				.add(Restrictions.eq("instructorBuscado.id", idInstructor));
 
-			
-				
-				if(apellido != null) {
-				criteria = criteria.add(Restrictions.like("usuarioBuscado.apellido","%" + apellido + "%"));
-				}
-				
-				if(nombre != null) {
-					criteria = criteria.add(Restrictions.like("usuarioBuscado.nombre","%" + nombre + "%"));
+				if(nombreDeUsuario != null) {
+					criteria = criteria.add(Restrictions.like("usuarioBuscado.nombreDeUsuario", "%" + nombreDeUsuario + "%"  ));
 				}			
+				
 				return  (List<Agenda>) criteria.list();
 	}
 	

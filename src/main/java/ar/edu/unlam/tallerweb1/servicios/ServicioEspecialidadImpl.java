@@ -13,6 +13,7 @@ import ar.edu.unlam.tallerweb1.dao.IveDao;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Service
 @Transactional
 public class ServicioEspecialidadImpl implements ServicioEspecialidad {

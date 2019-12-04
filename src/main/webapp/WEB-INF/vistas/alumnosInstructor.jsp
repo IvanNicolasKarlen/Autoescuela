@@ -35,18 +35,12 @@
 
   <form:form method="GET"  action="buscadorDeAlumnos"> 
 <h3 class="tit3 text-center">Buscador de alumnos</h3><br><br>
-
-
-
-	<div class="container">	
-	<b class="tit2 text-center m-t-90">Nombre:</b><label for="nombre"></label>
-            <input type="text" name="nombre" id="nombre" class="form-control">
+ 
+ 	<div class="container">
+	<b class="tit2 text-center m-t-90">Nombre de usuario:</b><label for="dni" ></label>
+            <input type="text" name="nombreDeUsuario" id="nombreDeUsuario" class="form-control">
  </div><br><br>
-  
-	<div class="container">
-	<b class="tit2 text-center m-t-90">Apellido:</b><label for="apellido"></label>
-            <input type="text" name="apellido" id="apellido" class="form-control">
- </div><br><br>
+ 
 
 		<button class="btn btn-primary" type="submit" name="btnBuscar">Buscar <i class="fa fa-search"></i></button>
 			

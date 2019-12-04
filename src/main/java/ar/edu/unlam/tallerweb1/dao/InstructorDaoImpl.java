@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.hibernate.Session;
@@ -8,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Repository
@@ -50,4 +53,5 @@ public class InstructorDaoImpl implements InstructorDao {
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.get(Usuario.class, idInstructor);
 	}
+
 }

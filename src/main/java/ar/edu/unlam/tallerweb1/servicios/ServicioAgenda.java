@@ -21,7 +21,7 @@ public interface ServicioAgenda {
 	
 	/******************************INSTRUCTOR******************************/
 	List<Agenda> buscarDiaYHorarioDeTurnoDeUnInstructor(Long idInstructor);
-	List<Agenda> buscarAlumnos(Long idInstructor,String nombre,String apellido);
+	List<Agenda> buscarAlumnos(Long idInstructor,String nombreDeUsuario);
 	List<Agenda> traerFechasDisponibles(Long idInstructor);
 	void updateAgenda(Agenda agenda);
 	Agenda buscarAgendaPorId(Long idAgenda);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 @Repository
 public class EspecialidadDaoImpl implements EspecialidadDao {
 	@Inject
@@ -67,6 +68,4 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 		
 		return c.getEspecialidad();
 	}
-
-
 }

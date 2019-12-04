@@ -82,8 +82,8 @@ public class ControladorInstructor {
 	
 	
 	@RequestMapping(path="/buscadorDeAlumnos")
-	public ModelAndView buscarAlumnos ( @RequestParam (name="nombre",required=false)  String nombre,
-										@RequestParam (name="apellido",required=false)String apellido,
+	public ModelAndView buscarAlumnos ( 
+										@RequestParam (name="nombreDeUsuario",required=false)String nombreDeUsuario,
 										HttpServletRequest request){
 
 		ModelMap model = new ModelMap();
@@ -93,7 +93,7 @@ public class ControladorInstructor {
 		if(rol.equals("Instructor")){
 
 		
-		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(idInstructor,nombre,apellido);
+		List <Agenda> buscarAlumnos =servicioAgenda.buscarAlumnos(idInstructor,nombreDeUsuario);
 		List <Agenda> listaAgenda = servicioAgenda.buscarDiaYHorarioDeTurnoDeUnInstructor(idInstructor);
 		List <Agenda> traerAlumnosDisponibles = servicioAgenda.traerFechasDisponibles(idInstructor);
 		
@@ -138,7 +138,9 @@ public class ControladorInstructor {
 						      	HttpServletRequest request) {		
 		
 		String rol = request.getSession().getAttribute("ROL")!=null?(String)request.getSession().getAttribute("ROL"):null;
-		Long id = (Long) request.getSession().getAttribute("ID");
+		
+		Long id =(long)request.getSession().getAttribute("ID");
+		Usuario user = servicioUsuario.traerUsuarioPorId(id);
 
 		if(rol.equals("Instructor")){
 
@@ -159,7 +161,6 @@ public class ControladorInstructor {
 			model.put("estadoDeAgenda",estadoDeAgenda);
 			model.put("estadoVehiculo",estadoVehiculo);
 			
-		
 		if(confirmacion.equals("noConfirmado")){
 			model.put("confirmacion", "¿Esta seguro de querer cancelar la clase seleccionada?");
 			model.put("idAgenda",idAgenda);
@@ -177,7 +178,8 @@ public class ControladorInstructor {
 			ve.setEstadoDeVehiculo(estadoVehiculo);
 			servicioVehiculo.updateVehiculo(ve);
 			agenda.setEstadoDeAgenda(estadoDeAgenda);
-			servicioAgenda.updateAgenda(agenda);			
+			servicioAgenda.updateAgenda(agenda);
+			servicioNotificacion.crearNotificacion(user, agenda);
 			
 			model.put("estadoDeAgenda", estadoDeAgenda);
 			model.put("estadoVehiculo", estadoVehiculo);
@@ -212,6 +214,8 @@ public class ControladorInstructor {
 		
 		List<EstadoDeAgenda> estadosDeAgenda = servicioEstadoDeAgenda.traerListaDeEstadoDeAgendaParaInstructor();
 		List<EstadoDeVehiculo> estadoDeVehiculo = servicioEstadoDeVehiculo.traerListaDeEstadoDeVehiculo();
+		
+		
 		model.put("estadosDeAgenda",estadosDeAgenda);
 		model.put("estadoDeVehiculo",estadoDeVehiculo);
 		model.put("idAgenda",idAgenda);
@@ -244,7 +248,6 @@ public class ControladorInstructor {
 		return new ModelAndView("redirect:/index");
 	}
 }
-	
 	
 	@RequestMapping(path="/grafico", method = RequestMethod.GET)
 	public ModelAndView grafico (HttpServletRequest request) {
