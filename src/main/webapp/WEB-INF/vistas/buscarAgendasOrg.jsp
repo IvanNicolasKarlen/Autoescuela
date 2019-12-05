@@ -65,6 +65,7 @@
 				<th>Curso</th>
 				<th>Clase pagada</th>
 				<th>Estado del turno</th>
+				<th>Modificar Estado</th>
 				<th>Modificar</th>
 
 
@@ -84,6 +85,8 @@
 							</c:if> <c:if test="${la.clasePagada == false}">
 								<i class="fa fa-times t-center"></i>
 							</c:if></td>
+						<td>${la.estadoDeAgenda.estado}</td>
+						
 						<form method="post" action="${context}/modificarTurnoOrg">
 						<td><select name="estadoAgenda" class="selection-1">
 								<c:forEach items="${listaEstadosAgenda}" var="ea">
@@ -99,6 +102,7 @@
 							</button>
 						</td>
 						</form>
+					
 					</tr>
 				</c:forEach>
 			</table>

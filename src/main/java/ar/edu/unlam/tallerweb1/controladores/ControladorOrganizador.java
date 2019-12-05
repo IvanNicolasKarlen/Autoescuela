@@ -694,10 +694,13 @@ public class ControladorOrganizador {
 				agenda.setEstadoDeAgenda(estado);
 				servicioAgenda.modificarAgenda(agenda);
 				Agenda agendaMod = servicioAgenda.buscarAgendaPorId(idAgenda);
-				if(agendaMod.getEstadoDeAgenda().getEstado().equals(estado.getEstado())){
-					Long idUserOrg =(long)request.getSession().getAttribute("ID");
-					Usuario org = servicioUsuario.traerUsuarioPorId(idUserOrg);
-					servicioNotificacion.crearNotificacion(org, agendaMod);
+				EstadoDeAgenda estadoAgendaMod = agendaMod.getEstadoDeAgenda();
+				if(estadoAgendaMod.getEstado().equals(estado.getEstado())){
+					if(estadoAgendaMod.getEstado().toUpperCase().contains("CANCEL")){
+						Long idUserOrg =(long)request.getSession().getAttribute("ID");
+						Usuario org = servicioUsuario.traerUsuarioPorId(idUserOrg);
+						servicioNotificacion.crearNotificacion(org, agendaMod);
+					}
 					model.put("mensaje","Agenda modificada exitosamente");
 				}else{
 					model.put("error", "No se pudo modificar la agenda");

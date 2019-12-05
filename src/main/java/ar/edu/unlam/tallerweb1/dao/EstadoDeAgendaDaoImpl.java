@@ -156,7 +156,9 @@ final Session session = sessionFactory.getCurrentSession();
 	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador() {
 		Session session = sessionFactory.getCurrentSession();
 		return session.createCriteria(EstadoDeAgenda.class)
-						.add(Restrictions.not(Restrictions.like("detalle", "%alumno%")))
+						.add(Restrictions.ne("estado", "Cancelado por Alumno"))
+						.add(Restrictions.ne("estado", "Cancelado por Instructor"))
+						.add(Restrictions.ne("estado", "Abandonada"))
 						.list();
 	}
 	

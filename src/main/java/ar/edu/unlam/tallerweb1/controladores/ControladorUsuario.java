@@ -50,12 +50,11 @@ public class ControladorUsuario {
 		@RequestMapping("/index")
 		public ModelAndView index(HttpServletRequest request) {
 			ModelMap model = new ModelMap();
-			String rol = request.getSession().getAttribute("ROL") != null?(String) request.getSession().getAttribute("ROL"):"";
 			Long idUser = request.getSession().getAttribute("ID")!= null?(Long) request.getSession().getAttribute("ID"):null;
 			List<Notificacion> notificaciones = new ArrayList<Notificacion>();
-			Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
 			String vistaindex = "index";
-			if(user!=null){
+			if(idUser!=null){
+				Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
 				notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
 				model.put("notiSize", notificaciones.size());
 				switch(user.getRol()){
