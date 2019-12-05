@@ -722,5 +722,24 @@ TreeSet<Agenda> returnClases = new TreeSet<Agenda>();
 	}
 
 
+	
+	
+	@Override
+	public void setAlumnoDao(AlumnoDao alumnoDao) {
+		this.alumnoDao= alumnoDao;
+		
+	}
+
+	@Override
+	public void setEstadoInscripcionDao(EstadoInscripcionDao estadoinscripcionDao) {
+		this.estadoinscripcionDao= estadoinscripcionDao;
+		
+	}
+
+	@Override
+	public void setAgendaDao(AgendaDao agendaDao) {
+		this.agendaDao= agendaDao;
+		
+	}
 
 }

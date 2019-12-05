@@ -82,6 +82,12 @@ public interface AgendaDao {
 	
 
 
+	/*************MOCK**********/
+	
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
+
 	
 	/*******************************************************************/
 }

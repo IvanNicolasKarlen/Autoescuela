@@ -1,4 +1,4 @@
-package ar.edu.unlam.tallerweb1.persistencia;
+package ar.edu.unlam.tallerweb1.controlador;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
+import ar.edu.unlam.ViewModel.CursosViewModel;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.controladores.ControladorAlumno;
 import ar.edu.unlam.tallerweb1.controladores.ControladorInstructor;
 import ar.edu.unlam.tallerweb1.controladores.ControladorUsuario;
 import ar.edu.unlam.tallerweb1.dao.AgendaDao;
+import ar.edu.unlam.tallerweb1.dao.AlumnoDao;
 import ar.edu.unlam.tallerweb1.dao.CursoDao;
 import ar.edu.unlam.tallerweb1.dao.CursoDaoImpl;
 import ar.edu.unlam.tallerweb1.dao.EspecialidadDao;
@@ -83,7 +85,7 @@ import java.util.TreeSet;
 
 
 
-public class testAlumno extends SpringTest {
+public class TestControladorAlumno extends SpringTest {
 	
 	
 	
@@ -146,6 +148,8 @@ public class testAlumno extends SpringTest {
 	        
 	        
 			ControladorAlumno controladorAlumno = new ControladorAlumno();
+
+			//Creo mocks
 			
 			ServicioEstadoInscripcion servicioEstadoInscripcionMock = mock(ServicioEstadoInscripcion.class);
 			
@@ -161,17 +165,17 @@ public class testAlumno extends SpringTest {
 			//Alumno por parametros
 			Alumno alumno = new Alumno();
 			
-			
+			//EstadoInscripcion
 			EstadoInscripcion estadoCursando = new EstadoInscripcion();
 			
 			when(servicioEstadoInscripcionMock.buscarEstadoCursando()).thenReturn(estadoCursando);
 			
-			
+			//Cursando
 			List<Inscripcion> cursando = mock(List.class);
 					
 			when(servicioInscripcionMock.saberSiEstaRealizandoAlgunCurso(alumno.getId(), estadoCursando)).thenReturn(cursando);
 			
-			
+			//Listado de clases
 			List<Agenda> listadoDeClases = mock(List.class);
 					
 			when(servicioAgendaMock.traerTodasLasClasesQueEstaAnotado(alumno.getId(), estadoCursando)).thenReturn(listadoDeClases);
@@ -207,14 +211,15 @@ public class testAlumno extends SpringTest {
 	        
 	        
 		ControladorAlumno controladorAlumno = new ControladorAlumno();
-			
+		
+		//Mockeo servicios	
 		ServicioEstadoInscripcion servicioEstadoInscripcionMock = mock(ServicioEstadoInscripcion.class);
 			
 		ServicioAgenda servicioAgendaMock = mock(ServicioAgenda.class); 
 		
 		ServicioInscripcion servicioInscripcionMock = mock(ServicioInscripcion.class);
 		
-		
+		//Seteo los servicios mockeados al controlador
 		controladorAlumno.setServicioEstadoInscripcion(servicioEstadoInscripcionMock);
 		controladorAlumno.setServicioInscripcion(servicioInscripcionMock);
 		controladorAlumno.setServicioAgenda(servicioAgendaMock);
@@ -408,9 +413,6 @@ public class testAlumno extends SpringTest {
 
 		
     }
-	
-	
-    
-		
+
     
 }  

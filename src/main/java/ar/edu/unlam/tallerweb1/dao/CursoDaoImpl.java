@@ -24,6 +24,10 @@ public class CursoDaoImpl implements CursoDao {
 	@Inject 
 	private SessionFactory sessionFactory;
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 
 
 	@Override

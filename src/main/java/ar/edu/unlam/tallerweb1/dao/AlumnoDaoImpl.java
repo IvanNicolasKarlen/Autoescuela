@@ -19,6 +19,12 @@ public class AlumnoDaoImpl implements AlumnoDao {
 
 	@Inject
 	private SessionFactory sessionFactory;
+/*************MOCK**********/
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 
 	
 	/************************************ INSTRUCTOR ***********************************/

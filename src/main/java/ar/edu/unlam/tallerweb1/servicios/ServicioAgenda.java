@@ -7,6 +7,9 @@ import java.util.TreeSet;
 
 import ar.edu.unlam.ViewModel.AgendasViewModel;
 import ar.edu.unlam.ViewModel.CursosViewModel;
+import ar.edu.unlam.tallerweb1.dao.AgendaDao;
+import ar.edu.unlam.tallerweb1.dao.AlumnoDao;
+import ar.edu.unlam.tallerweb1.dao.EstadoInscripcionDao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
@@ -70,6 +73,14 @@ public interface ServicioAgenda {
 
 	List<Agenda> traerTodasLasClasesDeUnAlumno(Long id);
 
+	
+	/*************MOCK*******************/
+	
+	 void setAlumnoDao(AlumnoDao alumnoDao);
+	
+	 void setEstadoInscripcionDao(EstadoInscripcionDao estadoinscripcionDao);
+		
+	 void setAgendaDao(AgendaDao agendaDao);
 	
 	
 

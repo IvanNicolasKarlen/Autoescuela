@@ -16,6 +16,10 @@ public class EstadoInscripcionDaoImpl implements EstadoInscripcionDao {
 
 	@Inject
 	private SessionFactory sessionfactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionfactory = sessionFactory;
+	}
 
 	
 	@Override

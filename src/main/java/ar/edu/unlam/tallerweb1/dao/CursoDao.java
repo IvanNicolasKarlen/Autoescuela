@@ -22,6 +22,12 @@ public interface CursoDao {
 	void modificarCurso(Curso curso);
 
 	List<Curso> traerCursosPorEspecialidad(String especialidad);
+	
+/*************MOCK**********/
+	
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
 
 
 }

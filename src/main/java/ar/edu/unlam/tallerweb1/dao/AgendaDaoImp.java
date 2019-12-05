@@ -30,7 +30,9 @@ public class AgendaDaoImp implements AgendaDao {
     private SessionFactory sessionFactory;
 
 
-
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	/*******************************O R G A N I Z A D X R *//////////////////////////
 
 	@Override
