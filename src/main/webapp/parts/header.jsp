@@ -41,26 +41,34 @@
 							<!-- Estos se van a mostrar si sos alumno -->
 								<c:if test="${rol=='Alumno'}">
 									<li>
-									<a href="${context}/index">Inicio</a>
+									<a class="text-center" href="${context}/indexAlumno">Inicio</a>
 								</li>
 								<li>
-									<a href="${context}/listadoCursos">Anotarme</a>
+									<a class="text-center" href="${context}/listadoCursos">Anotarme</a>
 								</li>
 								<li>
-									<a href="${context}/listadoFechas">Mis clases</a>
+									<a class="text-center" href="${context}/listadoFechas">Mis clases</a>
+								</li>
+								<li>
+									<a class="text-center" href="${context}/historial">Historial</a>
 								</li>
 								</c:if>
 							<!-- fin alumno -->
 							<!-- Instructor -->
 								<c:if test="${rol=='Instructor'}">
+							
 									<li>
 										<a href="${context}/index">Inicio</a>
 									</li>
 									
 									<li>
-										<a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a>
+										<a href="${context}/AlumnosDelInstructor">Buscador de Alumnos</a>
 									</li>
 									
+									<li>
+										<a href="${context}/horasTrabajadas">Horas trabajadas</a>
+									</li>
+							
 								</c:if>
 							
 							<!-- Fin instructor -->
@@ -80,9 +88,14 @@
 
 					<!-- Social -->
 					<div class="social flex-w flex-l-m p-r-20">
-					<!-- IF: Si el ID esta vacio muestra INGRESAR, sino muestra MI CUENTA -->
+					<!-- IF: Si el ROL esta vacio muestra INGRESAR, sino muestra NOMBRE Y APELLIDO -->
 						<c:if test="${not empty rol}">
-							<a href="${context}/cuenta"><b class="text-danger">Mi cuenta</b></a>
+							<a><b class="text-danger">Mi Cuenta </b></a>
+							<a href="${context}/notificaciones"><b class="text-danger"><span class="fa fa-bell" aria-hidden="true">
+								<c:if test="${notiSize > 0}">
+									<b style="color:yellow;font-size:20px"> ${notiSize}</b>
+								</c:if> 
+							</span></b></a>
 						</c:if>
 						<c:if test="${empty rol}">
 							<a href="${context}/login"><b class="text-danger">Ingresar</b></a>

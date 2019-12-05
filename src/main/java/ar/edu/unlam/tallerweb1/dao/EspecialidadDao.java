@@ -2,11 +2,19 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.TipoDeVehiculo;
 
 public interface EspecialidadDao {
+	
+/*************MOCK**********/
+	void setSessionFactory(SessionFactory sessionFactory);
+	
+
+	
 	/*************************Organizador***************************************/
 	List<Especialidad> traerListaDeEspecialidades();
 	Especialidad traerEspecialidadPorId(Long id);

@@ -67,4 +67,12 @@ public class ServicioCursoImpl implements ServicioCurso{
 	}
 
 	
+	
+
+/*****************MOCK*****************/
+
+public void setCursoDao(CursoDao cursoDao) {
+	this.cursoDao = cursoDao;
+}
+	
 }

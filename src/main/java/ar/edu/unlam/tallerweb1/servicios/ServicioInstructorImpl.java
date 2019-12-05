@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unlam.tallerweb1.dao.InstructorDao;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
+import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
 
 @Service
@@ -25,4 +26,19 @@ public class ServicioInstructorImpl implements ServicioInstructor {
 		return instructorDao.buscarInstructorPorId(id);
 	}
 
+	
+	/******************************INSTRUCTOR*******************************************/
+
+	@Override
+	public Instructor buscarInstructor(Long idInstructor) {
+		Usuario usuario =	instructorDao.buscarUsuario(idInstructor);
+		return instructorDao.buscarInstructor( usuario.getInstructor().getId());
+	}
+
+	@Override
+	public Usuario buscarUsuario(Long idInstructor) {
+
+		return instructorDao.buscarUsuario(idInstructor);
+	}
+	
 }

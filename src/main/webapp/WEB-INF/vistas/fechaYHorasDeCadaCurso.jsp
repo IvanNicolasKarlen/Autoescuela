@@ -64,17 +64,17 @@
   		
 	
 	
-	<p class="text-center">Quiero dejar de hacer el curso de: </p>
+	<p class="text-center">Eliminar todas juntas mis clases de: </p>
 	<c:forEach items="${listaCursos}" var="la">
 
 		
 <form:form  method="POST" modelAttribute="agenda" action="mostrarAlerta">
 <label class="checkbox-inline">
-${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
+${la.curso.especialidad.tipo}
 </label>
 
 
-<input name="idCurso" type="hidden" value="${la.curso.especialidad.id}"></input>
+<input name="idEspecialidad" type="hidden" value="${la.curso.especialidad.id}"></input>
     
     <button type="submit" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm m-b-20 ">
           Eliminar 
@@ -104,8 +104,9 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
   		
 <form:form action="clasesDelCurso" method="get">	
 	
-	<p class="text-center">Solo ver mis clases de:: </p>
+	<p class="text-center">Solo ver mis clases de: </p>
 	<c:forEach items="${listaCursos}" var="la">
+	
 
 		
 <label class="checkbox-inline">
@@ -125,19 +126,32 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 <c:forEach items="${listadoClases}" var="la">
 
 
+
 <div class="col-md-4 ">
 
   <h2 class="text-center color0-hov trans-0-4 bg-dark text-white">Curso de ${la.inscripcion.curso.especialidad.tipo}</h2>
-		
-		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
+  
+   <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
+   
+   <c:if test="${la.hora < 1000 }">
+	
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,1)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+   <c:if test="${la.hora >= 1000 }">
+  		
+  		 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(2,3)}${la.hora.toString().substring(2,3)}<br>
+	
+	</c:if>
+   
 		
 		<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
 		
-		
-		<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
+ 
+	<c:if test="${la.estadoDeAgenda.estado == 'Ocupada' }">
 		<b class="color0-hov trans-0-4 text-center text-primary">Estado de la clase:</b> Aún no cursó</p>
 		</c:if>
 		
@@ -152,15 +166,9 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 		
 		
 <c:if test="${(la.estadoDeAgenda.id == 2) }">		<br>
-<button type="button" class="btn3 flex-c-m txt11 trans-0-4 m-l-r-auto btn-sm">
-          <span class="glyphicon glyphicon-pencil"> </span> EDITAR 
-        </button>
-        
-        			
-        			
-        			
+
         				     <!-- BOTON ELIMINAR -->
-     <br>   
+        
 <form:form  method="POST" modelAttribute="agenda" action="mostrarAlerta">
 
 			<input name="idAgendaSeleccionada" type="hidden" value="${la.id}"></input>
@@ -171,13 +179,11 @@ ${la.curso.especialidad.tipo} ${la.curso.especialidad.id}
 	
 	
 </form:form> 
+
 								<!--FIN  BOTON ELIMINAR -->
-        
-        
+       
        </c:if> 
-        
-        
-        
+ <br></br>            
  </div>
 
 </c:forEach>       

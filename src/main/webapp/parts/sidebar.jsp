@@ -41,15 +41,19 @@
 			<!-- FIN DEL IF usuarioID==null -->
 			<!-- if rol=='alumno' -->
 		<c:if test="${rol=='Alumno'}">
-			<li><a href="${context}/index">Inicio</a></li>
-			<li><a href="${context}/listadoCursos">Anotarme</a></li>
-			<li><a href="${context}/listadoFechas">Mis clases</a></li>
+			<li class="t-center m-b-13"><a  href="${context}/indexAlumno">Inicio</a></li>
+			<li class="t-center m-b-13"><a  href="${context}/listadoCursos">Anotarme</a></li>
+			<li class="t-center m-b-13"><a  href="${context}/listadoFechas">Mis clases</a></li>
+			<li class="t-center m-b-13"><a href="${context}/historial">Historial</a></li>
 		</c:if>
 		<!-- FIN ALUMNO -->
 			<!-- Instructor -->
 		<c:if test="${rol=='Instructor'}">
-			<li><a href="${context}/index">Inicio</a></li>
-			<li><a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a></li>
+		
+			<li class="t-center m-b-13"><a href="${context}/index">Inicio</a></li>
+			<li class="t-center m-b-13"><a href="${context}/buscadorDeAlumnos">Buscador de Alumnos</a></li>
+			<li class="t-center m-b-13"><a href="${context}/horasTrabajadas">Horas trabajadas</a></li>
+	
 		</c:if>
 
 		<!-- Fin instructor -->

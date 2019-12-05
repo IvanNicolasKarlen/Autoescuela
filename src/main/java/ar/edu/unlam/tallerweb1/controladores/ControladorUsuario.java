@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
+import ar.edu.unlam.tallerweb1.modelo.Notificacion;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 
 @Controller
@@ -30,24 +32,44 @@ public class ControladorUsuario {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioUsuario servicioUsuario;
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 	
-	
+		public void setServicioUsuario(ServicioUsuario servicioUsuario) {
+		this.servicioUsuario = servicioUsuario;
+	}
+
+
+
+	public void setServicioNotificacion(ServicioNotificacion servicioNotificacion) {
+		this.servicioNotificacion = servicioNotificacion;
+	}
+
+
+
 		@RequestMapping("/index")
 		public ModelAndView index(HttpServletRequest request) {
 			ModelMap model = new ModelMap();
 			String rol = request.getSession().getAttribute("ROL") != null?(String) request.getSession().getAttribute("ROL"):"";
-			model.put("usuarioId", request.getSession().getAttribute("ID"));
-			model.put("rol", rol);
+			Long idUser = request.getSession().getAttribute("ID")!= null?(Long) request.getSession().getAttribute("ID"):null;
+			List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+			Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
 			String vistaindex = "index";
-			switch(rol){
-			case "Alumno": 	vistaindex="indexAlumno";
-							break;
-			case "Instructor": vistaindex="indexInstructor";
-							break;
-			case "Organizador": vistaindex="indexOrganizador";
-							break;
-			default: 
+			if(user!=null){
+				notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+				model.put("notiSize", notificaciones.size());
+				switch(user.getRol()){
+				case "Alumno": 	vistaindex="indexAlumno";
+								break;
+				case "Instructor": vistaindex="indexInstructor";
+								break;
+				case "Organizador": vistaindex="indexOrganizador";
+								break;
+				default: 
+				}
+				model.put("rol", user.getRol());
 			}
+			
 			return new ModelAndView(vistaindex,model);
 	
 		}
@@ -86,6 +108,13 @@ public class ControladorUsuario {
 			
 				request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 				request.getSession().setAttribute("ID", usuarioBuscado.getId());
+				switch(usuarioBuscado.getRol()){
+				case "Organizador": request.getSession().setAttribute("IDROL", usuarioBuscado.getOrganizador().getId());
+									break;
+				case "Instructor": request.getSession().setAttribute("IDROL", usuarioBuscado.getInstructor().getId());
+									break;
+				case "Alumno": request.getSession().setAttribute("IDROL", usuarioBuscado.getAlumno().getId());
+				}
 				return new ModelAndView("redirect:/index");
 				
 		} else {
@@ -94,6 +123,7 @@ public class ControladorUsuario {
 		}
 		return new ModelAndView("login", model);
 	}
+
 
 
 	// Escucha la url /, y redirige a la URL /index, es lo mismo que si se invoca la url /index directamente.
@@ -130,6 +160,7 @@ public class ControladorUsuario {
 				}else{
 					user.setRol("Alumno");
 					Alumno alumno = new Alumno();
+					alumno.setUsuario(user);
 					user.setAlumno(alumno);
 					if(servicioUsuario.insertarUsuario(user)!=null){
 						model.put("mensaje", "Usuario creado con exito");
@@ -149,6 +180,41 @@ public class ControladorUsuario {
 		request.getSession().removeAttribute("ROL");
 		request.getSession().removeAttribute("ID");
 		return new ModelAndView("redirect:/login");
+	}
+	@RequestMapping(path="notificaciones", method=RequestMethod.GET)
+	public ModelAndView notificaciones(HttpServletRequest request,
+			@RequestParam(name="filter", required=false, defaultValue="noleidas")String filter,
+			@RequestParam(name="leidas", required=false, defaultValue="false")String leidas,
+			@RequestParam(name="id", required=false)Long idNotificacion){
+		ModelMap model = new ModelMap();
+		Long idUser = (long)request.getSession().getAttribute("ID");
+		Usuario user = servicioUsuario.traerUsuarioPorId(idUser);
+		
+		model.put("rol", (String)request.getSession().getAttribute("ROL"));
+		
+		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		
+		switch(filter){						
+			case "leidas": notificaciones = servicioNotificacion.traerNotificacionesLeidas(user);
+							break;
+			case "todas": notificaciones = servicioNotificacion.traerTodasLasNotificaciones(user);
+							break;
+			default: notificaciones = servicioNotificacion.traerNotificacionesNoLeidas(user);
+		}
+		if(leidas.equals("true")||leidas=="true"){
+			for(Notificacion noti:notificaciones){
+				noti.setLeida(true);
+				servicioNotificacion.modificarNotificacion(noti);
+			}
+		}
+		if(idNotificacion!=null){
+			Notificacion notificacionSeleccionada = servicioNotificacion.traerNotificacionPorId(idNotificacion);
+			model.put("notificacion", notificacionSeleccionada);
+			notificacionSeleccionada.setLeida(true);
+			servicioNotificacion.modificarNotificacion(notificacionSeleccionada);
+		}
+		model.put("notificaciones", notificaciones);
+		return new ModelAndView("notificaciones",model);
 	}
 
 }

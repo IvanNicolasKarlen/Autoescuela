@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.dao;
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Inscripcion;
+import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -24,10 +25,17 @@ import javax.inject.Inject;
 @Repository("usuarioDao")
 public class UsuarioDaoImpl implements UsuarioDao {
 
-	// Como todo dao maneja acciones de persistencia, normalmente estar√° inyectado el session factory de hibernate
-	// el mismo est√° difinido en el archivo hibernateContext.xml
+	// Como todo dao maneja acciones de persistencia, normalmente estar· inyectado el session factory de hibernate
+	// el mismo est· difinido en el archivo hibernateContext.xml
 	@Inject
     private SessionFactory sessionFactory;
+
+		
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+
 
 	/****************************************** INSTRUCTOR **************************************/
 	
@@ -50,7 +58,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
 		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran m√°s de un resultado en la busqueda.
+		// uniqueResult da error si se encuentran m·s de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("nombreDeUsuario", usuario.getNombreDeUsuario()))
@@ -63,7 +71,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (Long)session.save(usuario);		
 	}
 	
-	
+
+	@Override
+	public Usuario traerUsuarioPorId(Long user) {
+		final Session session = sessionFactory.getCurrentSession();
+		return (Usuario) session.get(Usuario.class, user);
+	}
 	
 	/****************************O R G A N I Z A D X R ******************///////////////
 
@@ -106,6 +119,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		return (Usuario) session.createCriteria(Usuario.class)
 						.add(Restrictions.like("nombreDeUsuario", nombreUser)).uniqueResult();
 	}
+
+
+
 	
 	
 	

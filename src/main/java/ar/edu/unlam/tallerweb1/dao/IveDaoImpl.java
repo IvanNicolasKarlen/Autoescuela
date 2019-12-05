@@ -18,6 +18,10 @@ public class IveDaoImpl implements IveDao {
 	@Inject
 	private SessionFactory sessionFactory;
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 	
 	/****************************************ORGANIZADOR******************************************/
 	public Long guardarIve(InstructorVehiculoEspecialidad ive){

@@ -17,6 +17,10 @@ import ar.edu.unlam.tallerweb1.modelo.Vehiculo;
 public class VehiculoDaoImpl implements VehiculoDao {
 	@Inject
 	private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	/******************************************INSTRUCTOR**************************************/
 	@Override
@@ -31,6 +35,14 @@ public class VehiculoDaoImpl implements VehiculoDao {
 				
 				.list();
 				
+	}
+	
+	@Override
+	public void updateVehiculo(Vehiculo idEstadoDeVehiculo) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		session.update(idEstadoDeVehiculo);
+		
 	}
 	/******************************************ORGANIZADOR**************************************/
 	@Override
@@ -76,5 +88,6 @@ public class VehiculoDaoImpl implements VehiculoDao {
 								.add(Restrictions.isNull("iveBuscada.instructor"))
 								.list();
 	}
+
 	
 }

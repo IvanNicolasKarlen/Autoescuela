@@ -22,25 +22,15 @@
 	<!-- Welcome -->
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105 m-t-50">	
 	
-		<h1>id cursoooo ${curso2}</h1>
-<h1>Cantidad de agendas ${agendas2size}</h1>
-
-
-<c:forEach items="${agendas2}" var="a">
-
-<h1>id agenda ${a}</h1>
-
-
-</c:forEach>
 
 		 
 		<h4 class="tit2 t-center m-b-35 m-t-2">
-                 <label>Has sido anotado exitosamente</label>
+                 <label>${mensaje}</label>
 					</h4>
 		
 
 <div class="card-body">
-  <a href="indexAlumno" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+  <a href="listadoFechas" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					CONTINUAR
   </a>
   </div>

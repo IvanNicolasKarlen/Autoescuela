@@ -46,7 +46,7 @@ select * from instructorvehiculoespecialidad;
 
 
  Insert into estadodeagenda(estado) 
- values("Disponible"), /*1*/
+ values("Disponible"),/*1*/
  ("Ocupada"),/*2*/
  ("Cancelado por Alumno"),/*3*/
  ("Cancelado por Instructor"),/*4*/
@@ -66,7 +66,7 @@ insert into instructorvehiculoespecialidad(especialidad_id, instructor_id, vehic
 values(1,1,1),(2,1,2);     
  
 /*Insert into estadodelcurso(estadodelcurso) values ("Cursando");*/
-Insert into estadoInscripcion(estado) values ("Cursando"), ("Finalizado");
+Insert into estadoInscripcion(estado) values ("Cursando"), ("Finalizado"), ("Eliminado por Alumno");
 
 Insert into curso (
 	 cantClasesPracticas,
@@ -99,14 +99,19 @@ Insert into curso (
 Insert into agenda (fecha, hora,estadodeagenda_id,instructorvehiculoespecialidad_id) 
 values 
 
-("08/11/2019", 0900,1,1),
-("09/11/2019", 0900,1,2),
-("10/11/2019", 0900,1,2),
-("12/11/2019", 0900,1,1),
-("13/11/2019", 0900,1,1),
-("14/11/2019", 0900,1,1),
-("15/11/2019", 0900,1,2),
-("16/11/2019", 0900,1,2);
+("08-11-2019", 0900,1,1),
+("12-11-2019", 0900,1,2),
+("13-11-2019", 0900,1,2),
+("12-11-2019", 0900,1,1),
+("13-11-2019", 0900,1,1),
+("14-11-2019", 0900,1,1),
+("15-11-2019", 0900,1,2),
+("16-11-2019", 0900,1,2),
+("17-11-2019", 0900,1,1);
+
+
+
+
 
 select * from agenda;
 select * from inscripcion;

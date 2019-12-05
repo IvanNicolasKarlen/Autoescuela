@@ -5,6 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+<!-- Header desktop -->
+		<c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 	<title>Home</title>
 	<!-- meta, css, vendor, etc. -->
 <%@ include file="../../parts/meta.jsp" %> 
@@ -41,8 +43,15 @@
 						<c:if test="${usuarioId!=null}">
 						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
 							<!-- Button1 -->
-							<a href="AlumnosDelInstructor" class="btn1 flex-c-m size1 txt3 trans-0-4">
+							<a href="${context}/AlumnosDelInstructor" class="btn1 flex-c-m size1 txt3 trans-0-4">
 								Ver alumnos
+							</a>
+						</div><br>
+						
+						<div class="wrap-btn-slide1 animated visible-false" data-appear="zoomIn">
+							<!-- Button1 -->
+							<a href="${context}/horasTrabajadas" class="btn1 flex-c-m size1 txt3 trans-0-4">
+								Horas trabajadas
 							</a>
 						</div>
 						</c:if>

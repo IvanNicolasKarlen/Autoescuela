@@ -17,6 +17,10 @@ public class EspecialidadDaoImpl implements EspecialidadDao {
 	@Inject
 	private SessionFactory sessionFactory;
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 /************************************** Organizador ***********************/
 	
 	@SuppressWarnings("unchecked")

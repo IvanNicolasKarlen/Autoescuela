@@ -2,11 +2,19 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import ar.edu.unlam.tallerweb1.modelo.Especialidad;
 import ar.edu.unlam.tallerweb1.modelo.Instructor;
 import ar.edu.unlam.tallerweb1.modelo.InstructorVehiculoEspecialidad;
 
 public interface IveDao {
+	
+/*************MOCK**********/
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
+
 	
 	/***********************************ORGANIZADOR**********************************/
 	Long guardarIve(InstructorVehiculoEspecialidad ive);

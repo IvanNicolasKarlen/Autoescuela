@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
 	<title>Cancelación de clase</title>
-	<!-- meta, css, vendor, etc. -->
+<!-- meta, css, vendor, etc. -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <%@ include file="../../parts/meta.jsp" %> 
@@ -23,15 +23,17 @@
 <%@ include file="../../parts/sidebar.jsp" %> 
 	<!-- fin sidebar -->
 	
-	
 	<section class="section-welcome bg1-pattern p-t-120 p-b-105">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 p-b-30">
 					<div class="t-center">
-						<h4 class="tit2 t-center m-b-35 m-t-2">
+					<div class="wrap-text-welcome t-center">
+		<h4 class="tit2 t-center m-b-35 m-t-2">
 						Clase cancelada con éxito 
 						</h4>
+
+					
 						
 					<form:form method="GET"  action="buscadorDeAlumnos"> 
 						<button class="btn btn-primary" type="submit" name="volver">Volver</button>

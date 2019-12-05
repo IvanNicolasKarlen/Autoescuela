@@ -55,5 +55,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	public Usuario traerUsuarioPorNombreUsuario(String nombreUser) {
 		return servicioUsuarioDao.traerUsuarioPorNombreUsuario(nombreUser);
 	}
-	/*************************************************************************/
+	/********************************INSTRUCTOR*****************************************/
+
+	@Override
+	public Usuario traerUsuarioPorId(Long id) {
+		return servicioUsuarioDao.traerUsuarioPorId(id);
+	}
 }

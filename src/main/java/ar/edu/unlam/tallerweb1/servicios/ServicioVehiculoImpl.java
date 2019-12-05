@@ -26,6 +26,12 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
 	public List<EstadoDeVehiculo> traerVehiculos(Long idAgenda){
 		return vehiculoDao.traerVehiculos(idAgenda);
 }
+	
+	@Override
+	public void updateVehiculo(Vehiculo idEstadoDeVehiculo) {
+		vehiculoDao.updateVehiculo(idEstadoDeVehiculo);
+		
+	}
 	/********************************ORGANIZADOR**************************/
 	@Override
 	public List<Vehiculo> obtenerVehiculoPorEspecialidad(Especialidad especialidad) {
@@ -63,5 +69,6 @@ public class ServicioVehiculoImpl implements ServicioVehiculo {
 		
 		
 	}
+
 
 }

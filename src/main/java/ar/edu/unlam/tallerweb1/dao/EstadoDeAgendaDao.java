@@ -2,11 +2,18 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import ar.edu.unlam.tallerweb1.modelo.EstadoDeAgenda;
 
 public interface EstadoDeAgendaDao {
 
+/********************************INSTRUCTOR**********************************/
 	
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor();
+	List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor();
+//	void updateEstadoDeAgenda(EstadoDeAgenda mensaje);	
+//	EstadoDeAgenda traerListaDeOcupados();
 	/********************************ORGANIZADOR**********************************/
 	
 	List<EstadoDeAgenda> traerListaDeEstadoDeAgenda();
@@ -21,5 +28,13 @@ public interface EstadoDeAgendaDao {
 	EstadoDeAgenda traigoElEstadoFinalizado();
 	EstadoDeAgenda traigoElEstadoAbandonada();
 	EstadoDeAgenda traigoElEstadoOcupada();
+	EstadoDeAgenda buscarEstadoPerdida();
+	List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador();
+	
 
+/*************MOCK**********/
+	
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
 }

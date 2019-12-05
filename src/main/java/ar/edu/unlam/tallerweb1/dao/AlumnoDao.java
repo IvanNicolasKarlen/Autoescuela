@@ -2,6 +2,8 @@ package ar.edu.unlam.tallerweb1.dao;
 
 import java.util.List;
 
+import org.hibernate.SessionFactory;
+
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 
@@ -15,5 +17,11 @@ public interface AlumnoDao {
 	Alumno buscarAlumno(Long idAlumno);
 
 	Usuario buscarUsuario(Long idAlumno);
+	
+/*************MOCK**********/
+	
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
 
 }

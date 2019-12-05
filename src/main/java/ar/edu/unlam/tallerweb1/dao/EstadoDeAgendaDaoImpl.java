@@ -17,6 +17,12 @@ public class EstadoDeAgendaDaoImpl implements EstadoDeAgendaDao {
 
 	@Inject
 	private SessionFactory sessionFactory;
+	
+
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 /************************************************ORGANIZADOR***************************/
 	
@@ -112,7 +118,72 @@ final Session session = sessionFactory.getCurrentSession();
 				
 		return a;
 	}
+
+	@Override
+	public EstadoDeAgenda buscarEstadoPerdida() {
+final Session session = sessionFactory.getCurrentSession();
+		
+		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.eq("estado","Clase perdida"))
+				.uniqueResult();
+				
+		return a;
+	}
+	/***************************************INSTRUCTOR********************************/
+	@SuppressWarnings("unchecked")
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaInstructor() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("estado", "Disponible"))
+				.add(Restrictions.ne("estado", "Ocupada"))
+				.add(Restrictions.ne("estado", "Cancelado por Alumno"))
+				.add(Restrictions.ne("estado", "Cancelado por Organizador"))
+				.add(Restrictions.ne("estado", "Finalizado"))
+				.add(Restrictions.ne("estado", "Clase perdida"))
+				.add(Restrictions.ne("estado", "Abandonada"))
+				
+				.list();
+	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EstadoDeAgenda> traerDetalleDeEstadoDeAgendaParaInstructor() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+				.add(Restrictions.ne("detalle", "El alumno puede inscribirse"))
+				.add(Restrictions.ne("detalle", "Ya hay un alumno inscripto"))
+				.add(Restrictions.ne("detalle", "El alumno cancelo la clase"))
+				.add(Restrictions.ne("detalle", "El organizador decidio cancelar la clase"))
+				.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EstadoDeAgenda> traerListaDeEstadoDeAgendaParaOrganizador() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createCriteria(EstadoDeAgenda.class)
+						.add(Restrictions.not(Restrictions.like("detalle", "%alumno%")))
+						.list();
+	}
 	
+//	
+//	@Override
+//	public void updateEstadoDeAgenda(EstadoDeAgenda mensaje) {
+//		final Session session = sessionFactory.getCurrentSession();
+//		session.update(mensaje);		
+//	}
+//
+//	@Override
+//	public EstadoDeAgenda traerListaDeOcupados() {
+//		final Session session = sessionFactory.getCurrentSession();
+//		
+//		EstadoDeAgenda a = (EstadoDeAgenda) session.createCriteria(EstadoDeAgenda.class)
+//				.add(Restrictions.eq("estado", "Ocupado"))
+//				.uniqueResult();
+//		return a;
+//	}
+//	
+
+
 	
 }

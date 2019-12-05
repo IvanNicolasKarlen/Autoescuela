@@ -4,6 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+<head>
+<title>Home</title>
 <title>Agenda</title>
 <c:set var="context" value="${pageContext.request.contextPath}"> </c:set>
 <!-- meta, css, vendor, etc. -->
@@ -33,6 +35,7 @@
 					
 	<hr>
 	<div>
+					<a href="index">Volver a Inicio</a>
 					<a href="${context}/index">Volver a Inicio</a>
 				</div>
 			</div>

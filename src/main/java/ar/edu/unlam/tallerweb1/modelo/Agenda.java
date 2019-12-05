@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.modelo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+
 
 @Entity
 public class Agenda implements Comparable{
@@ -87,10 +90,10 @@ public class Agenda implements Comparable{
 	@Override
 	public int compareTo(Object o) {
 		Agenda a = (Agenda)o;
-		String nombreObjeto = a.getFecha().toLowerCase();
-		String nombreThis = this.getFecha().toLowerCase();
-		return( nombreThis.compareTo( nombreObjeto ) );
-		
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		 LocalDate Objeto = LocalDate.parse(a.getFecha(), formatter);
+		 LocalDate This = LocalDate.parse(this.getFecha(), formatter);	
+		return( This.compareTo( Objeto ) );
 	}
 
 	public Boolean getClasePagada() {

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +22,11 @@ public class InscripcionDaoImpl implements InscripcionDao {
 
 	@Inject
 	private SessionFactory sessionfactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionfactory = sessionFactory;
+	}
+
 
 	
 	/********************************* Alumno *********************************************/
@@ -28,11 +34,14 @@ public class InscripcionDaoImpl implements InscripcionDao {
 	public List<Inscripcion> saberSiEstaRealizandoAlgunCurso(Long idAlumno, EstadoInscripcion estado) {
 		final Session session = sessionfactory.getCurrentSession();
 		
+		@SuppressWarnings("unchecked")
 		List<Inscripcion> lista = session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id",idAlumno))
-				.createAlias("curso", "cur")
+				.createAlias("curso.especialidad", "esp")
+				//.setProjection(Projections.countDistinct(("esp.id")))
 				.createAlias("estadoInscripcion", "estadoInscripcionBuscado")
 				.add(Restrictions.eq("estadoInscripcionBuscado.id", estado.getId()))
+				
 				.list();
 		return lista;
 	}
@@ -42,7 +51,7 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		final Session session = sessionfactory.getCurrentSession();
 		
 		
-		
+		System.out.println(estado.getId());
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 					.createAlias("curso", "cur")
 					.createAlias("cur.especialidad", "ce")
@@ -68,17 +77,6 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		
 	}
 
-	@Override
-	public Inscripcion buscarInscripcion(Alumno alumno, Curso curso) {
-		final Session session = sessionfactory.getCurrentSession();
-		return (Inscripcion) session.createCriteria(Inscripcion.class)
-				.add(Restrictions.eq("alumno.id",alumno.getId()))
-				.add(Restrictions.eq("curso.id",curso.getId()))
-				.createAlias("estadoInscripcion", "estadoInscripcion")
-				.add(Restrictions.eq("estadoInscripcion.estado", "Cursando"))
-				.uniqueResult();
-		
-	}
 
 	@Override
 	public void guardarInscripcionEnLaAgenda(Agenda a) {
@@ -94,6 +92,7 @@ public class InscripcionDaoImpl implements InscripcionDao {
 		List <Inscripcion> l =  session.createCriteria(Inscripcion.class)
 				.add(Restrictions.eq("alumno.id", idAlumno))
 				.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+				.createAlias("curso.especialidad", "especialidad")
 				.list();
 	return l;
 	}
@@ -152,15 +151,16 @@ final Session session = sessionfactory.getCurrentSession();
 	}
 
 	@Override
-	public Inscripcion buscarInscripcionAEliminar( Long idAlumno, Long idEspecialidad, EstadoInscripcion estado) {
+	public Inscripcion buscarInscripcion( Long idAlumno, Long idCurso) {
+		 
 		 final Session session = sessionfactory.getCurrentSession();
-		 return (Inscripcion) session.createCriteria(Inscripcion.class)
+			return (Inscripcion) session.createCriteria(Inscripcion.class)
 					.createAlias("alumno", "alumno")
 					.add(Restrictions.eq("alumno.id",idAlumno))
-					.createAlias("curso.especialidad", "especialidad")
-					.add(Restrictions.eq("especialidad.id",idEspecialidad))
-					.createAlias("estadoInscripcion", "estadoInscripcion")
-					.add(Restrictions.eq("estadoInscripcion.id", estado.getId()))
+					.createAlias("curso", "curso")
+					.add(Restrictions.eq("curso.id",idCurso))
+					.createAlias("estadoInscripcion", "estadoInscrip")
+					.add(Restrictions.eq("estadoInscrip.estado", "Cursando"))
 					.uniqueResult();
 	}
 

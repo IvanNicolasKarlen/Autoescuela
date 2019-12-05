@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.dao;
-
 import java.util.List;
+
+import org.hibernate.SessionFactory;
 
 import ar.edu.unlam.tallerweb1.modelo.Agenda;
 import ar.edu.unlam.tallerweb1.modelo.Alumno;
@@ -19,7 +20,7 @@ public interface InscripcionDao {
 	
 	void guardarInscripcion(Alumno alumno, Curso curso, Inscripcion tablainscripcion, EstadoInscripcion estado);
 	
-	Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
+	//Inscripcion buscarInscripcion(Alumno alumno, Curso curso);
 
 	void guardarInscripcionEnLaAgenda(Agenda a);
 
@@ -33,8 +34,16 @@ public interface InscripcionDao {
 
 	Inscripcion cursoQueQuieroEliminar(Long idCurso, Long idAlumno);
 
-	Inscripcion buscarInscripcionAEliminar( Long idAlumno, Long idInscripcion, EstadoInscripcion estado);
+	Inscripcion buscarInscripcion(Long idAlumno, Long idCurso);
+
 	
+	
+/*************MOCK**********/
+	
+
+	void setSessionFactory(SessionFactory sessionFactory);
+	
+
 	
 	/****************************************************************/
 

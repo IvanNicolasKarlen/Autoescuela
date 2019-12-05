@@ -21,6 +21,11 @@ public class AlumnoDaoImpl implements AlumnoDao {
 	private SessionFactory sessionFactory;
 
 	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	
 	/************************************ INSTRUCTOR ***********************************/
 	
 	@Override

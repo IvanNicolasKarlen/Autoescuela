@@ -20,7 +20,9 @@ public class ServicioAlumnoImpl implements ServicioAlumno {
 
 	@Override
 	public Alumno buscarAlumno(Long idAlumno) {
-		return alumnoDao.buscarAlumno( idAlumno);
+		Usuario usuario =	alumnoDao.buscarUsuario(idAlumno);
+		
+		return alumnoDao.buscarAlumno( usuario.getAlumno().getId());
 	}
 
 	@Override

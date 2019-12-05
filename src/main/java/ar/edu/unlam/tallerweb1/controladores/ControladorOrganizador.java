@@ -43,10 +43,9 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioEstadoInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioIVE;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInscripcion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioInstructor;
-import ar.edu.unlam.tallerweb1.servicios.ServicioConvertirFecha;
+import ar.edu.unlam.tallerweb1.servicios.ServicioNotificacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioAgenda;
 import ar.edu.unlam.tallerweb1.servicios.ServicioCurso;
-import ar.edu.unlam.tallerweb1.servicios.ServicioValidarFechaElegida;
 import ar.edu.unlam.tallerweb1.servicios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioVehiculo;
 import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
@@ -54,10 +53,6 @@ import ar.edu.unlam.tallerweb1.servicios.ServicioTipoDeVehiculo;
 @Controller
 public class ControladorOrganizador {
 
-	@Inject
-	private ServicioConvertirFecha servicioConvertirFecha;
-	@Inject
-	private ServicioValidarFechaElegida servicioValidarFechaElegida;
 	@Inject
 	private ServicioCurso servicioCurso;
 	@Inject
@@ -82,10 +77,8 @@ public class ControladorOrganizador {
 	private ServicioEstadoDeAgenda servicioEstadoDeAgenda;
 	@Inject
 	private ServicioEstadoInscripcion servicioEstadoInscripcion;
-
-	
-	
-
+	@Inject
+	private ServicioNotificacion servicioNotificacion;
 
 	public void setServicioCurso(ServicioCurso servicioCurso) {
 		this.servicioCurso = servicioCurso;
@@ -95,6 +88,17 @@ public class ControladorOrganizador {
 	public void setServicioEspecialidad(ServicioEspecialidad servicioEspecialidad) {
 		this.servicioEspecialidad = servicioEspecialidad;
 	}
+	
+
+	public void setServicioEstadoDelCurso(ServicioEstadoDelCurso servicioEstadoDelCurso) {
+		this.servicioEstadoDelCurso = servicioEstadoDelCurso;
+	}
+
+
+	public void setServicioEstadoInscripcion(ServicioEstadoInscripcion servicioEstadoInscripcion) {
+		this.servicioEstadoInscripcion = servicioEstadoInscripcion;
+	}
+
 
 	@RequestMapping(path="/agregarCurso")
 	public ModelAndView agregarCurso(HttpServletRequest request){
@@ -609,7 +613,7 @@ public class ControladorOrganizador {
 								+ "<p>Recomendamos cambiar el estado de curso para que nadie pueda inscribirse, y volver a intentar luego "
 								+ "que las inscripciones hayan finalizado.</p>");
 							}
-								
+					break;			
 					case "no": return new ModelAndView("redirect:/verCursos");
 					
 					default: return new ModelAndView("redirect:/verCursos");
@@ -660,12 +664,12 @@ public class ControladorOrganizador {
 			Usuario user = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
 			model.put("user", user);
 			List<Agenda> listaAg = new ArrayList<Agenda>();
-			List<EstadoDeAgenda> listaEstado = servicioEstadoDeAgenda.traerListaDeEstadoDeAgenda();
+			List<EstadoDeAgenda> listaEstado = servicioEstadoDeAgenda.traerListaDeEstadoDeAgendaParaOrganizador();
 			if(fecha.equals("nada")){
-				listaAg= servicioAgenda.traerTodasLasClasesDeUnAlumno(user.getId());
+				listaAg= servicioAgenda.traerTodasLasClasesDeUnAlumno(user.getAlumno().getId());
 			}else{
+				fecha = fecha.replace('/', '-');
 				listaAg.add(servicioAgenda.traerAgendaPorFechaYAlumno(user.getAlumno(), fecha));
-				System.out.println("n/ /n FECHAAAAAAAAA: " +fecha +" /n n/");
 			}
 			model.put("listaEstadosAgenda", listaEstado);
 			model.put("listaAgenda", listaAg);
@@ -690,7 +694,10 @@ public class ControladorOrganizador {
 				agenda.setEstadoDeAgenda(estado);
 				servicioAgenda.modificarAgenda(agenda);
 				Agenda agendaMod = servicioAgenda.buscarAgendaPorId(idAgenda);
-				if(agendaMod.getEstadoDeAgenda().equals(estado)){
+				if(agendaMod.getEstadoDeAgenda().getEstado().equals(estado.getEstado())){
+					Long idUserOrg =(long)request.getSession().getAttribute("ID");
+					Usuario org = servicioUsuario.traerUsuarioPorId(idUserOrg);
+					servicioNotificacion.crearNotificacion(org, agendaMod);
 					model.put("mensaje","Agenda modificada exitosamente");
 				}else{
 					model.put("error", "No se pudo modificar la agenda");
@@ -705,6 +712,24 @@ public class ControladorOrganizador {
 		Usuario user = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
 		model.put("user", user);
 		return new ModelAndView("buscarAgendasOrg",model);
+	}
+	@RequestMapping(path="/modificarUsuario/{nombreUser}")
+	public ModelAndView modificarUsuario(HttpServletRequest request,
+			@PathVariable(value="nombreUser")String nombreUser){
+		String rol = (String)request.getSession().getAttribute("ROL");
+		ModelMap model = new ModelMap();
+		if(rol.equals("Organizador")){
+			Usuario usuarioBuscado = servicioUsuario.traerUsuarioPorNombreUsuario(nombreUser);
+			if(usuarioBuscado.getRol().equals("Organizador")){
+				return new ModelAndView("redirect:/busquedaUsuarios");
+			}else{
+				model.put("usuarioBuscado", usuarioBuscado);
+			}
+				
+		}else{
+			return new ModelAndView("redirect:/index");
+		}
+		return new ModelAndView("modificarUsuarioOrg",model);
 	}
 
 }

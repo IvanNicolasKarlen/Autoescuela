@@ -30,23 +30,33 @@
 
 <form:form class="wrap-form-reservation size22 m-l-r-auto" method="POST" modelAttribute="agendasViewModel" action="inscripcion">
 
-<input name="idCurso" path=idCurso type="text"  value="${cursoSeleccionado.id}"/>
+<input name="idCurso" path=idCurso type="text" style="display:none" value="${cursoSeleccionado.id}"/>
 
 	
 <div class="row">
 <c:forEach items="${listaAgendas}" var="la">
 <div class="col-md-4 ">
 
-<input name="idAgendas[${la.id}]" type="text"  value="${la.id}"/>
+<input name="idAgendas[${la.id}]" type="text"  value="${la.id}" style="display:none"/>
 
-<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${especialidad}</h2>
+<h2 class="text-center color0-hov trans-0-4 bg-info text-white">Curso de ${la.instructorVehiculoEspecialidad.especialidad.tipo}</h2>
  <c:set var="i" value="${ i+1}"/>
 		 <h5 class="card-subtitle p-t-10 mb-2 text-center text-info">Clase <c:out value="${i}"/></h5>
 		          
 		
 		 <p class="card-text text-center"><b class="color0-hov trans-0-4">Fecha</b>: ${la.fecha}<br>
-	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora}<br>
-		
+	<c:if test="${la.hora < 1000 }">
+	
+	<b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,1)}:${la.hora.toString().substring(1,3)}<br>
+	
+	</c:if>
+   
+   <c:if test="${la.hora >= 1000 }">
+  		
+  		 	 <b class="color0-hov trans-0-4 text-center">Hora:</b> ${la.hora.toString().substring(0,2)}:${la.hora.toString().substring(2,3)}${la.hora.toString().substring(2,3)}<br>
+	</c:if>
+	
+		 
 		<b class="color0-hov trans-0-4 text-center">Instructor:</b> ${la.instructorVehiculoEspecialidad.instructor.usuario.nombre} ${la.instructorVehiculoEspecialidad.instructor.usuario.apellido}<br>
 		
 		<b class="color0-hov trans-0-4 text-center">Vehiculo:</b> ${la.instructorVehiculoEspecialidad.vehiculo.modelo} ${la.instructorVehiculoEspecialidad.vehiculo.patente}</p>
@@ -61,28 +71,19 @@
 </div>	
 	
 	</br>
-	</br>
 <div class="card-body">
   <button type="submit" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
 					ACEPTAR INSCRIPCION
   </button>
   </div>
-	
-	
-  		
-  		
-  		<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
-					CANCELAR
-	</a>
-  		
-  		</form:form>
+</form:form>
   		
   	<form:form  method="POST" modelAttribute="agendasViewModel" action="seleccionarAgenda">
 	
 		<c:forEach items="${listaAgendas}" var="la">
-			<div class="col-md-4 ">
+			
 			<input name="idAgendas[${la.id}]" type="hidden" value="${la.id}"></input>
-			</div>
+			
 		</c:forEach>
 		<input  name="idCurso" type="hidden" value="${cursoSeleccionado.id}"></input>
 	
@@ -95,7 +96,10 @@
 </form:form>	
   		
   		
-  
+  		<a href="listadoCursos" class="btn3 flex-c-m size13 txt11 trans-0-4 m-l-r-auto">
+					CANCELAR
+	</a>
+  		
   		
   		
   		

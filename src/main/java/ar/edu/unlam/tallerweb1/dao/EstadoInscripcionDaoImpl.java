@@ -17,6 +17,11 @@ public class EstadoInscripcionDaoImpl implements EstadoInscripcionDao {
 	@Inject
 	private SessionFactory sessionfactory;
 
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionfactory = sessionFactory;
+	}
+	
+	
 	
 	@Override
 	public EstadoInscripcion buscarEstadoCursando() {
@@ -36,6 +41,17 @@ public class EstadoInscripcionDaoImpl implements EstadoInscripcionDao {
 		
 		return(EstadoInscripcion) session.createCriteria(EstadoInscripcion.class)
 				.add(Restrictions.eq("estado", "Finalizado"))
+				.uniqueResult();
+	}
+
+
+	@Override
+	public EstadoInscripcion buscarEstadoEliminadoPorAlumno() {
+final Session session = sessionfactory.getCurrentSession();
+
+		
+		return(EstadoInscripcion) session.createCriteria(EstadoInscripcion.class)
+				.add(Restrictions.eq("estado", "Eliminado por Alumno"))
 				.uniqueResult();
 	}
 	

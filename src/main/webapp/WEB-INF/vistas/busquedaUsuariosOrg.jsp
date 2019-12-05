@@ -20,13 +20,9 @@
 	<!-- Sidebar -->
 	<%@ include file="../../parts/sidebar.jsp"%>
 	<!-- fin sidebar -->
-	<hr />
-	<hr />
-	<hr />
+
 	<div class="container">
-	<hr />
-	<hr />
-	<hr />
+
 		<div class="t-center">
 			<h3 class="t3">Búsqueda de Usuarios</h3>
 		</div>
@@ -81,7 +77,7 @@
 			<th>Agendas</th>
 			<c:forEach items="${listaUsuarios}" var="lu">
 				<tr>
-					<td>${lu.nombreDeUsuario}</td>
+					<td><a href="${context}/modificarUsuario/${lu.nombreDeUsuario}">${lu.nombreDeUsuario}</a></td>
 					<td>${lu.nombre}</td>
 					<td>${lu.apellido}</td>
 					<td>${lu.dni}</td>
