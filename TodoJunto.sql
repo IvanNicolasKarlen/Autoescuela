@@ -3,7 +3,7 @@ values (125);
 
 insert into usuario(apellido,dni,nombre,password,rol,organizador_id,nombreDeUsuario)
 values  ("Delgado",40123456,"Candelaria",123456,"Organizador",125,"candekn");
-
+update organizador set usuario_id=1 where id=125;
 insert into estadodevehiculo(estadoActual)
 VALUES	("Funcionando");
 
